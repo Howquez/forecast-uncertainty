@@ -20,14 +20,18 @@ class BSR(Page):
     # def get_form_fields(self):
     #     return ["temp{}".format(i) for i in range(self.player.minTemp, self.player.maxTemp+1)]
 
-    form_fields=["temp1", "temp2", "temp3", "temp4", "temp5", "temp6", "temp7", "temp8", "temp9", "temp10",\
-        "temp11", "temp12", "temp13", "temp14", "temp15", "temp16", "temp17", "temp18", "temp19", "temp20",\
-        "temp21", "temp22", "temp23", "temp24", "temp25", "temp26", "temp27", "temp28", "temp29", "temp30",\
-        "temp31", "temp32", "temp33", "temp34", "temp35", "temp36", "temp37", "temp38", "temp39", "temp40",\
-        "temp41", "temp42", "temp43", "temp44", "temp45", "temp46", "temp47", "temp48", "temp49", "temp50", "temp51"]
+    form_fields=["prob0", "prob1", "prob2", "prob3", "prob4", "prob5", "prob6", "prob7", "prob8", "prob9", "prob10",\
+        "prob11", "prob12", "prob13", "prob14", "prob15", "prob16", "prob17", "prob18", "prob19", "prob20",\
+        "prob21", "prob22", "prob23", "prob24", "prob25", "prob26", "prob27", "prob28", "prob29", "prob30",\
+        "prob31", "prob32", "prob33", "prob34", "prob35", "prob36", "prob37", "prob38", "prob39", "prob40",\
+        "prob41", "prob42", "prob43", "prob44", "prob45", "prob46", "prob47", "prob48", "prob49", "prob50"]
 
     def get_form_fields(self):
-        return self.form_fields[self.player.minTemp + 10 : self.player.maxTemp + 11]
+        return self.form_fields[self.player.minTemp : self.player.maxTemp + 1]
+
+    def before_next_page(self):
+        self.player.set_loss()
+        self.player.set_payoff()
     pass
 
 class ResultsWaitPage(WaitPage):
@@ -35,11 +39,12 @@ class ResultsWaitPage(WaitPage):
 
 
 class Results(Page):
+
     pass
 
 
 page_sequence = [# Instructions,
                  BSR_PreSelection,
                  BSR,
-                 ResultsWaitPage,
+                 # ResultsWaitPage,
                  Results]
