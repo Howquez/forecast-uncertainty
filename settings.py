@@ -4,8 +4,22 @@ SESSION_CONFIGS = [
     dict(
        name='Forecasts',
        display_name="Forecasts",
-       num_demo_participants=3,
+       num_demo_participants=10,
        app_sequence=['BSR']
+    ),
+    dict(
+       name='Baillon',
+       display_name="Baillon",
+       num_demo_participants=10,
+       app_sequence=['Baillon']
+    ),
+    dict(
+        name='Survey',
+        display_name="Survey",
+        num_demo_participants=10,
+        app_sequence=["Baillon", "BSR", "postBaillon", "postBSR"],
+        BSR_weight=0.5,
+        treatment="random",
     ),
 ]
 
@@ -26,7 +40,7 @@ LANGUAGE_CODE = 'de'
 
 # e.g. EUR, GBP, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = 'EUR'
-USE_POINTS = True
+USE_POINTS = False
 
 ROOMS = []
 

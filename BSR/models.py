@@ -27,77 +27,148 @@ class Constants(BaseConstants):
     name_in_url = 'BSR'
     players_per_group = None
     num_rounds = 1
-    BSR_prize = [0, 10]
-    observed_temp = 25
-    temp_range = [0, 50]
+
+    null_payoff = 0
+    prize_payoff = 10
+    observed_temp = 6 # defines the "winning" temperature
+    TEMP_RANGE = [0, 100]
+    temps = [j for j in range(TEMP_RANGE[0], TEMP_RANGE[1] + 1)]
+    # form_fields = ["prob" + str(k) for k in temps]
+
+    weight = 0.5
 
 
-class Subsession(BaseSubsession):
-    pass
+class SharedBaseSubsession(BaseSubsession):
+    class Meta:
+        abstract = True
 
 
-class Group(BaseGroup):
-    pass
+class SharedBaseGroup(BaseGroup):
+    class Meta:
+        abstract = True
 
 
-class Player(BasePlayer):
+class SharedBasePlayer(BasePlayer):
+    class Meta:
+        abstract = True
 
-    minTemp=models.IntegerField(
-        label="Was ist die niedrigste Temperatur, die Ihrer Meinung nach gerade so noch wahrscheinlich ist?",
-        min=Constants.temp_range[0],
-        initial=24,
-        # max=Constants.temp_range[1],
-        doc="define the range of temperatures with positive probability"
+    CQ1 = models.StringField(
+        label="Haben Sie Ihre Entscheidungssituation verstanden?",
+        doc="Comprehension Question 1",
+        widget=widgets.RadioSelect,
+        choices=[
+            ["No", "Nein"],
+            ["Yes", "Ja"],
+        ],
+        initial="Yes"
     )
 
-    def minTemp_max(self):
-        return self.maxTemp
+    CQ2 = models.IntegerField(
+        label="Was ist der Ergebnis von 4+4?",
+        doc="Question for Testing purposes",
+        initial=8
+    )
+
+    minTemp = models.IntegerField(
+        label="Was ist die niedrigste Temperatur, die Ihrer Meinung nach gerade so noch wahrscheinlich ist?",
+        doc="Name the lowest temperature you assign a positive probability of occurring to.",
+        min=Constants.TEMP_RANGE[0],
+        initial=22,
+        blank=True
+
+    )
 
     maxTemp = models.IntegerField(
         label="Was ist die höchste Temperatur, die Ihrer Meinung nach gerade so noch wahrscheinlich ist?",
-        # min=Constants.temp_range[0],
-        initial=26,
-        max=Constants.temp_range[1],
-        doc="define the range of temperatures with positive probability"
+        doc="Name the highest temperature you assign a positive probability of occurring to.",
+        max=Constants.TEMP_RANGE[1],
+        initial=28,
+        blank=True
     )
 
-    def maxTemp_min(self):
-        return self.minTemp
-
-    prob0, prob1, prob2, prob3, prob4, prob5, prob6, prob7, prob8, prob9, prob10,\
-        prob11, prob12, prob13, prob14, prob15, prob16, prob17, prob18, prob19, prob20,\
-        prob21, prob22, prob23, prob24, prob25, prob26, prob27, prob28, prob29, prob30,\
-        prob31, prob32, prob33, prob34, prob35, prob36, prob37, prob38, prob39, prob40,\
-        prob41, prob42, prob43, prob44, prob45, prob46, prob47, prob48, prob49, prob50,\
-        = [models.IntegerField(min=0,
-                               max=100,
-                               label="{}°C".format(i),
-                               doc="probability assigned to {}°C".format(i),
-                               blank=True,
-                               initial=0)
-    for i in range(Constants.temp_range[0],
-                   Constants.temp_range[1] + 1)]
+    # define form fields for each temperature
+    for i in Constants.temps:
+        locals()['prob' + str(i)] = models.IntegerField(
+            label=str(i),
+            doc="probability assigned to {}°C".format(i),
+            min=0,
+            max=100,
+            initial=0,
+            blank=False
+        )
+    del i
 
     random_int = models.IntegerField()
     loss = models.CurrencyField()
+    winning_prob = models.IntegerField()
+    chance2win = models.IntegerField()
 
-    def set_loss(self):
-        self.random_int = randint(0, 100)
+    def set_loss(self):  # create Loss Function loss = \Sigma_{i=0}^{50} (1-p_i)^2
         self.loss = 0
-        for i in range(Constants.temp_range[1] + abs(Constants.temp_range[0] + 1)): #0<=i<=49+1
-            p = eval("self.prob{}".format(i))/100
-            if i == Constants.observed_temp + abs(Constants.temp_range[0]):
-                l=((1-p)**2)*100
+        for temp in Constants.temps:
+            p = eval("self.prob{}".format(temp)) / 100
+            if temp == self.participant.vars["observed_temp"]:
+                self.winning_prob = int(p * 100)
+                l = ((1 - p) ** 2) * 100 * Constants.weight
             else:
-                l=(p**2)*100
-            self.loss+=l
+                l = (p ** 2) * 100 * Constants.weight
+            self.loss += l
+
+        if int(round(100 - self.loss, 0)) < 0:
+            self.chance2win = 0
+        else:
+            self.chance2win = int(round(100 - self.loss, 0))
 
     def set_payoff(self):
+        self.random_int = randint(0, 100)
         if self.loss <= self.random_int:
-            self.payoff = Constants.BSR_prize[1]
+            self.payoff = Constants.prize_payoff
+            self.FEV1 = "alert-success"
         else:
-            self.payoff = Constants.BSR_prize[0]
+            self.payoff = Constants.null_payoff
+            self.FEV1 = "alert-danger"
 
+    FEV1 = models.StringField(
+        doc="FrontEndVariable 1 to define appearance of alert on Results Page"
+    )
+
+    commonQuestion1 = models.LongStringField(
+        label="Was sehen Sie als die größte Herausforderung in Bezug auf ein sich veränderndes Klima?",
+        doc="What do you see as the biggest challenge with respect to a changing climate?",
+        blank=True
+    )
+
+    commonQuestion2 = models.LongStringField(
+        label="Wie gehen Sie damit um?",
+        doc="How are you dealing with it?[Referring to commonQuestion1",
+        blank=True
+    )
+
+
+class Subsession(SharedBaseSubsession):
+    def this_app_constants(self):
+        return dict(
+            treatment="pre"
+        )
+
+class Group(SharedBaseGroup):
+    pass
+
+
+class Player(SharedBasePlayer):
+    # def calc_each_loss(self):
+    #     losses = dict()
+    #     for winner_temp in Constants.temps:
+    #         loss = 0
+    #         for temp in Constants.temps:
+    #             p = eval("self.prob{}".format(temp)) / 100
+    #             if temp == winner_temp:
+    #                 l = ((1 - p) ** 2) * 100 * Constants.weight
+    #             else:
+    #                 l = (p ** 2) * 100 * Constants.weight
+    #             loss+=l
+    #         losses.update({"loss{}".format(winner_temp):loss})
+    pass
 
 
 
@@ -107,7 +178,12 @@ class Player(BasePlayer):
 
     # def generate_fields(self):
     #    for temp in range(10, 46):
-    #        locals()["temp{}".format(temp)] = make_integer_field(label="{}°C".format(temp))
+    #        locals()["temp{}".format(temp)] = models.IntegerField(min=0,
+    #                            max=100,
+    #                            label="{}°C".format(temp),
+    #                            doc="probability assigned to {}°C".format(temp),
+    #                            blank=True,
+    #                            initial=0)
 
 
 
@@ -138,4 +214,3 @@ class Player(BasePlayer):
     #     tempList["temp{}".format(x)] = make_integer_field(label="{}°C".format(x))
 
 
-    pass

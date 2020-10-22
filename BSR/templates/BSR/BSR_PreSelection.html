@@ -2,13 +2,41 @@
 {% load otree static %}
 
 {% block title %}
-    Binarized Scoring Rule Vorauswahl
+BSR Preselection
+{% endblock %}
+
+{% block styles %}
+    <link href="{% static 'BSR/css/styles.css' %}" rel="stylesheet">
+    <link href="{% static 'BSR/css/modal.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'BSR/js/preBSR.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
     {% formfields %}
 
-    {% next_button %}
+<!-- The more than 100 Error Modal -->
+    <div id="lowMaxModal" class="modal" style="backdrop-filter: blur(10px);">
+      <!-- Modal content -->
+      <div class="card mx-auto text-white bg-danger mb-3 w-50">
+          <h5 class="card-header">Achtung</h5>
+          <div class="card-body">
+              <p class="card-text">
+                  Die höchste Temperatur, die sie für möglich halten, muss höher sein, als die niedrigste Temperatur, die Sie für möglich halten.
+                  Dementsprechend muss die niedrigste Temperatur, die sie für möglich halten, niedriger sein, als die höchste Temperatur, die Sie für möglich halten.
+              </p>
+              <button id="closeLowMax" type="button" class="btn-outline-light btn">
+              Fehlermeldung Schließen
+              </button>
+          </div>
+      </div>
+    </div>
 
+<!-- Buttons -->
+    <button onclick="validation()" id="pre_BSR_validation" class="btn-outline-primary btn back" type="button">Eingabe prüfen</button>
+    <button onclick="revision()" id="pre_BSR_revision" class="btn-outline-primary btn back" type="button" style="display:none">Eingabe ändern</button>
+    <button onclick="validation()" id="pre_BSR_next" class="btn-success btn next" style="display:none">Weiter</button>
 {% endblock %}

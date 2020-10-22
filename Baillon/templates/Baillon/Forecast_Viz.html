@@ -1,0 +1,29 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Wettervorhersage
+{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+{% block scripts %}
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="{% static 'Baillon/js/forecast_viz.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+
+<br><br>
+
+    <button id="BSR_next" class="btn-outline-primary btn">
+        Weiter
+    </button>
+
+{% endblock %}

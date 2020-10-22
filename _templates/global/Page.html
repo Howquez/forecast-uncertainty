@@ -5,4 +5,16 @@
 {% endblock %}
 
 {% block global_scripts  %}
+<!-- disable ENTER key -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        // Disable Enter Key...
+        // ... using jQuery
+        $(document).keypress(
+          function(event){
+            if (event.which == '13') {
+              event.preventDefault();
+            }
+        });
+    </script>
 {% endblock %}

@@ -7,9 +7,119 @@
 
 {% block content %}
 
-Your final payoff is: {{ participant.payoff }}
+<div class="alert
+    {% if participant.vars.baillon_payoff1 > 0 %}
+        alert-success
+    {% else %}
+        alert-danger
+    {% endif %}"
+     role="alert">
+  <h4 class="alert-heading">Baillon 1</h4>
+  <p>
+      Die tatsächlich gemessene Temperatur beträgt {{ participant.vars.observed_temp }} °C. Sie haben sich dafür entschieden, dass....
+  </p>
+  <hr>
+  <p class="mb-0">Ihre Auszahlung aus dieser Runde ist: {{ participant.vars.baillon_payoff1 }}</p>
+</div>
 
-    {% next_button %}
+<div class="alert
+    {% if participant.vars.baillon_payoff2 > 0 %}
+        alert-success
+    {% else %}
+        alert-danger
+    {% endif %}"
+     role="alert">
+  <h4 class="alert-heading">Baillon 2</h4>
+  <p>
+      Die tatsächlich gemessene Temperatur beträgt {{ participant.vars.observed_temp }} °C. Sie haben sich dafür entschieden, dass....
+  </p>
+  <hr>
+  <p class="mb-0">Ihre Auszahlung aus dieser Runde ist: {{ participant.vars.baillon_payoff2 }}</p>
+</div>
+
+<div class="alert
+    {% if participant.vars.baillon_payoff3 > 0 %}
+        alert-success
+    {% else %}
+        alert-danger
+    {% endif %}"
+     role="alert">
+  <h4 class="alert-heading">Baillon 3</h4>
+  <p>
+      Die tatsächlich gemessene Temperatur beträgt {{ participant.vars.observed_temp }} °C. Sie haben sich dafür entschieden, dass....
+  </p>
+  <hr>
+  <p class="mb-0">Ihre Auszahlung aus dieser Runde ist: {{ participant.vars.baillon_payoff3 }}</p>
+</div>
+
+<div class="alert
+    {% if participant.vars.baillon_payoff4 > 0 %}
+        alert-success
+    {% else %}
+        alert-danger
+    {% endif %}"
+     role="alert">
+  <h4 class="alert-heading">Baillon 4</h4>
+  <p>
+      Die tatsächlich gemessene Temperatur beträgt {{ participant.vars.observed_temp }} °C. Sie haben sich dafür entschieden, dass....
+  </p>
+  <hr>
+  <p class="mb-0">Ihre Auszahlung aus dieser Runde ist: {{ participant.vars.baillon_payoff4 }}</p>
+</div>
+
+<div class="alert
+    {% if participant.vars.baillon_payoff5 > 0 %}
+        alert-success
+    {% else %}
+        alert-danger
+    {% endif %}"
+     role="alert">
+  <h4 class="alert-heading">Baillon 5</h4>
+  <p>
+      Die tatsächlich gemessene Temperatur beträgt {{ participant.vars.observed_temp }} °C. Sie haben sich dafür entschieden, dass....
+  </p>
+  <hr>
+  <p class="mb-0">Ihre Auszahlung aus dieser Runde ist: {{ participant.vars.baillon_payoff5 }}</p>
+</div>
+
+
+<div class="alert
+    {% if participant.vars.baillon_payoff6 > 0 %}
+        alert-success
+    {% else %}
+        alert-danger
+    {% endif %}"
+     role="alert">
+  <h4 class="alert-heading">Baillon 6</h4>
+  <p>
+      Die tatsächlich gemessene Temperatur beträgt {{ participant.vars.observed_temp }} °C. Sie haben sich dafür entschieden, dass....
+  </p>
+  <hr>
+  <p class="mb-0">Ihre Auszahlung aus dieser Runde ist: {{ participant.vars.baillon_payoff6 }}</p>
+</div>
+
+
+<div class="alert {{ player.FEV1 }}" role="alert">
+  <h4 class="alert-heading">BSR 1</h4>
+  <p>
+      Die tatsächlich gemessene Temperatur beträgt {{ participant.vars.observed_temp }} °C. Sie haben geschätzt, dass diese Temperatur
+      mit einer Wahrscheinlichkeit von {{ player.winning_prob }} % eintritt. Zusammen mit Ihren Schätzungen zu anderen
+      Temperaturbereichen ergab sich daraus eine Gewinnchance von {{ player.chance2win }} %.
+  </p>
+  <hr>
+  <p class="mb-0">Ihre Auszahlung aus dieser Runde ist: {{ player.payoff }}</p>
+</div>
+
+
+
+
+
+<br><br>
+    <button id="Results_next" class="btn-outline-success btn">
+        Studie abschließen
+    </button>
+
+
 {% endblock %}
 
 
