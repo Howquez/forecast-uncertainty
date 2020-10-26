@@ -62,8 +62,8 @@ var displayForecast = false;
 var opacity = 0.1;
 var observedColor = "#5DE58E";
 var observedRGBA  = `rgba(93, 229, 142, ${opacity})`;
-var forecastColor = "#FF5B66";
-var forecastRGBA  = `rgba(255, 91, 102, ${opacity})`;
+var forecastColor = "#C582FF";
+var forecastRGBA  = `rgba(197, 130, 255, ${opacity*1.5})`;
 
 
 // language plot options
