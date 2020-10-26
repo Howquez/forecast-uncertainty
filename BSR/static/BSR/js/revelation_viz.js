@@ -48,33 +48,15 @@ var weiskirchenObserved = [
         [1602856800000, 9.1],  //20201016
         [1602943200000, 8.7],  //20201017
         [1603029600000, 8.5],  //20201018 to be revealed
-        [1603116000000, 12.7], //20201019
+        [1603116000000, null], //20201019
     ];
 
 // get vars from python
-    // let location = js_vars.location;   // equals "Weiskirchen" or "Ilomantsi"
-    let treatment = js_vars.treatment; // equals "best_guess" or "interval"
-    let page = js_vars.page; // equals "historic" or "forecast" or "revelation"
-    // let treatmentDisplayed = js_vars.treatment_displayed; // equals "true" or "false"
-    // treatmentDisplayed = (treatmentDisplayed == "true")
+// let location = js_vars.location;   // equals "Weiskirchen" or "Ilomantsi"
+let treatment = js_vars.treatment; // equals "best_guess" or "interval"
 
-// page and treatment specific operations
-// var page = "historic"; // forecast; solution;
+// other variables
 var displayForecast = false;
-
-
-// display forecast after the first round, i.e. in postBaillon App
-if (page == "forecast"){
-    displayForecast = true;
-}
-
-for (var i = 0; i < weiskirchenObserved.length; ++i){
-    if (page != "revelation"){
-        if (i > 3){
-            weiskirchenObserved[i][1] = null;
-        }
-    }
-}
 
 // color definitions
 var opacity = 0.1;
@@ -131,7 +113,6 @@ var chart = Highcharts.chart('container', {
         }
       }]
     },
-
     yAxis: {
         title: {
             text: null
@@ -143,7 +124,8 @@ var chart = Highcharts.chart('container', {
     tooltip: {
         crosshairs: true,
         shared: true,
-        valueSuffix: "°C"
+        valueSuffix: "°C",
+        xDateFormat: "%A"
     },
 
     series: [{
