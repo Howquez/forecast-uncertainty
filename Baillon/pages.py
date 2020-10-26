@@ -5,18 +5,33 @@ from .models import Constants
 
 class Historic_Viz(Page):
     def is_displayed(self):
-        if self.subsession.this_app_constants()["treatment"] == "pre" and self.round_number == 1:
+        if self.subsession.this_app_constants()["treatment_displayed"] == False and self.round_number == 1:
             return True
+
+    def js_vars(self):
+        return dict(
+            # treatment_displayed = "false",
+            page = "historic",
+            location=self.participant.vars["location"],
+        )
 
 class Forecast_Viz(Page):
     def is_displayed(self):
-        if self.subsession.this_app_constants()["treatment"] == "post" and self.round_number == 1:
+        if self.subsession.this_app_constants()["treatment_displayed"] == True and self.round_number == 1: # as defined in post_baillon/models
             return True
+
+    def js_vars(self):
+        return dict(
+            # treatment_displayed = "true", # may be deleted
+            page = "forecast",
+            treatment = self.participant.vars["treatment"],
+            location = self.participant.vars["location"],
+        )
 
 class Instructions(Page):
     def is_displayed(self):
         print(self.subsession.this_app_constants())
-        if self.subsession.this_app_constants()["treatment"] == "pre" and self.round_number == 1:
+        if self.subsession.this_app_constants()["treatment_displayed"] == "True" and self.round_number == 1:
             return True
 
     form_model="player"
@@ -52,7 +67,6 @@ class Baillon_Decision(Page):
         return dict(
             ticks = Constants.ticks,
             event_decision = self.player.event_decision,
-            treatment = self.participant.vars["treatment"],
         )
 
     def vars_for_template(self):
@@ -71,15 +85,11 @@ class Baillon_Decision(Page):
 
         for j, choice in zip(indices, form_fields):
             choice_i = getattr(self.player, choice)
-            self.participant.vars["baillon_choices_made"][j - 1] =choice_i
+            self.participant.vars["baillon_choices_made"][j - 1] = choice_i
 
         self.player.set_payoffs()
         self.player.set_consistency()
         self.player.set_switching_row()
-
-
-class Results(Page):
-    pass
 
 
 page_sequence = [Historic_Viz,

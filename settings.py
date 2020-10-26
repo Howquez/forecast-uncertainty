@@ -7,12 +7,14 @@ SESSION_CONFIGS = [
         num_demo_participants=10,
         app_sequence=['BSR'],
         BSR_weight=0.5,
+        location="random",
     ),
     dict(
         name='Baillon',
         display_name="Baillon",
         num_demo_participants=10,
         app_sequence=['Baillon'],
+        location="random",
         treatment="random",
     ),
     dict(
@@ -21,7 +23,8 @@ SESSION_CONFIGS = [
         num_demo_participants=10,
         app_sequence=["Baillon", "BSR", "postBaillon", "postBSR"],
         BSR_weight=0.5,
-        treatment="random",
+        location="random",
+        treatment="random"
     ),
 ]
 

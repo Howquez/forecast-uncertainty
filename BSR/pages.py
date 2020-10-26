@@ -5,7 +5,7 @@ from .models import Constants
 
 class Instructions(Page):
     def is_displayed(self):
-        if self.subsession.this_app_constants()["treatment"] == "pre":
+        if self.subsession.this_app_constants()["treatment_displayed"] == False:
             return True
 
     form_model="player"
@@ -60,7 +60,7 @@ class BSR(Page):
 
 class ControlQuestions(Page):
     def is_displayed(self):
-        if self.subsession.this_app_constants()["treatment"] == "post":
+        if self.subsession.this_app_constants()["treatment_displayed"] == True:
             return True
 
     form_model = "player"
@@ -70,13 +70,20 @@ class ControlQuestions(Page):
 
 class Weather_Viz(Page):
     def is_displayed(self):
-        if self.subsession.this_app_constants()["treatment"] == "post":
+        if self.subsession.this_app_constants()["treatment_displayed"] == True:
             return True
+
+    def js_vars(self):
+        return dict(
+            # treatment_displayed = "true", # self.subsession.this_app_constants()["treatment_status"],
+            page = "revelation",
+            location=self.participant.vars["location"],
+        )
 
 
 class Results(Page):
     def is_displayed(self):
-        if self.subsession.this_app_constants()["treatment"] == "post":
+        if self.subsession.this_app_constants()["treatment_displayed"] == True:
             return True
 
 

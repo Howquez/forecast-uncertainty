@@ -7,7 +7,7 @@ class Constants(OriginalConstants):
 class Subsession(SharedBaseSubsession):
     def this_app_constants(self):
         return dict(
-            treatment="post"
+            treatment_displayed = True
         )
 
 

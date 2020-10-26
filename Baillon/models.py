@@ -25,9 +25,10 @@ class Constants(BaseConstants):
 
     name_in_url = 'Baillon'
 
-    treatments  = ["confirmation", "contradiction"]
-    confirmation_temp  = 9
-    contradiction_temp = 3
+    locations  = ["Weiskirchen", "Ilomantsi"] # ["confirmation", "contradiction"]
+    treatments = ["best_guess", "interval"]
+    Weiskirchen_temp = 8 # 8.5
+    Ilomantsi_temp   = 3 # 3.2
 
     players_per_group = None
     num_rounds = 6
@@ -55,24 +56,27 @@ class SharedBaseSubsession(BaseSubsession):
     class Meta:
         abstract = True
 
-    def creating_session(self):
+    def creating_session(self): # having these configs in here, it is impossible to play the BSR App independently
         if self.round_number == 1:
+            locations = Constants.locations.copy()
             treatments = Constants.treatments.copy()
             for p in self.get_players():
-                # set treatment variable
-                if self.session.config["treatment"] == "random":
+                # set location variable
+                if self.session.config["location"] == "random":
+                    p.participant.vars["location"] = random.choice(locations)
                     p.participant.vars["treatment"] = random.choice(treatments)
                 else:
+                    p.participant.vars["location"] = self.session.config["location"]
                     p.participant.vars["treatment"] = self.session.config["treatment"]
-                print(p.participant.vars["treatment"])
+                # print(p.participant.vars["location"])
 
-                # set winning temperature conditional on treatment and link it to baillon event
-                if p.participant.vars["treatment"] == "confirmation":
-                    p.participant.vars["observed_temp"] = Constants.confirmation_temp
+                # set winning temperature conditional on location and link it to baillon event
+                if p.participant.vars["location"] == "Weiskirchen":
+                    p.participant.vars["observed_temp"] = Constants.Weiskirchen_temp
                     p.participant.vars["winning_event"] = "2"
 
-                elif p.participant.vars["treatment"] == "contradiction":
-                    p.participant.vars["observed_temp"] = Constants.contradiction_temp
+                elif p.participant.vars["location"] == "Ilomantsi":
+                    p.participant.vars["observed_temp"] = Constants.Ilomantsi_temp
                     p.participant.vars["winning_event"] = "1"
 
                 # create event list for Baillon decision sequence once per player
@@ -191,7 +195,7 @@ class SharedBasePlayer(BasePlayer):
 class Subsession(SharedBaseSubsession):
     def this_app_constants(self):
         return dict(
-            treatment="pre"
+            treatment_displayed = False
         )
 
 class Group(SharedBaseGroup):

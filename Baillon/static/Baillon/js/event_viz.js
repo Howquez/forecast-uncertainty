@@ -1,7 +1,6 @@
 // get vars from python
     let ticksArray = js_vars.ticks;
     let event      = js_vars.event_decision;
-    let treatment  = js_vars.treatment;
 
 // set constants
     // const events = ["E1", "E2", "E3", "E12", "E23", "E13"];
@@ -9,17 +8,12 @@
     const lossColor    = "#FF5B66";
 
 // set variables
-    var treatmentDiff = 0;
+    var treatmentDiff = 0; // legacy
     var S1Col = lossColor;
     var S2Col = lossColor;
     var S3Col = lossColor;
     var subHeader;
 
-// LEGACY: set differences between treatments [confirmation/contradiction] with confirmation as a default
-    // if (treatment == "contradiction"){
-    //     treatmentDiff = 6;
-    //     // labelArray = ticksArray.map( function(value) {return value - treatmentDiff} )
-    // }
     var labelArray = ticksArray.map( function(value) {return value - treatmentDiff} );
 
 

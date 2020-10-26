@@ -30,7 +30,7 @@ class Constants(BaseConstants):
 
     null_payoff = 0
     prize_payoff = 10
-    observed_temp = 6 # defines the "winning" temperature
+    # observed_temp = 6 # defines the "winning" temperature
     TEMP_RANGE = [0, 100]
     temps = [j for j in range(TEMP_RANGE[0], TEMP_RANGE[1] + 1)]
     # form_fields = ["prob" + str(k) for k in temps]
@@ -148,7 +148,7 @@ class SharedBasePlayer(BasePlayer):
 class Subsession(SharedBaseSubsession):
     def this_app_constants(self):
         return dict(
-            treatment="pre"
+            treatment_displayed = False
         )
 
 class Group(SharedBaseGroup):
