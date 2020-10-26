@@ -1,0 +1,101 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Baillon Decision
+{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+{% block scripts %}
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <script src="{% static 'Baillon/js/single_click.js' %}"></script>
+    <script src="{% static 'Baillon/js/event_viz.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class = "container">
+        <div class = "row" >
+            <!-- <div class = "card" > -->
+                <table class = "table">
+
+                    <colgroup>
+                        <col span="1" style="width: 50%;">
+                        <col span="1" style="width: 10%;">
+                        <col span="1" style="width: 10%;">
+                        <col span="1" style="width: 30%;">
+                    </colgroup>
+
+                    <thead>
+                    <tr class = "header">
+                        <th class = "payment-th" style = "border-right: 2px solid #dee2e6;" colspan = "2">
+                            Weather Event
+                        </th>
+                        <th class = "payment-th" colspan = "2">
+                            Lottery Event
+                        </th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td colspan="2" style = "border-right: 2px solid #dee2e6;">
+                                <p id="subHeader">
+                                    <em>Sie gewinnen entsprechend der unten dargestellten Grafik.</em>
+                                </p>
+                            </td>
+                            <td colspan="2">
+                                <p>
+                                    <em>Sie gewinnen 10 Euro mit der folgenden Wahrscheinlichkeit (und sonst nichts).</em>
+                                </p>
+                            </td>
+                        </tr>
+
+                        {% for i,f,p in choices %}
+                            <tr>
+                                <!-- Lottery with visualization -->
+                                {% if i == 1 %}
+                                <td class="lottery" rowspan="{{ num_choices }}">
+
+                                    <figure class="highcharts-figure" style="vertical-align: baseline; display: table-cell">
+                                        <div id="container"></div>
+                                        <p class="highcharts-description"></p>
+                                    </figure>
+
+                                </td>
+                                {% endif %}
+
+                                <!-- radio select form fields -->
+                                <td class="formfield" style="border-right: 2px solid #dee2e6;">
+                                    <input type="radio" name="{{ f }}" id="{{ p }}" value="A" required> <!-- enter disabled attribute here if needed-->
+                                </td>
+                                <td class="formfield">
+                                    <input type="radio" name="{{ f }}" id="{{ p }}" value="B" required>
+                                </td>
+
+                                <!-- Safe Payments -->
+                                <td class="safe-payment">
+                                    {{ p }}% <br/>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            <!-- </div> -->
+        </div>
+    </div>
+
+<br><br>
+
+    <button id="BSR_next" class="btn-outline-primary btn">
+        Weiter
+    </button>
+
+{% endblock %}

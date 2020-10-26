@@ -68,6 +68,12 @@ class ControlQuestions(Page):
                    "commonQuestion2"]
 
 
+class Weather_Viz(Page):
+    def is_displayed(self):
+        if self.subsession.this_app_constants()["treatment"] == "post":
+            return True
+
+
 class Results(Page):
     def is_displayed(self):
         if self.subsession.this_app_constants()["treatment"] == "post":
@@ -78,5 +84,6 @@ page_sequence = [Instructions,
                  BSR_PreSelection,
                  BSR,
                  ControlQuestions,
+                 Weather_Viz,
                  Results
                  ]
