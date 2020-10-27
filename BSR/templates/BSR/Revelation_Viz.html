@@ -27,6 +27,9 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">{{ participant.vars.location }} Oktober 2020</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Am <b>Sonntag</b>, dem 18. Oktober um 14:00 Uhr wurden hier
+                <b><span id="revelation"></span>°C</b> gemessen.
+            </h6>
             <figure class="highcharts-figure">
                 <div id="container"></div>
             </figure>
@@ -39,11 +42,10 @@
                     {% endif %}
                 im Oktober 2020.
             </p>
-            <p class="card-text">Am Sonntag, dem 18. Oktober um 14:00 Uhr wurden dort
-                <span id="revelation"></span>°C gemessen.
+            <p class="card-text">
             </p>
             <p class="card-text">
-                Die Messdaten, die dieser Studie zugrunde liegen und für Ihre Auszahlung relevant sind, finden Sie
+                <em> Die Messdaten, die dieser Studie zugrunde liegen und für Ihre Auszahlung relevant sind, finden Sie
                 {% if participant.vars.location == "Ilomantsi" %}
                     <a href="https://kachelmannwetter.com/de/messwerte/ostfinnland/temperatur/20201019-1100z.html#obs-detail-029390-72h" target="_blank">hier</a> und
                     <a href="https://kachelmannwetter.com/de/messwerte/ostfinnland/temperatur/20201009-1100z.html#obs-detail-029390-72h" target="_blank">hier</a>.
@@ -51,6 +53,9 @@
                     <a href="https://kachelmannwetter.com/de/messwerte/63-e-491-n/temperatur/20201009-1100z.html#obs-detail-J728-72h" target="_blank">hier</a> und
                     <a href="https://kachelmannwetter.com/de/messwerte/63-e-491-n/temperatur/20201019-1100z.html#obs-detail-J728-72h" target="_blank">hier</a>.
                 {% endif %}
+                </em>
+            </p>
+            <p class="card-text">Auf der folgenden Seite zeigen wir Ihnen, wie sich dieses Ergebnis auf Ihre Auszahlung auswirkt.
             </p>
         </div>
     </div>
