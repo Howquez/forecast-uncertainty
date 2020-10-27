@@ -31,7 +31,7 @@ class Forecast_Viz(Page):
 class Instructions(Page):
     def is_displayed(self):
         print(self.subsession.this_app_constants())
-        if self.subsession.this_app_constants()["treatment_displayed"] == "True" and self.round_number == 1:
+        if self.subsession.this_app_constants()["treatment_displayed"] == True and self.round_number == 1:
             return True
 
     form_model="player"
