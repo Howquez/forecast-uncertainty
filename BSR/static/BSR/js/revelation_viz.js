@@ -150,7 +150,7 @@ Highcharts.setOptions({
 });
 
 // plot options
-var chart = Highcharts.chart('container', {
+var chart = Highcharts.chart("weather_viz", {
     exporting: {
         enabled: false
     },

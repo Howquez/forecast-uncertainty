@@ -108,7 +108,8 @@ var ilomantsiObserved = [
 // get vars from python
 let village = js_vars.location;   // equals "Weiskirchen" or "Ilomantsi"
 let treatment = js_vars.treatment; // equals "best_guess" or "interval"
-let page = js_vars.page; // equals "historic" or "forecast" or "revelation"
+let page = js_vars.page; // equals "historic" or "forecast" or "decision" or "revelation"
+let app  = js_vars.treatment_displayed;
 
 // page and treatment specific operations
 var displayForecast = false;
@@ -167,7 +168,7 @@ Highcharts.setOptions({
 });
 
 // plot options
-var chart = Highcharts.chart('container', {
+var chart = Highcharts.chart("weather_viz", {
     exporting: {
         enabled: false
     },

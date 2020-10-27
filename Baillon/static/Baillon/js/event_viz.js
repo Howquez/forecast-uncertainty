@@ -68,7 +68,6 @@ var chart = Highcharts.chart('container', {
                 labels: {
             formatter: function () {
                 var label = this.axis.defaultLabelFormatter.call(this);
-                console.log(typeof label)
                 if (label == ticksArray[0]) {
                     return "-"
                 } else if (label == ticksArray[ticksArray.length - 1]) {

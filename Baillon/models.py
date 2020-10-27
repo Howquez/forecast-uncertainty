@@ -169,8 +169,8 @@ class SharedBasePlayer(BasePlayer):
 
         # make payoff in round accessible in other apps by writing it into participant vars
         self.participant.vars["baillon_payoff" + str(self.round_number)] = self.payoff
-        print(self.in_round(self.round_number).payoff)
-        print("baillon_payoff" + str(self.round_number) + " is:", self.participant.vars["baillon_payoff" + str(self.round_number)])
+            # print(self.in_round(self.round_number).payoff)
+            # print("baillon_payoff" + str(self.round_number) + " is:", self.participant.vars["baillon_payoff" + str(self.round_number)])
 
     def set_consistency(self):
         n = Constants.num_choices

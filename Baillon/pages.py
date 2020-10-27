@@ -22,7 +22,6 @@ class Forecast_Viz(Page):
 
     def js_vars(self):
         return dict(
-            # treatment_displayed = "true", # may be deleted
             page = "forecast",
             treatment = self.participant.vars["treatment"],
             location = self.participant.vars["location"],
@@ -30,8 +29,8 @@ class Forecast_Viz(Page):
 
 class Instructions(Page):
     def is_displayed(self):
-        print(self.subsession.this_app_constants())
-        if self.subsession.this_app_constants()["treatment_displayed"] == True and self.round_number == 1:
+            # print(self.subsession.this_app_constants()["treatment_displayed"])
+        if self.subsession.this_app_constants()["treatment_displayed"] == False and self.round_number == 1:
             return True
 
     form_model="player"
@@ -54,7 +53,6 @@ class Instructions(Page):
                 error_messages[field_name] # = 'Wrong answer' # wenn error message dict leer
                 return error_messages
 
-
 class Baillon_Decision(Page):
     form_model = "player"
 
@@ -67,6 +65,10 @@ class Baillon_Decision(Page):
         return dict(
             ticks = Constants.ticks,
             event_decision = self.player.event_decision,
+            # the following three vars are needed such that the weather viz can be displayed on decision screen as well
+            treatment_displayed = str(self.subsession.this_app_constants()["treatment_displayed"]),
+            page="historic",
+            location=self.participant.vars["location"]
         )
 
     def vars_for_template(self):
@@ -78,7 +80,7 @@ class Baillon_Decision(Page):
     # set player's payoff
     def before_next_page(self):
         # unzip indices and form fields from <mpl_choices> list
-        round_number = self.subsession.round_number
+        # round_number = self.subsession.round_number
         form_fields = [list(t) for t in zip(*self.participant.vars['baillon_choices'])][1]
         indices = [list(t) for t in zip(*self.participant.vars['baillon_choices'])][0]
         # index = indices[round_number - 1]
@@ -92,7 +94,7 @@ class Baillon_Decision(Page):
         self.player.set_switching_row()
 
 
-page_sequence = [Historic_Viz,
+page_sequence = [Instructions,
+                 Historic_Viz,
                  Forecast_Viz,
-                 Instructions,
                  Baillon_Decision]
