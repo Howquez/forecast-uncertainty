@@ -26,21 +26,31 @@
 
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title"><span id="village"></span></h5>
+            <h5 class="card-title">{{ participant.vars.location }} Oktober 2020</h5>
             <figure class="highcharts-figure">
                 <div id="container"></div>
             </figure>
-            <p class="card-text">Wetter um 14:00 Uhr:
-                <span id="revelation"></span>°C.
+            <p class="card-text">Der Wetterbericht den wir Ihnen gezeigt haben und auf dem Ihre Entscheidungen sowie
+                Ihre möglichen Auszahlungen basieren, bezieht sich auf das Wetter in {{ participant.vars.location }}
+                    {% if participant.vars.location == "Ilomantsi" %}
+                        (Finnland)
+                    {% else %}
+                        (Saarland)
+                    {% endif %}
+                im Oktober 2020.
             </p>
-            <p class="card-text">Sie wissen zwar noch immer nicht auf welchen Ort und Zeitpunkt sich das oben dargestellte
-                Wetter bezieht, bekommen aber eine reale Wettervorhersage für
-                <a style="color:#C582FF">den Sonntag (also den lila gefärbten Bereich)</a> angezeigt. Wie eben müssen Sie
-                für die folgenden Aufgaben abschätzen, welche Temperaturbereiche Sie über eine Woche später,
-                an dem Sonntag am selben Ort und zur gleichen Tageszeit für Wahrscheinlich halten.
+            <p class="card-text">Am Sonntag, dem 18. Oktober um 14:00 Uhr wurden dort
+                <span id="revelation"></span>°C gemessen.
             </p>
-            <p class="card-text">Am Ende der Studie werden wir sowohl den Ort, als auch das entsprechende Datum sowie die
-                Quelle und die am Sonntag eingetretene Temperatur preisgeben.
+            <p class="card-text">
+                Die Messdaten, die dieser Studie zugrunde liegen und für Ihre Auszahlung relevant sind, finden Sie
+                {% if participant.vars.location == "Ilomantsi" %}
+                    <a href="https://kachelmannwetter.com/de/messwerte/ostfinnland/temperatur/20201019-1100z.html#obs-detail-029390-72h" target="_blank">hier</a> und
+                    <a href="https://kachelmannwetter.com/de/messwerte/ostfinnland/temperatur/20201009-1100z.html#obs-detail-029390-72h" target="_blank">hier</a>.
+                {% else %}
+                    <a href="https://kachelmannwetter.com/de/messwerte/63-e-491-n/temperatur/20201009-1100z.html#obs-detail-J728-72h" target="_blank">hier</a> und
+                    <a href="https://kachelmannwetter.com/de/messwerte/63-e-491-n/temperatur/20201019-1100z.html#obs-detail-J728-72h" target="_blank">hier</a>.
+                {% endif %}
             </p>
         </div>
     </div>

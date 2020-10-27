@@ -129,8 +129,6 @@ if (village == "Ilomantsi"){
 function fillText() {
 
     document.getElementById("revelation").innerHTML = observed[12][1];
-    document.getElementById("village").innerHTML = village;
-
     }
 
 // color definitions
