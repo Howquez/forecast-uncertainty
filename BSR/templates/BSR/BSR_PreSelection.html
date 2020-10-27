@@ -11,14 +11,22 @@ BSR Preselection
 {% endblock %}
 
 {% block scripts %}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="{% static 'BSR/js/weather_viz.js' %}"></script>
     <script src="{% static 'BSR/js/preBSR.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
-    {% formfields %}
+<br><br>
 
-<!-- The more than 100 Error Modal -->
+{% formfields %}
+
+<!-- The low max Error Modal -->
     <div id="lowMaxModal" class="modal" style="backdrop-filter: blur(10px);">
       <!-- Modal content -->
       <div class="card mx-auto text-white bg-danger mb-3 w-50">
@@ -29,14 +37,34 @@ BSR Preselection
                   Dementsprechend muss die niedrigste Temperatur, die sie für möglich halten, niedriger sein, als die höchste Temperatur, die Sie für möglich halten.
               </p>
               <button id="closeLowMax" type="button" class="btn-outline-light btn">
-              Fehlermeldung Schließen
+              Fehlermeldung ausblenden
               </button>
           </div>
       </div>
     </div>
 
+<!-- Weather Forecast Viz Modal -->
+    <div id="weatherModal" class="modal" style="backdrop-filter: blur(10px);">
+      <!-- Modal content -->
+      <div class="card mx-auto mb-3 w-50">
+          <h5 class="card-header">Wetterbericht</h5>
+          <div class="card-body">
+              <figure class="highcharts-figure">
+                  <div id="weather_viz"></div>
+              </figure>
+              <button id="closeWeather" type="button" class="btn-outline-primary btn">
+              Wetterbericht ausblenden
+              </button>
+          </div>
+      </div>
+    </div>
+
+
+<br><br>
+
 <!-- Buttons -->
-    <button onclick="validation()" id="pre_BSR_validation" class="btn-outline-primary btn back" type="button">Eingabe prüfen</button>
-    <button onclick="revision()" id="pre_BSR_revision" class="btn-outline-primary btn back" type="button" style="display:none">Eingabe ändern</button>
-    <button onclick="validation()" id="pre_BSR_next" class="btn-success btn next" style="display:none">Weiter</button>
+    <button type="button" onclick="" id="pre_BSR_weather" class="btn-outline-primary btn">Wetterbericht einblenden</button>
+    <button type="button" onclick="validation()" id="pre_BSR_validation" class="btn-outline-primary btn">Eingabe prüfen</button>
+    <button type="button" onclick="revision()" id="pre_BSR_revision" class="btn-outline-primary btn" style="display:none">Eingabe ändern</button>
+    <button onclick="validation()" id="pre_BSR_next" class="btn-success btn" style="display:none">Weiter</button>
 {% endblock %}

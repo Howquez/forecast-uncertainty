@@ -17,7 +17,8 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="{% static 'BSR/js/weather_viz.js' %}"></script>
     <script src="{% static 'BSR/js/modal.js' %}"></script>
     <script src="{% static 'BSR/js/calculate.js' %}"></script>
 {% endblock %}
@@ -35,7 +36,7 @@
           <div class="card-body">
               <p class="card-text">Die Summe der von Ihnen eingegebenen Wahrscheinlichkeiten darf 100% nicht überschreiten.</p>
               <button id="closeError" type="button" class="btn-outline-light btn">
-              Fehlermeldung Schließen
+              Fehlermeldung ausblenden
               </button>
           </div>
       </div>
@@ -49,7 +50,7 @@
           <div class="card-body">
               <p class="card-text">Sie erhöhen Ihre Gewinnchance, wenn die Summe der von Ihnen eingegebenen Wahrscheinlichkeiten 100% ergibt.</p>
               <button id="closeWarning" type="button" class="btn-outline-dark btn">
-              Warnung Schließen
+              Warnung ausblenden
               </button>
           </div>
       </div>
@@ -98,6 +99,22 @@
       </div>
     </div>
 
+<!-- Weather Forecast Viz Modal -->
+    <div id="weatherModal" class="modal" style="backdrop-filter: blur(10px);">
+      <!-- Modal content -->
+      <div class="card mx-auto mb-3 w-50">
+          <h5 class="card-header">Wetterbericht</h5>
+          <div class="card-body">
+              <figure class="highcharts-figure">
+                  <div id="weather_viz"></div>
+              </figure>
+              <button id="closeWeather" type="button" class="btn-outline-primary btn">
+              Wetterbericht ausblenden
+              </button>
+          </div>
+      </div>
+    </div>
+
 <br><br>
 
     <figure class="highcharts-figure">
@@ -137,21 +154,10 @@
 <br><br>
 
 <!-- Buttons -->
+    <button type="button" onclick="" id="pre_BSR_weather" class="btn-outline-primary btn">Wetterbericht einblenden</button>
+    <button id="openInstructions" type="button" class="btn-outline-primary btn">Instruktionen anzeigen</button>
+    <input onclick="change();calculate();displayChart()" type="button" id="calcButton" class ="btn-outline-primary btn" value="Gewinnwahrscheinlichkeit berechnen"></input>
+    <button id="BSR_next" class="btn-outline-success btn" style="display:none">Weiter</button>
 
-    <button id="openInstructions" type="button" class="btn-outline-secondary btn">
-              Instruktionen anzeigen
-    </button>
-
-    <input onclick="change();calculate();displayChart()" type="button" id="calcButton" class ="btn-outline-secondary btn" value="Gewinnwahrscheinlichkeit berechnen"></input>
-
-    <button id="BSR_next" class="btn-outline-success btn" style="display:none">
-        Weiter
-    </button>
-
-    <!-- <button id="calculator" type="button" onclick="calculate()" class ="btn-primary btn">Calculator</button> -->
-
-
-
-    <!-- <p id="total">calculating...</p> -->
 
 {% endblock %}

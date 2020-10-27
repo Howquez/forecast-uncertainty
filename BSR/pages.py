@@ -33,6 +33,14 @@ class BSR_PreSelection(Page):
     form_fields=["minTemp",
                  "maxTemp"]
 
+    def js_vars(self):
+        return dict(
+            # the following three vars are needed such that the weather viz can be displayed on decision screen as well
+            treatment_displayed = str(self.subsession.this_app_constants()["treatment_displayed"]),
+            page="decision",
+            location=self.participant.vars["location"]
+        )
+
 class BSR(Page):
     form_model="player"
 
@@ -48,7 +56,12 @@ class BSR(Page):
         return dict(
             minTemp = self.player.minTemp,
             maxTemp = self.player.maxTemp,
-            weight  = Constants.weight
+            weight  = Constants.weight,
+            # the following three vars are needed such that the weather viz can be displayed on decision screen as well
+            treatment_displayed=str(self.subsession.this_app_constants()["treatment_displayed"]),
+            page="decision",
+            location=self.participant.vars["location"]
+
         )
 
 

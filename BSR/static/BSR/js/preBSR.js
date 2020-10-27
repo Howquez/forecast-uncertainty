@@ -14,9 +14,9 @@ function validation(){
 	revise  = document.getElementById("pre_BSR_revision");
 	next    = document.getElementById("pre_BSR_next");
 
-	console.log("Min: ".concat(minTemp));
-	console.log("Max: ".concat(maxTemp));
-	console.log(window.location.href)
+	// console.log("Min: ".concat(minTemp));
+	// console.log("Max: ".concat(maxTemp));
+	// console.log(window.location.href)
 
 
 	if (maxTemp < minTemp) {
@@ -64,21 +64,26 @@ function revision(){
 
 // Modals
 // Get the button that close the modal
-var closeLowMax = document.getElementById("closeLowMax");
+var closeLowMax  = document.getElementById("closeLowMax");
+var closeWeather = document.getElementById("closeWeather");
 
 // When the user clicks the button, open the modal 
-// openInstructions.onclick = function() {
-//   instructionsModal.style.display = "block";
-// }
+pre_BSR_weather.onclick = function() {
+  weatherModal.style.display = "block";
+}
 
 // When the user clicks the button, close the modal 
 closeLowMax.onclick = function() {
-  lowMaxModal.style.display = "none";
+	lowMaxModal.style.display = "none";
+}
+closeWeather.onclick = function() {
+	weatherModal.style.display = "none"
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-  if (event.target == lowMaxModal) {
+  if (event.target == lowMaxModal || event.target == weatherModal) {
     lowMaxModal.style.display = "none";
+    weatherModal.style.display = "none";
   }
 }

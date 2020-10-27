@@ -67,7 +67,7 @@ class Baillon_Decision(Page):
             event_decision = self.player.event_decision,
             # the following three vars are needed such that the weather viz can be displayed on decision screen as well
             treatment_displayed = str(self.subsession.this_app_constants()["treatment_displayed"]),
-            page="historic",
+            page="decision",
             location=self.participant.vars["location"]
         )
 
