@@ -20,16 +20,37 @@
 
 {% block content %}
 
-    <figure class="highcharts-figure">
-        <div id="container"></div>
-        <p class="highcharts-description"></p>
-    </figure>
+<body onload="fillText()">
 
+    <br><br>
 
-<br><br>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title"><span id="village"></span></h5>
+            <figure class="highcharts-figure">
+                <div id="container"></div>
+            </figure>
+            <p class="card-text">Wetter um 14:00 Uhr:
+                <span id="revelation"></span>°C.
+            </p>
+            <p class="card-text">Sie wissen zwar noch immer nicht auf welchen Ort und Zeitpunkt sich das oben dargestellte
+                Wetter bezieht, bekommen aber eine reale Wettervorhersage für
+                <a style="color:#C582FF">den Sonntag (also den lila gefärbten Bereich)</a> angezeigt. Wie eben müssen Sie
+                für die folgenden Aufgaben abschätzen, welche Temperaturbereiche Sie über eine Woche später,
+                an dem Sonntag am selben Ort und zur gleichen Tageszeit für Wahrscheinlich halten.
+            </p>
+            <p class="card-text">Am Ende der Studie werden wir sowohl den Ort, als auch das entsprechende Datum sowie die
+                Quelle und die am Sonntag eingetretene Temperatur preisgeben.
+            </p>
+        </div>
+    </div>
+
+    <br><br>
 
     <button id="BSR_next" class="btn-outline-primary btn">
         Weiter
     </button>
+
+</body>
 
 {% endblock %}
