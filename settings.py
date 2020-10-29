@@ -2,22 +2,6 @@ from os import environ
 
 SESSION_CONFIGS = [
     dict(
-        name='Forecasts',
-        display_name="Forecasts",
-        num_demo_participants=10,
-        app_sequence=['BSR'],
-        BSR_weight=0.5,
-        location="random",
-    ),
-    dict(
-        name='Baillon',
-        display_name="Baillon",
-        num_demo_participants=10,
-        app_sequence=['Baillon'],
-        location="random",
-        treatment="random",
-    ),
-    dict(
         name='Survey',
         display_name="Survey",
         num_demo_participants=10,
