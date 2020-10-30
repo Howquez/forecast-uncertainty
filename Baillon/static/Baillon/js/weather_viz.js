@@ -107,13 +107,16 @@ var ilomantsiObserved = [
 
 // get vars from python
 let village = js_vars.location;   // equals "Weiskirchen" or "Ilomantsi"
-let treatment = js_vars.treatment; // equals "best_guess" or "interval"
+let treatment = js_vars.treatment; // equals "best_guess" or "interval" or "both"
 let page = js_vars.page; // equals "historic" or "forecast" or "decision" or "revelation"
 let iteration  = js_vars.treatment_displayed;
 
+console.log(treatment)
 
 // page and treatment specific operations
 var displayForecast = false;
+var displayBestGuess = false;
+var displayInterval = false;
 var observed;
 var bestGuess;
 var Range;
@@ -159,6 +162,16 @@ for (var i = 0; i < observed.length; ++i){
     }
 }
 
+// treatment definitions
+if (treatment == "best_guess" && displayForecast){
+    displayBestGuess = true;
+} else if (treatment == "interval"){
+    displayInterval = true;
+} else if (treatment == "both"){
+    displayBestGuess = true;
+    displayInterval = true;
+}
+
 // color definitions
 var opacity = 0.1;
 var observedColor = "#5DE58E";
@@ -182,7 +195,7 @@ var chart = Highcharts.chart("weather_viz", {
     },
 
     title: {
-        text: ""
+        text: `Treatment: "${treatment}" in ${village}`
     },
 
     xAxis: {
@@ -250,19 +263,22 @@ var chart = Highcharts.chart("weather_viz", {
             lineWidth: 2,
             lineColor: forecastColor
         },
-        showInLegend: displayForecast,
-        visible: displayForecast
+        showInLegend: displayForecast && displayBestGuess,
+        visible: displayForecast && displayBestGuess
     }, {
         name: "Wahrscheinlichster Bereich",
         data: range,
         type: "arearange",
         lineWidth: 0,
-        linkedTo: ":previous",
+        // linkedTo: ":previous",
         color: forecastColor, 
         fillOpacity: 0.3,
         zIndex: 0,
         marker: {
             enabled: true
-        }
+        },
+        showInLegend: displayForecast && displayInterval && treatment !== "both",
+        visible: displayForecast && displayInterval,
+
     }]
 });

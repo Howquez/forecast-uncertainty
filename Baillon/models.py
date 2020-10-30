@@ -26,7 +26,7 @@ class Constants(BaseConstants):
     name_in_url = 'Baillon'
 
     locations  = ["Weiskirchen", "Ilomantsi"] # ["confirmation", "contradiction"]
-    treatments = ["best_guess", "interval"]
+    treatments = ["best_guess", "interval", "both"]
     Weiskirchen_temp = 8 # 8.5
     Ilomantsi_temp   = 3 # 3.2
 

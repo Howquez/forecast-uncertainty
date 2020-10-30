@@ -125,7 +125,7 @@ function calculate() {
             type: 'column'
         },
         title: {
-            text: 'Ihre Wahrscheinlichkeitsverteilung'
+            text: 'Ihre Gewinnchance je Temperatur'
         },
         subtitle: {
             text: ''
