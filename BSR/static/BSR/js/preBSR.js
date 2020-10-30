@@ -1,18 +1,14 @@
 function validation(){
-	var minTemp;
-	var maxTemp;
-	var valid;
-	var next;
 
-	minTemp = parseInt(document.getElementById("id_minTemp").value);
-	maxTemp = parseInt(document.getElementById("id_maxTemp").value);
+	var minTemp = parseInt(document.getElementById("id_minTemp").value);
+	var maxTemp = parseInt(document.getElementById("id_maxTemp").value);
 
-	minField = document.getElementById("id_minTemp");
-	maxField = document.getElementById("id_maxTemp");
+	var minField = document.getElementById("id_minTemp");
+	var maxField = document.getElementById("id_maxTemp");
 
-	valid   = document.getElementById("pre_BSR_validation");
-	revise  = document.getElementById("pre_BSR_revision");
-	next    = document.getElementById("pre_BSR_next");
+	var valid   = document.getElementById("pre_BSR_validation");
+	var revise  = document.getElementById("pre_BSR_revision");
+	var next    = document.getElementById("pre_BSR_next");
 
 	// console.log("Min: ".concat(minTemp));
 	// console.log("Max: ".concat(maxTemp));
