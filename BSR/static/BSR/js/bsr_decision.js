@@ -4,19 +4,12 @@ console.log("bsr_decision_js is running")
 // ---------------------------------------------------------------------------------------------
 // Schritt 1 Tab
 	function validation(){
-		// declare variables
 		// get field values
 		var minTemp = parseInt(document.getElementById("id_minTemp").value);
 		var maxTemp = parseInt(document.getElementById("id_maxTemp").value);
 		// get fields
 		var minField = document.getElementById("id_minTemp");
 		var maxField = document.getElementById("id_maxTemp");
-		// get tabs
-		var choice_tab = document.getElementById("choice_tab");
-		// get buttons
-		var limits_validation = document.getElementById("limits_validation");
-		var limits_revision = document.getElementById("limits_revision");
-
 
 		//
 		if (maxTemp < minTemp) {
@@ -42,21 +35,11 @@ console.log("bsr_decision_js is running")
 			createTable();
 			createCols();
 			createHiddenFields();
-			// calcChance2win();
 
 		}
 	}
 
 	function revision(){
-		// get fields
-		var minField = document.getElementById("id_minTemp");
-		var maxField = document.getElementById("id_maxTemp");
-		// get tabs
-		var viz_tab = document.getElementById("viz_tab");
-		var choice_tab = document.getElementById("choice_tab");
-		// get buttons
-		var limits_validation = document.getElementById("limits_validation");
-		var limits_revision = document.getElementById("limits_revision");
 
 		//
 		limits_validation.style = "";
@@ -72,6 +55,9 @@ console.log("bsr_decision_js is running")
 
 		//
 		removeTable()
+
+		// make submit button invisible
+		submitButton.style = "display:none";
 	}
 
 // ---------------------------------------------------------------------------------------------
@@ -157,7 +143,6 @@ console.log("bsr_decision_js is running")
 
 		var viz_tab = document.getElementById("viz_tab");
 
-
 		// get all the probabilities assigned
 		for (var i = minTemp; i <= maxTemp; ++i){
 			input = parseInt(document.getElementById("id_prob".concat("", i)).value);
@@ -196,6 +181,9 @@ console.log("bsr_decision_js is running")
 			chance2win = gains[t-minTemp]
 			document.getElementById("chance2win".concat(t)).innerHTML = chance2win + "%";
 		}
+
+		// make submit button visible
+		submitButton.style = "";
 
 		// make viz_tab visible
 		viz_tab.className = "nav-link";
@@ -291,6 +279,17 @@ console.log("bsr_decision_js is running")
 // ---------------------------------------------------------------------------------------------
 
 // General stuff
+	// global vars
+	// get fields
+	var minField = document.getElementById("id_minTemp");
+	var maxField = document.getElementById("id_maxTemp");
+	// get tabs
+	var viz_tab = document.getElementById("viz_tab");
+	var choice_tab = document.getElementById("choice_tab");
+	// get buttons
+	var limits_validation = document.getElementById("limits_validation");
+	var limits_revision = document.getElementById("limits_revision");
+	var submitButton = document.getElementById("submit_button");
 
 	// vars from python
 	let weight  = js_vars.weight;
