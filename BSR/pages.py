@@ -52,6 +52,7 @@ class BSR_Decision(Page):
 
     def js_vars(self):
         return dict(
+            weight=Constants.weight,
             # the following three vars are needed such that the weather viz can be displayed on decision screen as well
             treatment_displayed = str(self.subsession.this_app_constants()["treatment_displayed"]),
             page="decision",

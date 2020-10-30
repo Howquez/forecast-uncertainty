@@ -47,13 +47,21 @@ Binarized Scoring Rule
                 <button type="button" onclick="validation();" id="limits_validation" class="btn-outline-primary btn">Prüfen</button>
                 <button type="button" onclick="revision();" id="limits_revision" class="btn-outline-primary btn" style="display:none">Entscheidung ändern</button>
             </div>
+
             <div class="tab-pane fade" id="choice" role="tabpanel" aria-labelledby="choice_tab">
                 <div id="table-wrapper">
                 </div>
-                <button type="button" class="btn-outline-primary btn">Gewinnwahrscheinlichkeit berechnen</button>
+                <button type="button" onclick="calcChance2win();" class="btn-outline-primary btn">Gewinnwahrscheinlichkeit berechnen</button>
                 <button type="submit" class="btn-outline-primary btn">Submit</button>
             </div>
-            <div class="tab-pane fade" id="viz" role="tabpanel" aria-labelledby="viz_tab">...</div>
+
+            <div class="tab-pane fade" id="viz" role="tabpanel" aria-labelledby="viz_tab">
+                <figure class="highcharts-figure">
+                    <div id="container"></div>
+                    <p class="highcharts-description"></p>
+                </figure>
+            </div>
+
             <div class="tab-pane fade" id="weather" role="tabpanel" aria-labelledby="weather_tab">
                 <figure class="highcharts-figure">
                     <div id="weather_viz"></div>

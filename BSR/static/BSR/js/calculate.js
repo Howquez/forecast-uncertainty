@@ -91,7 +91,7 @@ function calculate() {
 			losses[winningTempIndex] += loss;
 		}
 
-// calculate winning probabilities
+		// calculate winning probabilities
 		var temp = 1 - 1 * losses[winningTempIndex];
 		if (temp >= 0) {
 			gains[winningTempIndex] = Math.round(((temp*100) + Number.EPSILON) * 100) / 100;
@@ -103,7 +103,7 @@ function calculate() {
 	//console.log(losses);
 
 
-// write winning probabilities into table
+	// write winning probabilities into table
 	for (var w = minTemp; w <= maxTemp; ++w) {
 		gain = gains[w-minTemp]
 		document.getElementById("winprob_".concat(w)).innerHTML = gain + "%";
