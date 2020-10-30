@@ -1,0 +1,173 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'BSR/js/buttons.js' %}"></script>
+{% endblock %}
+
+
+{% block styles %}
+    <link href="{% static 'BSR/css/styles.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<!-- Tab navigation -->
+    <ul class="nav nav-tabs fixed-top navbar-light bg-light justify-content-center " id="myTab" role="tablist">
+
+        <li class="nav-item" >
+            <a class="nav-link active" id="part1-tab" data-toggle="tab" href="#part1" role="tab" aria-controls="part1" onclick="topFunction()"> Einführung </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" id="part2-tab" data-toggle="tab" href="#part2" role="tab" aria-controls="part2" onclick="topFunction()"> Aufgabe </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" id="part3-tab" data-toggle="tab" href="#part3" role="tab" aria-controls="part3" onclick="topFunction()"> Verständnisfragen </a>
+        </li>
+    </ul>
+
+<br>
+<br>
+
+<!-- Tab content -->
+<div class="tab-content" id="myTabContent">
+
+<!-- Part 1 (no back button) -->
+    <div class="tab-pane show active" id="part1" role="tabpanel" aria-labelledby="part1-tab">
+
+
+        <div class="bg-transparent mainheader" style="text-align:center">
+            <h3 class="card-title font-weight-bold"> Überbliick </h3>
+        </div>
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <p>
+                    Diese Aufgabe besteht aus zwei Schritten. Im ersten Schritt müssen Sie entscheiden, bei welchen
+                    Temperaturen Sie es für möglich halten, dass Sie an dem besagten Sonntag eintreten. Im zweiten
+                    Schritt entscheiden Sie dann, für wie wahrscheinlich Sie die jeweiligen Temperaturen jeweils halten.
+                </p>
+                <p>
+                    In dieser Aufgabe können Sie entweder {{ Constants.prize_payoff }} Euro oder nichts gewinnen.
+                    Je besser Sie schätzen, desto wahrscheinlicher ist es, dass Sie die {{ Constants.prize_payoff }}
+                    Euro gewinnen.
+                </p>
+                <p>
+                    Während Ihrer Entscheidung werden Sie auf Ihrem Bildschirm eine Menüleiste mit vier Seiten sehen:
+                </p>
+
+                <ol>
+                    <li>Schritt 1</li>
+                    <li>Schritt 2</li>
+                    <li>Veranschaulichung</li>
+                    <li>Wettervorhersage</li>
+                </ol>
+                <p>Im Folgenden werden wir Ihnen erklären, was Sie auf den jeweiligen Seiten finden werden.</p>
+                <p>
+                    <b>Schritt 1:</b> Im ersten Schritt stellen wir Ihnen zwei Fragen. Zum einen fragen wir Sie
+                    welche Temperatur Sie höchstens noch für möglich halten. Alle Temperaturen die über Ihrer Angabe
+                    liegen sollten Ihrer Schätzung nach nicht eintreffen. Zum anderen fragen wir Sie welche Temperatur
+                    Sie mindesten noch für möglich halten. Alle Temperaturen unter dieser Angabe sollten Ihrer Schätzung
+                    zufolge ebenfalls nicht eintreten.
+                </p>
+                <p>
+                    Sobald Sie beide Fragen beantworten haben, müssen Sie diese prüfen lassen. Dabei wird nur geprüft,
+                    dass die von Ihnen angegebene Mindesttemperatur nicht höher als die von Ihnen angegebene
+                    Höchsttemperatur. Sofern diese Prüfung positiv ausfällt, können Sie dem zweiten Schritt fortfahren.
+                    Dafür müssen Sie in der Menüleiste <em>Schritt 2</em> anklicken. Sollten Sie mit Ihrer Eingabe
+                    unzfrieden sein, so können Sie diese einfach ändern, indem Sie <em>Entscheidung ändern</em>
+                    auswählen.
+                </p>
+                <p>
+                    <b>Schritt 2</b> werden wir auf der folgenden Seite im Detail erklären.
+                </p>
+                <p>
+                    <b>Veranschaulichung:</b> Hier stellen wir Ihnen Ihre Entscheidung grafisch dar und zeigen Ihnen
+                    anhand eines Balkediagramms für jede Temperatur, wie wahrscheinlich es ist, dass Sie
+                    {{ Constants.prize_payoff }} Euro gewinnen, wenn diese tatsächlich eintrifft. Wie genau Sie dieses
+                    Diagramm zu verstehen haben erklären wir anhand von Lesebeispielen unterhalb des Diagramms.
+                </p>
+                <p>
+                    <b>Wetterbericht:</b> Falls Sie den eben dargestellten Wetterbericht vergessen haben oder falls Sie
+                    Ihn sich noch einmal genauer anschauen wollen, können Sie sich diesen hier ansehen.
+                </p>
+            </div>
+        </div>
+
+        <button onclick="topFunction()" type="button" class="nexttab btn-outline-primary btn next">Weiter</button>
+    </div>
+
+<!-- Part 2 -->
+    <div class="tab-pane" id="part2" role="tabpanel" aria-labelledby="part2-tab">
+
+        <div class="bg-transparent mainheader" style="text-align:center">
+            <h3 class="card-title font-weight-bold"> Aufgabe </h3>
+        </div>
+        <br>
+
+        <div class="card">
+            <div class="card-body">
+                <p>
+                    Im zweiten Schritt müssen Sie für jede Temperatur, die Sie für möglich halten, angeben, für wie
+                    wahrscheinlich Sie diese halten. Das bedeutet, dass Sie für jede dargestellte Temperatur einen
+                    prozentualen Wert zwischen 0 und 100 angeben müssen. Sollte eine Temperatur, die sie für
+                    wahrscheinlich halten, nicht angezeigt werden, so liegt das daran, dass Sie diese im ersten Schritt
+                    ausgeschlossen haben. Sollte das der Fall sein, können Sie einfach zu <em>Schritt 1</em> zurück-
+                    navigieren und ihre Angaben dort ändern.
+                </p>
+                <p>
+                    Bitte beachten Sie dass Sie in Summe nicht mehr als 100 Prozentpunkte verteilen können und dass Sie
+                    Ihre Gewinnchancen maximieren, wenn Sie genau 100 Prozentpunkte (und nicht weniger) verteilen.
+                </p>
+                <p>
+                    Sobald Sie für jede angezeigte Temperatur eine Schätzung eingegeben haben, können Sie Ihre
+                    Gewinnchance berechnen. Diese ist abhängig von all Ihren Schätzungen und beschreibt für jede
+                    Temperatur einzeln, wie wahrscheinlich es ist, dass Sie {{ Constants.prize_payoff }} Euro gewinnen,
+                    wenn diese Temperatur tatsächlich eingetreten ist. Sobald Ihre Gewinnchancen je Temperatur errechnet
+                    wurden, zeigen wir Ihnen diese tabellarisch an. Darüber hinaus stellen wir sie grafisch in Form
+                    eines Balkendiagramms unter dem nächsten Menüpunkt dar.
+                </p>
+                <p>
+                    Sollten Sie mit Ihren angaben unzufrieden sein, können Sie Ihre Angaben ändern und die Gewinnchancen
+                    erneut berechnen. Erst wenn Sie mit Ihren Angaben in beiden Schritten zufrieden sind sollten Sie auf
+                    <em>Absenden</em> klicken. Beachten Sie dabei, dass Sie erst auf <em>Absenden</em> klicken können,
+                    wenn Sie Ihre Gewinnchancen mindestens ein mal berechnet haben.
+                </p>
+                <p>
+                    Der Mechanismus, der Ihre Gewinnchancen anhand Ihrer angaben berechnet ist genau so gestaltet, dass
+                    Sie Ihre Chancen maximieren, wenn Sie für jede Temperatur eine ehrliche Schätzung abgeben.
+                </p>
+            </div>
+        </div>
+
+        <button onclick="topFunction()" type="button" class="prevtab btn-outline-primary btn back">Zurück</button>
+        <button onclick="topFunction()" type="button" class="nexttab btn-outline-primary btn next">Weiter</button>
+    </div>
+
+<!-- Part 3 -->
+    <div class="tab-pane" id="part3" role="tabpanel" aria-labelledby="part3-tab">
+
+
+        <div class="bg-transparent mainheader" style="text-align:center">
+            <h3 class="card-title font-weight-bold"> Verständnisfragen </h3>
+        </div>
+        <br>
+
+        <h5 class=" font-weight-bold mt-3 mb-3">Question 1</h5>
+        {% formfields %}
+
+
+        <button onclick="topFunction()" type="button" class="prevtab btn-outline-primary btn back">Zurück</button>
+        <button class="nexttab btn-outline-primary btn next">Weiter</button>
+    </div>
+
+
+</div>
+
+
+{% endblock %}

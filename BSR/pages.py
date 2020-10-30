@@ -3,7 +3,7 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 
 
-class Instructions(Page):
+class BSR_Instructions(Page):
     def is_displayed(self):
         if self.subsession.this_app_constants()["treatment_displayed"] == False:
             return True
@@ -127,7 +127,7 @@ class BSR(Page):
         self.player.set_payoff()
 
 
-page_sequence = [Instructions,
+page_sequence = [BSR_Instructions,
                  BSR_Decision,
                  # BSR_PreSelection,
                  # BSR,
