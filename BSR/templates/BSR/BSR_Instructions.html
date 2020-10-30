@@ -23,11 +23,15 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" id="part2-tab" data-toggle="tab" href="#part2" role="tab" aria-controls="part2" onclick="topFunction()"> Aufgabe </a>
+            <a class="nav-link" id="part2-tab" data-toggle="tab" href="#part2" role="tab" aria-controls="part2" onclick="topFunction()"> Übersicht </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" id="part3-tab" data-toggle="tab" href="#part3" role="tab" aria-controls="part3" onclick="topFunction()"> Verständnisfragen </a>
+            <a class="nav-link" id="part23-tab" data-toggle="tab" href="#part3" role="tab" aria-controls="part3" onclick="topFunction()"> Aufgabe </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" id="part4-tab" data-toggle="tab" href="#part4" role="tab" aria-controls="part4" onclick="topFunction()"> Verständnisfragen </a>
         </li>
     </ul>
 
@@ -42,20 +46,41 @@
 
 
         <div class="bg-transparent mainheader" style="text-align:center">
-            <h3 class="card-title font-weight-bold"> Überbliick </h3>
+            <h3 class="card-title font-weight-bold"> Einleitung </h3>
         </div>
         <br>
+        <div class="card">
+            <div class="card-body">
+                <p>
+                    Diese Aufgabe ist der letzten Aufgabe relativ ähnlich und bezieht sich auf denselben Wetterbericht,
+                    der Ihnen zuletzt dargestellt wurde. Und wieder möchten wir Sie bitten abzuschätzen, welche
+                    Temperaturen am Sonntag, also 9 Tage nach der letzten Ihnen bekannten Temperatur, eintreten könnten.
+                    Dieses Mal fragen wir Sie dabei explizit, welche Temperaturen Sie für wie wahrscheinlich halten.
+                    Am Ende dieser Umfrage erfahren Sie dann, welche Temperatur tatsächlich eingetreten ist und wie gut
+                    Ihre Schätzungen waren. Sie können dann  entweder {{ Constants.prize_payoff }} Euro oder nichts gewinnen.
+                    Je besser Sie schätzen, desto wahrscheinlicher ist es, dass Sie die {{ Constants.prize_payoff }}
+                    Euro gewinnen.
+                </p>
+            </div>
+        </div>
+
+        <button onclick="topFunction()" type="button" class="nexttab btn-outline-primary btn next">Weiter</button>
+    </div>
+
+<!-- Part 2 -->
+    <div class="tab-pane" id="part2" role="tabpanel" aria-labelledby="part2-tab">
+
+        <div class="bg-transparent mainheader" style="text-align:center">
+            <h3 class="card-title font-weight-bold"> Übersicht </h3>
+        </div>
+        <br>
+
         <div class="card">
             <div class="card-body">
                 <p>
                     Diese Aufgabe besteht aus zwei Schritten. Im ersten Schritt müssen Sie entscheiden, bei welchen
                     Temperaturen Sie es für möglich halten, dass Sie an dem besagten Sonntag eintreten. Im zweiten
                     Schritt entscheiden Sie dann, für wie wahrscheinlich Sie die jeweiligen Temperaturen jeweils halten.
-                </p>
-                <p>
-                    In dieser Aufgabe können Sie entweder {{ Constants.prize_payoff }} Euro oder nichts gewinnen.
-                    Je besser Sie schätzen, desto wahrscheinlicher ist es, dass Sie die {{ Constants.prize_payoff }}
-                    Euro gewinnen.
                 </p>
                 <p>
                     Während Ihrer Entscheidung werden Sie auf Ihrem Bildschirm eine Menüleiste mit vier Seiten sehen:
@@ -99,11 +124,12 @@
             </div>
         </div>
 
+        <button onclick="topFunction()" type="button" class="prevtab btn-outline-primary btn back">Zurück</button>
         <button onclick="topFunction()" type="button" class="nexttab btn-outline-primary btn next">Weiter</button>
     </div>
 
-<!-- Part 2 -->
-    <div class="tab-pane" id="part2" role="tabpanel" aria-labelledby="part2-tab">
+<!-- Part 3 -->
+    <div class="tab-pane" id="part3" role="tabpanel" aria-labelledby="part3-tab">
 
         <div class="bg-transparent mainheader" style="text-align:center">
             <h3 class="card-title font-weight-bold"> Aufgabe </h3>
@@ -149,8 +175,9 @@
         <button onclick="topFunction()" type="button" class="nexttab btn-outline-primary btn next">Weiter</button>
     </div>
 
-<!-- Part 3 -->
-    <div class="tab-pane" id="part3" role="tabpanel" aria-labelledby="part3-tab">
+
+<!-- Part 4 -->
+    <div class="tab-pane" id="part4" role="tabpanel" aria-labelledby="part3-tab">
 
 
         <div class="bg-transparent mainheader" style="text-align:center">
