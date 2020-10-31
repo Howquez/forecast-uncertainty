@@ -3,6 +3,9 @@ console.log("bsr_decision_js is running")
 
 // ---------------------------------------------------------------------------------------------
 // Schritt 1 Tab
+
+// The validation function shall be called in Schritt 1 to check if inputs are eligible
+// if yes, allow the respondent to proceed. if not, prohibit that and warn her.
 	function validation(){
 		// get field values
 		var minTemp = parseInt(document.getElementById("id_minTemp").value);
@@ -11,49 +14,50 @@ console.log("bsr_decision_js is running")
 		var minField = document.getElementById("id_minTemp");
 		var maxField = document.getElementById("id_maxTemp");
 
-		//
+		// the error condition
 		if (maxTemp < minTemp) {
 			alert("Die höchste Temperatur, die sie für möglich halten, muss höher sein, als die niedrigste Temperatur, die Sie für möglich halten.");
-			choice_tab.className = "nav-link disabled";
+			choice_tab.className = "nav-link disabled"; // disable Schritt 2 Tab
 			return false;
 		}
 
-		//
+		// warning condition if no values are entered
 		if (maxTemp == NaN || minTemp == NaN) {
 			alert("Bitte tragen Sie ganze Zahlenwerte ein.");
 			choice_tab.className = "nav-link disabled";
 			return false;
 		}
 
-		//
+		// everything is working as it should condition
 		if (minTemp <= maxTemp){
-			minField.setAttribute("readonly", "");
-			maxField.setAttribute("readonly", "");
-			choice_tab.className = "nav-link";
-			limits_validation.style = "display:none";
-			limits_revision.style = "";
-			createTable();
-			createCols();
-			createHiddenFields();
+			minField.setAttribute("readonly", ""); 		// block forms in Schritt 1
+			maxField.setAttribute("readonly", ""); 		// block forms in Schritt 1
+			choice_tab.className = "nav-link";			// enable Schritt 2 Tab
+			limits_validation.style = "display:none";	// hide validation button and..
+			limits_revision.style = "";					// ..display revision button
+			createTable();								// call function to create Table for Schritt 2
+			createCols();								// call function to fill Table for Schritt 2
+			createHiddenFields();						// call function to create&hide all forms not included in the table
 
 		}
 	}
 
+// The revision function shall be called in Schritt 2 to change one's inputs
 	function revision(){
 
-		//
+		// hide and unhide revision and validation button
 		limits_validation.style = "";
 		limits_revision.style = "display:none";
 
-		//
+		// unblock forms from Schritt 1
 		minField.removeAttribute("readonly");
 		maxField.removeAttribute("readonly");
 
-		//
+		// daisble Schritt 2 and Viz Tab
 		choice_tab.className = "nav-link disabled";
 		viz_tab.className = "nav-link disabled";
 
-		//
+		// erase the table in Schritt 2 Tab
 		removeTable()
 
 		// make submit button invisible
@@ -64,8 +68,9 @@ console.log("bsr_decision_js is running")
 // Schritt 2 Tab
 
 
-// tge following two functions create or remove a table, that is later to be filled with createCols()
+// the following two functions create or remove a table, that is later to be filled with createCols()
 	function createTable(){
+		//create table with three rows and row ids
 		document.getElementById("table-wrapper").innerHTML = '<div id="table-scroll"> <table class="table table-highlight table-hover"> <tr id="guessRow"> <th>Ihre Schätzung</th> </tr> <tr id="tempRow"> <th>Temperatur</th> </tr> <tr id="chanceRow"> <th>Ihre Gewinnchance</th> </tr> </table> </div>'
 	}
 
@@ -79,13 +84,17 @@ console.log("bsr_decision_js is running")
 		var maxTemp = parseInt(document.getElementById("id_maxTemp").value);
 		var temps = Array.from(seq(minTemp, maxTemp));
 
+		// identify div that will be filled with div_content, which is an initially empty string that will be 
+		// concatenated within two for loops
 		var div = document.getElementById("hidden_fields");
 		var div_content = ""
 
+		// create hidden fields/forms for temps lower than mintemp
 		for (i = 0; i <= minTemp; ++i){
 			div_content += `<input name="prob${i}" id="id_prob${i}" type="hidden" value="0" min="0" max="0" readonly>`
 		}
 
+		// create hidden fields/forms for temps higher than maxtemp
 		for (j = maxTemp + 1; j <= 100; ++j){
 			div_content += `<input name="prob${j}" id="id_prob${j}" type="hidden" value="0" min="0" max="0" readonly>`
 		}
@@ -98,12 +107,12 @@ console.log("bsr_decision_js is running")
 // with labels and a prelimenarily empty chance2win. One column for each temperature.
 	function createCols(){
 
-		//
+		// given the table from createTable(), we'll add maxTemp-minTemp columns
 		var minTemp = parseInt(document.getElementById("id_minTemp").value);
 		var maxTemp = parseInt(document.getElementById("id_maxTemp").value);
 		var temps = Array.from(seq(minTemp, maxTemp));
 
-		//
+		// with the given three rows
 		var field_row  = document.getElementById("guessRow");
 		var label_row  = document.getElementById("tempRow");
 		var chance_row = document.getElementById("chanceRow");
@@ -125,10 +134,10 @@ console.log("bsr_decision_js is running")
 
 	}
 
-		// calc chances to win and plot them accordingly
+// long function to calculate chances to win and plot them accordingly
 	function calcChance2win(){
 
-		//
+		// get all the variables needed
 		var minTemp = parseInt(document.getElementById("id_minTemp").value);
 		var maxTemp = parseInt(document.getElementById("id_maxTemp").value);
 		var temps = Array.from(seq(minTemp, maxTemp));
@@ -143,13 +152,14 @@ console.log("bsr_decision_js is running")
 
 		var viz_tab = document.getElementById("viz_tab");
 
-		// get all the probabilities assigned
+		// get all the probabilities assigned within the (unhidden) forms/fields
 		for (var i = minTemp; i <= maxTemp; ++i){
 			input = parseInt(document.getElementById("id_prob".concat("", i)).value);
 			input = input || 0;
 			inputs[i - minTemp] = input;
 		}
 
+		// retrieve these probabilities (guesses) once more to define losses and chances to win
 		for (var winningTempIndex = 0; winningTempIndex < temps.length; ++winningTempIndex){
 			
 			// get guesses and define losses
@@ -182,11 +192,9 @@ console.log("bsr_decision_js is running")
 			document.getElementById("chance2win".concat(t)).innerHTML = chance2win + "%";
 		}
 
-		// make submit button visible
-		submitButton.style = "";
-
-		// make viz_tab visible
-		viz_tab.className = "nav-link";
+		
+		submitButton.style = "";		// make submit button visible
+		viz_tab.className = "nav-link";	// make viz_tab visible
 
 
 		// make viz
@@ -262,12 +270,7 @@ console.log("bsr_decision_js is running")
 
 // ---------------------------------------------------------------------------------------------
 // Veranschaulichung Tab
-	function chanceViz(){
 
-
-
-		
-	}
 	
 
 	
@@ -277,24 +280,24 @@ console.log("bsr_decision_js is running")
 
 
 // ---------------------------------------------------------------------------------------------
-
 // General stuff
+
 	// global vars
-	// get fields
+	// initiate fields
 	var minField = document.getElementById("id_minTemp");
 	var maxField = document.getElementById("id_maxTemp");
-	// get tabs
+	// initiate tabs
 	var viz_tab = document.getElementById("viz_tab");
 	var choice_tab = document.getElementById("choice_tab");
-	// get buttons
+	// initiate buttons
 	var limits_validation = document.getElementById("limits_validation");
 	var limits_revision = document.getElementById("limits_revision");
 	var submitButton = document.getElementById("submit_button");
 
-	// vars from python
+	// initiate vars from python
 	let weight  = js_vars.weight;
 
-	// get seq() function 
+	// define seq() function as in R
 	function* seq( start, end, step = 1 ){
 	  if( end === undefined ) [end, start] = [start, 0];
 	  for( let n = start; n <= end; n += step ) yield n;
