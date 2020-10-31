@@ -10,8 +10,8 @@ class Historic_Viz(Page):
 
     def js_vars(self):
         return dict(
-            # treatment_displayed = "false",
             page = "historic",
+            treatment=self.participant.vars["treatment"],
             location=self.participant.vars["location"],
         )
 
@@ -34,24 +34,7 @@ class Instructions(Page):
             return True
 
     form_model="player"
-    form_fields=["CQ1",
-                 "CQ2"]
 
-    def error_message(self, values):
-        solutions = dict(
-            CQ1="Yes",
-            CQ2=int(8)
-        )
-
-        error_messages = dict(
-            CQ1="Sie müssen die Situation verstanden haben.",
-            CQ2="Falsch, probieren Sie es erneut."
-        )
-
-        for field_name in solutions:
-            if values[field_name] != solutions[field_name]:
-                error_messages[field_name] # = 'Wrong answer' # wenn error message dict leer
-                return error_messages
 
 class Baillon_Decision(Page):
     form_model = "player"

@@ -127,7 +127,7 @@ console.log("bsr_decision_js is running")
 			var new_label   = label_row.insertCell(step);
 			var new_chance  = chance_row.insertCell(step);
 
-			new_field.innerHTML  = `<input name="prob${temp}" id="id_prob${temp}" type="number" value="0" min="0" max="100" >`; // class="form-control form-control-sm"
+			new_field.innerHTML  = `<input name="prob${temp}" id="id_prob${temp}" class="form-control" type="number" value="0" min="0" max="100" >`; // class="form-control form-control-sm"
 			new_label.innerHTML  = `${temp}°C`;
 			new_chance.innerHTML = `<div id="chance2win${temp}"></div>`;
 		}

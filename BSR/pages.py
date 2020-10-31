@@ -25,8 +25,8 @@ class BSR_Instructions(Page):
 
         for field_name in solutions:
             if values[field_name] != solutions[field_name]:
-                error_messages[field_name] # = 'Wrong answer' # wenn error message dict leer
-                return error_messages
+                return error_messages[field_name] # = 'Wrong answer' # wenn error message dict leer
+                # return error_messages
 
 
 class BSR_Decision(Page):
