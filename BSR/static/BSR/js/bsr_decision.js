@@ -14,16 +14,22 @@ console.log("bsr_decision_js is running")
 		var minField = document.getElementById("id_minTemp");
 		var maxField = document.getElementById("id_maxTemp");
 
+		// force inputs to be ints
+		minField.value = minTemp;
+		maxField.value = maxTemp;
+
 		// the error condition
 		if (maxTemp < minTemp) {
-			alert("Die höchste Temperatur, die sie für möglich halten, muss höher sein, als die niedrigste Temperatur, die Sie für möglich halten.");
+			maxmin_alert.style = "";
+			// alert("Die höchste Temperatur, die sie für möglich halten, muss höher sein, als die niedrigste Temperatur, die Sie für möglich halten.");
 			choice_tab.className = "nav-link disabled"; // disable Schritt 2 Tab
 			return false;
 		}
 
 		// warning condition if no values are entered
 		if (maxTemp == NaN || minTemp == NaN) {
-			alert("Bitte tragen Sie ganze Zahlenwerte ein.");
+			nan_alert.style = "";
+			// alert("Bitte tragen Sie ganze Zahlenwerte ein.");
 			choice_tab.className = "nav-link disabled";
 			return false;
 		}
@@ -38,7 +44,9 @@ console.log("bsr_decision_js is running")
 			createTable();								// call function to create Table for Schritt 2
 			createCols();								// call function to fill Table for Schritt 2
 			createHiddenFields();						// call function to create&hide all forms not included in the table
-
+			// hide alerts
+			maxmin_alert.style = "display:none";
+			nan_alert.style = "display:none";
 		}
 	}
 
@@ -293,6 +301,11 @@ console.log("bsr_decision_js is running")
 	var limits_validation = document.getElementById("limits_validation");
 	var limits_revision = document.getElementById("limits_revision");
 	var submitButton = document.getElementById("submit_button");
+	// initiate alerts
+	var maxmin_alert = document.getElementById("maxminAlert");
+	var nan_alert = document.getElementById("nanAlert");
+	var exceed_alert = document.getElementById("exceedAlert");
+	var undercut_alert = document.getElementById("undercutAlert");
 
 	// initiate vars from python
 	let weight  = js_vars.weight;

@@ -1,10 +1,6 @@
 {% extends "global/Page.html" %}
 {% load otree static %}
 
-{% block title %}
-Binarized Scoring Rule
-{% endblock %}
-
 {% block styles %}
     <link href="{% static 'BSR/css/table.css' %}" rel="stylesheet">
 {% endblock %}
@@ -22,58 +18,110 @@ Binarized Scoring Rule
 
 {% block content %}
 
-<div class="card ">
-    <div class="card-header">
-        <ul class="nav nav-tabs card-header-tabs pull-right"  id="myTab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="limits_tab" data-toggle="tab" href="#limits" role="tab" aria-controls="limits" aria-selected="true">Schritt 1</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" id="choice_tab" data-toggle="tab" href="#choice" role="tab" aria-controls="choice" aria-selected="false">Schritt 2</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" id="viz_tab" data-toggle="tab" href="#viz" role="tab" aria-controls="viz" aria-selected="false">Veranschaulichung</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="weather_tab" data-toggle="tab" href="#weather" role="tab" aria-controls="weather" aria-selected="false">Wetterbericht</a>
-            </li>
-        </ul>
+
+<!-- Alerts -->
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none" id="maxminAlert">
+        <strong>Das sieht falschrum aus!</strong> Die höchste Temperatur, die Sie gerade noch so für möglich halten,
+        ist niedriger als die niedrigste Temperatur, die Sie für möglich halten.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 
-    <div class="card-body">
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="limits" role="tabpanel" aria-labelledby="limits_tab">
-                {% formfield player.minTemp %}
-                {% formfield player.maxTemp %}
-                <button type="button" onclick="validation();" id="limits_validation" class="btn-outline-primary btn">Prüfen</button>
-                <button type="button" onclick="revision();" id="limits_revision" class="btn-outline-primary btn" style="display:none">Entscheidung ändern</button>
-            </div>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert" style="display:none" id="nanAlert">
+        <strong>Holy guacamole!</strong> Bitte trage ganze Zahlenwerte ein.
+        überschreiten.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 
-            <div class="tab-pane fade" id="choice" role="tabpanel" aria-labelledby="choice_tab">
-                <div id="table-wrapper">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none" id="exceedAlert">
+        <strong>Holy guacamole!</strong> Die Summe der von Ihnen eingegebenen Wahrscheinlichkeiten darf 100% nicht
+        überschreiten.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="alert alert-info alert-dismissible fade show" role="alert" style="display:none" id="undercutAlert">
+        <strong>Nicht so schnell!</strong> Sie erhöhen Ihre Gewinnchance, wenn die Summe der von Ihnen eingegebenen
+        Wahrscheinlichkeiten 100% ergibt.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+<!-- Decisions -->
+    <div class="card ">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs pull-right"  id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="limits_tab" data-toggle="tab" href="#limits" role="tab" aria-controls="limits" aria-selected="true">Schritt 1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" id="choice_tab" data-toggle="tab" href="#choice" role="tab" aria-controls="choice" aria-selected="false">Schritt 2</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" id="viz_tab" data-toggle="tab" href="#viz" role="tab" aria-controls="viz" aria-selected="false">Veranschaulichung</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="weather_tab" data-toggle="tab" href="#weather" role="tab" aria-controls="weather" aria-selected="false">Wetterbericht</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card-body">
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="limits" role="tabpanel" aria-labelledby="limits_tab">
+                    <div class="input-group mb-4">
+                        <label for="id_minTemp">
+                            Was ist die niedrigste Temperatur, die Ihrer Meinung nach gerade so noch wahrscheinlich ist?
+                        </label>
+                        <input type="number" name="minTemp" id="id_minTemp" class="form-control" id="inlineFormInputGroup" placeholder="mindestens">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">°C</div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-4">
+                        <label for="id_maxTemp">
+                            Was ist die höchste Temperatur, die Ihrer Meinung nach gerade so noch wahrscheinlich ist?
+                        </label>
+                        <input type="number" name="minTemp" id="id_maxTemp" class="form-control" id="inlineFormInputGroup" placeholder="höchstens">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">°C</div>
+                        </div>
+                    </div>
+                    <button type="button" onclick="validation();" id="limits_validation" class="btn-outline-primary btn float-right">Prüfen</button>
+                    <button type="button" onclick="revision();" id="limits_revision" class="btn-outline-primary btn" style="display:none">Entscheidung ändern</button>
                 </div>
-                <button type="button" onclick="calcChance2win();" class="btn-outline-primary btn">Gewinnchance berechnen</button>
-            </div>
 
-            <div class="tab-pane fade" id="viz" role="tabpanel" aria-labelledby="viz_tab">
-                <figure class="highcharts-figure">
-                    <div id="container"></div>
-                    <p class="highcharts-description"></p>
-                </figure>
-            </div>
+                <div class="tab-pane fade" id="choice" role="tabpanel" aria-labelledby="choice_tab">
+                    <div id="table-wrapper">
+                    </div>
+                    <button type="button" onclick="calcChance2win();" class="btn-outline-primary btn">Gewinnchance berechnen</button>
+                </div>
 
-            <div class="tab-pane fade" id="weather" role="tabpanel" aria-labelledby="weather_tab">
-                <figure class="highcharts-figure">
-                    <div id="weather_viz"></div>
-                </figure>
+                <div class="tab-pane fade" id="viz" role="tabpanel" aria-labelledby="viz_tab">
+                    <figure class="highcharts-figure">
+                        <div id="container"></div>
+                        <p class="highcharts-description"></p>
+                    </figure>
+                </div>
+
+                <div class="tab-pane fade" id="weather" role="tabpanel" aria-labelledby="weather_tab">
+                    <figure class="highcharts-figure">
+                        <div id="weather_viz"></div>
+                    </figure>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
 
 <br><br>
 
+
+<!-- Submit Button -->
     <button type="submit" id="submit_button" class="btn-outline-success btn float-right" style="display:none">Absenden</button>
 
 
