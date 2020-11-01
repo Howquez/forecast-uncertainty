@@ -165,7 +165,26 @@ console.log("bsr_decision_js is running")
 			input = parseInt(document.getElementById("id_prob".concat("", i)).value);
 			input = input || 0;
 			inputs[i - minTemp] = input;
+		};
+
+		// sum inputs and trigger alerts if they exceed or undercut 100%
+		var sum = inputs.reduce(function(a,b){
+			return a+b;
+		}, 0)
+
+		if (sum < 100){
+			undercut_alert.style = "";
+			exceed_alert.style = "display:none";
+		} else if (sum > 100){
+			undercut_alert.style = "display:none";
+			exceed_alert.style = "";
+			return false;
+		} else {
+			exceed_alert.style = "display:none";
+			undercut_alert.style = "display:none";
+
 		}
+
 
 		// retrieve these probabilities (guesses) once more to define losses and chances to win
 		for (var winningTempIndex = 0; winningTempIndex < temps.length; ++winningTempIndex){
