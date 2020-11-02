@@ -38,7 +38,10 @@ console.log("bsr_decision_js is running")
 		if (minTemp <= maxTemp){
 			minField.setAttribute("readonly", ""); 		// block forms in Schritt 1
 			maxField.setAttribute("readonly", ""); 		// block forms in Schritt 1
-			choice_tab.className = "nav-link";			// enable Schritt 2 Tab
+			limits_tab.className = "nav-link";			// disbale hide the limits tab
+			choice_tab.className = "nav-link active";	// enable and display Schritt 2 Tab
+			limits_tab_pane.className = "tab-pane fade";
+			choice_tab_pane.className = "tab-pane show active fade";
 			limits_validation.style = "display:none";	// hide validation button and..
 			limits_revision.style = "";					// ..display revision button
 			createTable();								// call function to create Table for Schritt 2
@@ -79,7 +82,7 @@ console.log("bsr_decision_js is running")
 // the following two functions create or remove a table, that is later to be filled with createCols()
 	function createTable(){
 		//create table with three rows and row ids
-		document.getElementById("table-wrapper").innerHTML = '<div id="table-scroll"> <table class="table table-highlight table-hover"> <tr id="guessRow"> <th>Ihre Schätzung</th> </tr> <tr id="tempRow"> <th>Temperatur</th> </tr> <tr id="chanceRow"> <th>Ihre Gewinnchance</th> </tr> </table> </div>'
+		document.getElementById("table-wrapper").innerHTML = '<div class="table-responsive" id="table-scroll"> <table class="table table-highlight table-hover"> <tr id="guessRow"> <th>Ihre Schätzung</th> </tr> <tr id="tempRow"> <th>Temperatur</th> </tr> <tr id="chanceRow"> <th>Ihre Gewinnchance</th> </tr> </table> </div>'
 	}
 
 	function removeTable(){
@@ -99,8 +102,9 @@ console.log("bsr_decision_js is running")
 
 		// create hidden fields/forms for temps lower than mintemp
 		for (var i = lower_limit; i < minTemp; ++i){
-			var i_string = String(i).replace("-", "minus");
-			console.log(i_string)
+			// this move is repeated several times and is necessary to allow for temperaturs below 0°C
+			// which complicate the naming convention in python "prob-3" cannot be an object name, "probminus3" however can.
+			var i_string = String(i).replace("-", "minus"); 
 			div_content += `<input name="prob${i_string}" id="id_prob${i_string}" type="hidden" value="0" min="0" max="0" readonly>`
 		}
 
@@ -139,9 +143,8 @@ console.log("bsr_decision_js is running")
 			var new_chance  = chance_row.insertCell(step);
 
 			var temp_string = String(temp).replace("-", "minus");
-			console.log(temp_string)
 
-			new_field.innerHTML  = `<input name="prob${temp_string}" id="id_prob${temp_string}" class="form-control" type="number" value="0" min="0" max="100" >`; // class="form-control form-control-sm"
+			new_field.innerHTML  = `<div class="col-xs-1"><input name="prob${temp_string}" id="id_prob${temp_string}" class="form-control" type="number" value="0" min="0" max="100" ></div>`; // class="form-control form-control-sm"
 			new_label.innerHTML  = `${temp}°C`;
 			new_chance.innerHTML = `<div id="chance2win${temp}"></div>`;
 		}
@@ -242,7 +245,7 @@ console.log("bsr_decision_js is running")
 	            type: 'column'
 	        },
 	        title: {
-	            text: 'Ihre Wahrscheinlichkeitsverteilung'
+	            text: 'Ihre Gewinnchancen'
 	        },
 	        subtitle: {
 	            text: ''
@@ -323,8 +326,12 @@ console.log("bsr_decision_js is running")
 	var minField = document.getElementById("id_minTemp");
 	var maxField = document.getElementById("id_maxTemp");
 	// initiate tabs
-	var viz_tab = document.getElementById("viz_tab");
+	var limits_tab = document.getElementById("limits_tab");
 	var choice_tab = document.getElementById("choice_tab");
+	var viz_tab    = document.getElementById("viz_tab");
+	//initiate tabe-panes
+	var limits_tab_pane = document.getElementById("limits");
+	var choice_tab_pane = document.getElementById("choice");
 	// initiate buttons
 	var limits_validation = document.getElementById("limits_validation");
 	var limits_revision = document.getElementById("limits_revision");

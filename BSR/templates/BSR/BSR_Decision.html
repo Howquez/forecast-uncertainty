@@ -23,33 +23,21 @@
     <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none" id="maxminAlert">
         <strong>Das sieht falschrum aus!</strong> Die höchste Temperatur, die Sie gerade noch so für möglich halten,
         ist niedriger als die niedrigste Temperatur, die Sie für möglich halten.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
     </div>
 
     <div class="alert alert-warning alert-dismissible fade show" role="alert" style="display:none" id="nanAlert">
         <strong>Holy guacamole!</strong> Bitte trage ganze Zahlenwerte ein.
         überschreiten.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
     </div>
 
     <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none" id="exceedAlert">
         <strong>Holy guacamole!</strong> Die Summe der von Ihnen eingegebenen Wahrscheinlichkeiten darf 100% nicht
         überschreiten.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
     </div>
 
     <div class="alert alert-info alert-dismissible fade show" role="alert" style="display:none" id="undercutAlert">
         <strong>Nicht so schnell!</strong> Sie erhöhen Ihre Gewinnchance, wenn die Summe der von Ihnen eingegebenen
         Wahrscheinlichkeiten 100% ergibt.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
     </div>
 
 <!-- Decisions -->
@@ -92,8 +80,8 @@
                             <div class="input-group-text">°C</div>
                         </div>
                     </div>
-                    <button type="button" onclick="validation();" id="limits_validation" class="btn-outline-primary btn float-right">Prüfen</button>
-                    <button type="button" onclick="revision();" id="limits_revision" class="btn-outline-primary btn" style="display:none">Entscheidung ändern</button>
+                    <button type="button" onclick="validation();" id="limits_validation" class="btn-outline-primary btn float-right">Prüfen und weiter</button>
+                    <button type="button" onclick="revision();" id="limits_revision" class="btn-outline-secondary btn" style="display:none">Entscheidung ändern</button>
                 </div>
 
                 <div class="tab-pane fade" id="choice" role="tabpanel" aria-labelledby="choice_tab">
