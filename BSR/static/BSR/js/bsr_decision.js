@@ -40,8 +40,8 @@ console.log("bsr_decision_js is running")
 			maxField.setAttribute("readonly", ""); 		// block forms in Schritt 1
 			limits_tab.className = "nav-link";			// disbale hide the limits tab
 			choice_tab.className = "nav-link active";	// enable and display Schritt 2 Tab
-			limits_tab_pane.className = "tab-pane fade";
-			choice_tab_pane.className = "tab-pane show active fade";
+			limits_tab_pane.className = "tab-pane fade"; // change tab-panes like "weiter"...
+			choice_tab_pane.className = "tab-pane show active fade"; // ... .
 			limits_validation.style = "display:none";	// hide validation button and..
 			limits_revision.style = "";					// ..display revision button
 			createTable();								// call function to create Table for Schritt 2
@@ -174,6 +174,7 @@ console.log("bsr_decision_js is running")
 			var i_string = String(i).replace("-", "minus");
 			input = parseInt(document.getElementById("id_prob".concat("", i_string)).value);
 			input = input || 0;
+			document.getElementById("id_prob".concat("", i_string)).value = input; // seems redundant but is important if form is left empty
 			inputs[i - minTemp] = input;
 		};
 
