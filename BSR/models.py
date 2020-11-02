@@ -30,7 +30,7 @@ class Constants(BaseConstants):
 
     null_payoff = 0
     prize_payoff = 10
-    TEMP_RANGE = [0, 100]
+    TEMP_RANGE = [-15, 50]
     temps = [j for j in range(TEMP_RANGE[0], TEMP_RANGE[1] + 1)]
 
     weight = 0.5
@@ -86,7 +86,7 @@ class SharedBasePlayer(BasePlayer):
 
     # define form fields for each temperature
     for i in Constants.temps:
-        locals()['prob' + str(i)] = models.IntegerField(
+        locals()['prob' + str(i).replace("-", "minus")] = models.IntegerField(
             label=str(i),
             doc="probability assigned to {}°C".format(i),
             min=0,
@@ -104,7 +104,8 @@ class SharedBasePlayer(BasePlayer):
     def set_loss(self):  # create Loss Function loss = \Sigma_{i=0}^{50} (1-p_i)^2
         self.loss = 0
         for temp in Constants.temps:
-            p = eval("self.prob{}".format(temp)) / 100
+            p = eval("self.prob" + str(temp).replace("-", "minus"))
+            # p = eval("self.prob{}".format(str(temp).replace("-", "minus"))) / 100
             if temp == self.participant.vars["observed_temp"]:
                 self.winning_prob = int(p * 100)
                 l = ((1 - p) ** 2) * 100 * Constants.weight

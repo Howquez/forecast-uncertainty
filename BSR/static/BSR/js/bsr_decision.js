@@ -98,13 +98,16 @@ console.log("bsr_decision_js is running")
 		var div_content = ""
 
 		// create hidden fields/forms for temps lower than mintemp
-		for (i = 0; i <= minTemp; ++i){
-			div_content += `<input name="prob${i}" id="id_prob${i}" type="hidden" value="0" min="0" max="0" readonly>`
+		for (var i = lower_limit; i < minTemp; ++i){
+			var i_string = String(i).replace("-", "minus");
+			console.log(i_string)
+			div_content += `<input name="prob${i_string}" id="id_prob${i_string}" type="hidden" value="0" min="0" max="0" readonly>`
 		}
 
 		// create hidden fields/forms for temps higher than maxtemp
-		for (j = maxTemp + 1; j <= 100; ++j){
-			div_content += `<input name="prob${j}" id="id_prob${j}" type="hidden" value="0" min="0" max="0" readonly>`
+		for (var j = maxTemp + 1; j <= upper_limit; ++j){
+			var j_string = String(j).replace("-", "minus");
+			div_content += `<input name="prob${j_string}" id="id_prob${j_string}" type="hidden" value="0" min="0" max="0" readonly>`
 		}
 
 		div.innerHTML = div_content;
@@ -135,7 +138,10 @@ console.log("bsr_decision_js is running")
 			var new_label   = label_row.insertCell(step);
 			var new_chance  = chance_row.insertCell(step);
 
-			new_field.innerHTML  = `<input name="prob${temp}" id="id_prob${temp}" class="form-control" type="number" value="0" min="0" max="100" >`; // class="form-control form-control-sm"
+			var temp_string = String(temp).replace("-", "minus");
+			console.log(temp_string)
+
+			new_field.innerHTML  = `<input name="prob${temp_string}" id="id_prob${temp_string}" class="form-control" type="number" value="0" min="0" max="100" >`; // class="form-control form-control-sm"
 			new_label.innerHTML  = `${temp}°C`;
 			new_chance.innerHTML = `<div id="chance2win${temp}"></div>`;
 		}
@@ -162,7 +168,8 @@ console.log("bsr_decision_js is running")
 
 		// get all the probabilities assigned within the (unhidden) forms/fields
 		for (var i = minTemp; i <= maxTemp; ++i){
-			input = parseInt(document.getElementById("id_prob".concat("", i)).value);
+			var i_string = String(i).replace("-", "minus");
+			input = parseInt(document.getElementById("id_prob".concat("", i_string)).value);
 			input = input || 0;
 			inputs[i - minTemp] = input;
 		};
@@ -192,7 +199,8 @@ console.log("bsr_decision_js is running")
 			// get guesses and define losses
 			for (var enteredTemp = minTemp; enteredTemp <= maxTemp; ++enteredTemp){
 				
-				guess = document.getElementById("id_prob".concat("", enteredTemp)).value / 100;
+				var enteredTemp_string = String(enteredTemp).replace("-", "minus");
+				guess = document.getElementById("id_prob".concat("", enteredTemp_string)).value / 100;
 				guess = guess || 0;
 
 				if (enteredTemp == temps[winningTempIndex]) {
@@ -216,6 +224,7 @@ console.log("bsr_decision_js is running")
 		// write winning probabilities into table
 		for (var t = minTemp; t <= maxTemp; ++t) {
 			chance2win = gains[t-minTemp]
+			var t_string = String(t).replace("-", "minus");
 			document.getElementById("chance2win".concat(t)).innerHTML = chance2win + "%";
 		}
 
@@ -328,6 +337,8 @@ console.log("bsr_decision_js is running")
 
 	// initiate vars from python
 	let weight  = js_vars.weight;
+	let lower_limit = js_vars.lower_limit;
+	let upper_limit = js_vars.upper_limit;
 
 	// define seq() function as in R
 	function* seq( start, end, step = 1 ){

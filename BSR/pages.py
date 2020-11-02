@@ -33,7 +33,7 @@ class BSR_Decision(Page):
     form_model = "player"
 
     def get_form_fields(self):
-        temp_fields = ["prob" + str(k) for k in Constants.temps]
+        temp_fields = ["prob" + str(k).replace("-", "minus") for k in Constants.temps]
         minmax_fields = ["minTemp", "maxTemp"]
         final_fields = minmax_fields + temp_fields
         return final_fields
@@ -41,6 +41,8 @@ class BSR_Decision(Page):
     def js_vars(self):
         return dict(
             weight=Constants.weight,
+            lower_limit=Constants.TEMP_RANGE[0],
+            upper_limit=Constants.TEMP_RANGE[1],
             treatment=self.participant.vars["treatment"],
             # the following three vars are needed such that the weather viz can be displayed on decision screen as well
             treatment_displayed = str(self.subsession.this_app_constants()["treatment_displayed"]),
