@@ -17,7 +17,15 @@ from random import randrange
 author = 'Hauke Roggenkamp'
 
 doc = """
-Your app description
+This app is designed to measure ambiguity attitudes as prposed in Baillon et al. (2018, Econometrica).
+The task at hand is an estimation of an (yet) unknown weather event. To this end, subjects are exposed to some sort of
+a temperature report from a short time period in an (yet) unknown region to an unknown time. Subjects are then asked
+about the temperature in 9 days after the last reported temperature.
+
+This app is intended to be played twice in an alternating sequence where another app (BSR) is played twice as well: 
+[initialize, Baillon, BSR, Baillon, BSR]
+Therefore, this app is "cloned" where the clone (postBaillon) is played as the second iteration. Looking at this app in
+isolation may consequently feel a little weird. This app has succeed the initialize app in order to run.
 """
 
 

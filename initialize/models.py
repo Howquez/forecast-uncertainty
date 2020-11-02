@@ -12,10 +12,11 @@ from otree.api import (
 import random
 # from random import randrange
 
-author = 'Your name here'
+author = 'Hauke Roggenkamp'
 
 doc = """
-Your app description
+This app initializes the remainder of the survey and sets participant vars that are used in Baillon and BSR apps.
+It is also a convenient place to carry general app overarching instructions.
 """
 
 
