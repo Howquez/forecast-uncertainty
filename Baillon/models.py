@@ -36,7 +36,6 @@ class Constants(BaseConstants):
     null_payoff = 0
     prize_payoff = 10
 
-    payment = 10
     currency = "EUR"
 
     # create (hard coded) list of choices, temperature ticks and events
@@ -58,27 +57,7 @@ class SharedBaseSubsession(BaseSubsession):
 
     def creating_session(self): # having these configs in here, it is impossible to play the BSR App independently
         if self.round_number == 1:
-            locations = Constants.locations.copy()
-            treatments = Constants.treatments.copy()
             for p in self.get_players():
-                # set location variable
-                if self.session.config["location"] == "random":
-                    p.participant.vars["location"] = random.choice(locations)
-                    p.participant.vars["treatment"] = random.choice(treatments)
-                else:
-                    p.participant.vars["location"] = self.session.config["location"]
-                    p.participant.vars["treatment"] = self.session.config["treatment"]
-                # print(p.participant.vars["location"])
-
-                # set winning temperature conditional on location and link it to baillon event
-                if p.participant.vars["location"] == "Weiskirchen":
-                    p.participant.vars["observed_temp"] = Constants.Weiskirchen_temp
-                    p.participant.vars["winning_event"] = "2"
-
-                elif p.participant.vars["location"] == "Ilomantsi":
-                    p.participant.vars["observed_temp"] = Constants.Ilomantsi_temp
-                    p.participant.vars["winning_event"] = "1"
-
                 # create event list for Baillon decision sequence once per player
                 events = Constants.events.copy()
                 random.shuffle(events)
