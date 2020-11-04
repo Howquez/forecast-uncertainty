@@ -10,4 +10,4 @@ class Intro_Welcome(Page):
     pass
 
 
-page_sequence = [Intro_Welcome, Intro_Instructions]
+page_sequence = [Intro_Welcome]

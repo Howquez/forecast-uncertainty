@@ -10,6 +10,14 @@ SESSION_CONFIGS = [
         location="random",
         treatment="random"
     ),
+    dict(
+        name='MPP',
+        display_name="MPP",
+        num_demo_participants=10,
+        app_sequence=["initialize", "MPP"],
+        location="random",
+        treatment="random"
+    )
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs

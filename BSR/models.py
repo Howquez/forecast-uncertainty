@@ -116,7 +116,7 @@ class SharedBasePlayer(BasePlayer):
         for temp in Constants.temps:
             p = eval("self.prob" + str(temp).replace("-", "minus"))
             # p = eval("self.prob{}".format(str(temp).replace("-", "minus"))) / 100
-            if temp == self.participant.vars["observed_temp"]:
+            if temp == int(self.participant.vars["observed_temp"]):
                 self.winning_prob = int(p * 100)
                 l = ((1 - p) ** 2) * 100 * Constants.weight
             else:

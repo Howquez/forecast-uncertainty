@@ -1,0 +1,97 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Instruktionen</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Multipe Point Prediction</h6>
+        <p class="card-text">
+            Auch auf der nächsten Seite bitten wir Sie Schätzungen zur Temperatur an dem besagten Sonntag einzugeben. Dabei
+            können Sie {{ Constants.prize_payoff }} Euro zu gewinnen. Je besser Ihre Schätzungen sind, desto wahrscheinlicher
+            ist es, dass Sie die {{ Constants.prize_payoff }} Euro gewinnen.
+            Um genauer zu sein werden wir Sie nach drei Schätzungen fragen. Aus diesen drei Schätzungen errechnet sich dann
+            Ihre Gewinnchance.
+        </p>
+
+        <p class="card-text">
+            Generell gilt, dass Ihre Gewinnchance umso höher sind, je dichter Ihre Schätzungen an der tatsächlich
+            gemessenen Temperatur liegen. Dementsprechend kann man sagen, dass es Sie etwas <em>kostet</em>, wenn Sie
+            sich verschätzen. Wie hoch diese kosten sind, hängt dabei davon ab, ob Sie die tatsächlich gemessene
+            Temperatur über- oder unterschätzen. In den drei Schätzungen, die Sie abgeben varriert, ob über- oder
+            unterschätzen teurer ist oder ob es keinen Unterschied macht ob Sie nun über oder unter der tatsächlich
+            gemessenen Temperatur liegen.
+        </p>
+
+        <p class="card-text">
+            Ihre Entschidungssituation wird genau so aussehen:
+        </p>
+
+        <div class="container clearfix border-left border-primary">
+            <p>
+                <br> Was schätzen Sie, welche Temperatur wurde <a style="color:#C582FF">am Sonntag</a> gemessen...
+            </p>
+            <table class="table table-hover">
+                <tbody>
+                <tr>
+                    <td>
+                        <label for="id_Q1">
+                        ...wenn Überschätzen drei Mal so teuer wie Unterschätzen ist?
+                        </label>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input type="number" name="Q1" id="id_Q1" class="form-control" step=".1" value="45.5" readonly>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">°C</div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="id_Q2">
+                        ...wenn Überschätzen genau so teuer wie Unterschätzen ist?
+                        </label>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input type="number" name="Q2" id="id_Q2" class="form-control" step=".1" value="47.3" readonly>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">°C</div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="id_Q3">
+                        ...wenn Unterschätzen drei Mal so teuer wie Überschätzen ist?
+                        </label>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input type="number" name="Q3" id="id_Q3" class="form-control" step=".1" value="49.1" readonly>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">°C</div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+        </div>
+
+        <p class="card-text">
+            Nachdem Sie Ihre Schätzungen eingegeben haben, bestimmen wir die Summe der Kosten. Je niedirger diese Summe
+            ist, desto wahrscheinlicher ist es, dass Sie {{ Constants.prize_payoff }} Euro gewinnen können. Am Ende dieser
+            Umfrage werden wir Ihnen
+        </p>
+    </div>
+</div>
+
+<br><br>
+<button type="submit" id="submit_button" class="btn-outline-primary btn float-right">Verstanden</button>
+{% endblock %}
