@@ -13,6 +13,9 @@ console.log("bsr_decision_js is running")
 		// get fields
 		var minField = document.getElementById("id_minTemp");
 		var maxField = document.getElementById("id_maxTemp");
+		// initiate tabs
+		var limits_tab = document.getElementById("limits_tab");
+		var choice_tab = document.getElementById("choice_tab");
 
 		// force inputs to be ints
 		minField.value = minTemp;
@@ -36,17 +39,23 @@ console.log("bsr_decision_js is running")
 
 		// everything is working as it should condition
 		if (minTemp <= maxTemp){
-			minField.setAttribute("readonly", ""); 		// block forms in Schritt 1
-			maxField.setAttribute("readonly", ""); 		// block forms in Schritt 1
-			limits_tab.className = "nav-link";			// disbale hide the limits tab
-			choice_tab.className = "nav-link active";	// enable and display Schritt 2 Tab
-			limits_tab_pane.className = "tab-pane fade"; // change tab-panes like "weiter"...
-			choice_tab_pane.className = "tab-pane show active fade"; // ... .
-			limits_validation.style = "display:none";	// hide validation button and..
-			limits_revision.style = "";					// ..display revision button
+
 			createTable();								// call function to create Table for Schritt 2
 			createCols();								// call function to fill Table for Schritt 2
 			createHiddenFields();						// call function to create&hide all forms not included in the table
+
+			minField.setAttribute("readonly", ""); 		// block forms in Schritt 1
+			maxField.setAttribute("readonly", ""); 		// block forms in Schritt 1
+
+			limits_tab.className = "nav-link";			// de-activate  the limits tab
+			choice_tab.className = "nav-link active";	// enable and display Schritt 2 Tab
+
+			limits_tab_pane.className = "tab-pane fade"; // change tab-panes like "weiter"...
+			choice_tab_pane.className = "tab-pane show active fade"; // ... .
+
+			limits_validation.style = "display:none";	// hide validation button and..
+			limits_revision.style = "";					// ..display revision button
+
 			// hide alerts
 			maxmin_alert.style = "display:none";
 			nan_alert.style = "display:none";
@@ -55,6 +64,9 @@ console.log("bsr_decision_js is running")
 
 // The revision function shall be called in Schritt 2 to change one's inputs
 	function revision(){
+		// initiate tabs
+		var choice_tab = document.getElementById("choice_tab");
+		var viz_tab    = document.getElementById("viz_tab");
 
 		// hide and unhide revision and validation button
 		limits_validation.style = "";
@@ -326,10 +338,7 @@ console.log("bsr_decision_js is running")
 	// initiate fields
 	var minField = document.getElementById("id_minTemp");
 	var maxField = document.getElementById("id_maxTemp");
-	// initiate tabs
-	var limits_tab = document.getElementById("limits_tab");
-	var choice_tab = document.getElementById("choice_tab");
-	var viz_tab    = document.getElementById("viz_tab");
+
 	//initiate tabe-panes
 	var limits_tab_pane = document.getElementById("limits");
 	var choice_tab_pane = document.getElementById("choice");

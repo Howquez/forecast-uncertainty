@@ -28,6 +28,18 @@ class BSR_Instructions(Page):
                 return error_messages[field_name] # = 'Wrong answer' # wenn error message dict leer
                 # return error_messages
 
+    def js_vars(self):
+        return dict(
+            weight=Constants.weight,
+            lower_limit=Constants.TEMP_RANGE[0],
+            upper_limit=Constants.TEMP_RANGE[1],
+            treatment=self.participant.vars["treatment"],
+            # the following three vars are needed such that the weather viz can be displayed on decision screen as well
+            treatment_displayed = str(self.subsession.this_app_constants()["treatment_displayed"]),
+            page="decision",
+            location=self.participant.vars["location"]
+        )
+
 
 class BSR_Decision(Page):
     form_model = "player"
