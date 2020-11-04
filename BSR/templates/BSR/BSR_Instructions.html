@@ -63,18 +63,39 @@
                     der Ihnen zuletzt dargestellt wurde. Und wieder möchten wir Sie bitten abzuschätzen, welche
                     Temperaturen am Sonntag, also 9 Tage nach der letzten Ihnen bekannten Temperatur, eintreten könnte.
                 </p>
-                <p>
+                <p class="lead">
                     Dieses Mal fragen wir Sie dabei explizit, welche Temperaturen Sie für wie wahrscheinlich halten.
-                    Am Ende dieser Umfrage erfahren Sie dann, welche Temperatur tatsächlich eingetreten ist und wie gut
-                    Ihre Schätzungen waren. Sie können dann  entweder {{ Constants.prize_payoff }} Euro oder nichts gewinnen.
-                    Je besser Sie schätzen, desto wahrscheinlicher ist es, dass Sie die {{ Constants.prize_payoff }}
-                    Euro gewinnen.
+                </p>
+                <p class="text-info"> Überblick: </p>
+                <ul>
+                    <li>Sie schätzen welchen Temperaturen Sie für wahrscheinlich halten.</li>
+                    <li>Sie schätzen für wie wahrscheinlich Sie die jeweiligen Temperaturen halten.</li>
+                    <li>Am Ende der Umfrage zeigen wir Ihnen auf welchen Ort und auf welche Zeit sich der Wetterbericht
+                    bezieht. Außerdem zeigen wir Ihnen, welche Temperatur tatsächlich eingetreten ist.</li>
+                    <li>Bis dahin gilt: je besser Ihre Schätzungen, desto höher die Chance {{ Constants.prize_payoff }}
+                        Euro zu gewinnen.</li>
+                    <li>Gegeben Ihrer Einschätzung zur Temperatur im gesuchten Zeitraum maximieren Sie Ihre Gewinnchance,
+                    wenn Sie ehrliche Angaben machen.</li>
+                </ul>
+                <p>
+                    Auf der folgenden Seite (<a class="text-primary">Beispiel & Spielregeln</a>) stellen wir die
+                    Entscheidungssituation nach und erklären diese. Außerdem stellen wir Ihnen erste Verständnisfragen.
+                    Diese müssen Sie richtig beantworten, um die vollständigen Erklärungen sehen zu können.
+                </p>
+                <p>
+                    Sobald Sie die Erklärungen vollständig gelesen haben, können Sie sich auf der Seite
+                    <a class="text-primary">Verdienst</a> anschauen, wie genau Ihre Entscheidungen in dieser Aufgabe
+                    Ihren Verdienst beeinflussen.
+                </p>
+                <p>
+                    Zum Schluss müssen Sie auf der Seite <a class="text-primary">Verständnisfragen</a> X weitere Fragen
+                    richtig beantworten. Im Anschluss daran können Sie mit der richtigen Entscheidung beginnen.
                 </p>
             </div>
         </div>
 
         <br><br>
-        <button onclick="topFunction()" type="button" class="nexttab btn-outline-primary btn next float-right">Weiter</button>
+        <button onclick="topFunction()" type="button" class="nexttab btn-outline-primary btn next float-right">Verstanden</button>
     </div>
 
 <!-- Part 2: Beispiel & Spielregeln -->
@@ -84,12 +105,12 @@
             <h3> Beispiel & Spielregeln </h3>
         </div>
         <br>
-        <p>
+        <p class="lead">
             Diese Aufgabe besteht aus zwei Schritten. Im ersten Schritt müssen Sie entscheiden, bei welchen
             Temperaturen Sie es für möglich halten, dass Sie an dem besagten Sonntag eintreten. Im zweiten
-            Schritt entscheiden Sie dann, für wie wahrscheinlich Sie die jeweiligen Temperaturen jeweils halten.
+            Schritt entscheiden Sie dann, für wie wahrscheinlich Sie die Temperaturen jeweils halten.
         </p>
-        <p>
+        <p >
             Während Ihrer Entscheidung werden Sie auf Ihrem Bildschirm eine Menüleiste mit vier Seiten sehen. Hier finden
             Sie einen Beispielhaften Bildschirm, der Ihnen die Menüpunkte, die Entscheidungen sowie die dazugehörigen
             Erklärungen darstellt. Das Beispiel sieht der wirklichen Entscheidung sehr ähnlich.
@@ -316,16 +337,20 @@
         </div>
         <br><br>
 
+        <p class="lead">
+            Bitte lesen Sie sich die Erklräungen zusammen mit dem Beispiel sorgfältig durch.
+        </p>
         <p>
-            Bitte lesen Sie sich die Erklräungen zusammen mit dem Beispiel sorgfältig durch. Sobald Sie alle Instruktionen
-            verstanden haben können Sie auf <mark>Weiter</mark> klicken. Als nächsten erklären Wir Ihnen wie sich diese
-            Aufgabe auf Ihren verdienst auswirken kann. Danach stellen wir Ihnen Verständnisfragen. Sobald Sie diese alle
-            richtig beantwortet haben, können Sie mit der eigentlichen Entscheidung fortfahren.
+            Sobald Sie alle Instruktionen gelesen und erste Verständnisfragen beantwortet haben, erscheint ein Button mit
+            der Aufschrift <mark>Verstanden</mark>. Klicken Sie auf diesen um fortzufahren klicken. Im Anschluss
+            erklären wir Ihnen wie sich diese Aufgabe auf Ihren Verdienst auswirken kann. Danach stellen wir Ihnen weitere
+            Verständnisfragen. Sobald Sie diese alle richtig beantwortet haben, können Sie mit der richtigen
+            Entscheidung beginnen.
         </p>
 
         <br><br>
         <button onclick="topFunction()" type="button" class="prevtab btn-outline-primary btn">Zurück</button>
-        <button onclick="topFunction()" type="button" class="nexttab btn-outline-primary btn float-right" id="nextButton" style="display:none">Weiter</button>
+        <button onclick="topFunction()" type="button" class="nexttab btn-outline-primary btn float-right" id="nextButton" style="display:none">Verstanden</button>
     </div>
 
 <!-- Part 3: Verdienst -->
@@ -357,7 +382,7 @@
 
         <br><br>
         <button onclick="topFunction()" type="button" class="prevtab btn-outline-primary btn ">Zurück</button>
-        <button onclick="topFunction()" type="button" class="nexttab btn-outline-primary btn float-right">Weiter</button>
+        <button onclick="topFunction()" type="button" class="nexttab btn-outline-primary btn float-right">Verstanden</button>
     </div>
 
 

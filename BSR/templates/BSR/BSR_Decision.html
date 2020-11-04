@@ -61,6 +61,8 @@
 
         <div class="card-body">
             <div class="tab-content" id="myTabContent">
+
+                <!-- Tab 1: Pre-selection/Limits -->
                 <div class="tab-pane fade show active" id="limits" role="tabpanel" aria-labelledby="limits_tab">
                     <div class="input-group mb-4">
                         <label for="id_minTemp">
@@ -84,12 +86,19 @@
                     <button type="button" onclick="revision();" id="limits_revision" class="btn-outline-secondary btn" style="display:none">Entscheidung ändern</button>
                 </div>
 
+                <!-- Tab 2: Decision Table -->
                 <div class="tab-pane fade" id="choice" role="tabpanel" aria-labelledby="choice_tab">
                     <div id="table-wrapper">
                     </div>
+                    <p>
+                        <small>Geben Sie nur ganze Zahlen ein. Die Summe aller Eingaben darf nicht größer als 100 sein.
+                        Sobald Sie alle gewünschten Eingaben getätigt haben, können Sie ihre Gewinnchancen berechnen.
+                        Wenn Sie gewinnen können Sie {{ Constants.prize_payoff }} Euro erhalten.</small> <br>
+                    </p>
                     <button type="button" onclick="calcChance2win();" class="btn-outline-primary btn">Gewinnchance berechnen</button>
                 </div>
 
+                <!-- Tab 3: Decision Visualization -->
                 <div class="tab-pane fade" id="viz" role="tabpanel" aria-labelledby="viz_tab">
                     <figure class="highcharts-figure">
                         <div id="container"></div>
@@ -97,6 +106,7 @@
                     </figure>
                 </div>
 
+                <!-- Tab 4: Weather Viz/Forecast -->
                 <div class="tab-pane fade" id="weather" role="tabpanel" aria-labelledby="weather_tab">
                     <figure class="highcharts-figure">
                         <div id="weather_viz"></div>
