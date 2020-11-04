@@ -3,6 +3,15 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 
 
+class Baillon_Instructions(Page):
+    def is_displayed(self):
+            # print(self.subsession.this_app_constants()["treatment_displayed"])
+        if self.subsession.this_app_constants()["treatment_displayed"] == False and self.round_number == 1:
+            return True
+
+    form_model="player"
+
+
 class Historic_Viz(Page):
     def is_displayed(self):
         if self.subsession.this_app_constants()["treatment_displayed"] == False and self.round_number == 1:
@@ -26,15 +35,6 @@ class Forecast_Viz(Page):
             treatment = self.participant.vars["treatment"],
             location = self.participant.vars["location"],
         )
-
-class Instructions(Page):
-    def is_displayed(self):
-            # print(self.subsession.this_app_constants()["treatment_displayed"])
-        if self.subsession.this_app_constants()["treatment_displayed"] == False and self.round_number == 1:
-            return True
-
-    form_model="player"
-
 
 class Baillon_Decision(Page):
     form_model = "player"
@@ -78,7 +78,7 @@ class Baillon_Decision(Page):
         self.player.set_switching_row()
 
 
-page_sequence = [Instructions,
+page_sequence = [Baillon_Instructions,
                  Historic_Viz,
                  Forecast_Viz,
                  Baillon_Decision]
