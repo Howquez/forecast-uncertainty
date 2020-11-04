@@ -6,5 +6,8 @@ from .models import Constants
 class Intro_Instructions(Page):
     pass
 
+class Intro_Welcome(Page):
+    pass
 
-page_sequence = [Intro_Instructions]
+
+page_sequence = [Intro_Welcome, Intro_Instructions]
