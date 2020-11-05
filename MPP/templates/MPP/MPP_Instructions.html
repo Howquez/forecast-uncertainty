@@ -13,14 +13,14 @@
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
-    <script src="{% static 'MPP/js/weather_viz.js' %}"></script>
+    <script src="{% static 'global/js/weather_viz.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title">Instruktionen</h5>
+        <h5 class="card-title display-4">Instruktionen</h5>
         <h6 class="card-subtitle mb-2 text-muted">Multipe Point Prediction</h6>
         <p class="card-text">
             Auch auf der nächsten Seite bitten wir Sie Schätzungen zur Temperatur an dem besagten Sonntag einzugeben. Dabei
@@ -106,7 +106,14 @@
 
         <p class="card-text"><br><br>
             Nachdem Sie Ihre Schätzungen eingegeben haben, bestimmen wir die Summe der Kosten. Je niedirger diese Summe
-            ist, desto wahrscheinlicher ist es, dass Sie {{ Constants.prize_payoff }} Euro gewinnen können. Am Ende dieser
+            ist, desto wahrscheinlicher ist es, dass Sie {{ Constants.prize_payoff }} Euro gewinnen können.
+        </p>
+        <p class="card-text lead">
+            Sie werden diese Entscheidungssituation zweimal durchlaufen. In der ersten Runde sehen Sie den oben
+            dargestellten Wetterbericht. In der zweiten Runde sehen Sie zusätzlich eine (echte) Wettervorhersage.
+        </p>
+        <p class="card-text">
+            Am Ende dieser
             Umfrage werden wir sowohl den Ort, als auch das entsprechende Datum sowie die Quelle und die am Sonntag
             eingetretene Temperatur preisgeben. Darüber hinaus werden wir Ihre Schätzungen sowie die Gewinnchancen
             in allen Runden anzeigen und zufällig bestimmen, welche Runde für Ihre Auszahlung relevant ist.

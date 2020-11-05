@@ -108,14 +108,6 @@ var ilomantsiObserved = [
 // get vars from python
 let village = js_vars.location;   // equals "Weiskirchen" or "Ilomantsi"
 let treatment = js_vars.treatment; // equals "best_guess" or "interval"
-let page = js_vars.page; // equals "historic" or "forecast" or "decision" or "revelation"
-let iteration  = js_vars.treatment_displayed;
-
-console.log(village)
-console.log(treatment)
-console.log(page)
-console.log(iteration)
-
 
 // page and treatment specific operations
 var displayForecast = false;
@@ -135,34 +127,9 @@ if (village == "Ilomantsi"){
 
 // text operations
 function fillText() {
-    var reportArray = [observed[1][1],
-    observed[2][1],
-    observed[3][1]];
 
-    document.getElementById("report0").innerHTML = reportArray[0];
-    document.getElementById("report1").innerHTML = reportArray[1];
-    document.getElementById("report2").innerHTML = reportArray[2];
+    document.getElementById("revelation").innerHTML = observed[12][1];
     }
-
-// display forecast after the first round, i.e. in postBaillon App
-if (page == "forecast"){
-    displayForecast = true;
-}
-
-// display forecast during second decision round
-if (iteration == "True"){ //marks the second iteration of an App
-    displayForecast = true;
-}
-
-
-// display only the first few data points
-for (var i = 0; i < observed.length; ++i){
-    if (page != "revelation"){
-        if (i > 3){
-            observed[i][1] = null;
-        }
-    }
-}
 
 // color definitions
 var opacity = 0.1;
@@ -175,7 +142,9 @@ var forecastRGBA  = `rgba(197, 130, 255, ${opacity*1.5})`;
 // language plot options
 Highcharts.setOptions({
     lang: {
-        weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+        months:        ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+        shortMonths:   ["Jan.", "Feb.", "März", "Apr.", "Mai", "Jun.", "Jul.", "Aug.", "Sept.", "Okt.", "Nov.", "Dez."],
+        weekdays:      ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
         shortWeekdays: ['So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.']
     },
 });
@@ -186,8 +155,12 @@ var chart = Highcharts.chart("weather_viz", {
         enabled: false
     },
 
-    chart: {
-        height: (5 / 16 * 100) + '%' // 16:5 ratio
+    plotOptions: {
+        series: {
+            animation:{
+                duration: 2000
+            }
+        }
     },
 
     title: {
@@ -198,12 +171,6 @@ var chart = Highcharts.chart("weather_viz", {
         type: "datetime",
         accessibility: {
             rangeDescription: ""
-        },
-        labels: {
-            formatter: function() {
-            var dayStr = Highcharts.dateFormat('%a', this.value);
-            return dayStr;
-            }
         },
         plotBands: [{
         from: 1602079200000 - 43200000,
@@ -234,8 +201,7 @@ var chart = Highcharts.chart("weather_viz", {
     tooltip: {
         crosshairs: true,
         shared: true,
-        valueSuffix: "°C",
-        xDateFormat: "%A"
+        valueSuffix: "°C"
     },
 
     series: [{
@@ -259,21 +225,19 @@ var chart = Highcharts.chart("weather_viz", {
             lineWidth: 2,
             lineColor: forecastColor
         },
-        showInLegend: displayForecast && displayBestGuess,
-        visible: displayForecast && displayBestGuess
+        showInLegend: displayForecast,
+        visible: displayForecast
     }, {
         name: "Wahrscheinlichster Bereich",
         data: range,
         type: "arearange",
         lineWidth: 0,
-        // linkedTo: ":previous",
+        linkedTo: ":previous",
         color: forecastColor, 
         fillOpacity: 0.3,
         zIndex: 0,
         marker: {
             enabled: true
-        },
-        showInLegend: displayForecast && displayInterval && treatment !== "both",
-        visible: displayForecast && displayInterval,
+        }
     }]
 });

@@ -7,14 +7,14 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script src="{% static 'MPP/js/revelation_viz.js' %}"></script>
+    <script src="{% static 'global/js/revelation_viz.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 <body onload="fillText()">
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">{{ participant.vars.location }} Oktober 2020</h5>
+            <h5 class="card-title display-4">{{ participant.vars.location }} Oktober 2020</h5>
             <h6 class="card-subtitle mb-2 text-muted">Am <b>Sonntag</b>, dem 18. Oktober um 14:00 Uhr wurden hier
                 <b><span id="revelation"></span>°C</b> gemessen.
             </h6>

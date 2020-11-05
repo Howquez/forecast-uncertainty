@@ -7,14 +7,14 @@
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
-    <script src="{% static 'MPP/js/weather_viz.js' %}"></script>
+    <script src="{% static 'global/js/weather_viz.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 <body onload="fillText()">
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Wie wird das Wetter in 9 Tagen?</h5>
+            <h5 class="card-title display-4">Wie wird das Wetter in 9 Tagen?</h5>
             <h6 class="card-subtitle mb-2 text-muted">Was schätzen Sie?</h6>
             {% if player.round_number == 1 %}
                 <p class="card-text">
