@@ -16,18 +16,19 @@
         <div class="card-body">
             <h5 class="card-title display-4">Wie wird das Wetter in 9 Tagen?</h5>
             <h6 class="card-subtitle mb-2 text-muted">Was schätzen Sie?</h6>
+            <br>
             {% if player.round_number == 1 %}
                 <p class="card-text">
-                    <small> Die Temperaturen
+                    Die Temperaturen
                     <a style="color:#5DE58E">zwischen Mittwoch und Freitag (also im grün gefärbten Bereich)</a>
                     betrugen jeweils um 14:00 Uhr
-                    <span id="report0"></span>°C, <span id="report1"></span>°C bzw. <span id="report2"></span>°C.</small>
+                    <span id="report0"></span>°C, <span id="report1"></span>°C bzw. <span id="report2"></span>°C.
                 </p>
                 <p class="card-text">
-                    <small> Ohne zu wissen, auf welchen Ort und Zeitpunkt sich das oben dargestellte Wetter bezieht,
+                    Ohne zu wissen, auf welchen Ort und Zeitpunkt sich das oben dargestellte Wetter bezieht,
                     müssen Sie für die folgenden Aufgaben abschätzen, welche Temperaturbereiche Sie über eine Woche später,
                     <a style="color:#C582FF">am Sonntag (also im lila gefärbten Bereich)</a>,
-                        am selben Ort und zur gleichen Tageszeit für wahrscheinlich halten. </small>
+                        am selben Ort und zur gleichen Tageszeit für wahrscheinlich halten.
                 </p>
             {% else %}
                 <div class="alert alert-primary" role="alert">
@@ -38,6 +39,7 @@
             <figure class="highcharts-figure">
                 <div id="weather_viz"></div>
             </figure>
+            <br>
 
             <p class="lead">
                 Was schätzen Sie, welche Temperatur wurde <a style="color:#C582FF">am Sonntag</a> gemessen...

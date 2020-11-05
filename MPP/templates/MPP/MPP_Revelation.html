@@ -18,15 +18,16 @@
             <h6 class="card-subtitle mb-2 text-muted">Am <b>Sonntag</b>, dem 18. Oktober um 14:00 Uhr wurden hier
                 <b><span id="revelation"></span>°C</b> gemessen.
             </h6>
+            <br>
             <figure class="highcharts-figure">
                 <div id="weather_viz"></div>
             </figure>
             <p class="card-text">
                 <small>Der Wetterbericht den wir Ihnen gezeigt haben und auf dem Ihre Entscheidungen sowie
-                    Ihre möglichen Auszahlungen basieren, bezieht sich auf das Wetter in {{ participant.vars.location }}
-                    {% if participant.vars.location == "Ilomantsi" %}
+                Ihre möglichen Auszahlungen basieren, bezieht sich auf das Wetter in {{ participant.vars.location }}
+                {% if participant.vars.location == "Ilomantsi" %}
                         (Finnland)
-                    {% else %}
+                {% else %}
                         (Saarland)
                     {% endif %}
                     im Oktober 2020.
