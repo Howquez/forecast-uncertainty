@@ -1,6 +1,21 @@
 {% extends "global/Page.html" %}
 {% load otree static %}
 
+{% block styles %}
+<style>
+    #weather_viz {  width: auto;  height: 50%; }
+</style>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="{% static 'MPP/js/weather_viz.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 
 <div class="card">
@@ -25,10 +40,15 @@
         </p>
 
         <p class="card-text">
-            Ihre Entschidungssituation wird genau so aussehen:
+            Ihre Entscheidungssituation wird dabei wie folgt  aussehen: <br><br>
         </p>
 
         <div class="container clearfix border-left border-primary">
+
+            <figure class="highcharts-figure">
+                <div id="weather_viz"></div>
+            </figure>
+
             <p>
                 <br> Was schätzen Sie, welche Temperatur wurde <a style="color:#C582FF">am Sonntag</a> gemessen...
             </p>
@@ -36,9 +56,9 @@
                 <tbody>
                 <tr>
                     <td>
-                        <label for="id_Q1">
-                        ...wenn Überschätzen drei Mal so teuer wie Unterschätzen ist?
-                        </label>
+                        <label for="id_Q1"><small><em>
+                        ...wenn überschätzen dreimal so teuer wie unterschätzen ist?
+                        </em></small></label>
                     </td>
                     <td>
                         <div class="input-group">
@@ -51,9 +71,9 @@
                 </tr>
                 <tr>
                     <td>
-                        <label for="id_Q2">
-                        ...wenn Überschätzen genau so teuer wie Unterschätzen ist?
-                        </label>
+                        <label for="id_Q2"><small><em>
+                        ...wenn überschätzen genauso teuer wie unterschätzen ist?
+                        </em></small></label>
                     </td>
                     <td>
                         <div class="input-group">
@@ -66,9 +86,9 @@
                 </tr>
                 <tr>
                     <td>
-                        <label for="id_Q3">
-                        ...wenn Unterschätzen drei Mal so teuer wie Überschätzen ist?
-                        </label>
+                        <label for="id_Q3"><small><em>
+                        ...wenn unterschätzen dreimal so teuer wie überschätzen ist?
+                        </em></small></label>
                     </td>
                     <td>
                         <div class="input-group">
@@ -84,10 +104,12 @@
             <br>
         </div>
 
-        <p class="card-text">
+        <p class="card-text"><br><br>
             Nachdem Sie Ihre Schätzungen eingegeben haben, bestimmen wir die Summe der Kosten. Je niedirger diese Summe
             ist, desto wahrscheinlicher ist es, dass Sie {{ Constants.prize_payoff }} Euro gewinnen können. Am Ende dieser
-            Umfrage werden wir Ihnen
+            Umfrage werden wir sowohl den Ort, als auch das entsprechende Datum sowie die Quelle und die am Sonntag
+            eingetretene Temperatur preisgeben. Darüber hinaus werden wir Ihre Schätzungen sowie die Gewinnchancen
+            in allen Runden anzeigen und zufällig bestimmen, welche Runde für Ihre Auszahlung relevant ist.
         </p>
     </div>
 </div>

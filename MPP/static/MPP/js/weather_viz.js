@@ -186,6 +186,10 @@ var chart = Highcharts.chart("weather_viz", {
         enabled: false
     },
 
+    chart: {
+        height: (5 / 16 * 100) + '%' // 16:5 ratio
+    },
+
     title: {
         text: ""
     },
