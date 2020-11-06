@@ -5,22 +5,14 @@ from .models import Constants
 
 class MPP_Instructions(Page):
     def is_displayed(self):
-        if self.round_number == 1:
+        if self.subsession.this_app_constants()["treatment_displayed"] == False:
             return True
 
     def js_vars(self):
-
-        treatment_displayed = False
-        page = "historic"
-
-        if self.round_number == 2:
-            treatment_displayed = True
-            page = "forecast"
-
         return dict(
             location=self.participant.vars["location"],
-            treatment_displayed=treatment_displayed,
-            page=page,
+            treatment_displayed=str(self.subsession.this_app_constants()["treatment_displayed"]),
+            page="historic",
             treatment=self.participant.vars["treatment"],
         )
 
@@ -34,18 +26,10 @@ class MPP_Decision(Page):
         self.player.set_payoff()
 
     def js_vars(self):
-
-        treatment_displayed = False
-        page = "historic"
-
-        if self.round_number == 2:
-            treatment_displayed = True
-            page = "forecast"
-
         return dict(
             location=self.participant.vars["location"],
-            treatment_displayed=treatment_displayed,
-            page=page,
+            treatment_displayed=str(self.subsession.this_app_constants()["treatment_displayed"]),
+            page="decision",
             treatment=self.participant.vars["treatment"],
         )
 
@@ -53,7 +37,7 @@ class MPP_Decision(Page):
 class MPP_Revelation(Page):
 
     def is_displayed(self):
-        if self.round_number == 2:
+        if self.subsession.this_app_constants()["treatment_displayed"] == True:
             return True
 
     def js_vars(self):

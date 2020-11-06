@@ -14,7 +14,7 @@ SESSION_CONFIGS = [
         name='MPP',
         display_name="MPP",
         num_demo_participants=10,
-        app_sequence=["initialize", "MPP"],
+        app_sequence=["initialize", "MPP", "postMPP"],
         location="random",
         treatment="random"
     )

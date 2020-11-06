@@ -46,10 +46,10 @@
             </p>
             <p>
                 Die für Ihre Auszahlung entscheidende und zufällig ausgewählte Runde ist <b>Runde
-                #{{ participant.vars.winning_round }}</b> (in der folgenden Tabelle <a class="text-success">grün</a>
-                gefärbt). In dieser Runde ergab sich eine Gewinnchance von <b>{{ participant.vars.MPP_chance }}%</b>.
+                #X</b> (in der folgenden Tabelle <a class="text-success">grün</a>
+                gefärbt). In dieser Runde ergab sich eine Gewinnchance von <b>X%</b>.
                 Wie der Zufall es so will ergibt sich daraus, dass Sie in diesem Teil der Umfrage
-                <b>{{participant.vars.MPP_payoff}} Euro</b> gewinnen können.
+                <b>X Euro</b> gewinnen können.
             </p>
             <table class="table">
                 <thead>
@@ -63,21 +63,21 @@
                 </thead>
                 <tbody>
                 {% for p in player.in_all_rounds %}
-                    <tr {{ p.FEV1 }}>
-                        <th scope="row">{{ p.round_number }}</th>
+                    <tr>
+                        <th scope="row">#</th>
                         <td>Überschätzen ist teurer</td>
                         <td>{{ p.Q1 }}°C</td>
                         <td>{{ p.diff_Q1 }}°C</td>
                         <td rowspan="3">{{ p.total_chance }}%</td>
                     </tr>
-                    <tr {{ p.FEV1 }}>
-                        <th scope="row">{{ p.round_number }}</th>
+                    <tr>
+                        <th scope="row">#</th>
                         <td>Beides gleich teuer</td>
                         <td>{{ p.Q2 }}°C</td>
                         <td>{{ p.diff_Q2 }}°C</td>
                     </tr>
-                    <tr {{ p.FEV1 }}>
-                        <th scope="row">{{ p.round_number }}</th>
+                    <tr>
+                        <th scope="row">#</th>
                         <td>Unterschätzen ist teurer</td>
                         <td>{{ p.Q3 }}°C</td>
                         <td>{{ p.diff_Q3 }}°C</td>
@@ -91,7 +91,7 @@
         <br><br>
 
     <button id="next" class="btn-outline-primary btn float-right">
-        Diesen Teil Beenden
+        Diesen Teil beenden
     </button>
 </body>
 {% endblock %}

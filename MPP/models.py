@@ -22,7 +22,7 @@ Belief elicitation usind Eyting & Schmidt's (2019, WP) Multiple Point Prediction
 class Constants(BaseConstants):
     name_in_url = 'MPP'
     players_per_group = None
-    num_rounds = 2
+    num_rounds = 1
 
     null_payoff = 0
     prize_payoff = 10
@@ -32,18 +32,23 @@ class Constants(BaseConstants):
     punishment_scale = 3
 
 
-class Subsession(BaseSubsession):
+class SharedBaseSubsession(BaseSubsession):
+    class Meta:
+        abstract = True
+
     def creating_session(self): # having these configs in here, it is impossible to play the BSR App independently
         if self.round_number == 1:
             for p in self.get_players():
                 winning_round = random.randint(1, 2)
-                p.participant.vars["winning_round"] = winning_round
+                p.participant.vars["MPP_winning_round"] = winning_round
 
-class Group(BaseGroup):
-    pass
+class SharedBaseGroup(BaseGroup):
+    class Meta:
+        abstract = True
 
-
-class Player(BasePlayer):
+class SharedBasePlayer(BasePlayer):
+    class Meta:
+        abstract = True
 
     FEV1 = models.StringField(doc="FrontEndVariable1 to style table rows.")
 
@@ -110,10 +115,15 @@ class Player(BasePlayer):
         else:
             self.payoff = Constants.null_payoff
 
-        if self.round_number == self.participant.vars["winning_round"]:
-            self.participant.vars["MPP_payoff"] = self.payoff
-            self.participant.vars["MPP_chance"] = self.total_chance
-            self.FEV1 = "class=table-success"
-        else:
-            self.payoff = 0
-            self.FEV1 = ""
+
+class Subsession(SharedBaseSubsession):
+    def this_app_constants(self):
+        return dict(
+            treatment_displayed = False
+        )
+
+class Group(SharedBaseGroup):
+    pass
+
+class Player(SharedBasePlayer):
+    pass

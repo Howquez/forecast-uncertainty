@@ -37,6 +37,5 @@ class Group(SharedBaseGroup):
 
 
 class Player(SharedBasePlayer):
-
     pass
 

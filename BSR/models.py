@@ -45,16 +45,13 @@ class Constants(BaseConstants):
 
     weight = 0.5
 
-
 class SharedBaseSubsession(BaseSubsession):
     class Meta:
         abstract = True
 
-
 class SharedBaseGroup(BaseGroup):
     class Meta:
         abstract = True
-
 
 class SharedBasePlayer(BasePlayer):
     class Meta:
@@ -153,7 +150,6 @@ class SharedBasePlayer(BasePlayer):
         blank=True
     )
 
-
 class Subsession(SharedBaseSubsession):
     def this_app_constants(self):
         return dict(
@@ -162,7 +158,6 @@ class Subsession(SharedBaseSubsession):
 
 class Group(SharedBaseGroup):
     pass
-
 
 class Player(SharedBasePlayer):
     # def calc_each_loss(self):
