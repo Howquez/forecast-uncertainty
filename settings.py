@@ -17,6 +17,14 @@ SESSION_CONFIGS = [
         app_sequence=["initialize", "MPP", "postMPP"],
         location="random",
         treatment="random"
+    ),
+    dict(
+        name='BaillonMPP',
+        display_name="BaillonMPP",
+        num_demo_participants=10,
+        app_sequence=["initialize", "Baillon", "MPP", "postBaillon","postMPP"],
+        location="random",
+        treatment="random"
     )
 ]
 
