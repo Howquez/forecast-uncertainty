@@ -17,7 +17,7 @@
     var labelArray = ticksArray.map( function(value) {return value - treatmentDiff} );
 
 
-// set color (and implicitely the label) of barchart
+// set color (and implicitly the label) of barchart
     if (/1/.test(event)){
         S1Col = successColor
     }
@@ -31,15 +31,23 @@
     }
 
 // set subheader of table
-    var E1SubHeader  = `<em>Sie gewinnen 10 Euro, wenn die Temperatur bis zu ${labelArray[1]}°C beträgt (und sonst nichts).</em>`;
-    var E2SubHeader  = `<em>Sie gewinnen 10 Euro, wenn die Temperatur ${labelArray[1]}°C bis ${labelArray[2]}°C beträgt (und sonst nichts).</em>`;
-    var E3SubHeader  = `<em>Sie gewinnen 10 Euro, wenn die Temperatur ${labelArray[2]}°C oder mehr beträgt (und sonst nichts).</em>`;
-    var E12SubHeader = `<em>Sie gewinnen 10 Euro, wenn die Temperatur bis zu ${labelArray[2]}°C beträgt (und sonst nichts).</em>`;
-    var E23SubHeader = `<em>Sie gewinnen 10 Euro, wenn die Temperatur ${labelArray[1]}°C oder mehr beträgt (und sonst nichts).</em>`;
-    var E13SubHeader = `<em>Sie gewinnen 10 Euro, wenn die Temperatur bis zu ${labelArray[1]}°C oder ${labelArray[2]}°C oder mehr beträgt (und sonst nichts).`;
+    var E1SubHeader  = "<em>Sie gewinnen 10 Euro, wenn die Temperatur bis einschließlich 7,9°C beträgt (und sonst nichts).</em>";
+    var E2SubHeader  = "<em>Sie gewinnen 10 Euro, wenn die Temperatur zwischen 8,0°C und 13,9°C beträgt (und sonst nichts).</em>";
+    var E3SubHeader  = "<em>Sie gewinnen 10 Euro, wenn die Temperatur mindestens 14,0°C beträgt (und sonst nichts).</em>";
+    var E12SubHeader = "<em>Sie gewinnen 10 Euro, wenn die Temperatur höchstens 13,9°C beträgt (und sonst nichts).</em>";
+    var E23SubHeader = "<em>Sie gewinnen 10 Euro, wenn die Temperatur mindestens 8,0°C beträgt (und sonst nichts).</em>";
+    var E13SubHeader = "<em>Sie gewinnen 10 Euro, wenn die Temperatur bis einschließlich 7,9°C oder 14,0°C und mehr beträgt (und sonst nichts).</em>";
+
+    // var E1SubHeader  = `<em>Sie gewinnen 10 Euro, wenn die Temperatur bis einnschließlich ${labelArray[1]}°C beträgt (und sonst nichts).</em>`;
+    // var E2SubHeader  = `<em>Sie gewinnen 10 Euro, wenn die Temperatur ${labelArray[1]}°C bis ${labelArray[2]}°C beträgt (und sonst nichts).</em>`;
+    // var E3SubHeader  = `<em>Sie gewinnen 10 Euro, wenn die Temperatur ${labelArray[2]}°C oder mehr beträgt (und sonst nichts).</em>`;
+    // var E12SubHeader = `<em>Sie gewinnen 10 Euro, wenn die Temperatur bis zu ${labelArray[2]}°C beträgt (und sonst nichts).</em>`;
+    // var E23SubHeader = `<em>Sie gewinnen 10 Euro, wenn die Temperatur ${labelArray[1]}°C oder mehr beträgt (und sonst nichts).</em>`;
+    // var E13SubHeader = `<em>Sie gewinnen 10 Euro, wenn die Temperatur bis zu ${labelArray[1]}°C oder ${labelArray[2]}°C oder mehr beträgt (und sonst nichts).`;
+
 
     subHeader = window[event.concat("SubHeader")];
-    
+    console.log(subHeader)
     document.getElementById("subHeader").innerHTML = subHeader;
 
 
@@ -115,19 +123,19 @@ var chart = Highcharts.chart('container', {
 
     series: [{
         label: "Series3",
-        name: `${labelArray[2]}°C und drüber` ,// "14°C und drüber",
+        name: "14,0°C und drüber", //`${labelArray[2]}°C und drüber` ,// "14°C und drüber",
         data: [ticksArray[3] - ticksArray[2]],
         showInLegend: false,
         color: S3Col,
     }, {
         label: "Series2",
-        name: `${labelArray[1]}°C bis ${labelArray[2]}°C` ,//"8°C bis 14°C",
+        name: "8,0°C bis einschließlich 13,9°C", //`${labelArray[1]}°C bis ${labelArray[2]}°C` ,//"8°C bis 14°C",
         data: [ticksArray[2] - ticksArray[1]],
         showInLegend: false,
         color: S2Col,
     }, {
         label: "Series1",
-        name: `bis zu ${labelArray[1]}°C` , //"bis zu 8°C",
+        name: "bis einschließlich 7,9°C", //`bis zu ${labelArray[1]}°C` , //"bis zu 8°C",
         data: [ticksArray[1] - ticksArray[0]],
         showInLegend: false,
         color: S1Col,

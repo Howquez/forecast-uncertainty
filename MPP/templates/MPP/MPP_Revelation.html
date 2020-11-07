@@ -51,40 +51,44 @@
                 Wie der Zufall es so will ergibt sich daraus, dass Sie in diesem Teil der Umfrage
                 <b>X Euro</b> gewinnen können.
             </p>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">Runde</th>
-                    <th scope="col">Kosten</th>
-                    <th scope="col">Ihre Schätzung</th>
-                    <th scope="col">Differenz</th>
-                    <th scope="col">Chance</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for p in player.in_all_rounds %}
-                    <tr>
-                        <th scope="row">#</th>
-                        <td>Überschätzen ist teurer</td>
-                        <td>{{ p.Q1 }}°C</td>
-                        <td>{{ p.diff_Q1 }}°C</td>
-                        <td rowspan="3">{{ p.total_chance }}%</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">#</th>
-                        <td>Beides gleich teuer</td>
-                        <td>{{ p.Q2 }}°C</td>
-                        <td>{{ p.diff_Q2 }}°C</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">#</th>
-                        <td>Unterschätzen ist teurer</td>
-                        <td>{{ p.Q3 }}°C</td>
-                        <td>{{ p.diff_Q3 }}°C</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            <div id="table-wrapper">
+                <div class="table-responsive" id="table-scroll">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Runde</th>
+                            <th scope="col">Kosten</th>
+                            <th scope="col">Ihre Schätzung</th>
+                            <th scope="col">Differenz</th>
+                            <th scope="col">Chance</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for p in player.in_all_rounds %}
+                            <tr>
+                                <th scope="row">#</th>
+                                <td>Überschätzen ist teurer</td>
+                                <td>{{ p.Q1 }}°C</td>
+                                <td>{{ p.diff_Q1 }}°C</td>
+                                <td rowspan="3" style="vertical-align: middle">{{ p.total_chance }}%</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">#</th>
+                                <td>Beides gleich teuer</td>
+                                <td>{{ p.Q2 }}°C</td>
+                                <td>{{ p.diff_Q2 }}°C</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">#</th>
+                                <td>Unterschätzen ist teurer</td>
+                                <td>{{ p.Q3 }}°C</td>
+                                <td>{{ p.diff_Q3 }}°C</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
