@@ -1,3 +1,6 @@
+// Thank you snunnari. The single switching point script is copied (and slightly adjusted) from this repo
+// https://github.com/snunnari/otree_psm)
+
 console.log("engines running");
 var switchingValue;
 
