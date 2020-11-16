@@ -41,7 +41,10 @@ class Baillon_Decision(Page):
 
     # form fields
     def get_form_fields(self):
-        form_fields = [list(t) for t in zip(*self.participant.vars["baillon_choices"])][1]
+        if len(self.player.event_decision) == 3: #compound decision
+            form_fields = [list(t) for t in zip(*self.participant.vars["baillon_compound_choices"])][1]
+        else:
+            form_fields = [list(t) for t in zip(*self.participant.vars["baillon_single_choices"])][1]
         return form_fields
 
     def js_vars(self):
@@ -56,17 +59,28 @@ class Baillon_Decision(Page):
         )
 
     def vars_for_template(self):
+        if len(self.player.event_decision) == 3: #compound decision
+            choices = self.player.participant.vars["baillon_compound_choices"]
+        else:
+            choices = self.player.participant.vars["baillon_single_choices"]
         return {
-            "choices" : self.player.participant.vars["baillon_choices"],
+            "choices" : choices,
             "num_choices" : Constants.num_choices
         }
 
     # set player's payoff
     def before_next_page(self):
+        if len(self.player.event_decision) == 3: #compound decision
+            form_fields = [list(t) for t in zip(*self.participant.vars["baillon_compound_choices"])][1]
+            indices = [list(t) for t in zip(*self.participant.vars["baillon_compound_choices"])][0]
+        else:
+            form_fields = [list(t) for t in zip(*self.participant.vars["baillon_single_choices"])][1]
+            indices = [list(t) for t in zip(*self.participant.vars["baillon_single_choices"])][0]
+
         # unzip indices and form fields from <mpl_choices> list
         # round_number = self.subsession.round_number
-        form_fields = [list(t) for t in zip(*self.participant.vars['baillon_choices'])][1]
-        indices = [list(t) for t in zip(*self.participant.vars['baillon_choices'])][0]
+        # form_fields = [list(t) for t in zip(*self.participant.vars['baillon_choices'])][1]
+        # indices = [list(t) for t in zip(*self.participant.vars['baillon_choices'])][0]
         # index = indices[round_number - 1]
 
         for j, choice in zip(indices, form_fields):
