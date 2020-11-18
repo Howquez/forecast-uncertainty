@@ -1,6 +1,8 @@
 // get vars from python
-    let ticksArray = js_vars.ticks;
-    let event      = js_vars.event_decision;
+    let ticksArray   = js_vars.ticks;
+    let event        = js_vars.event_decision;
+    let enabledLabel = js_vars.enabledLabel;
+    console.log(enabledLabel)
 
 // set constants
     // const events = ["E1", "E2", "E3", "E12", "E23", "E13"];
@@ -33,9 +35,11 @@
 // set subheader of table
     var E1SubHeader  = "<em>Sie gewinnen 10 Euro, wenn die Temperatur bis einschließlich 7,9°C beträgt (und sonst nichts).</em>";
     var E2SubHeader  = "<em>Sie gewinnen 10 Euro, wenn die Temperatur zwischen 8,0°C und 13,9°C beträgt (und sonst nichts).</em>";
-    var E3SubHeader  = "<em>Sie gewinnen 10 Euro, wenn die Temperatur mindestens 14,0°C beträgt (und sonst nichts).</em>";
-    var E12SubHeader = "<em>Sie gewinnen 10 Euro, wenn die Temperatur höchstens 13,9°C beträgt (und sonst nichts).</em>";
-    var E23SubHeader = "<em>Sie gewinnen 10 Euro, wenn die Temperatur mindestens 8,0°C beträgt (und sonst nichts).</em>";
+    // var E3SubHeader  = "<em>Sie gewinnen 10 Euro, wenn die Temperatur mindestens 14,0°C beträgt (und sonst nichts).</em>";
+    var E3SubHeader  = `<em>Sie gewinnen 10 Euro, wenn die Temperatur mindestens ${labelArray[2]}°C (und sonst nichts).</em>`;
+    // var E12SubHeader = "<em>Sie gewinnen 10 Euro, wenn die Temperatur höchstens 13,9°C beträgt (und sonst nichts).</em>";
+    var E12SubHeader = `<em>Sie gewinnen 10 Euro, wenn die Temperatur höchstens ${labelArray[2]-1},9°C beträgt (und sonst nichts).</em>`;
+    var E23SubHeader = `<em>Sie gewinnen 10 Euro, wenn die Temperatur mindestens ${labelArray[1]},0°C oder mehr beträgt (und sonst nichts).</em>`;
     var E13SubHeader = "<em>Sie gewinnen 10 Euro, wenn die Temperatur bis einschließlich 7,9°C oder 14,0°C und mehr beträgt (und sonst nichts).</em>";
 
     // var E1SubHeader  = `<em>Sie gewinnen 10 Euro, wenn die Temperatur bis einnschließlich ${labelArray[1]}°C beträgt (und sonst nichts).</em>`;
@@ -73,7 +77,7 @@ var chart = Highcharts.chart('container', {
         min: 0,
         max: 24,
         tickPositions: ticksArray,
-                labels: {
+        labels: {
             formatter: function () {
                 var label = this.axis.defaultLabelFormatter.call(this);
                 if (label == ticksArray[0]) {
@@ -113,7 +117,7 @@ var chart = Highcharts.chart('container', {
         series: {
             stacking: "normal",
             dataLabels: {
-                enabled:true,
+                enabled: enabledLabel,
                 formatter: function() {                
                     return this.series.name;
                     }

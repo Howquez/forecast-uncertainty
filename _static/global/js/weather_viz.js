@@ -110,6 +110,7 @@ let village = js_vars.location;   // equals "Weiskirchen" or "Ilomantsi"
 let treatment = js_vars.treatment; // equals "best_guess" or "interval" or "both"
 let page = js_vars.page; // equals "historic" or "forecast" or "decision" or "revelation"
 let iteration  = js_vars.treatment_displayed;
+let small = js_vars.small || false; // determines size of visualization
 
 console.log(treatment)
 
@@ -179,6 +180,12 @@ var observedRGBA  = `rgba(93, 229, 142, ${opacity})`;
 var forecastColor = "#C582FF";
 var forecastRGBA  = `rgba(197, 130, 255, ${opacity*1.5})`;
 
+// height of chart
+var height = 9;
+if (small){
+    height = 6;
+}
+
 
 // language plot options
 Highcharts.setOptions({
@@ -192,6 +199,10 @@ Highcharts.setOptions({
 var chart = Highcharts.chart("weather_viz", {
     exporting: {
         enabled: false
+    },
+
+    chart: {
+        height: (height / 16 * 100) + '%' // 16:9 ratio
     },
 
     title: {
@@ -210,22 +221,22 @@ var chart = Highcharts.chart("weather_viz", {
             }
         },
         plotBands: [{
-        from: 1602079200000 - 43200000,
-        to: 1602252000000 + 43200000,
-        color: observedRGBA,
-        label: {
-            text: "", // Content of the label. 
-            verticalAlign: "middle",
-        }
-      }, {
-        from: 1603029600000 - 43200000,
-        to: 1603029600000 + 43200000,
-        color: forecastRGBA,
-        label: {
-            text: "", // Content of the label. 
-            verticalAlign: "middle",
-        }
-      }]
+            from: 1602079200000 - 43200000,
+            to: 1602252000000 + 43200000,
+            color: observedRGBA,
+            label: {
+                text: "", // Content of the label. 
+                verticalAlign: "middle",
+            }
+        }, {
+            rom: 1603029600000 - 43200000,
+            to: 1603029600000 + 43200000,
+            color: forecastRGBA,
+            label: {
+                text: "", // Content of the label. 
+                verticalAlign: "middle",
+            }
+        }]
     },
     yAxis: {
         title: {

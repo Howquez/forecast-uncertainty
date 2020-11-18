@@ -25,6 +25,17 @@
 -->
 <br><br>
 
+
+<div class="alert alert-primary alert-dismissible fade show mb-5" role="alert">
+    Sie müssen nicht in allen 28 Zeilen eine Auswahl treffen. Wenn Sie in einer bestimmten Zeile die klassische
+    Lotterie wählen, dann wird Ihre Auswahl in allen folgenden Zeilen automatisch die klassische Lotterie und in
+    allen vorhergehenden Zeilen die wetterabhängige Lotterie sein. Sie müssen also nur auswählen, ab welcher
+    Zeile Sie die klassische Lotterie bevorzugen.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
     <div class = "container">
         <div class = "row" >
             <!-- <div class = "card" > -->
@@ -40,10 +51,10 @@
                     <thead>
                     <tr class = "header">
                         <th class = "payment-th" style = "border-right: 2px solid #dee2e6;" colspan = "2">
-                            Weather Event
+                            Wetterabhängige Lotterie
                         </th>
                         <th class = "payment-th" colspan = "2">
-                            Lottery Event
+                            Klassische Lotterie
                         </th>
                     </tr>
                     </thead>
@@ -117,6 +128,13 @@
       </div>
     </div>
 
+<div class="alert alert-danger alert-dismissible fade show mb-5" role="alert">
+    Sie können nicht mehr zu einer Frage zurückkehren, sobald Sie auf die Schaltfläche "Weiter" geklickt haben.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
 <!-- Button trigger modal -->
     <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#weatherModal">
       Wetterbericht einblenden
@@ -125,5 +143,6 @@
     <button id="Baillon_next" class="btn-primary btn float-right">
         Weiter
     </button>
+
 
 {% endblock %}

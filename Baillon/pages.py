@@ -9,8 +9,21 @@ class Baillon_Instructions(Page):
         if self.subsession.this_app_constants()["treatment_displayed"] == False and self.round_number == 1:
             return True
 
-    form_model="player"
+    def js_vars(self):
+        return dict(
+            ticks=[0, 14, 20, 34],
+            event_decision="E3",
+            treatment=self.participant.vars["treatment"],
+            enabledLabel=False,
+        )
 
+    def vars_for_template(self):
+        choices = self.player.participant.vars["baillon_compound_choices"]
+        indices = [0, 1, 3, 7, 11, 19]
+        return {
+            "choices":[choices[i] for i in indices],
+            "num_choices": 6
+        }
 
 class Historic_Viz(Page):
     def is_displayed(self):
@@ -52,6 +65,7 @@ class Baillon_Decision(Page):
             ticks = Constants.ticks,
             event_decision = self.player.event_decision,
             treatment = self.participant.vars["treatment"],
+            enabledLabel=True,
             # the following three vars are needed such that the weather viz can be displayed on decision screen as well
             treatment_displayed = str(self.subsession.this_app_constants()["treatment_displayed"]),
             page="decision",
