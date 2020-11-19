@@ -105,10 +105,27 @@ var ilomantsiObserved = [
         [1603116000000, null], //20201019
     ];
 
+var instructionsObserved = [
+        [1601992800000, null], //20201006
+        [1602079200000, 48.3], //20201007 to be displayed
+        [1602165600000, 46.9], //20201008 to be displayed
+        [1602252000000, 46.1], //20201009 to be displayed
+        [1602338400000, 46.1], //20201010
+        [1602424800000, 46.1],  //20201011
+        [1602511200000, 46.1],  //20201012
+        [1602597600000, 46.1],  //20201013
+        [1602684000000, 46.1], //20201014
+        [1602770400000, 46.1],  //20201015
+        [1602856800000, 46.1],  //20201016
+        [1602943200000, 46.1],  //20201017
+        [1603029600000, 46.1],  //20201018 to be revealed
+        [1603116000000, null], //20201019
+    ];
+
 // get vars from python
 let village = js_vars.location;   // equals "Weiskirchen" or "Ilomantsi"
 let treatment = js_vars.treatment; // equals "best_guess" or "interval" or "both"
-let page = js_vars.page; // equals "historic" or "forecast" or "decision" or "revelation"
+let page = js_vars.page; // equals "historic" or "forecast" or "decision" or "revelation" or "instructions"
 let iteration  = js_vars.treatment_displayed;
 let small = js_vars.small || false; // determines size of visualization
 
@@ -121,6 +138,8 @@ var displayInterval = false;
 var observed;
 var bestGuess;
 var Range;
+var yMin = 0;
+var yMax = 25;
 
 if (village == "Ilomantsi"){
     observed = ilomantsiObserved;
@@ -130,7 +149,8 @@ if (village == "Ilomantsi"){
     observed = weiskirchenObserved;
     bestGuess = weiskirchenBestGuess;
     range = weiskirchenRange;
-}
+} 
+
 
 // text operations
 function fillText() {
@@ -202,7 +222,8 @@ var chart = Highcharts.chart("weather_viz", {
     },
 
     chart: {
-        height: (height / 16 * 100) + '%' // 16:9 ratio
+        height: (height / 16 * 100) + '%', // 16:9 ratio
+        backgroundColor: 'transparent'
     },
 
     title: {
@@ -229,7 +250,7 @@ var chart = Highcharts.chart("weather_viz", {
                 verticalAlign: "middle",
             }
         }, {
-            rom: 1603029600000 - 43200000,
+            from: 1603029600000 - 43200000,
             to: 1603029600000 + 43200000,
             color: forecastRGBA,
             label: {
@@ -242,8 +263,8 @@ var chart = Highcharts.chart("weather_viz", {
         title: {
             text: "Temperatur in °C"
         },
-        min: 0,
-        max: 25,
+        min: yMin,
+        max: yMax,
     },
 
     tooltip: {

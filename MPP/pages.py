@@ -8,14 +8,6 @@ class MPP_Instructions(Page):
         if self.subsession.this_app_constants()["treatment_displayed"] == False:
             return True
 
-    def js_vars(self):
-        return dict(
-            location=self.participant.vars["location"],
-            treatment_displayed=str(self.subsession.this_app_constants()["treatment_displayed"]),
-            page="historic",
-            treatment=self.participant.vars["treatment"],
-        )
-
 class MPP_Decision(Page):
     form_model = "player"
     form_fields = ["Q1",

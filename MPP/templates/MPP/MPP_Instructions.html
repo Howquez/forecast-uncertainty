@@ -10,115 +10,364 @@
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
-    <script src="{% static 'global/js/weather_viz.js' %}"></script>
+    <script src="{% static 'MPP/js/instructions_viz.js' %}"></script>
+    <script src="{% static 'global/js/buttons.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title display-4">Instruktionen</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Multipe Point Prediction</h6>
-        <br>
-        <p class="card-text">
-            Auch auf der nächsten Seite bitten wir Sie Schätzungen zur Temperatur an dem besagten Sonntag einzugeben. Dabei
-            können Sie {{ Constants.prize_payoff }} Euro zu gewinnen. Je besser Ihre Schätzungen sind, desto wahrscheinlicher
-            ist es, dass Sie die {{ Constants.prize_payoff }} Euro gewinnen.
-            Um genauer zu sein werden wir Sie nach drei Schätzungen fragen. Aus diesen drei Schätzungen errechnet sich dann
-            Ihre Gewinnchance.
-        </p>
+<!-- Tab navigation -->
+    <ul class="nav nav-tabs fixed-top navbar-light bg-light justify-content-center " id="myTab" role="tablist">
 
-        <p class="card-text">
-            Generell gilt, dass Ihre Gewinnchance umso höher sind, je dichter Ihre Schätzungen an der tatsächlich
-            gemessenen Temperatur liegen. Dementsprechend kann man sagen, dass es Sie etwas <em>kostet</em>, wenn Sie
-            sich verschätzen. Wie hoch diese kosten sind, hängt dabei davon ab, ob Sie die tatsächlich gemessene
-            Temperatur über- oder unterschätzen. In den drei Schätzungen, die Sie abgeben varriert, ob über- oder
-            unterschätzen teurer ist oder ob es keinen Unterschied macht ob Sie nun über oder unter der tatsächlich
-            gemessenen Temperatur liegen.
-        </p>
+        <li class="nav-item" >
+            <a class="nav-link active" id="part1-tab" data-toggle="tab" href="#part1" role="tab" aria-controls="part1" onclick="topFunction()"> Einführung </a>
+        </li>
 
-        <p class="card-text">
-            Ihre Entscheidungssituation wird dabei wie folgt  aussehen: <br><br>
-        </p>
+        <li class="nav-item">
+            <a class="nav-link" id="part2-tab" data-toggle="tab" href="#part2" role="tab" aria-controls="part2" onclick="topFunction()"> Beispiel</a>
+        </li>
 
-        <div class="container clearfix border-left border-primary w-75">
+        <li class="nav-item">
+            <a class="nav-link" id="part3-tab" data-toggle="tab" href="#part3" role="tab" aria-controls="part3" onclick="topFunction()"> Regeln & Verdienst </a>
+        </li>
 
-            <figure class="highcharts-figure">
-                <div id="weather_viz"></div>
-            </figure>
+        <li class="nav-item">
+            <a class="nav-link" id="part4-tab" data-toggle="tab" href="#part4" role="tab" aria-controls="part4" onclick="topFunction()"> Verständnisfragen </a>
+        </li>
+    </ul>
 
-            <p>
-                <br> Was schätzen Sie, welche Temperatur wurde <a style="color:#C582FF">am Sonntag</a> gemessen...
+<div class="tab-content" id="myTabContent">
+    <!-- Part 1: Einführung (no back button) -->
+    <div class="tab-pane show active" id="part1" role="tabpanel" aria-labelledby="part1-tab">
+        <div class="card">
+        <div class="card-body">
+            <h5 class="card-title display-4">Einführung</h5>
+            <h6 class="card-subtitle mb-5 text-muted">Multipe Point Prediction</h6>
+            <p class="card-text">
+                Auch inn der nächsten Entscheidungssituation bitten wir Sie Schätzungen zur Temperatur an dem besagten
+                Sonntag einzugeben. Auch hier können Sie {{ Constants.prize_payoff }} Euro zu gewinnen. Und auch in dieser
+                Situation gilt: Je besser Ihre Schätzungen sind, desto wahrscheinlicher ist es, dass Sie die
+                {{ Constants.prize_payoff }} Euro gewinnen.
+                Anders als in der vorherigen Entscheidungssituation werden wir Sie nach drei Schätzungen fragen.
+                Aus diesen drei Schätzungen errechnet sich dann Ihre Gewinnchance.
             </p>
-            <table class="table table-hover">
-                <tbody>
-                <tr>
-                    <td>
-                        <label for="id_Q1"><small><em>
-                        ...wenn überschätzen dreimal so teuer wie unterschätzen ist?
-                        </em></small></label>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <input type="number" name="Q1" id="id_Q1" class="form-control" step=".1" value="45.5" readonly>
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">°C</div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="id_Q2"><small><em>
-                        ...wenn überschätzen genauso teuer wie unterschätzen ist?
-                        </em></small></label>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <input type="number" name="Q2" id="id_Q2" class="form-control" step=".1" value="47.3" readonly>
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">°C</div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="id_Q3"><small><em>
-                        ...wenn unterschätzen dreimal so teuer wie überschätzen ist?
-                        </em></small></label>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <input type="number" name="Q3" id="id_Q3" class="form-control" step=".1" value="49.1" readonly>
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">°C</div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <br>
-        </div>
 
-        <p class="card-text"><br><br>
-            Nachdem Sie Ihre Schätzungen eingegeben haben, bestimmen wir die Summe der Kosten. Je niedirger diese Summe
-            ist, desto wahrscheinlicher ist es, dass Sie {{ Constants.prize_payoff }} Euro gewinnen können.
-        </p>
-        <p class="card-text lead">
-            Sie werden diese Entscheidungssituation zweimal durchlaufen. In der ersten Runde sehen Sie den oben
-            dargestellten Wetterbericht. In der zweiten Runde sehen Sie zusätzlich eine (echte) Wettervorhersage.
-        </p>
-        <p class="card-text">
-            Am Ende dieser
-            Umfrage werden wir sowohl den Ort, als auch das entsprechende Datum sowie die Quelle und die am Sonntag
-            eingetretene Temperatur preisgeben. Darüber hinaus werden wir Ihre Schätzungen sowie die Gewinnchancen
-            in allen Runden anzeigen und zufällig bestimmen, welche Runde für Ihre Auszahlung relevant ist.
-        </p>
+            <hr class="my-4 w-75">
+
+            <p class="lead text-center col-md-auto">
+                Generell gilt, dass Ihre Gewinnchance umso höher ausfällt, je dichter Ihre Schätzungen an der tatsächlich
+                gemessenen Temperatur liegen.
+            </p>
+
+            <hr class="my-4 w-75">
+
+            <p class="card-text">
+                Daraus folgt, dass Ihre Gewinnchance sinkt, wenn Sie sich verschätzen. Wieviel Prozentpunkte Sie durch
+                das verschätzen einbußen,hängt dabei davon ab, ob Sie die tatsächlich Temperatur über- oder unterschätzen.
+                Die drei Schätzungen die sie abgeben müssen unterscheiden sich nämlich hinsichtlich dieser Einbuße:
+                Mal bußen Sie mehr von Ihrer Gewinnchance ein, wenn Sie die Temperatur überschätzen, als wenn Sie diese
+                unterschätzen. In einer anderen Schätzung verhält es sich andersrum &mdash; Unterschätzen hat einen
+                stärkeren Effekt als Überschätzen. Schließlich werden Sie auch um eine Schätzunng gebeten wenn Unter-
+                und Überschätzen die gleichen Einbußen nach sich ziehen.
+            </p>
+
+            <p class="card-text">
+                Wie genau diese Schätzungen aussehen zeigen wir Ihnen auf der folgenden Seite. Im Anschluss erklären wir
+                Ihnen wie genau Ihre Gewinnchance von den drei Schätzungen abhängt. Bevor Sie dann Ihre Schätzungen
+                abgeben können, bitten wir Sie ein paar kurze Verständnisfragen zu beantworten.
+            </p>
+        </div>
     </div>
+        <br><br>
+        <button onclick="topFunction()" type="button" class="nexttab btn-outline-primary btn next float-right">Verstanden</button>
+    </div>
+
+    <!-- Part 2: Beispiel  -->
+    <div class="tab-pane" id="part2" role="tabpanel" aria-labelledby="part2-tab">
+        <div class="card">
+        <div class="card-body">
+            <h5 class="card-title display-4">Beispiel</h5>
+            <h6 class="card-subtitle mb-5 text-muted">Multipe Point Prediction</h6>
+            <p class="card-text">
+                Hier sehen Sie, wie genau Ihre Entscheidungssituation aussehen wird. Wie in der Einführung beschrieben,
+                müssen Sie drei Schätzungen zur Temperatur am Sonntag in 9 Tagen abgeben. Die drei Fragen Unterscheiden
+                sich dabei nur hinsichtlich Ihrer Einbußen, wenn Sie sich verschätzen.<br><br>
+            </p>
+
+            <div class="container clearfix border-left border-primary w-75 bg-light">
+                <br>
+                <figure class="highcharts-figure">
+                    <div id="weather_viz"></div>
+                </figure>
+
+                <p>
+                    <br> Was schätzen Sie, welche Temperatur wurde <a style="color:#C582FF">am Sonntag</a> gemessen...
+                </p>
+                <table class="table table-hover mb-4">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <label for="id_Q1"><small><em>
+                            ...wenn überschätzen dreimal so teuer wie unterschätzen ist?
+                            </em></small></label>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input type="number" name="Q1" id="id_Q1" class="form-control" step=".1">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">°C</div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="id_Q2"><small><em>
+                            ...wenn überschätzen genauso teuer wie unterschätzen ist?
+                            </em></small></label>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input type="number" name="Q2" id="id_Q2" class="form-control" step=".1">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">°C</div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="id_Q3"><small><em>
+                            ...wenn unterschätzen dreimal so teuer wie überschätzen ist?
+                            </em></small></label>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input type="number" name="Q3" id="id_Q3" class="form-control" step=".1">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">°C</div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button type="button" id="submit_button" class="btn-outline-success btn float-right mb-3">Absenden</button>
+            </div>
+
+            <p class="card-text">
+                <br>
+                Erst am Ende dieser
+                Umfrage werden wir sowohl den Ort, als auch das entsprechende Datum sowie die Quelle und die am Sonntag
+                eingetretene Temperatur preisgeben.
+            </p>
+
+            <p class="card-text">
+                Die Aufgabe ist schwierig. Wenn Sie sich unsicher sind, welche Temperaturen eintreten könnten und Sie
+                denken, dass irgendeine Temperatur zwischen X°C und Y°C eintreten könnte, dann bedenken Sie, dass sie bei
+                der ersten Frage den niedrigeren Wert und bei der dritten Frage den höheren Wert angeben sollten.
+            </p>
+
+            <p class="card-text">
+                Auf der folgenden Seite erklären wir Ihnen die Regeln, und wie Ihre Schätzungen Ihre Gewinnchance
+                beeinflusst.
+            </p>
+
+        </div>
+    </div>
+        <br><br>
+        <button onclick="topFunction()" type="button" class="prevtab btn-outline-primary btn">Zurück</button>
+        <button onclick="topFunction()" type="button" class="nexttab btn-outline-primary btn float-right">Verstanden</button>
+    </div>
+
+    <!-- Part 3: Verdienst -->
+    <div class="tab-pane" id="part3" role="tabpanel" aria-labelledby="part3-tab">
+        <div class="card">
+        <div class="card-body">
+            <h5 class="card-title display-4">Regeln & Verdienst</h5>
+            <h6 class="card-subtitle mb-5 text-muted">Multipe Point Prediction</h6>
+
+            <p class="card-text">
+                Nachdem Sie Ihre Schätzungen eingegeben haben, wird für jede Ihrer Schätzungen bestimmt, wie weit sie von der
+                tatsächlich gemessenen Temperatur abweicht. Wenn Sie überall die richtige Temperatur geschätzt haben, dann
+                haben Sie keine Einbußen und in dieser Aufgabe eine 100% Gewinnchance {{ Constants.prize_payoff }}
+                Euro zu verdienen. Liegen Sie in ein oder mehreren Schätzungen daneben, reduziert das Ihre Gewinnchance.
+                Je weiter Sie daneben liegen, desto unwahrscheinlicher wird es für Sie {{ Constants.prize_payoff }} Euro
+                zu gewinnen.
+            </p>
+
+            <p class="card-text">
+                Abweichungen kosten Sie, je nachdem ob Sie über- oder
+                unterschätzen entweder 2 oder 6 Prozentpunkte pro 1°C. Das bedeutet, dass Ihre Gewinnchance auf
+                {{ Constants.prize_payoff }} Euro um 2 oder gar 6 Prozent sinkt, wenn Sie sich um 1°C verschätzen
+                &mdash; je nachdem in welcher Schätzung und in welche Richtung Sie sich verschätzen.
+            </p>
+
+            <p class="card-text">
+                Nachdem Sie Ihre drei Schätzungen eingegeben und abgesendet haben, berechnen wir die einzelnen
+                Abweichungen sowie Ihre Einbußen. Die Einbußen werden dann zusammengezählt und von den 100% abgezogen.
+                Wenn Sie sich also so verschätzt haben, dass in den Schätzungen insgesamt Einbußen von 20 Prozentpunkten
+                entstehen, dann beträgt Ihre Gewinnchance {{ Constants.prize_payoff }} Euro zu verdienen 80%.
+            </p>
+
+            <p class="lead">
+                Die folgende Tabelle erklärt die Auswirkungen vom Über- bzw. Unterschätzen je Frage:
+            </p>
+            <br>
+
+            <div class="container clearfix  w-75">
+                <div class="table-responsive table-hover mb-4" id="table-scroll">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <td scope="col">Frage</td>
+                            <td scope="col">Einbuße beim Unterschätzen</td>
+                            <td scope="col">Einbuße beim Überschätzen</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><small>...wenn Überschätzen dreimal so teuer wie Unterschätzen ist?</small></td>
+                                <td><small>2 Prozentpunkte je °C</small></td>
+                                <td><small>6 Prozentpunkte je °C</small></td>
+                            </tr>
+                            <tr>
+                                <td><small>...wenn Überschätzen genauso teuer wie Unterschätzen ist?</small></td>
+                                <td><small>2 Prozentpunkte je °C</small></td>
+                                <td><small>2 Prozentpunkte je °C</small></td>
+                            </tr>
+                            <tr>
+                                <td><small>...wenn Unterschätzen dreimal so teuer wie Überschätzen ist?</small></td>
+                                <td><small>6 Prozentpunkte je °C</small></td>
+                                <td><small>2 Prozentpunkte je °C</small></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <p class="card-text">
+                Um die Einbußen besser zu verstehen, zeigen wir Ihnen unten noch einmal das auf der vorigenn Seite dargestellte
+                Beispiel. Stellen Sie sich vor, die Person, die diese Schätzungen eingegeben hat ist am Ende der Umfrage
+                angelangt und findet heraus, dass sich die Wetterdaten auf die Sahara bezogen, und dass dort 45,0°C für den
+                Sonntag gemessen wurden. <br><br>
+            </p>
+
+            <div class="container clearfix border-left border-primary w-75 bg-light">
+
+                <figure class="highcharts-figure">
+                    <div id="revelation_viz"></div>
+                </figure>
+
+                <p>
+                    <br> Was schätzen Sie, welche Temperatur wurde <a style="color:#C582FF">am Sonntag</a> gemessen...
+                </p>
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <label for="id_Q1"><small><em>
+                            ...wenn überschätzen dreimal so teuer wie unterschätzen ist?
+                            </em></small></label>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input type="number" name="Q1" id="id_Q1" class="form-control" step=".1" value="45.5" readonly>
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">°C</div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="id_Q2"><small><em>
+                            ...wenn überschätzen genauso teuer wie unterschätzen ist?
+                            </em></small></label>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input type="number" name="Q2" id="id_Q2" class="form-control" step=".1" value="47.0" readonly>
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">°C</div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="id_Q3"><small><em>
+                            ...wenn unterschätzen dreimal so teuer wie überschätzen ist?
+                            </em></small></label>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input type="number" name="Q3" id="id_Q3" class="form-control" step=".1" value="48.5" readonly>
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">°C</div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="card-text">
+                <br>
+                Dann hat die Person, die diese Schätzungen abgegeben hat, sich in ihrer ersten
+                Schätzung um 0,5°C geirrt und die Temperatur überschätzt. Weil Überschätzen in der ersten Schätzung dreimal
+                so teuer wie Unterschätzen ist, birgt diese Abweichung 6 &middot; 0,5 = 3 Prozentpunkte.
+            </p>
+            <p class="card-text">
+                In der zweiten Schätzung hat die Person 47°C geschätzt und liegt damit um 2°C daneben. Weil Über- und
+                Unterschätzen gleich teuer sind, verliert die Person an dieser Stelle 2 &middot; 2 = 4 Prozentpunkte.
+            </p>
+            <p class="card-text">
+                In der dirtten Schätzung lag die Person mit 48,5°C 3,5°C über dem tatsächlich gemessenen Wert. Die Person
+                hat die Temperatur also auch hier überschätzt. Überschätzen ist in diesem Fall aber nicht so teuer wir
+                Unterschätzen und kostet nur 3 Punkte je °C. Dementsprechend betragen die Kosten hier
+                2 &middot; 3,5 = 7 Prozentpunkte.
+            </p>
+            <p class="card-text">
+                In Summe ergeben sich daraus Einbußen in Höhe von 3 + 4 + 7 = 14 Prozentpunkten. Dementsprechend hat die
+                Person in dieser Entscheidungssituation eine Gewinnchance von 100 - 14 = 86%.
+            </p>
+            <hr class="my-4 w-75">
+            <p class="lead text-center col-md-auto">
+                Ob Sie die {{ Constants.prize_payoff }} Euro gewinnen wird wieder durch eine virtuelle Urne bestimmt.
+                Bei einer Gewinnchance von beispielsweise 86% werden 86 grüne und 14 rote Kugeln in eine Urne gelegt.
+                Wird daraufhin eine grüne Kugel gezogen, haben Sie in dieser Entscheidungssituation
+                {{ Constants.prize_payoff }} Euro gewonnen.
+            </p>
+            <hr class="my-4 w-75">
+            <p class="card-text">
+                Daher sollten Sie bemüht sein, möglichst gut zu schätzen, damit sie hohe Gewinnchancen haben, falls diese
+                Entscheidungssituation am Ende zufällig für Ihre Auszahlung bestimmt wird.
+            </p>
+        </div>
+    </div>
+        <br><br>
+        <button onclick="topFunction()" type="button" class="prevtab btn-outline-primary btn ">Zurück</button>
+        <button onclick="topFunction()" type="button" class="nexttab btn-outline-primary btn float-right">Verstanden</button>
+    </div>
+
+    <!-- Part 4: Verständnisfragen -->
+    <div class="tab-pane" id="part4" role="tabpanel" aria-labelledby="part3-tab">
+        <div class="card">
+        <div class="card-body">
+            <h5 class="card-title display-4">Verständnisfragen</h5>
+            <h6 class="card-subtitle mb-5 text-muted">Multipe Point Prediction</h6>
+            <p class="card-text">
+                ...
+            </p>
+        </div>
+    </div>
+        <br><br>
+        <button onclick="topFunction()" type="button" class="prevtab btn-outline-primary btn ">Zurück</button>
+        <button class="nexttab btn-outline-primary btn float-right">Los geht's</button>
+    </div>
+
 </div>
 
-<br><br>
-<button type="submit" id="submit_button" class="btn-outline-primary btn float-right">Verstanden</button>
 {% endblock %}

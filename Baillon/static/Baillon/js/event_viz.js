@@ -63,6 +63,7 @@ var chart = Highcharts.chart('container', {
     chart: {
         type: "bar",
         height: (9 / 16 * 100) + '%', // 16:9 ratio
+        backgroundColor: 'transparent'
     },
     title: {
         text: event,
