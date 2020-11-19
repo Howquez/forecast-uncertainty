@@ -23,10 +23,10 @@
         <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="5" style="width: 5%" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
     </div>
 -->
-<br><br>
 
+<body onload="fillText()">
 
-
+{% if player.round_number == 1 %}
 <div class="alert alert-primary alert-dismissible fade show mb-5" role="alert">
     Sie müssen nicht in allen {{ num_choices }} Zeilen eine Auswahl treffen. Wenn Sie in einer bestimmten Zeile die klassische
     Lotterie wählen, dann wird Ihre Auswahl in allen folgenden Zeilen automatisch die klassische Lotterie und in
@@ -36,10 +36,51 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
+{% endif %}
 
-    <div class = "container">
-        <div class = "row" >
-            <!-- <div class = "card" > -->
+{% if player.round_number > 1 %}
+    <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        Wetterdaten ein-/ausblenden
+    </button>
+    <br><br>
+{% endif %}
+
+{% if player.round_number > 1 %}
+<div class="collapse" id="collapseExample">
+{% endif %}
+    <div class="card">
+        <div class="card-body">
+            <p class="card-text">
+                Die Temperaturen
+                <a style="color:#5DE58E">zwischen Mittwoch und Freitag (also im grün gefärbten Bereich)</a>
+                betrugen jeweils um 14:00 Uhr (MEZ)<sup>1</sup>
+                <span id="report0"></span>°C, <span id="report1"></span>°C bzw. <span id="report2"></span>°C.
+            </p>
+            <p class="card-text">
+                Ohne zu wissen, auf welchen Ort und Zeitpunkt sich das oben dargestellte Wetter bezieht,
+                müssen Sie für die folgenden Aufgaben abschätzen, welche Temperaturbereiche Sie 9 Tage später,
+                <a style="color:#C582FF">am Sonntag (also im lila gefärbten Bereich)</a>,
+                am selben Ort und zur gleichen Tageszeit für wahrscheinlich halten.
+            </p>
+
+            <figure class="highcharts-figure">
+                <div id="weather_viz"></div>
+            </figure>
+        </div>
+    </div>
+    <br>
+
+{% if player.round_number > 1 %}
+</div>
+{% endif %}
+
+<div class="card">
+    <div class="card-body">
+
+        <h1 class="display-4 mb-4"> Ihre Entscheidung:</h1>
+
+        <div class = "container">
+            <div class = "row" >
                 <table class = "table table-condensed">
 
                     <colgroup>
@@ -104,13 +145,14 @@
                         {% endfor %}
                     </tbody>
                 </table>
-            <!-- </div> -->
+            </div>
         </div>
     </div>
+</div>
 
 <br><br>
 
-<!-- Weather Forecast Viz Modal -->
+<!-- Weather Forecast Viz Modal
     <div class="modal fade" id="weatherModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="backdrop-filter: blur(10px);">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -128,22 +170,26 @@
         </div>
       </div>
     </div>
+-->
+{% if player.round_number == 1 %}
+    <div class="alert alert-danger alert-dismissible fade show mb-5" role="alert">
+        Sie können nicht mehr zu einer Frage zurückkehren, sobald Sie auf die Schaltfläche "Weiter" geklickt haben.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{% endif %}
 
-<div class="alert alert-danger alert-dismissible fade show mb-5" role="alert">
-    Sie können nicht mehr zu einer Frage zurückkehren, sobald Sie auf die Schaltfläche "Weiter" geklickt haben.
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
 
-<!-- Button trigger modal -->
+<!-- Button trigger modal
     <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#weatherModal">
       Wetterbericht einblenden
     </button>
+-->
 <!-- Next Button -->
-    <button id="Baillon_next" class="btn-primary btn float-right">
-        Weiter
+    <button id="Baillon_next" class="btn-outline-success btn float-right">
+        Absenden
     </button>
 
-
+</body>
 {% endblock %}

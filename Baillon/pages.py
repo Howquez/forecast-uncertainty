@@ -25,29 +25,6 @@ class Baillon_Instructions(Page):
             "num_choices": 6
         }
 
-class Historic_Viz(Page):
-    def is_displayed(self):
-        if self.subsession.this_app_constants()["treatment_displayed"] == False and self.round_number == 1:
-            return True
-
-    def js_vars(self):
-        return dict(
-            page = "historic",
-            treatment=self.participant.vars["treatment"],
-            location=self.participant.vars["location"],
-        )
-
-class Forecast_Viz(Page):
-    def is_displayed(self):
-        if self.subsession.this_app_constants()["treatment_displayed"] == True and self.round_number == 1: # as defined in post_baillon/models
-            return True
-
-    def js_vars(self):
-        return dict(
-            page = "forecast",
-            treatment = self.participant.vars["treatment"],
-            location = self.participant.vars["location"],
-        )
 
 class Baillon_Decision(Page):
     form_model = "player"
@@ -69,7 +46,9 @@ class Baillon_Decision(Page):
             # the following three vars are needed such that the weather viz can be displayed on decision screen as well
             treatment_displayed = str(self.subsession.this_app_constants()["treatment_displayed"]),
             page="decision",
-            location=self.participant.vars["location"]
+            location=self.participant.vars["location"],
+            small=True,
+
         )
 
     def vars_for_template(self):
@@ -106,7 +85,34 @@ class Baillon_Decision(Page):
         self.player.set_switching_row()
 
 
+
+
+class Historic_Viz(Page):
+    def is_displayed(self):
+        if self.subsession.this_app_constants()["treatment_displayed"] == False and self.round_number == 1:
+            return True
+
+    def js_vars(self):
+        return dict(
+            page = "historic",
+            treatment=self.participant.vars["treatment"],
+            location=self.participant.vars["location"],
+        )
+
+class Forecast_Viz(Page):
+    def is_displayed(self):
+        if self.subsession.this_app_constants()["treatment_displayed"] == True and self.round_number == 1: # as defined in post_baillon/models
+            return True
+
+    def js_vars(self):
+        return dict(
+            page = "forecast",
+            treatment = self.participant.vars["treatment"],
+            location = self.participant.vars["location"],
+        )
+
+
 page_sequence = [Baillon_Instructions,
-                 Historic_Viz,
-                 Forecast_Viz,
+                 # Historic_Viz,
+                 # Forecast_Viz,
                  Baillon_Decision]
