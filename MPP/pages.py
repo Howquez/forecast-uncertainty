@@ -23,6 +23,7 @@ class MPP_Decision(Page):
             treatment_displayed=str(self.subsession.this_app_constants()["treatment_displayed"]),
             page="decision",
             treatment=self.participant.vars["treatment"],
+            small=True,
         )
 
 

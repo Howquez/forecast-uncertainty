@@ -15,20 +15,20 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title display-4">Wie wird das Wetter in 9 Tagen?</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Was schätzen Sie?</h6>
-            <br>
+            <h6 class="card-subtitle mb-5 text-muted">Was schätzen Sie?</h6>
+
             {% if player.round_number == 1 %}
                 <p class="card-text">
                     Die Temperaturen
                     <a style="color:#5DE58E">zwischen Mittwoch und Freitag (also im grün gefärbten Bereich)</a>
-                    betrugen jeweils um 14:00 Uhr
+                    betrugen jeweils um 14:00 Uhr (MEZ)<sup>1</sup>
                     <span id="report0"></span>°C, <span id="report1"></span>°C bzw. <span id="report2"></span>°C.
                 </p>
                 <p class="card-text">
                     Ohne zu wissen, auf welchen Ort und Zeitpunkt sich das oben dargestellte Wetter bezieht,
-                    müssen Sie für die folgenden Aufgaben abschätzen, welche Temperaturbereiche Sie über eine Woche später,
+                    müssen Sie für die folgenden Aufgaben abschätzen, welche Temperaturbereiche Sie 9 Tage später,
                     <a style="color:#C582FF">am Sonntag (also im lila gefärbten Bereich)</a>,
-                        am selben Ort und zur gleichen Tageszeit für wahrscheinlich halten.
+                    am selben Ort und zur gleichen Tageszeit für wahrscheinlich halten.
                 </p>
             {% else %}
                 <div class="alert alert-primary" role="alert">
@@ -95,11 +95,14 @@
                 </tr>
                 </tbody>
             </table>
-
-
+        </div>
+        <div class="card-footer bg-light text-secondary">
             <p class="card-text">
-                <small> Am Ende der Umfrage werden wir sowohl den Ort, als auch das entsprechende Datum sowie die
-                Quelle und die am Sonntag eingetretene Temperatur preisgeben. <small>
+                Am Ende der Umfrage werden wir sowohl den Ort, das Datum sowie die Quelle und die am Sonntag
+                eingetretene Temperatur preisgeben.
+            </p>
+            <p>
+                <sup>1</sup> Die Zeitangabe MEZ bedeutet nicht automatisch, dass es sich um einen ORT in der MEZ handelt.
             </p>
         </div>
     </div>
