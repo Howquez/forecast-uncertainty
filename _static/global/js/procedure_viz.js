@@ -4,7 +4,8 @@ var chart = Highcharts.chart("process_viz", {
   },
   chart: {
     type: "bar",
-    height: (5 / 16 * 100) + '%' // 16:5 ratio
+    height: (5 / 16 * 100) + '%', // 16:5 ratio
+    backgroundColor: 'transparent'
   },
   title: {
     text: ""
@@ -17,36 +18,89 @@ var chart = Highcharts.chart("process_viz", {
     title: {
       text: ""
     },
-    tickPositions: [0, 2.5, 5, 6.5],
+    tickPositions: [-1.5, 0, 2, 4, 5],
     labels: {
       formatter: function() {
         return
       }
     },
-    plotBands: [{ // mark round 1
+    plotBands: [{
+      color: "rgba(173, 0, 155, 0)", // add opacity 0<opacity<1 here
+      from: -2,
+      to: 0,
+      label: {
+        text: "Bereich",
+        align: 'right',
+        x: -20,
+        verticalAlign: "bottom",
+        y: -20
+      }
+    }, {
+      color: "rgba(173, 0, 155, 0)", // add opacity 0<opacity<1 here
+      from: -2,
+      to: 0,
+      label: {
+        text: "Aufgabe",
+        align: "right",
+        x: -20,
+        verticalAlign: "middle",
+        y: 0
+      }
+    }, {
+      color: "rgba(173, 0, 155, 0)", // add opacity 0<opacity<1 here
+      from: -2,
+      to: 0,
+      label: {
+        text: "Verfügbare Informationen",
+        align: "right",
+        x: -20,
+        verticalAlign: "top",
+        y: +20
+      }
+    }, { // mark round 1
       color: "rgba(173, 0, 155, 0)", // add opacity 0<opacity<1 here
       from: 0,
-      to: 2.5,
+      to: 2,
       label: {
-        text: "Runde 1",
+        text: "Runde #1",
+        align: 'center',
+        verticalAlign: "bottom",
+        y: -20
+      }
+    }, { // mark round 1
+      color: "rgba(173, 0, 155, 0)", // add opacity 0<opacity<1 here
+      from: 0,
+      to: 2,
+      label: {
+        text: "Gemessene Temperaturen",
+        align: "center",
+        verticalAlign: "top",
+        y: +20
+      }
+    }, { // mark round 2
+      color: "rgba(173, 0, 155, 0)", // add opacity 0<opacity<1 here
+      from: 2,
+      to: 4,
+      label: {
+        text: "Runde #2",
         align: 'center',
         verticalAlign: "bottom",
         y: -20
       }
     }, { // mark round 2
       color: "rgba(173, 0, 155, 0)", // add opacity 0<opacity<1 here
-      from: 2.5,
-      to: 5,
+      from: 2,
+      to: 4,
       label: {
-        text: "Runde 2",
-        align: 'center',
-        verticalAlign: "bottom",
-        y: -20
+        text: "Wettervorhersage",
+        align: "center",
+        verticalAlign: "top",
+        y: +20
       }
     }, { // mark the end
       color: "rgba(173, 0, 155, 0)", // add opacity 0<opacity<1 here
-      from: 5,
-      to: 6.5,
+      from: 4,
+      to: 5,
       label: {
         text: "Abschluss",
         align: 'center',
@@ -60,12 +114,12 @@ var chart = Highcharts.chart("process_viz", {
   },
   tooltip: {
     formatter: function() {
-      return this.series.name 
+      return this.series.name
     }
   },
   plotOptions: {
     series: {
-      animation:{
+      animation: {
         duration: 1500
       },
       pointWidth: 150,
@@ -74,7 +128,6 @@ var chart = Highcharts.chart("process_viz", {
         enabled: true,
         crop: false,
         allowOverlap: true,
-        rotation: 90,
         formatter: function() {
           return this.series.name;
         }
@@ -83,43 +136,39 @@ var chart = Highcharts.chart("process_viz", {
   },
   series: [{
     name: "Auflösung",
-    color: "#40FFA2",
-    data: [1],
+    color: "#7500c0",
+    dataLabels: {
+      rotation: 90
+    },
+    data: [0.5],
     showInLegend: false
   }, {
     name: "Abschließende Fragen",
-    color: "#2EE8C3",
+    color: "#e6dcff",
+    dataLabels: {
+      rotation: 90
+    },
     data: [0.5],
     showInLegend: false
   }, {
     name: 'Frageblock 2',
-    color: "#FFE226",
+    color: "#a055f5",
     data: [1],
     showInLegend: false
   }, {
     name: 'Frageblock 1',
-    color: "#ffbb33",
+    color: "#be82ff",
     data: [1],
-    showInLegend: false
-  }, {
-    name: "Wettervorhersage",
-    color: "#ff4444",
-    data: [0.5],
     showInLegend: false
   }, {
     name: 'Frageblock 2',
-    color: "#FFE226",
+    color: "#a055f5",
     data: [1],
     showInLegend: false
   }, {
     name: 'Frageblock 1',
-    color: "#ffbb33",
+    color: "#be82ff",
     data: [1],
-    showInLegend: false
-  }, {
-    name: "Beobachtetes Wetter",
-    color: "#ff4444",
-    data: [0.5],
     showInLegend: false
   }]
 });
