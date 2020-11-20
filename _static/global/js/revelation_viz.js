@@ -155,6 +155,11 @@ var chart = Highcharts.chart("weather_viz", {
         enabled: false
     },
 
+    chart: {
+        height: (9 / 16 * 100) + '%', // 16:9 ratio
+        backgroundColor: 'transparent'
+    },
+
     plotOptions: {
         series: {
             animation:{
@@ -173,16 +178,16 @@ var chart = Highcharts.chart("weather_viz", {
             rangeDescription: ""
         },
         plotBands: [{
-        from: 1602079200000 - 43200000,
-        to: 1602252000000 + 43200000,
+        from: 1602079200000 - 39000000, // 43200000
+        to: 1602252000000 + 39000000, // 43200000
         color: observedRGBA,
         label: {
             text: "", // Content of the label. 
             verticalAlign: "middle",
         }
       }, {
-        from: 1603029600000 - 43200000,
-        to: 1603029600000 + 43200000,
+        from: 1603029600000 - 52000000, // 43200000
+        to: 1603029600000 + 52000000, // 43200000
         color: forecastRGBA,
         label: {
             text: "", // Content of the label. 

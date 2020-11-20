@@ -52,20 +52,11 @@
 
         <p class="card-text">
             In der Grafik sehen Sie ein Beispiel solcher Wetterdaten. Dort sind Temperaturen von drei aufeinanderfolgenden
-            Tagen dargestellt (und grün hinterlegt). Ihre Schätzung soll sich nun auf Sonntag (also den lila hinterlegten
-            Bereich) beziehen.
+            Tagen dargestellt jeweils um 14:00 Uhr (MEZ)<sup>1</sup> (und grün hinterlegt). Ihre Schätzung soll sich nun
+            auf den Sonntag 9 Tage später (also den lila hinterlegten Bereich) beziehen.
         </p>
 
-        <p class="card-text">
-            Mit diesen Informationen müssen Sie dann Fragen beantworten, die sich in zwei Blöcke gliedern lassen.
-            Alle Fragen beziehen sich auf das von Ihnen zu schätzende Wettergeschehen. Nachdem Sie die beiden Frageblöcke
-            ein erstes Mal beantwortet haben, zeigen wir Ihnen zusätzlich zu den gemessenen Temperaturen auch eine
-            Wettervorhersage &hyphen; also eine Schätzung von Experten darüber, wie sich die Temperatur entwickeln kann.<sup>1,2</sup>
-            In der Grafik wird diese Wettervorhersage dann für Sonntag (also im lila hinterlegten Bereich) angezeigt.
-            Nachdem Sie sich die Wettervorhersage angeschaut haben, durchlaufen Sie die beiden Frageblöcke erneut.
-        </p>
-
-        <div class="container clearfix border-left border-primary w-75">
+        <div class="container clearfix border-left border-primary w-75 bg-light">
             <figure class="highcharts-figure">
                 <div id="weather_viz"></div>
                 <figcaption>
@@ -73,13 +64,31 @@
                 </figcaption>
             </figure>
         </div>
+        <br><br>
+        <p class="lead">
+            Aufbau dieser Umfrage
+        </p>
+
+        <p class="card-text">
+            Mit diesen Informationen müssen Sie dann Fragen beantworten, die sich in zwei Blöcke gliedern lassen.
+            Alle Fragen beziehen sich auf das von Ihnen zu schätzende Wettergeschehen. Nachdem Sie die beiden Frageblöcke
+            ein erstes Mal beantwortet haben, zeigen wir Ihnen zusätzlich zu den gemessenen Temperaturen auch eine
+            Wettervorhersage &mdash; also eine Schätzung von Experten darüber, wie sich die Temperatur entwickeln kann.<sup>2,3</sup>
+            In der Grafik wird diese Wettervorhersage dann für Sonntag (also im lila hinterlegten Bereich) angezeigt.
+            Nachdem Sie sich die Wettervorhersage angeschaut haben, durchlaufen Sie die beiden Frageblöcke erneut.
+        </p>
+
+        <figure class="highcharts-figure" style="width:95%">
+            <div id="process_viz" class="clearfix"></div>
+        </figure>
+
 
         <p class="card-text">
             Bei der Beantwortung der Fragen können Sie Geld verdienen. Dabei gilt grundsätzlich, dass Ihre Chance Geld
             zu gewinnen steigt, je besser Sie die Temperatur einschätzen. Wie genau sich Ihre Antworten auf Ihre
             Gewinnchancen auswirken, erklären wir Ihnen vor den beiden Frageblöcken im Detail.
             An dieser Stelle müssen Sie nur wissen, dass am Ende einer der Frageblöcke zufällig ausgewählt wird,
-            um Ihren Gewinn zu bestimmen &hyphen; Sie wissen vorab aber nicht, welcher Frageblock es sein wird.
+            um Ihren Gewinn zu bestimmen &mdash; Sie wissen vorab aber nicht, welcher Frageblock es sein wird.
             Das heißt, dass jede Ihrer Entscheidungen für ihre Auszahlung relevant sein könnte.
             Deswegen sollten Sie Ihre Entscheidungen sorgfältig treffen. Der Betrag, den Sie in dieser zufällig
             ausgewählten Entscheidung verdient haben, wird Ihnen ausgezahlt.
@@ -92,21 +101,13 @@
             Temperatur eingetreten ist, welcher Frageblock für Ihren Gewinn entscheidend ist und schließlich, was Sie in
             dieser Umfrage gewinnen.
         </p>
-        <hr class="my-4 w-75">
-
-        <p class="lead">
-            Aufbau dieser Umfrage
-        </p>
-
-        <figure class="highcharts-figure">
-            <div id="process_viz"></div>
-        </figure>
 
     </div>
     <div class="card-footer bg-light text-secondary">
-        <p><sup>1</sup> Dabei handelt es sich um eine echte Wettervorhersage, die wir Ihnen am Ende der Umfrage in Gänze
+        <p><sup>1</sup> Die Zeitangabe MEZ bedeutet nicht automatisch, dass es sich um einen ORT in der MEZ handelt.<br>
+            <sup>2</sup> Dabei handelt es sich um eine echte Wettervorhersage, die wir Ihnen am Ende der Umfrage in Gänze
             zur Verfügung stellen. <br>
-            <sup>2</sup> Wir werden Ihnen aber auch zu diesem Zeitpunkt noch nicht verraten, auf welchen Ort und welchen
+            <sup>3</sup> Wir werden Ihnen aber auch zu diesem Zeitpunkt noch nicht verraten, auf welchen Ort und welchen
             Zeitraum sich diese Informationen beziehen.
         </p>
     </div>

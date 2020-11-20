@@ -11,14 +11,14 @@ var chart = Highcharts.chart("process_viz", {
     text: ""
   },
   xAxis: {
-    categories: [""]
+    categories: [""],
   },
   yAxis: {
     min: 0,
     title: {
       text: ""
     },
-    tickPositions: [-1.5, 0, 2, 4, 5],
+    tickPositions: [-2, 0, 2.5, 4.5, 5.5],
     labels: {
       formatter: function() {
         return
@@ -26,51 +26,60 @@ var chart = Highcharts.chart("process_viz", {
     },
     plotBands: [{
       color: "rgba(173, 0, 155, 0)", // add opacity 0<opacity<1 here
-      from: -2,
+      from: -1.5,
       to: 0,
       label: {
-        text: "Bereich",
+        text: "Bereich:",
         align: 'right',
         x: -20,
         verticalAlign: "bottom",
-        y: -20
+        y: -10,
+        style: {
+          fontWeight: "bold"
+        }
       }
     }, {
       color: "rgba(173, 0, 155, 0)", // add opacity 0<opacity<1 here
-      from: -2,
+      from: -1.5,
       to: 0,
       label: {
-        text: "Aufgabe",
+        text: "Aufgabe:",
         align: "right",
         x: -20,
         verticalAlign: "middle",
-        y: 0
+        y: 0,
+        style: {
+          fontWeight: "bold"
+        }
       }
     }, {
       color: "rgba(173, 0, 155, 0)", // add opacity 0<opacity<1 here
-      from: -2,
+      from: -1.5,
       to: 0,
       label: {
-        text: "Verfügbare Informationen",
+        text: "Verfügbare Informationen:",
         align: "right",
         x: -20,
         verticalAlign: "top",
-        y: +20
+        y: +20,
+        style: {
+          fontWeight: "bold"
+        }
       }
     }, { // mark round 1
       color: "rgba(173, 0, 155, 0)", // add opacity 0<opacity<1 here
       from: 0,
-      to: 2,
+      to: 2.5,
       label: {
         text: "Runde #1",
         align: 'center',
         verticalAlign: "bottom",
-        y: -20
+        y: -10
       }
     }, { // mark round 1
       color: "rgba(173, 0, 155, 0)", // add opacity 0<opacity<1 here
       from: 0,
-      to: 2,
+      to: 2.5,
       label: {
         text: "Gemessene Temperaturen",
         align: "center",
@@ -79,18 +88,18 @@ var chart = Highcharts.chart("process_viz", {
       }
     }, { // mark round 2
       color: "rgba(173, 0, 155, 0)", // add opacity 0<opacity<1 here
-      from: 2,
-      to: 4,
+      from: 2.5,
+      to: 4.5,
       label: {
         text: "Runde #2",
         align: 'center',
         verticalAlign: "bottom",
-        y: -20
+        y: -10
       }
     }, { // mark round 2
       color: "rgba(173, 0, 155, 0)", // add opacity 0<opacity<1 here
-      from: 2,
-      to: 4,
+      from: 2.5,
+      to: 4.5,
       label: {
         text: "Wettervorhersage",
         align: "center",
@@ -99,13 +108,13 @@ var chart = Highcharts.chart("process_viz", {
       }
     }, { // mark the end
       color: "rgba(173, 0, 155, 0)", // add opacity 0<opacity<1 here
-      from: 4,
-      to: 5,
+      from: 4.5,
+      to: 5.5,
       label: {
         text: "Abschluss",
         align: 'center',
         verticalAlign: "bottom",
-        y: -20
+        y: -10
       }
     }]
   },
@@ -119,6 +128,7 @@ var chart = Highcharts.chart("process_viz", {
   },
   plotOptions: {
     series: {
+    borderWidth: 1,
       animation: {
         duration: 1500
       },
@@ -166,9 +176,25 @@ var chart = Highcharts.chart("process_viz", {
     data: [1],
     showInLegend: false
   }, {
+    name: "Instruktionen",
+    color: "#e6dcff",
+    dataLabels: {
+      rotation: 90
+    },
+    data: [0.25],
+    showInLegend: false
+  }, {
     name: 'Frageblock 1',
     color: "#be82ff",
     data: [1],
+    showInLegend: false
+  }, {
+    name: "Instruktionen",
+    color: "#e6dcff",
+    dataLabels: {
+      rotation: 90
+    },
+    data: [0.25],
     showInLegend: false
   }]
 });
