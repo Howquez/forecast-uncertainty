@@ -27,6 +27,7 @@
 <body onload="fillText()">
 
 {% if player.round_number == 1 %}
+{% if treatment_displayed == "False" %}
 <div class="alert alert-primary alert-dismissible fade show mb-5" role="alert">
     Sie müssen nicht in allen {{ num_choices }} Zeilen eine Auswahl treffen. Wenn Sie in einer bestimmten Zeile die klassische
     Lotterie wählen, dann wird Ihre Auswahl in allen folgenden Zeilen automatisch die klassische Lotterie und in
@@ -36,6 +37,7 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
+{% endif %}
 {% endif %}
 
 {% if player.round_number > 1 %}
@@ -178,12 +180,14 @@
     </div>
 -->
 {% if player.round_number == 1 %}
+{% if treatment_displayed == "False" %}
     <div class="alert alert-danger alert-dismissible fade show mb-5" role="alert">
         Sie können nicht mehr zu einer Frage zurückkehren, sobald Sie auf die Schaltfläche "Weiter" geklickt haben.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
+{% endif %}
 {% endif %}
 
 
