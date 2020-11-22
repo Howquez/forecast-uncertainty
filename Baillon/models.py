@@ -141,16 +141,27 @@ class SharedBasePlayer(BasePlayer):
     class Meta:
         abstract = True
 
-    CQ1 = models.StringField(
-        label="Haben Sie Ihre Entscheidungssituation verstanden?",
-        doc="Comprehension Question 1",
-        widget=widgets.RadioSelect,
-        choices=[
-            ["No", "Nein"],
-            ["Yes", "Ja"],
-        ],
-        initial="Yes"
+    BaillonQ1 = models.BooleanField(
+        doc="Baillon Comprehension Question 1",
+        blank=False
     )
+    BaillonQ2 = models.BooleanField(
+        doc="Baillon Comprehension Question 2",
+        blank=False
+    )
+    BaillonQ3 = models.FloatField(
+        doc="Baillon Comprehension Question 3",
+        blank=True
+    )
+    BaillonQ4 = models.BooleanField(
+        doc="Baillon Comprehension Question 4",
+        blank=False
+    )
+    BaillonQ5 = models.BooleanField(
+        doc="Baillon Comprehension Question 5",
+        blank=False
+    )
+
 
     CQ2 = models.IntegerField(
         label="Was ist der Ergebnis von 4+4?",

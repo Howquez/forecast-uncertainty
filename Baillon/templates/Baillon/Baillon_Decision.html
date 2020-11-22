@@ -50,12 +50,18 @@
 {% endif %}
     <div class="card">
         <div class="card-body">
-            <p class="card-text">
-                Die Temperaturen
-                <a style="color:#5DE58E">zwischen Mittwoch und Freitag (also im grün gefärbten Bereich)</a>
-                betrugen jeweils um 14:00 Uhr (MEZ)<sup>1</sup>
-                <span id="report0"></span>°C, <span id="report1"></span>°C bzw. <span id="report2"></span>°C.
-            </p>
+            {% if treatment_displayed == "True" %}
+                <div class="alert alert-success" role="alert">
+                    Bitte beachten Sie, dass die Grafik nun auch eine Wettervorhersage enthält.
+                </div>
+            {% else %}
+                <p class="card-text">
+                    Die Temperaturen
+                    <a style="color:#5DE58E">zwischen Mittwoch und Freitag (also im grün gefärbten Bereich)</a>
+                    betrugen jeweils um 14:00 Uhr (MEZ)<sup>1</sup>
+                    <span id="report0"></span>°C, <span id="report1"></span>°C bzw. <span id="report2"></span>°C.
+                </p>
+            {% endif %}
             <p class="card-text">
                 Ohne zu wissen, auf welchen Ort und Zeitpunkt sich das oben dargestellte Wetter bezieht,
                 müssen Sie für die folgenden Aufgaben abschätzen, welche Temperaturbereiche Sie 9 Tage später,
@@ -123,7 +129,7 @@
                                 <td class="lottery" rowspan="{{ num_choices }}">
 
                                     <figure class="highcharts-figure" style="vertical-align: baseline; display: table-cell">
-                                        <div id="container"></div>
+                                        <div class="event_viz"></div>
                                     </figure>
 
                                 </td>
@@ -134,7 +140,7 @@
                                     <input type="radio" name="{{ f }}" id="{{ p }}" value="A" required> <!-- enter disabled attribute here if needed-->
                                 </td>
                                 <td class="formfield">
-                                    <input type="radio" name="{{ f }}" id="{{ p }}" value="B" required>
+                                    <input type="radio" name="{{ f }}" id="{{ p }}" value="B"required>
                                 </td>
 
                                 <!-- Safe Payments -->

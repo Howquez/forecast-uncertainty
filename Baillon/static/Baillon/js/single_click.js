@@ -1,18 +1,20 @@
 // Thank you snunnari. The single switching point script is copied (and slightly adjusted) from this repo
 // https://github.com/snunnari/otree_psm)
 
+// :not('.demonstration')
+
 console.log("engines running");
 var switchingValue;
 
 $(document).ready(function () {
-    $('input[type=radio]').change(
+    $("input[type=radio]:not(.demonstration)").change(
         function () {
             var clickedRadio = this;
             var afterClickedRadio = false;
             var strictlyAfterClickedRadio = false;
             var before = []
 
-            var radios = document.querySelectorAll('input[type=radio]');
+            var radios = document.querySelectorAll("input[type=radio]:not(.demonstration)");
 
             for (i = 0; i < radios.length; ++i) {
                 var radio = radios[i];

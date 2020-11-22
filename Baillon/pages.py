@@ -25,6 +25,45 @@ class Baillon_Instructions(Page):
             "num_choices": 6
         }
 
+    form_model = "player"
+    form_fields = ["BaillonQ1",
+                   "BaillonQ2",
+                   "BaillonQ3",
+                   "BaillonQ4",
+                   "BaillonQ5"]
+
+    def error_message(self, values):
+        solutions = dict(
+            BaillonQ1=False,
+            BaillonQ2=True,
+            BaillonQ4=True,
+            BaillonQ5=True,
+        )
+
+        error_messages = dict(
+            BaillonQ1="Sie müssen die Situation verstanden haben.",
+            BaillonQ2="Sie müssen die Situation verstanden haben.",
+            BaillonQ4="Sie müssen die Situation verstanden haben.",
+            BaillonQ5="Sie müssen die Situation verstanden haben.",
+        )
+
+        for field_name in solutions:
+            if values[field_name] != solutions[field_name]:
+                return error_messages[field_name]  # = 'Wrong answer' # wenn error message dict leer
+                # return error_messages
+
+class Forecast_Viz(Page):
+    def is_displayed(self):
+        if self.subsession.this_app_constants()["treatment_displayed"] == True and self.round_number == 1: # as defined in post_baillon/models
+            return True
+
+    # def js_vars(self):
+    #     return dict(
+    #         page = "forecast",
+    #         treatment = self.participant.vars["treatment"],
+    #         location = self.participant.vars["location"],
+    #     )
+
 
 class Baillon_Decision(Page):
     form_model = "player"
@@ -57,6 +96,7 @@ class Baillon_Decision(Page):
         else:
             choices = self.player.participant.vars["baillon_single_choices"]
         return {
+            "treatment_displayed" : str(self.subsession.this_app_constants()["treatment_displayed"]),
             "choices" : choices,
             "num_choices" : Constants.num_choices
         }
@@ -99,20 +139,8 @@ class Historic_Viz(Page):
             location=self.participant.vars["location"],
         )
 
-class Forecast_Viz(Page):
-    def is_displayed(self):
-        if self.subsession.this_app_constants()["treatment_displayed"] == True and self.round_number == 1: # as defined in post_baillon/models
-            return True
-
-    def js_vars(self):
-        return dict(
-            page = "forecast",
-            treatment = self.participant.vars["treatment"],
-            location = self.participant.vars["location"],
-        )
-
 
 page_sequence = [Baillon_Instructions,
                  # Historic_Viz,
-                 # Forecast_Viz,
+                 Forecast_Viz,
                  Baillon_Decision]

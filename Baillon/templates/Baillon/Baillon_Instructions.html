@@ -9,6 +9,9 @@
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="{% static 'Baillon/js/event_viz.js' %}"></script>
     <script src="{% static 'global/js/buttons.js' %}"></script>
+    <script src="{% static 'Baillon/js/single_click.js' %}"></script>
+    <script src="{% static 'Baillon/js/instructions_viz.js' %}"></script>
+
 {% endblock %}
 
 
@@ -20,6 +23,11 @@
 
 <!-- Tab navigation -->
 <ul class="nav nav-tabs fixed-top navbar-light bg-light justify-content-center " id="myTab" role="tablist">
+    <!--
+    <li class="nav-item">
+        <a class="nav-link disabled" id="non-tab" data-toggle="tab" href="" role="tab" aria-controls="non-tab"> <b>Instruktionen:</b> </a>
+    </li>
+    -->
 
     <li class="nav-item" >
         <a class="nav-link active" id="part1-tab" data-toggle="tab" href="#part1" role="tab" aria-controls="part1" onclick="topFunction()"> Einführung </a>
@@ -30,14 +38,13 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" id="part3-tab" data-toggle="tab" href="#part3" role="tab" aria-controls="part3" onclick="topFunction()"> Regeln & Verdienst </a>
+        <a class="nav-link" id="part3-tab" data-toggle="tab" href="#part3" role="tab" aria-controls="part3" onclick="topFunction()"> Ablauf & Verdienst </a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link" id="part4-tab" data-toggle="tab" href="#part4" role="tab" aria-controls="part4" onclick="topFunction()"> Verständnisfragen </a>
     </li>
 </ul>
-
 <div class="tab-content" id="myTabContent">
     <!-- Part 1: Einführung (no back button) -->
     <div class="tab-pane show active" id="part1" role="tabpanel" aria-labelledby="part1-tab">
@@ -45,22 +52,24 @@
         <div class="card-body">
             <h5 class="card-title display-4">Einführung</h5>
             <h6 class="card-subtitle mb-5 text-muted">Baillon</h6>
+
             <p class="card-text">
                 In dieser Aufgabe bekommen Sie zwei Lotterien vorgestellt. Die eine ist eine „klassische“ Lotterie, bei der
-                ein virtueller Ball aus einer virtuellen Urne gezogen wird. Die andere Lotterie hängt vom Wetter an dem für
+                eine virtuelle Kugel aus einer virtuellen Urne gezogen wird. Die andere Lotterie hängt vom Wetter an dem für
                 Sie noch unbekannten Ort ab.
             </p>
 
             <p class="card-text">
-                Die <em>klassische Lotterie</em> funktioniert wie folgt: Stellen Sie sich eine mit 100 Kugeln gefüllte Urne vor.
+                Die <b>klassische Lotterie</b> funktioniert wie folgt: Stellen Sie sich eine mit 100 Kugeln gefüllte Urne vor.
                 Die Kugeln sind entweder grün oder rot gefärbt. Wird eine rote Kugel aus dieser Urne gezogen, gewinnen Sie
-                nichts. Wird hingegen eine grüne Urne gezogen, gewinnen Sie 10 Euro.
+                nichts. Wird hingegen eine grüne Urne gezogen, gewinnen Sie 10 Euro. Sie können sich als merken, dass Sie
+                bei grün gewinnen und bei rot nicht.
                 Nehmen wir an, dass 75 von 100 Kugeln grün gefärbt sind. Dann liegt die Wahrscheinlichkeit bei einer Ziehung
                 10 Euro zu gewinnen bei 75%. Liegen nur 30 grüne Kugeln in der Urne, liegt die Wahrscheinlichkeit bei 30%.
             </p>
 
             <p class="card-text">
-                Die wetterabhängige Lotterie funktioniert anders: Hier schätzen Sie die Temperatur an einem Ihnen noch
+                Die <b>wetterabhängige Lotterie</b> funktioniert anders: Hier schätzen Sie die Temperatur an einem Ihnen noch
                 unbekannten Ort zu einem Ihnen unbekannten Datum um 14:00 Uhr (MEZ). Die genaue Temperatur sowie den Ort
                 und das Datum werden Sie am Ende der Umfrage erfahren.
                 Vor ihrer Entscheidung erhalten Sie zunächst Informationen über die Temperaturen der  vorangegangenen Tage.
@@ -70,9 +79,9 @@
                 Ihre Schätzung basiert auf drei Temperaturbereichen, zum Beispiel:
             </p>
             <ul>
-                <li>Die Temperatur beträgt mindestens 20°C</li>
-                <li>Die Temperatur beträgt zwischen 14°C und 19,9°C</li>
                 <li>Die Temperatur beträgt weniger als 14°C</li>
+                <li>Die Temperatur beträgt zwischen 14°C und 19,9°C</li>
+                <li>Die Temperatur beträgt mindestens 20°C</li>
             </ul>
             <p class="card-text">
                 In dieser Entscheidungssituation können Sie für die verschiedenen Temperaturbereiche wählen, ob Sie eher
@@ -81,6 +90,9 @@
                 der wetterabhängigen Lotterie bevorzugen würden. Dafür werden wir Sie fragen, wie viele grüne
                 Kugeln mindestens in der virtuellen Urne sein müssen, das heißt wie hoch die Gewinnwahrscheinlichkeit
                 mindestens sein muss, damit Sie sich für die klassische und gegen die wetterabhängige Lotterie entscheiden.
+            </p>
+            <p class="card-text">
+                Wie genau Ihre Entscheidungssituation aussehen wird zeigen wir Ihnen auf der nachfolgenden Seite.
             </p>
         </div>
     </div>
@@ -94,11 +106,185 @@
             <div class="card-body">
                 <h5 class="card-title display-4">Beispiel</h5>
                 <h6 class="card-subtitle mb-5 text-muted">Baillon</h6>
-                <p class="lead">
-                    Ihre Entscheidungssituationn wird ungefähr wie folgt aussehen:
+                <p class="card-text">
+                    Hier sehen Sie, wie genau Ihre Entscheidungssituation aussehen wird. Wie in der Einführung beschrieben,
+                    sehen Sie drei Temperaturbereiche, für die Sie schätzen müssen, für wie wahrscheinlich Sie diese halten.
+
                 </p>
 
                 <div class="container clearfix border-left border-primary w-75 mb-3 bg-light">
+                    <div class = "container">
+                        <br>
+                        <button class="btn btn-outline-secondary" type="button">
+                            Wetterdaten ein-/ausblenden
+                        </button>
+                        <br><br>
+                        <div class = "row" >
+                            <table class = "table table-condensed">
+
+                                <colgroup>
+                                    <col span="1" style="width: 50%;">
+                                    <col span="1" style="width: 10%;">
+                                    <col span="1" style="width: 10%;">
+                                    <col span="1" style="width: 30%;">
+                                </colgroup>
+
+                                <thead>
+                                <tr class = "header">
+                                    <th class = "payment-th" style = "border-right: 2px solid #dee2e6;" colspan = "2">
+                                        Wetterabhängige Lotterie
+                                    </th>
+                                    <th class = "payment-th" colspan = "2">
+                                        Klassische Lotterie
+                                    </th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    <tr>
+                                        <td colspan="2" style = "border-right: 2px solid #dee2e6;">
+                                            <p id="subHeader">
+                                                <em>Sie gewinnen 10 Euro entsprechend der unten dargestellten Grafik (und sonst nichts).</em>
+                                            </p>
+                                        </td>
+                                        <td colspan="2">
+                                            <p>
+                                                <em>Sie gewinnen 10 Euro mit der folgenden Wahrscheinlichkeit (und sonst nichts).</em>
+                                            </p>
+                                        </td>
+                                    </tr>
+
+                                    {% for i,f,p in choices %}
+                                        <tr>
+                                            <!-- Lottery with visualization -->
+                                            {% if i == 1 %}
+                                            <td class="lottery" rowspan="{{ num_choices }}">
+
+                                                <figure class="highcharts-figure">
+                                                    <div class="event_viz"></div>
+                                                </figure>
+
+                                            </td>
+                                            {% endif %}
+
+                                            <!-- radio select form fields -->
+                                            {% if p < 40 %}
+                                                <td class="formfield" style="border-right: 2px solid #dee2e6;">
+                                                    <input type="radio" name="{{ f }}" id="{{ p }}" value="A" checked> <!-- enter disabled attribute here if needed-->
+                                                </td>
+                                                <td class="formfield">
+                                                    <input type="radio" name="{{ f }}" id="{{ p }}" value="B">
+                                                </td>
+                                            {% else %}
+                                                <td class="formfield" style="border-right: 2px solid #dee2e6;">
+                                                    <input type="radio" name="{{ f }}" id="{{ p }}" value="A"> <!-- enter disabled attribute here if needed-->
+                                                </td>
+                                                <td class="formfield">
+                                                    <input type="radio" name="{{ f }}" id="{{ p }}" value="B" checked>
+                                                </td>
+                                            {% endif%}
+
+                                            <!-- Safe Payments -->
+                                            <td class="safe-payment">
+                                                {{ p }}%
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <br><br>
+                        <button type="button" id="example" class="btn-outline-success btn float-right">
+                            Absenden
+                        </button>
+                        <br><br>
+                    </div>
+                </div>
+
+                <p>
+                    Im Wesentlichen zeigen wir Ihnen eine Tabelle mit zwei Spalten. Die linke Spalte steht für die
+                    wetterabhängige Lotterie und die rechte Spalte für die klassische Lotterie. Die Zeilen der Tabelle geben an,
+                    wie viele grüne Kugeln sich in der virtuellen Urne befinden bzw. wie groß die Gewinnwahrscheinlichkeit ist.
+                    In diesem Beispiel sehen Sie 6 Zeilen mit jeweils unterschiedlichen Prozentangaben. Stellen Sie sich vor,
+                    dass jede Zeile für einne Urne steht. Diese Zeilen (Urnen) unterscheiden sich nun hinsichtlich der
+                    Zusammensetzung aus grünen und roten Kugeln. Die Urne in der dritten Zeile enthält zum Beispiel 40
+                    grüne Kugeln (und 60 rote Kugeln). Wenn eine Kugel aus dieser Urne gezogen wird, beträgt die
+                    Wahrscheinlichkeit, dass diese Kugel grün ist (und Sie {{ Constants.prize_payoff }} Euro gewinnen)
+                    40%.
+                </p>
+
+                <hr class="my-4 w-75">
+
+                <p class="lead text-center col-md-auto">
+                    Sie müssen nun für jede Zeile (Urne) entscheiden, ob Sie die wetterabhängige Lotterie oder die klassische
+                    Lotterie mit dem jeweiligen Anteil an grünen Kugeln bevorzugen.
+                </p>
+
+                <hr class="my-4 w-75">
+
+                <p class="card-text">
+                    In der ersten Zeile beträgt die Wahrscheinlichkeit 0% (0 der 100 Kugeln in der virtuellen Urne sind grün).
+                    Das heißt, dass Sie keine Chance haben {{ Constants.prize_payoff }} Euro zu gewinnen, wenn Sie sich für die klassischen Lotterie entscheiden.
+                    Dementsprechend würden Sie vermutlich die wetterabhängie Lotterie bevorzugen und (wie im Beispiel oben) in
+                    der ersten Zeile das linke Feld auswählen.
+                </p>
+
+                <p class="card-text">
+                    Andersherum würden Sie die klassische Lotterie der wetterabhängigen Lotterie in der letzten Zeile vorziehen,
+                    weil die Gewinnwahrscheinlichkeit dort 100% beträgt. Wenn also eine Kugel aus der virtuellen Urne gezogen
+                    werden sollte, dann wäre Sie mit sicherheit grün und Ihr Gewinn beträge {{ Constants.prize_payoff }} Euro.
+                </p>
+                <p class="card-text">
+                    Nehmen wir an, dass die beispielhafte Entscheidungssituation oben von einer Person ausgefüllt wurde,
+                    die schätzt, dass es ungefähr zu 30% wahrscheinlich ist, dass die Temperatur am Sonntag 20°C oder
+                    mehr beträgt. Dann sollte sie die wetterabhängige Lotterie den beiden ersten klassischen Lotterien
+                    mit Anteilen von 0 bzw. 20% an grünen Kugeln vorziehen. Außerdem müsste sie alle klassischen Lotterien
+                    mit mehr als 30% grünen Kugeln besser finden als die wetterabhängige Lotterie, denn sobald sich mehr
+                    als 30% grüne Kugeln in der Urne befinden, ist die Wahrscheinlichkeit mit der klassischen Lotterie
+                    {{ Constants.prize_payoff }} Euro zu gewinnen <u>ihrer Schätzung nach</u> höher als in der
+                    wetterabhängigen Lotterie.
+                </p>
+            </div>
+        </div>
+        <br><br>
+        <button onclick="topFunction()" type="button" class="prevtab btn-outline-primary btn">Zurück</button>
+        <button onclick="topFunction()" type="button" class="nexttab btn-outline-primary btn float-right">Verstanden</button>
+    </div>
+
+    <!-- Part 3: Verdienst -->
+    <div class="tab-pane" id="part3" role="tabpanel" aria-labelledby="part3-tab">
+        <div class="card">
+        <div class="card-body">
+            <h5 class="card-title display-4">Ablauf & Verdienst</h5>
+            <h6 class="card-subtitle mb-5 text-muted">Baillon</h6>
+
+            <p class="lead">
+                Ablauf
+            </p>
+
+            <p>
+                Dieser Frageblock besteht aus insgesamt sechs Entscheidungssituation, die dem Beispiel ähneln. Diese
+                sechs Entscheidungssituationen unterscheiden sich nur hinsichtlich der wetterabhängigen Lotterie. Im
+                Beispiel kann man 10 Euro gewinnen, wenn die Temperatur mindestens 20°C beträgt. Darüber hinaus würden
+                wir die übrigen Temperaturbereiche auch abfragen. Also zum Beispiel, wie Sie sich entscheiden würden,
+                wenn Sie in der Wetterabhängigen Lotterie gewinnen würden, falls die Temperatur...
+                <ul>
+                    <li>...weniger als 14°C beträgt.</li>
+                    <li>...zwischen 14 und 20°C beträgt.</li>
+                    <li>...weniger als 20°C beträgt.</li>
+                    <li>...mindestens 14°C beträgt.</li>
+                    <li>...weniger als 14°C oder mindestens 20° beträgt.</li>
+                </ul>
+                Achten Sie daher bitte genau auf den Text in der ersten Spalte, der die wetterabhängige Lotterie
+                beschreibt, sowie auf die grafische Darstellung in der Tabelle &mdash; also welcher Temperaturbereich
+                grün beziehungsweise rot markiert ist. Dies ist insbesondere deshalb wichtig, weil wir in den "echten"
+                Entscheidungssituationen 6 ähnliche aber andere Temperaturbereiche abfragen.
+                <br><br>
+            </p>
+
+
+            <div class="container clearfix border-left border-primary w-75 bg-light">
                     <div class = "container">
                         <div class = "row" >
                             <!-- <div class = "card" > -->
@@ -127,7 +313,7 @@
                                         <tr>
                                             <td colspan="2" style = "border-right: 2px solid #dee2e6;">
                                                 <p id="subHeader">
-                                                    <em>Sie gewinnen 10 Euro entsprechend der unten dargestellten Grafik (und sonst nichts).</em>
+                                                    <em>Sie gewinnen 10 Euro, wenn die Temperatur mindestens 20°C (und sonst nichts).</em>
                                                 </p>
                                             </td>
                                             <td colspan="2">
@@ -144,7 +330,7 @@
                                                 <td class="lottery" rowspan="{{ num_choices }}">
 
                                                     <figure class="highcharts-figure">
-                                                        <div id="container"></div>
+                                                        <div class="event_viz"></div>
                                                     </figure>
 
                                                 </td>
@@ -152,18 +338,18 @@
 
                                                 <!-- radio select form fields -->
                                                 {% if p < 40 %}
-                                                    <td class="formfield" style="border-right: 2px solid #dee2e6;">
-                                                        <input type="radio" name="{{ f }}" id="{{ p }}" value="A" disabled checked> <!-- enter disabled attribute here if needed-->
+                                                    <td style="border-right: 2px solid #dee2e6;">
+                                                        <input type="radio" value="A" checked disabled class="demonstration">
                                                     </td>
-                                                    <td class="formfield">
-                                                        <input type="radio" name="{{ f }}" id="{{ p }}" value="B" disabled>
+                                                    <td>
+                                                        <input type="radio" value="B" disabled class="demonstration">
                                                     </td>
                                                 {% else %}
-                                                    <td class="formfield" style="border-right: 2px solid #dee2e6;">
-                                                        <input type="radio" name="{{ f }}" id="{{ p }}" value="A" disabled> <!-- enter disabled attribute here if needed-->
+                                                    <td style="border-right: 2px solid #dee2e6;">
+                                                        <input type="radio" value="A" disabled class="demonstration">
                                                     </td>
-                                                    <td class="formfield">
-                                                        <input type="radio" name="{{ f }}" id="{{ p }}" value="B" disabled checked>
+                                                    <td>
+                                                        <input type="radio" value="B" checked disabled class="demonstration">
                                                     </td>
                                                 {% endif%}
 
@@ -180,88 +366,37 @@
                     </div>
                 </div>
 
+                <br><br>
+                <p class="lead">
+                    Verdienst
+                </p>
+
                 <p>
-                    Im Wesentlichen zeigen wir Ihnen eine Tabelle mit zwei Spalten. Die linke Spalte steht für die
-                    wetterabhängige Lotterie und die rechte Spalte für die klassische Lotterie. Die Zeilen der Tabelle geben an,
-                    wie viele grüne Kugeln sich in der virtuellen Urne befinden bzw. wie groß die Gewinnwahrscheinlichkeit ist.
-                    Sie müssen also für jede Gewinnwahrscheinlichkeit entscheiden, ob Sie die wetterabhängige oder die klassische
-                    Lotterie bevorzugen.
+                    Sobald Sie die Umfrage abgeschlossen haben, wird eine Ihrer Entscheidungen ausgezahlt, die zufällig
+                    ausgewählt wird. Wenn zufällig eine Entscheidungssituation dieses Abschnittes der Umfrage ausgewählt wird,
+                    wird gleichzeitig auch eine zufällige Zeile, das heißt eine der angegebenen Wahrscheinlichkeiten, ausgewählt.
                 </p>
-
-                <hr class="my-2 mb-5">
-
-                <p class="card-text">
-                    Stellen Sie sich vor, dass die Wahrscheinlichkeit 0%  ist (0 der 100 Kugeln in der virtuellen Urne sind grün).
-                    Das heißt, dass Sie keine Chance 10 Euro zu gewinnen, wenn Sie sich für die klassischen Lotterie entscheiden.
-                    Dementsprechend würden Sie vermutlich die wetterabhängie Lotterie bevorzugen und (wie im Beispiel oben) in
-                    der ersten Zeile das linke Feld auswählen.
+                <p>
+                    Nehmen wir für einen Moment an, dass am Ende der Umfrage dieser Frageblock und genau die oben dargestellte
+                    Entscheidungssituation ausgewählt wird. Nehmen wir darüber hinaus an, dass zufällig die vierte Zeile für
+                    die Auszahlung bestimmt wird. In dieser Zeile bestand die Wahl zwischen der wetterabhänngigen Lotterie
+                    und einer klassichen Lotterie mit einer Gewinnchance von 60% &mdash; also mit einer Urne die mit 60
+                    grünen Kugeln gefüllt ist.
                 </p>
-
-                <p class="card-text">
-                    Andersherum würden Sie die klassische Lotterie der wetterabhängigen Lotterie in der letzten Zeile vorziehen,
-                    weil die Gewinnwahrscheinlichkeit dort 100% beträgt. Wenn also eine Kugel aus der virtuellen Urne gezogen
-                    werden sollte, dann wäre Sie mit sicherheit grün und Ihr Gewinn beträge 10 Euro.
+                <p>
+                    Da die Wahl in dem Beispiel auf die klassische Lotterie gefallen ist, wird die Auszahlung (ob Sie
+                    {{ Constants.prize_payoff }} Euro gewinnen oder nicht) darüber bestimmt, ob eine grüne Kugel
+                    gezogen wird. Wenn ja, gewinnen {{ Constants.prize_payoff }} Euro.
+                </p>
+                <p>
+                    Nehmen wir an, Sie hätten sich in dem Beispiel anders entschieden und hätten anstelle der klassischen
+                    Lotterie mit 60% die wetterabhängige Lotterie bevorzugt. Dann würde, wenn wieder die vierte Zeile
+                    ausgewählt wird, die wetterabhängige Lotterie Ihre Auszahlung bestimmen. Dementsprechend würden Sie am
+                    Ende der Umfrage {{ Constants.prize_payoff }} Euro gewinnen, wenn sich herausstellt, dass tatsächlich
+                    mindestens 20°C gemessen wurden.
                 </p>
             </div>
         </div>
-        <br><br>
-        <button onclick="topFunction()" type="button" class="prevtab btn-outline-primary btn">Zurück</button>
-        <button onclick="topFunction()" type="button" class="nexttab btn-outline-primary btn float-right">Verstanden</button>
-    </div>
-
-    <!-- Part 3: Verdienst -->
-    <div class="tab-pane" id="part3" role="tabpanel" aria-labelledby="part3-tab">
-        <div class="card">
-        <div class="card-body">
-            <h5 class="card-title display-4">Regeln & Verdienst</h5>
-            <h6 class="card-subtitle mb-5 text-muted">Multipe Point Prediction</h6>
-
-            <p class="lead">
-                Ablauf
-            </p>
-
-            <p>
-                Dieser Frageblock besteht aus innsgesamt sechs Entscheidungssituation, die dem Beispiel oben ähneln. Diese
-                sechs Entscheidungssituationen unterscheiden sich nur hinsichtlich der wetterabhängigen Lotterie. Oben im
-                Beispiel kann man 10 Euro gewinnen, wenn die Temperatur mindestens 20°C beträgt. Darüber hinaus würden wir
-                Sie noch fragen, welche Lotterie Sie bevorzugen würden, Wenn sie in der wetterabhängigen Lotterie gewinnen
-                würden, falls die Temperatur
-                <ul>
-                    <li>weniger als 14°C beträgt</li>
-                    <li>zwischen 14 und 20°C beträgt</li>
-                    <li>weniger als 20°C beträgt</li>
-                    <li>mindestens 14°C beträgt</li>
-                    <li>weniger als 14°C oder mindestens 20° beträgt</li>
-                </ul>
-            </p>
-
-            <hr class="my-4 w-75">
-
-            <p class="lead">
-                Auszahlung
-            </p>
-
-            <p>
-                Sobald Sie die Umfrage abgeschlossen haben, wird eine Ihrer Entscheidungen ausgezahlt, die zufällig
-                ausgewählt wird. Wenn zufällig eine Entscheidungssituation dieses Abschnittes der Umfrage ausgewählt wird,
-                wird gleichzeitig auch eine zufällige Zeile, d.h. eine der angegebenen Wahrscheinlichkeiten, ausgewählt.
-            </p>
-            <p>
-                Zum Beispiel liegt die Entscheidung in der Zeile zwischen der wetterabhängigen Lotterie (10 Euro bei weniger
-                als 14°C) und der klassischen Lotterie (Gewinnwahrscheinlichkeit: 70 Prozent).
-            </p>
-            <p>
-                Wenn Sie sich in dieser Zeile für die klassische Lotterie (mit der Gewinnwahrscheinlichkeit 70 Prozent)
-                entschieden haben, wird ihre Auszahlung darüber bestimmt, ob ein grüner Ball gezogen wird (10 Euro) oder
-                eben nicht (0 Euro).
-            </p>
-            <p>
-                Wenn Sie sich in dieser Zeile für die wetterabhängige Lotterie entschieden haben, wird ihre Auszahlung
-                darüber bestimmt, ob die gemessene Temperatur tatsächlich niedriger als 14°C betrug (10 Euro) oder
-                ob sie höher war (0 Euro).
-            </p>
-        </div>
-    </div>
         <br><br>
         <button onclick="topFunction()" type="button" class="prevtab btn-outline-primary btn ">Zurück</button>
         <button onclick="topFunction()" type="button" class="nexttab btn-outline-primary btn float-right">Verstanden</button>
@@ -272,10 +407,202 @@
         <div class="card">
         <div class="card-body">
             <h5 class="card-title display-4">Verständnisfragen</h5>
-            <h6 class="card-subtitle mb-5 text-muted">Multipe Point Prediction</h6>
+            <h6 class="card-subtitle mb-5 text-muted">Baillon</h6>
             <p>
-                ....
+                Bitte betrachten Sie das unten dargestellte Beispiel. Nehmenn Sie an, dass eine Person die
+                Entscheidungssituation so ausgefüllt hat, wie sie hier aufgeführt ist. Beachten Sie auch, dass sich die
+                Entscheidungssituation von den auf den vorigen Seiten dargestellten Beispielen unterscheidet.
             </p>
+
+            <div class="container clearfix border-left border-primary w-75 mb-3 bg-light">
+                <div class = "container">
+                    <div class = "row" >
+                        <table class = "table table-condensed">
+
+                            <colgroup>
+                                <col span="1" style="width: 50%;">
+                                <col span="1" style="width: 10%;">
+                                <col span="1" style="width: 10%;">
+                                <col span="1" style="width: 30%;">
+                            </colgroup>
+
+                            <thead>
+                            <tr class = "header">
+                                <th class = "payment-th" style = "border-right: 2px solid #dee2e6;" colspan = "2">
+                                    Wetterabhängige Lotterie
+                                </th>
+                                <th class = "payment-th" colspan = "2">
+                                    Klassische Lotterie
+                                </th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td colspan="2" style = "border-right: 2px solid #dee2e6;">
+                                        <p id="subHeader">
+                                            <em>Sie gewinnen 10 Euro, wenn die Temperatur zwischen 14,0°C und 19,9°C beträgt (und sonst nichts).</em>
+                                        </p>
+                                    </td>
+                                    <td colspan="2">
+                                        <p>
+                                            <em>Sie gewinnen 10 Euro mit der folgenden Wahrscheinlichkeit (und sonst nichts).</em>
+                                        </p>
+                                    </td>
+                                </tr>
+
+                                {% for i,f,p in choices %}
+                                    <tr>
+                                        <!-- Lottery with visualization -->
+                                        {% if i == 1 %}
+                                        <td class="lottery" rowspan="{{ num_choices }}">
+
+                                            <figure class="highcharts-figure">
+                                                <div id="example_viz"></div>
+                                            </figure>
+
+                                        </td>
+                                        {% endif %}
+
+                                        <!-- radio select form fields -->
+                                        {% if p < 80 %}
+                                            <td style="border-right: 2px solid #dee2e6;">
+                                                <input type="radio" value="A" checked disabled class="demonstration">
+                                            </td>
+                                            <td>
+                                                <input type="radio" value="B" disabled class="demonstration">
+                                            </td>
+                                        {% else %}
+                                            <td style="border-right: 2px solid #dee2e6;">
+                                                <input type="radio" value="A" disabled class="demonstration">
+                                            </td>
+                                            <td>
+                                                <input type="radio" value="B" checked disabled class="demonstration">
+                                            </td>
+                                        {% endif%}
+
+                                        <!-- Safe Payments -->
+                                        <td class="safe-payment">
+                                            {{ p }}%
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <p class="lead">
+                <br>
+                Die folgenden Fragen beziehen sich auf das oben dargestellte Beispiel. Bitte beantworten Sie die Fragen.
+                Sobald Sie alle Fragen richtig beantwortet haben, können Sie mit der richtigen Entscheidungssituation
+                beginnen und {{ Constants.prize_payoff }} Euro gewinnen.
+                <br><br>
+            </p>
+
+            <table class="table table-hover">
+
+                <tbody>
+                <tr>
+                    <td>
+                        <label for="id_BaillonQ1">
+                            Ist die folgende Aussage wahr oder falsch?<br>
+                            <em>Die Person bevorzugt die wetterabhängige Lotterie grundsätzlich gegenüber der klassischen Lotterie.</em>
+                        </label>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <select class="form-control" id="id_BaillonQ1" name="BaillonQ1">
+                                <option selected>Bitte wählen...</option>
+                                <option value="True">Wahr</option>
+                                <option value="False" selected>Falsch</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="id_BaillonQ2">
+                            Bei welcher der folgenden Temperaturen könnte die Person in dem Beispiel oben in der
+                            wetterabhängigen Lotterie {{ Constants.prize_payoff }} Euro gewinnen?
+                        </label>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <select class="form-control" id="id_BaillonQ2" name="BaillonQ2">
+                                <option selected>Bitte wählen...</option>
+                                <option value="False">13,9°C</option>
+                                <option value="False">20,0°C</option>
+                                <option value="False">10,0°C</option>
+                                <option value="True" selected>18,7°C</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="id_BaillonQ3">
+                            Wie viele grüne Kugeln müssen sich mindestens in der virtuellen Urne befinden,
+                            damit die Person die klassische Lotterie bevorzugt? Frage muss überdacht werden (60).
+                        </label>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input type="number" name="Q3" id="id_BaillonQ3" class="form-control" step="1" name="BaillonQ3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Kugeln</div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="id_BaillonQ4">
+                            Angenommen die Person erfährt am Ende des Experiments, dass diese Entscheidungssituation ihren
+                            Auszahlungsbetrag bestimmen wird, und dass die 60%-Zeile ausgewählt wurde.
+                            Die Temperatur in dem ihr dann bekannten Ort beträgt 15°C beträgt. Welche Aussage ist richtig?
+                        </label>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <select class="form-control" id="id_BaillonQ4" name="BaillonQ4">
+                                <option selected>Bitte wählen...</option>
+                                <option value="False">Die Person bekommt 0 Euro ausgezahlt, weil die wetterabhängige
+                                    Lotterie ihre Auszahlung bestimmt.</option>
+                                <option value="False">Die klassische Lotterie bestimmt die Auszahlung.</option>
+                                <option value="True" selected>Die wetterabhängige Lotterie bestimmt die Auszahlung und sie
+                                    gewinnt 10 Euro.</option>
+                                <option value="False">Die Person hat eine 60% Chance 10 Euro zu gewinnen.</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="id_BaillonQ5">
+                            Angenommen die Person erfährt am Ende des Experiments, dass diese Entscheidungssituation ihren
+                            Auszahlungsbetrag bestimmen wird, und dass die 80%-Zeile ausgewählt wurde.
+                            Die Temperatur in dem ihr dann bekannten Ort beträgt 20°C beträgt. Welche Aussage ist richtig?
+                        </label>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <select class="form-control" id="id_BaillonQ5" name="BaillonQ5">
+                                <option >Bitte wählen...</option>
+                                <option value="False">Die Person bekommt 0 Euro ausgezahlt, weil die wetterabhängige
+                                    Lotterie ihre Auszahlung bestimmt.</option>
+                                <option value="False">Die wetterabhängige Lotterie bestimmt die Auszahlung.</option>
+                                <option value="False">Die klassische Lotterie bestimmt die Auszahlung und sie gewinnt sicher 10 Euro.</option>
+                                <option value="True" selected>Die Person hat eine 80% Chance 10 Euro zu gewinnen.</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+                {{ form.errors }}
+            </table>
         </div>
     </div>
         <br><br>

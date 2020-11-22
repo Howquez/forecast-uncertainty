@@ -9,17 +9,49 @@
 {% endblock %}
 
 {% block scripts %}
-
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script src="{% static 'global/js/weather_viz.js' %}"></script>
+    <script src="{% static 'global/js/procedure_viz.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
+<div class="jumbotron bg-light">
+    <h1 class="card-title display-2 mb-1">
+        Runde 2!
+    </h1>
+    <p class="lead">Sie haben die erste Runde der Umfrage abgeschlossen.</p>
+    <p>
+        Die zweite Runde beinhaltet die gleichen Frageblöcke wie die erste Runde. Der einzige Unterschied zu den
+        Entscheidungssituationen eben ist, dass Sie in den folgenden Entscheidungssituationen zusätzliche
+        Informationen erhalten:
+    </p>
+
+    <hr class="my-4 w-75">
+
+    <p class="lead text-center col-md-auto">
+        Neben gemessenen Temperaturen zeigen wir Ihnen auch eine Wettervorhersage &mdash; also eine Schätzung von
+        Experten darüber, wie sich die Temperatur entwickeln kann.
+    </p>
+
+    <hr class="my-4 w-75">
+
+    <p>
+        Dabei handelt es sich um eine echte Wettervorhersage, die wir Ihnen am Ende der Umfrage in Gänze
+        zur Verfügung stellen. In der unten dargestellten Grafik zeigen wir Ihnen nochmal den Aufbau der Umfrage.
+        <br><br>
+    </p>
+
+    <figure class="highcharts-figure" style="width:95%">
+        <div id="process_viz" class="clearfix"></div>
+    </figure>
+
+    <button class="btn btn-primary btn-lg float-right" role="button">Mit Runde 2 beginnen</button>
+</div>
+<!--
 <body onload="fillText()">
 
     <br><br>
@@ -55,5 +87,5 @@
     </button>
 
 </body>
-
+-->
 {% endblock %}
