@@ -1,3 +1,5 @@
+You can find the experiment's demo [here](https://forecastsurvey.herokuapp.com/demo/). 
+
 # Structure
 ### Overview
 This oTree experiment consists of two elements: 
@@ -8,7 +10,7 @@ This oTree experiment consists of two elements:
 The belief elicitation is either done using a quadratic scoring rule (BSR) for distributions or Eyting & Schmidt's 
 [(2020, Working Paper)](https://download.uni-mainz.de/RePEc/pdf/Discussion_Paper_1818.pdf)
 Multiple Point Predictions (MPP). Both are implemented in a binarized fashion using Hossain & Okui's 
-[(2013, Review of Economic Studies)](https://www.jstor.org/stable/43551453?seq=1#metadata_info_tab_contents) 
+[(2013, Review of Economic Studies)](https://www.jstor.org/stable/43551453) 
 binarized scoring rule.
 
 ### App Sequence
