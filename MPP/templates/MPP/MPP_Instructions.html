@@ -62,8 +62,8 @@
             <hr class="my-4 w-75">
 
             <p class="card-text">
-                Daraus folgt, dass Ihre Gewinnchance sinkt, wenn Sie sich verschätzen. Wieviel Prozentpunkte Sie durch
-                das verschätzen einbußen,hängt dabei davon ab, ob Sie die tatsächlich Temperatur über- oder unterschätzen.
+                Daraus folgt, dass Ihre Gewinnchance sinkt, wenn Sie sich verschätzen. Wieviele Prozentpunkte Sie durch
+                das verschätzen einbußen, hängt dabei davon ab, ob Sie die tatsächlich Temperatur über- oder unterschätzen.
                 Die drei Schätzungen die sie abgeben müssen unterscheiden sich nämlich hinsichtlich dieser Einbuße:
                 Mal bußen Sie mehr von Ihrer Gewinnchance ein, wenn Sie die Temperatur überschätzen, als wenn Sie diese
                 unterschätzen. In einer anderen Schätzung verhält es sich andersrum &mdash; Unterschätzen hat einen
@@ -90,8 +90,8 @@
             <h6 class="card-subtitle mb-5 text-muted">Multipe Point Prediction</h6>
             <p class="card-text">
                 Hier sehen Sie, wie genau Ihre Entscheidungssituation aussehen wird. Wie in der Einführung beschrieben,
-                müssen Sie drei Schätzungen zur Temperatur am Sonntag in 9 Tagen abgeben. Die drei Fragen Unterscheiden
-                sich dabei nur hinsichtlich Ihrer Einbußen, wenn Sie sich verschätzen.<br><br>
+                müssen Sie drei Schätzungen zur Temperatur am Sonntag in 9 Tagen um 14:00 Uhr (MEZ) abgeben. Die drei
+                Fragen Unterscheiden sich dabei nur hinsichtlich Ihrer Einbußen, wenn Sie sich verschätzen.<br><br>
             </p>
 
             <div class="container clearfix border-left border-primary w-75 bg-light">
@@ -188,7 +188,7 @@
             <h6 class="card-subtitle mb-5 text-muted">Multipe Point Prediction</h6>
 
             <p class="card-text">
-                Nachdem Sie Ihre Schätzungen eingegeben haben, wird für jede Ihrer Schätzungen bestimmt, wie weit sie von der
+                Nachdem Sie Ihre Schätzungen eingegeben und abgesendet haben, wird für jede Ihrer Schätzungen bestimmt, wie weit sie von der
                 tatsächlich gemessenen Temperatur abweicht. Wenn Sie überall die richtige Temperatur geschätzt haben, dann
                 haben Sie keine Einbußen und in dieser Aufgabe eine 100% Gewinnchance {{ Constants.prize_payoff }}
                 Euro zu verdienen. Liegen Sie in ein oder mehreren Schätzungen daneben, reduziert das Ihre Gewinnchance.
@@ -247,10 +247,10 @@
             </div>
 
             <p class="card-text">
-                Um die Einbußen besser zu verstehen, zeigen wir Ihnen unten noch einmal das auf der vorigenn Seite dargestellte
+                Um die Einbußen besser zu verstehen, zeigen wir Ihnen unten noch einmal das auf der vorigen Seite dargestellte
                 Beispiel. Stellen Sie sich vor, die Person, die diese Schätzungen eingegeben hat ist am Ende der Umfrage
-                angelangt und findet heraus, dass sich die Wetterdaten auf die Sahara bezogen, und dass dort 45,0°C für den
-                Sonntag gemessen wurden. <br><br>
+                angelangt und findet heraus, dass sich die Wetterdaten auf die Sahara bezogen, und dass dort an
+                dem Sonntag um 14:00 Uhr (MEZ) 45,0°C gemessen wurden. <br><br>
             </p>
 
             <div class="container clearfix border-left border-primary w-75 bg-light">
@@ -315,7 +315,7 @@
 
             <p class="card-text">
                 <br>
-                Dann hat die Person, die diese Schätzungen abgegeben hat, sich in ihrer ersten
+                Dann hat sich die Person, die diese Schätzungen abgegeben hat, in ihrer ersten
                 Schätzung um 0,5°C geirrt und die Temperatur überschätzt. Weil Überschätzen in der ersten Schätzung dreimal
                 so teuer wie Unterschätzen ist, birgt diese Abweichung 6 &middot; 0,5 = 3 Prozentpunkte.
             </p>
@@ -325,8 +325,8 @@
             </p>
             <p class="card-text">
                 In der dirtten Schätzung lag die Person mit 48,5°C 3,5°C über dem tatsächlich gemessenen Wert. Die Person
-                hat die Temperatur also auch hier überschätzt. Überschätzen ist in diesem Fall aber nicht so teuer wir
-                Unterschätzen und kostet nur 3 Punkte je °C. Dementsprechend betragen die Kosten hier
+                hat die Temperatur also auch hier überschätzt. Überschätzen ist in diesem Fall aber nicht so teuer wie
+                Unterschätzen und kostet nur 2 Punkte je °C. Dementsprechend betragen die Kosten hier
                 2 &middot; 3,5 = 7 Prozentpunkte.
             </p>
             <p class="card-text">
@@ -335,14 +335,15 @@
             </p>
             <hr class="my-4 w-75">
             <p class="lead text-center col-md-auto">
-                Ob Sie die {{ Constants.prize_payoff }} Euro gewinnen wird wieder durch eine virtuelle Urne bestimmt.
+                Ob Sie die {{ Constants.prize_payoff }} Euro gewinnen, wird wieder durch eine virtuelle Urne bestimmt.
                 Bei einer Gewinnchance von beispielsweise 86% werden 86 grüne und 14 rote Kugeln in eine Urne gelegt.
                 Wird daraufhin eine grüne Kugel gezogen, haben Sie in dieser Entscheidungssituation
                 {{ Constants.prize_payoff }} Euro gewonnen.
             </p>
             <hr class="my-4 w-75">
             <p class="card-text">
-                Daher sollten Sie bemüht sein, möglichst gut zu schätzen, damit sie hohe Gewinnchancen haben, falls diese
+                Daher sollten Sie bemüht sein, möglichst gut zu schätzen, damit möglichst viele grüne Kugeln in die Urne
+                gelegt werden &mdash; also damit Sie eine möglichst hohe Gewinnchancen haben, falls diese
                 Entscheidungssituation am Ende zufällig für Ihre Auszahlung bestimmt wird.
             </p>
         </div>

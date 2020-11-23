@@ -1,3 +1,7 @@
+let opacity = js_vars.opacity || 1;
+
+console.log(opacity);
+
 var chart = Highcharts.chart("process_viz", {
   exporting: {
     enabled: false
@@ -162,17 +166,17 @@ var chart = Highcharts.chart("process_viz", {
     showInLegend: false
   }, {
     name: 'Frageblock 2',
-    color: "#a055f5",
+    color: "rgba(160, 85, 245, 1)", // "#a055f5",
     data: [1],
     showInLegend: false
   }, {
     name: 'Frageblock 1',
-    color: "#be82ff",
+    color: "rgba(190, 130, 255, 1)", // "#be82ff",
     data: [1],
     showInLegend: false
   }, {
     name: 'Frageblock 2',
-    color: "#a055f5",
+    color: `rgba(160, 85, 245, ${opacity})`, // "#a055f5",
     data: [1],
     showInLegend: false
   }, {
@@ -185,7 +189,7 @@ var chart = Highcharts.chart("process_viz", {
     showInLegend: false
   }, {
     name: 'Frageblock 1',
-    color: "#be82ff",
+    color: `rgba(190, 130, 255, ${opacity})`, // "#be82ff",
     data: [1],
     showInLegend: false
   }, {

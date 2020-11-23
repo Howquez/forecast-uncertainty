@@ -53,8 +53,18 @@
     <div class="card">
         <div class="card-body">
             {% if treatment_displayed == "True" %}
-                <div class="alert alert-success" role="alert">
-                    Bitte beachten Sie, dass die Grafik nun auch eine Wettervorhersage enthält.
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <h4 class="lead">
+                        Bitte beachten Sie, dass die Grafik nun auch eine Wettervorhersage enthält.
+                    </h4>
+                    <hr>
+                    <p>
+                        Alle Angaben (also sowohl gemessene als auch vorhergesagte Temperaturen) beziehen sich auf dieselbe
+                        Tageszeit: 14:00 Uhr (MEZ).
+                    </p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
             {% else %}
                 <p class="card-text">
@@ -182,7 +192,7 @@
 {% if player.round_number == 1 %}
 {% if treatment_displayed == "False" %}
     <div class="alert alert-danger alert-dismissible fade show mb-5" role="alert">
-        Sie können nicht mehr zu einer Frage zurückkehren, sobald Sie auf die Schaltfläche "Weiter" geklickt haben.
+        Sie können nicht mehr zu einer Frage zurückkehren, sobald Sie auf die Schaltfläche "Absenden" geklickt haben.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>

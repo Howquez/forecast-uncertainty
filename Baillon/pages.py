@@ -57,12 +57,10 @@ class Forecast_Viz(Page):
         if self.subsession.this_app_constants()["treatment_displayed"] == True and self.round_number == 1: # as defined in post_baillon/models
             return True
 
-    # def js_vars(self):
-    #     return dict(
-    #         page = "forecast",
-    #         treatment = self.participant.vars["treatment"],
-    #         location = self.participant.vars["location"],
-    #     )
+    def js_vars(self):
+        return dict(
+            opacity = 0.2,
+        )
 
 
 class Baillon_Decision(Page):
