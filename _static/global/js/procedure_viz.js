@@ -1,6 +1,6 @@
-let opacity = js_vars.opacity || 1;
+let cloudiness = js_vars.opacity || 1;
 
-console.log(opacity);
+console.log(cloudiness);
 
 var chart = Highcharts.chart("process_viz", {
   exporting: {
@@ -176,7 +176,7 @@ var chart = Highcharts.chart("process_viz", {
     showInLegend: false
   }, {
     name: 'Frageblock 2',
-    color: `rgba(160, 85, 245, ${opacity})`, // "#a055f5",
+    color: `rgba(160, 85, 245, ${cloudiness})`, // "#a055f5",
     data: [1],
     showInLegend: false
   }, {
@@ -189,7 +189,7 @@ var chart = Highcharts.chart("process_viz", {
     showInLegend: false
   }, {
     name: 'Frageblock 1',
-    color: `rgba(190, 130, 255, ${opacity})`, // "#be82ff",
+    color: `rgba(190, 130, 255, ${cloudiness})`, // "#be82ff",
     data: [1],
     showInLegend: false
   }, {
