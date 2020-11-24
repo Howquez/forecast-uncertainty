@@ -17,7 +17,7 @@
             <h5 class="card-title display-4">Wie wird das Wetter in 9 Tagen?</h5>
             <h6 class="card-subtitle mb-5 text-muted">Was schätzen Sie?</h6>
 
-            {% if player.round_number == 1 %}
+            {% if player.round_number == 1 and treatment_displayed == "False" %}
                 <p class="card-text">
                     Die Temperaturen
                     <a style="color:#5DE58E">zwischen Mittwoch und Freitag (also im grün gefärbten Bereich)</a>
@@ -31,9 +31,18 @@
                     am selben Ort und zur gleichen Tageszeit für wahrscheinlich halten.
                 </p>
             {% else %}
-                <div class="alert alert-primary" role="alert">
-                    Bitte beachten Sie, dass Sie nun zusätzliche Informationen im Wetterbericht sehen können. Für den
-                    besagten Sonntag ist eine <b>Wettervorhersage</b> dargestellt.
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <h4 class="lead">
+                        Bitte beachten Sie, dass die Grafik nun auch eine Wettervorhersage enthält.
+                    </h4>
+                    <hr>
+                    <p>
+                        Alle Angaben (also sowohl gemessene als auch vorhergesagte Temperaturen) beziehen sich auf dieselbe
+                        Tageszeit: 14:00 Uhr (MEZ).
+                    </p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
             {% endif %}
             <figure class="highcharts-figure">

@@ -26,6 +26,11 @@ class MPP_Decision(Page):
             small=True,
         )
 
+    def vars_for_template(self):
+        return {
+            "treatment_displayed" : str(self.subsession.this_app_constants()["treatment_displayed"]),
+        }
+
 
 class MPP_Revelation(Page):
 
