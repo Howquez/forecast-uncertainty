@@ -25,6 +25,7 @@ class Results(Page):
 
     def vars_for_template(self):
         if bool(re.search("MPP", self.participant.vars["winning_app"])):
+            print(self.participant.vars["MPP_guess"])
             return {
                 "winning_app": "MPP",
                 "guess1": self.participant.vars["MPP_guess"][0],

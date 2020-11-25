@@ -136,18 +136,20 @@ class SharedBasePlayer(BasePlayer):
                 if not self.subsession.this_app_constants()["treatment_displayed"]: # select pre treatment app
                     self.participant.vars["payment_outcome"] = "leider verloren"
                     self.is_relevant = True
+                    self.store_payoff_info()
+
                     if self.success: # the player needs to be successful to win the prize
                         self.payoff = Constants.prize_payoff
-                        self.store_payoff_info()
                         self.participant.vars["payment_outcome"] = "gewonnen"
             elif bool(re.search("post", self.participant.vars["winning_app"])): # if the post treatment version is chosen:
                 self.participant.vars["payment_round"] = "Runde 2"
                 if self.subsession.this_app_constants()["treatment_displayed"]: # select post treatment app
                     self.participant.vars["payment_outcome"] = "leider verloren"
                     self.is_relevant = True
+                    self.store_payoff_info()
+
                     if self.success: # the player needs to be successful to win the prize
                         self.payoff = Constants.prize_payoff
-                        self.store_payoff_info()
                         self.participant.vars["payment_outcome"] = "gewonnen"
 
     def store_payoff_info(self):
@@ -155,7 +157,6 @@ class SharedBasePlayer(BasePlayer):
         self.participant.vars["MPP_diffs"] = [self.diff_Q1, self.diff_Q2, self.diff_Q3]
         costs = [self.costs_Q1, self.costs_Q2, self.costs_Q3]
         self.participant.vars["MPP_loss"] = [x * 2/3 for x in costs] # costs in percentage points
-
         self.participant.vars["Chance"] = self.total_chance
 
 
