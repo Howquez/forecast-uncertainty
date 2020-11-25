@@ -1,3 +1,4 @@
+# coding=utf-8
 from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
 from .models import Constants
@@ -5,7 +6,7 @@ from .models import Constants
 
 class BSR_Instructions(Page):
     def is_displayed(self):
-        if self.subsession.this_app_constants()["treatment_displayed"] == False:
+        if not self.subsession.this_app_constants()["treatment_displayed"]:
             return True
 
     form_model="player"
@@ -71,7 +72,7 @@ class BSR_Decision(Page):
 
 class ControlQuestions(Page):
     def is_displayed(self):
-        if self.subsession.this_app_constants()["treatment_displayed"] == True:
+        if self.subsession.this_app_constants()["treatment_displayed"]:
             return True
 
     form_model = "player"
@@ -81,7 +82,7 @@ class ControlQuestions(Page):
 
 class Revelation_Viz(Page):
     def is_displayed(self):
-        if self.subsession.this_app_constants()["treatment_displayed"] == True:
+        if self.subsession.this_app_constants()["treatment_displayed"]:
             return True
 
     def js_vars(self):
@@ -94,7 +95,7 @@ class Revelation_Viz(Page):
 
 class Results(Page):
     def is_displayed(self):
-        if self.subsession.this_app_constants()["treatment_displayed"] == True:
+        if self.subsession.this_app_constants()["treatment_displayed"]:
             return True
 
 

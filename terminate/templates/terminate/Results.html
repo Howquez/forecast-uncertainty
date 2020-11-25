@@ -1,0 +1,103 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block scripts %}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="{% static 'global/js/revelation_viz.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<body onload="fillText()">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title display-4">{{ participant.vars.location }} Oktober 2020</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Am <b>Sonntag</b>, dem 18. Oktober um 14:00 Uhr wurden hier
+                <b><span id="revelation"></span>°C</b> gemessen.
+            </h6>
+            <br>
+            <figure class="highcharts-figure">
+                <div id="weather_viz"></div>
+            </figure>
+            <p class="card-text">
+                <small>Der Wetterbericht den wir Ihnen gezeigt haben und auf dem Ihre Entscheidungen sowie
+                Ihre möglichen Auszahlungen basieren, bezieht sich auf das Wetter in {{ participant.vars.location }}
+                {% if participant.vars.location == "Ilomantsi" %}
+                        (Finnland)
+                {% else %}
+                        (Saarland)
+                    {% endif %}
+                    im Oktober 2020.
+                    Die Messdaten, die dieser Studie zugrunde liegen und für Ihre Auszahlung relevant sind, finden Sie
+                {% if participant.vars.location == "Ilomantsi" %}
+                    <a href="https://kachelmannwetter.com/de/messwerte/ostfinnland/temperatur/20201019-1100z.html#obs-detail-029390-72h" target="_blank">hier</a> und
+                    <a href="https://kachelmannwetter.com/de/messwerte/ostfinnland/temperatur/20201009-1100z.html#obs-detail-029390-72h" target="_blank">hier</a>.
+                {% else %}
+                    <a href="https://kachelmannwetter.com/de/messwerte/63-e-491-n/temperatur/20201009-1100z.html#obs-detail-J728-72h" target="_blank">hier</a> und
+                    <a href="https://kachelmannwetter.com/de/messwerte/63-e-491-n/temperatur/20201019-1100z.html#obs-detail-J728-72h" target="_blank">hier</a>.
+                {% endif %}
+                </small>
+            </p>
+            <p class="lead">
+                Hier sind Ihre Ergebnisse im Überblick:
+            </p>
+                {% if winning_app == "MPP" %}
+
+                <p>
+                    Die für Ihre Auszahlung entscheidende und zufällig ausgewählte Runde ist
+                    <b>Runde # {% if round2 %}2{% else %}1{% endif%}</b>
+                    (in der folgenden Tabelle <a class="text-success">grün</a>
+                    gefärbt). In dieser Runde ergab sich eine Gewinnchance von <b>{{chance}}%</b>.
+                    Wie der Zufall es so will ergibt sich daraus, dass Sie in diesem Teil der Umfrage
+                    <b>{{participant.payoff_plus_participation_fee}}</b> gewinnen können.
+                </p>
+                <div id="table-wrapper">
+                    <div class="table-responsive" id="table-scroll">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Kosten</th>
+                                    <th scope="col">Ihre Schätzung</th>
+                                    <th scope="col">Differenz</th>
+                                    <th scope="col">Chance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Überschätzen ist teurer</td>
+                                    <td>{{ guess1 }}°C</td>
+                                    <td>{{ diff1 }}°C</td>
+                                    <td rowspan="3" style="vertical-align: middle">{{ chance }}%</td>
+                                </tr>
+                                <tr>
+                                    <td>Beides gleich teuer</td>
+                                    <td>{{ guess2 }}°C</td>
+                                    <td>{{ diff2 }}°C</td>
+                                </tr>
+                                <tr>
+                                    <td>Unterschätzen ist teurer</td>
+                                    <td>{{ guess3 }}°C</td>
+                                    <td>{{ diff3 }}°C</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% else %}
+                <p>
+                    Für Ihren Gewinn wurde Spiel {{ winning_app }} in Runde {% if round2 %}2{% else %}1{% endif %}
+                    ausgewählt. Dort wurde Runde {{ round }} ausgewählt. In dieser Runde wurde Zeile {{ row }} zufällig
+                    bestimmt. In dieser Zeile haben Sie sich für Lotterie {{ lottery }} entschieden.
+                    Deshalb haben Sie <b>{{participant.payoff_plus_participation_fee}}</b> gewinnen können.
+                </p>
+
+            {% endif %}
+        </div>
+    </div>
+</body>
+{% endblock %}
+
+

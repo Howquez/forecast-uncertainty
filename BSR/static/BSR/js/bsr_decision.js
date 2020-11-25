@@ -76,7 +76,7 @@ console.log("bsr_decision_js is running")
 		minField.removeAttribute("readonly");
 		maxField.removeAttribute("readonly");
 
-		// daisble Schritt 2 and Viz Tab
+		// disable Schritt 2 and Viz Tab
 		choice_tab.className = "nav-link disabled";
 		viz_tab.className = "nav-link disabled";
 
@@ -114,7 +114,7 @@ console.log("bsr_decision_js is running")
 
 		// create hidden fields/forms for temps lower than mintemp
 		for (var i = lower_limit; i < minTemp; ++i){
-			// this move is repeated several times and is necessary to allow for temperaturs below 0°C
+			// this move is repeated several times and is necessary to allow for temperatures below 0°C
 			// which complicate the naming convention in python "prob-3" cannot be an object name, "probminus3" however can.
 			var i_string = String(i).replace("-", "minus"); 
 			div_content += `<input name="prob${i_string}" id="id_prob${i_string}" type="hidden" value="0" min="0" max="0" readonly>`
@@ -130,7 +130,7 @@ console.log("bsr_decision_js is running")
 
 	}
 
-// create Cols loops throug the available temperaturs between minTemp and maxTemp and creates form fields 
+// create Cols loops through the available temperaturs between minTemp and maxTemp and creates form fields
 // with labels and a prelimenarily empty chance2win. One column for each temperature.
 	function createCols(){
 

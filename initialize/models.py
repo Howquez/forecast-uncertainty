@@ -36,12 +36,15 @@ class Constants(BaseConstants):
     payment = 10
     currency = "EUR"
 
+    app_sequence = ["Baillon", "MPP", "postBaillon", "postMPP"]
+
 
 class Subsession(BaseSubsession):
     def creating_session(self): # having these configs in here, it is impossible to play the BSR App independently
         if self.round_number == 1:
             locations = Constants.locations.copy()
             treatments = Constants.treatments.copy()
+            app_sequence = Constants.app_sequence.copy()
             for p in self.get_players():
                 # set location variable
                 if self.session.config["location"] == "random":
@@ -50,7 +53,6 @@ class Subsession(BaseSubsession):
                 else:
                     p.participant.vars["location"] = self.session.config["location"]
                     p.participant.vars["treatment"] = self.session.config["treatment"]
-                # print(p.participant.vars["location"])
 
                 # set winning temperature conditional on location and link it to baillon event
                 if p.participant.vars["location"] == "Weiskirchen":
@@ -60,6 +62,9 @@ class Subsession(BaseSubsession):
                 elif p.participant.vars["location"] == "Ilomantsi":
                     p.participant.vars["observed_temp"] = Constants.Ilomantsi_temp
                     p.participant.vars["winning_event"] = "1"
+
+                # determine winning App
+                p.participant.vars["winning_app"] = random.choice(app_sequence)
 
 
 

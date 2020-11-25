@@ -1,3 +1,13 @@
+# coding=utf-8
+# coding=utf-8
+# coding=utf-8
+# coding=utf-8
+# coding=utf-8
+# coding=utf-8
+# coding=utf-8
+# coding=utf-8
+# coding=utf-8
+# coding=utf-8
 from otree.api import (
     models,
     widgets,

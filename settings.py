@@ -5,7 +5,7 @@ SESSION_CONFIGS = [
         name='Baillon_MPP',
         display_name="Baillon_MPP",
         num_demo_participants=10,
-        app_sequence=["initialize", "Baillon", "MPP", "postBaillon", "postMPP"],
+        app_sequence=["initialize", "Baillon", "MPP", "postBaillon", "postMPP", "terminate"],
         location="random",
         treatment="random"
     ),

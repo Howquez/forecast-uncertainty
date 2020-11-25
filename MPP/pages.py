@@ -2,10 +2,12 @@ from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
 from .models import Constants
 
+import re
+
 
 class MPP_Instructions(Page):
     def is_displayed(self):
-        if self.subsession.this_app_constants()["treatment_displayed"] == False:
+        if not self.subsession.this_app_constants()["treatment_displayed"]:
             return True
 
 class MPP_Decision(Page):
@@ -15,7 +17,8 @@ class MPP_Decision(Page):
                    "Q3"]
 
     def before_next_page(self):
-        self.player.set_payoff()
+        self.player.prepare_payoffs()
+        self.player.set_payoffs()
 
     def js_vars(self):
         return dict(
@@ -35,7 +38,7 @@ class MPP_Decision(Page):
 class MPP_Revelation(Page):
 
     def is_displayed(self):
-        if self.subsession.this_app_constants()["treatment_displayed"] == True:
+        if self.subsession.this_app_constants()["treatment_displayed"]:
             return True
 
     def js_vars(self):
@@ -44,4 +47,10 @@ class MPP_Revelation(Page):
             location=self.participant.vars["location"],
         )
 
-page_sequence = [MPP_Instructions, MPP_Decision, MPP_Revelation]
+    def vars_for_template(self):
+        return {
+            "treatment_displayed": str(self.subsession.this_app_constants()["treatment_displayed"]),
+        }
+
+
+page_sequence = [MPP_Instructions, MPP_Decision]

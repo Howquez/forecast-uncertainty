@@ -1,3 +1,7 @@
+# coding=utf-8
+# coding=utf-8
+# coding=utf-8
+# coding=utf-8
 from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
 from .models import Constants
@@ -118,6 +122,7 @@ class Baillon_Decision(Page):
             choice_i = getattr(self.player, choice)
             self.participant.vars["baillon_choices_made"][j - 1] = choice_i
 
+        self.player.prepare_payoffs()
         self.player.set_payoffs()
         self.player.set_consistency()
         self.player.set_switching_row()

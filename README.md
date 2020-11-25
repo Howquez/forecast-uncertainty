@@ -23,13 +23,15 @@ a payoff calculation and revelation. Because the apps (Baillon, BSR or MPP) are 
 survey is a little unusual because it cannot solely rely on rounds but also utilizes clones of these apps.
 
 As a consequence, the survey is based on one of the following app sequences: 
-- [[initialize](initialize), [Baillon](Baillon), [MPP](MPP), [postBaillon](postBaillon), [postMPP](postMPP)]
-- [initialize, Baillon, [BSR](BSR), postBaillon, [postBSR](postBSR)]
+- [[initialize](initialize), [Baillon](Baillon), [MPP](MPP), [postBaillon](postBaillon), [postMPP](postMPP), 
+[terminate](terminate)]
+- [initialize, Baillon, [BSR](BSR), postBaillon, [postBSR](postBSR), terminate]
 
 where _initialize_ is an app that initially writes some variables into the participant scope that are 
-retrieved later on.
+retrieved later on. Similarly, _terminate_ is an app that closes the survey by providing information stored
+in the participant.vars. The reason I built these apps is to decouple the other apps easily, if needed.
 
-### Page Sequence
+### Page Sequence 
 I haven't been working on the BSR app recently. For this reason I will explain the Baillon+MPP survey in what follows.
 The templates, i.e. the pages the respondents see, are displayed in the following order:
 1. [Intro_Welcome](initialize/templates/initialize/Intro_Welcome.html)
@@ -41,6 +43,12 @@ The templates, i.e. the pages the respondents see, are displayed in the followin
 7. [Forecast_Viz](Baillon/templates/Baillon/Forecast_Viz.html)
 8. [Baillon_Decision](Baillon/templates/Baillon/Baillon_Decision.html) (6 rounds)
 9. [MPP_Decision](MPP/templates/MPP/MPP_Decision.html)
-10. [MPP_Revelation](MPP/templates/MPP/MPP_Revelation.html)
+10. [Results](terminate/templates/terminate/Results.html)
+
+These templates utilize variables attached to the models (player, group, subsession, participannt,...) as well as
+variables passed to the template via `vars_for_template` method or variables passed to the js files via `js_vars` method
+(both is done within the respective pages.py files). These variables are then used as arguments in 
+[twig(?)](https://twig.symfony.com/doc/2.x/intro.html) logic such as if statements and loops in the templates.
+
 
 

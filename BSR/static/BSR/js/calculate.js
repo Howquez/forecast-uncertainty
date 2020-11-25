@@ -85,7 +85,7 @@ function calculate() {
 			console.log("- - - - - - - - - - -")
 			console.log("field: ".concat(enteredTemp));
 			console.log("winning temperature is: ".concat(temps[winningTempIndex]));
-			console.log("tempeature is:".concat(temps[winningTempIndex]));
+			console.log("temperature is:".concat(temps[winningTempIndex]));
 			console.log("assigned probability:".concat(input));
 			console.log("loss is:".concat(loss));
 			losses[winningTempIndex] += loss;

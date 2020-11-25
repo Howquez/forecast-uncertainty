@@ -1,3 +1,6 @@
+# coding=utf-8
+# coding=utf-8
+# coding=utf-8
 from otree.api import (
     models,
     widgets,
@@ -10,12 +13,14 @@ from otree.api import (
 )
 
 import random
+import re
+
 
 
 author = "Hauke Roggenkamp"
 
 doc = """
-Belief elicitation usind Eyting & Schmidt's (2019, WP) Multiple Point Prediction (MPP) Method.
+Belief elicitation using Eyting & Schmidt's (2019, WP) Multiple Point Prediction (MPP) Method.
 """
 
 
@@ -81,9 +86,12 @@ class SharedBasePlayer(BasePlayer):
     chance_Q3 = models.FloatField(doc="Winning probability stemming from corresponding difference.")
 
     total_chance = models.IntegerField(doc="Chance of winning the prize.")
-    rand_number = models.IntegerField(doc="Random number choosing the prize.")
+    random_draw = models.IntegerField(doc="Random draw determining the classic lottery's outcome (win if <= probability_to_pay).")
+    success = models.BooleanField(doc="True if player won in this round.", initial=False)
+    is_relevant = models.BooleanField(doc="Describes whether the result determines payoff.")
 
-    def set_payoff(self):
+
+    def prepare_payoffs(self):
         realization = self.participant.vars["observed_temp"]
 
         self.diff_Q1 = round(self.Q1 - realization, 1)
@@ -108,12 +116,30 @@ class SharedBasePlayer(BasePlayer):
         if self.total_chance < 0:
             self.total_chance = 0
 
-        self.rand_number = random.randint(0, 100)
+        self.random_draw = random.randint(0, 100)
 
-        if self.rand_number < self.total_chance:
-            self.payoff = Constants.prize_payoff
-        else:
-            self.payoff = Constants.null_payoff
+        if self.random_draw < self.total_chance:
+            self.success = True
+
+    def set_payoffs(self):
+        if bool(re.search("MPP", self.participant.vars["winning_app"])): # if one of the MPP apps is chosen
+            if not bool(re.search("post", self.participant.vars["winning_app"])): # if the pre treatment version is chosen
+                if not self.subsession.this_app_constants()["treatment_displayed"]: # select pre treatment app
+                    if self.success: # the player needs to be successful to win the prize
+                        self.payoff = Constants.prize_payoff
+                        self.is_relevant = True
+                        self.store_payoff_info()
+            elif bool(re.search("post", self.participant.vars["winning_app"])): # if the post treatment version is chosen:
+                if self.subsession.this_app_constants()["treatment_displayed"]: # select post treatment app
+                    if self.success: # the player needs to be successful to win the prize
+                        self.payoff = Constants.prize_payoff
+                        self.is_relevant = True
+                        self.store_payoff_info()
+
+    def store_payoff_info(self):
+        self.participant.vars["MPP_diffs"] = [self.diff_Q1, self.diff_Q2, self.diff_Q3]
+        self.participant.vars["MPP_guess"] = [self.Q1, self.Q2, self.Q3]
+        self.participant.vars["Chance"] = self.total_chance
 
 
 class Subsession(SharedBaseSubsession):

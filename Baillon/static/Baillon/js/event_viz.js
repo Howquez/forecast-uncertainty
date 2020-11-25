@@ -42,7 +42,7 @@
     var E23SubHeader = `<em>Sie gewinnen 10 Euro, wenn die Temperatur mindestens ${labelArray[1]},0°C oder mehr beträgt (und sonst nichts).</em>`;
     var E13SubHeader = "<em>Sie gewinnen 10 Euro, wenn die Temperatur bis einschließlich 7,9°C oder 14,0°C und mehr beträgt (und sonst nichts).</em>";
 
-    // var E1SubHeader  = `<em>Sie gewinnen 10 Euro, wenn die Temperatur bis einnschließlich ${labelArray[1]}°C beträgt (und sonst nichts).</em>`;
+    // var E1SubHeader  = `<em>Sie gewinnen 10 Euro, wenn die Temperatur bis einschließlich ${labelArray[1]}°C beträgt (und sonst nichts).</em>`;
     // var E2SubHeader  = `<em>Sie gewinnen 10 Euro, wenn die Temperatur ${labelArray[1]}°C bis ${labelArray[2]}°C beträgt (und sonst nichts).</em>`;
     // var E3SubHeader  = `<em>Sie gewinnen 10 Euro, wenn die Temperatur ${labelArray[2]}°C oder mehr beträgt (und sonst nichts).</em>`;
     // var E12SubHeader = `<em>Sie gewinnen 10 Euro, wenn die Temperatur bis zu ${labelArray[2]}°C beträgt (und sonst nichts).</em>`;
