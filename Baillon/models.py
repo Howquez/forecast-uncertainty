@@ -50,10 +50,10 @@ class Constants(BaseConstants):
                                     75, 80, 85, 90, 93,
                                     95, 97, 98, 99, 100]
 
-    single_event_probabilities = [00,  5, 10, 15, 20, # to do: center 33%
-                                  25, 30, 35, 40, 50,
-                                  55, 60, 65, 70, 75,
-                                  80, 85, 87, 88, 100]
+    single_event_probabilities = [00,  1, 2, 5, 10, # to do: center 33%
+                                  15, 20, 25, 30, 35,
+                                  40, 45, 50, 55, 60,
+                                  65, 70, 75, 85, 100]
 
     # probability_list = compound_event_probabilities
     num_choices = len(compound_event_probabilities)
@@ -117,6 +117,10 @@ class SharedBaseSubsession(BaseSubsession):
                 zip(indices, form_fields, p.participant.vars["list_single"])
             )
 
+            # ticks are needed in terminate app
+            p.participant.vars["baillon_ticks"] = Constants.ticks.copy()
+
+
 
 class SharedBaseGroup(BaseGroup):
     class Meta:
@@ -179,31 +183,56 @@ class SharedBasePlayer(BasePlayer):
         else:
             self.probability_to_pay = self.participant.vars["list_single"][
                 self.participant.vars["baillon_index_to_pay"] - 1]
-        self.participant.vars["Chance"] = self.probability_to_pay
+        # self.participant.vars["Chance"] = self.probability_to_pay
 
         if self.option_to_pay == "A":
-            self.participant.vars["option_chosen"] = "weather event"
+            self.participant.vars["option_chosen"] = "wetterabhängig"
             if bool(re.search(self.participant.vars["winning_event"], self.event_decision)):
                 self.success = True
         else:
-            self.participant.vars["option_chosen"] = "lottery event"
+            self.participant.vars["option_chosen"] = "klassisch"
             if self.random_draw <= self.probability_to_pay:
                 self.success = True
 
+
+
     def set_payoffs(self):
         if bool(re.search("Baillon", self.participant.vars["winning_app"])): # if one of the baillon apps is chosen
+            self.participant.vars["payment_block"] = "Frageblock 1"
+
             if not bool(re.search("post", self.participant.vars["winning_app"])): # if the pre treatment version is chosen
+                self.participant.vars["payment_round"] = "Runde 1"
+
                 if not self.subsession.this_app_constants()["treatment_displayed"]: # select pre treatment app
+
                     if self.round_number == self.participant.vars["baillon_round_to_pay"]: # round has to be the chosen one
+                        self.participant.vars["payment_outcome"] = "leider verloren"
+                        self.participant.vars["payment_event"] = self.event_decision
+                        self.participant.vars["lottery_chance"] = self.probability_to_pay
+
                         if self.success: # the player needs to be successful to win the prize
                             self.payoff = Constants.prize_payoff
                             self.is_relevant = True
+                            self.participant.vars["payment_outcome"] = "gewonnen"
+
+
+
             elif bool(re.search("post", self.participant.vars["winning_app"])): # if the post treatment version is chosen:
+                self.participant.vars["payment_round"] = "Runde 2"
+
                 if self.subsession.this_app_constants()["treatment_displayed"]: # select post treatment app
+
                     if self.round_number == self.participant.vars["baillon_round_to_pay"]: # round has to be the chosen one
+                        self.participant.vars["payment_outcome"] = "leider verloren"
+                        self.participant.vars["payment_event"] = self.event_decision
+                        self.participant.vars["lottery_chance"] = self.probability_to_pay
+
                         if self.success: # the player needs to be successful to win the prize
                             self.payoff = Constants.prize_payoff
                             self.is_relevant = True
+                            self.participant.vars["payment_outcome"] = "gewonnen"
+
+
 
 
 

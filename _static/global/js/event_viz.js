@@ -2,7 +2,9 @@
     let ticksArray   = js_vars.ticks;
     let event        = js_vars.event_decision;
     let enabledLabel = js_vars.enabledLabel;
-    console.log(enabledLabel)
+    let results = js_vars.results || false; // determines size of visualization
+
+    console.log(event)
 
 // set constants
     // const events = ["E1", "E2", "E3", "E12", "E23", "E13"];
@@ -16,7 +18,13 @@
     var S3Col = lossColor;
     var subHeader;
 
-    var labelArray = ticksArray.map( function(value) {return value - treatmentDiff} );
+    var labelArray = ticksArray;
+
+// height of chart
+    var height = 9;
+    if (results){
+        height = 6;
+    }
 
 
 // set color (and implicitly the label) of barchart
@@ -66,7 +74,7 @@ renderTo.forEach( element => {
         chart: {
             renderTo: element,
             type: "bar",
-            height: (9 / 16 * 100) + '%', // 16:9 ratio
+            height: (height / 16 * 100) + '%', // 16:9 ratio
             backgroundColor: 'transparent'
         },
         title: {

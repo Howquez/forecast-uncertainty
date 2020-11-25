@@ -10,7 +10,7 @@ from otree.api import (
 )
 
 import random
-# from random import randrange
+import re
 
 author = 'Hauke Roggenkamp'
 
@@ -44,7 +44,6 @@ class Subsession(BaseSubsession):
         if self.round_number == 1:
             locations = Constants.locations.copy()
             treatments = Constants.treatments.copy()
-            app_sequence = Constants.app_sequence.copy()
             for p in self.get_players():
                 # set location variable
                 if self.session.config["location"] == "random":
@@ -64,8 +63,15 @@ class Subsession(BaseSubsession):
                     p.participant.vars["winning_event"] = "1"
 
                 # determine winning App
+                regex = re.compile("Baillon|MPP|BSR")
+                app_sequence = list(filter(regex.search, self.session.config["app_sequence"]))
                 p.participant.vars["winning_app"] = random.choice(app_sequence)
+                print(p.participant.vars["winning_app"])
 
+                # define empty objects that will explain the payment outcome
+                p.participant.vars["payment_block"] = ""
+                p.participant.vars["payment_round"] = ""
+                p.participant.vars["payment_outcome"] = ""
 
 
 class Group(BaseGroup):

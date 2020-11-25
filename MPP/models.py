@@ -13,6 +13,7 @@ from otree.api import (
 )
 
 import random
+import math
 import re
 
 
@@ -35,6 +36,9 @@ class Constants(BaseConstants):
     chance_constant = 50
     punishment_factor = 3
     punishment_scale = 3
+
+    # a deviation from the observed temp costs punishment_scale/(3*chance_constant)*100 PP per °C (with 3 questions)
+    # this equals 2 PP for each degree°C with chance_constant = 50 & punishment_scale = 3 & punishment_scale = 1
 
 
 class SharedBaseSubsession(BaseSubsession):
@@ -96,23 +100,26 @@ class SharedBasePlayer(BasePlayer):
 
         self.diff_Q1 = round(self.Q1 - realization, 1)
         if self.diff_Q1 > 0:
-            self.costs_Q1 = self.diff_Q1 * Constants.punishment_scale
+            self.costs_Q1 = self.diff_Q1 * Constants.punishment_scale * Constants.punishment_factor
         else:
-            self.costs_Q1 = abs(self.diff_Q1) * Constants.punishment_factor * Constants.punishment_scale
+            self.costs_Q1 = -self.diff_Q1 * Constants.punishment_scale
         self.chance_Q1 = Constants.chance_constant - self.costs_Q1
 
         self.diff_Q2 = round(self.Q2 - realization, 1)
-        self.costs_Q2 = abs(self.diff_Q2) * Constants.punishment_scale
+        if self.diff_Q2 > 0:
+            self.costs_Q2 = self.diff_Q2 * Constants.punishment_scale
+        else:
+            self.costs_Q2 = -self.diff_Q2 * Constants.punishment_scale
         self.chance_Q2 = Constants.chance_constant - self.costs_Q2
 
         self.diff_Q3 = round(self.Q3 - realization, 1)
         if self.diff_Q3 > 0:
-            self.costs_Q3 = self.diff_Q3 * Constants.punishment_factor * Constants.punishment_scale
+            self.costs_Q3 = self.diff_Q3 * Constants.punishment_scale
         else:
-            self.costs_Q3 = abs(self.diff_Q3) * Constants.punishment_scale
+            self.costs_Q3 = -self.diff_Q3 * Constants.punishment_scale * Constants.punishment_factor
         self.chance_Q3 = Constants.chance_constant - self.costs_Q3
 
-        self.total_chance = int((self.chance_Q1 + self.chance_Q2 + self.chance_Q3) / (3 * Constants.chance_constant) * 100)
+        self.total_chance = math.ceil((self.chance_Q1 + self.chance_Q2 + self.chance_Q3) / (3 * Constants.chance_constant) * 100)
         if self.total_chance < 0:
             self.total_chance = 0
 
@@ -123,22 +130,32 @@ class SharedBasePlayer(BasePlayer):
 
     def set_payoffs(self):
         if bool(re.search("MPP", self.participant.vars["winning_app"])): # if one of the MPP apps is chosen
+            self.participant.vars["payment_block"] = "Frageblock 2"
             if not bool(re.search("post", self.participant.vars["winning_app"])): # if the pre treatment version is chosen
+                self.participant.vars["payment_round"] = "Runde 1"
                 if not self.subsession.this_app_constants()["treatment_displayed"]: # select pre treatment app
+                    self.participant.vars["payment_outcome"] = "leider verloren"
                     if self.success: # the player needs to be successful to win the prize
                         self.payoff = Constants.prize_payoff
                         self.is_relevant = True
                         self.store_payoff_info()
+                        self.participant.vars["payment_outcome"] = "gewonnen"
             elif bool(re.search("post", self.participant.vars["winning_app"])): # if the post treatment version is chosen:
+                self.participant.vars["payment_round"] = "Runde 2"
                 if self.subsession.this_app_constants()["treatment_displayed"]: # select post treatment app
+                    self.participant.vars["payment_outcome"] = "leider verloren"
                     if self.success: # the player needs to be successful to win the prize
                         self.payoff = Constants.prize_payoff
                         self.is_relevant = True
                         self.store_payoff_info()
+                        self.participant.vars["payment_outcome"] = "gewonnen"
 
     def store_payoff_info(self):
-        self.participant.vars["MPP_diffs"] = [self.diff_Q1, self.diff_Q2, self.diff_Q3]
         self.participant.vars["MPP_guess"] = [self.Q1, self.Q2, self.Q3]
+        self.participant.vars["MPP_diffs"] = [self.diff_Q1, self.diff_Q2, self.diff_Q3]
+        costs = [self.costs_Q1, self.costs_Q2, self.costs_Q3]
+        self.participant.vars["MPP_loss"] = [x * 2/3 for x in costs] # costs in percentage points
+
         self.participant.vars["Chance"] = self.total_chance
 
 

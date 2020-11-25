@@ -8,9 +8,18 @@ import re
 class Results(Page):
 
     def js_vars(self):
+        event=""
+        ticks=[]
+        if bool(re.search("Baillon", self.participant.vars["winning_app"])):
+            event=self.participant.vars["payment_event"]
+            ticks=self.participant.vars["baillon_ticks"]
         return dict(
             page = "revelation",
             location=self.participant.vars["location"],
+            event_decision=event,
+            ticks=ticks,
+            enabledLabel = True,
+            results=True,
         )
 
 
@@ -18,22 +27,23 @@ class Results(Page):
         if bool(re.search("MPP", self.participant.vars["winning_app"])):
             return {
                 "winning_app": "MPP",
-                "round2": bool(re.search("post", self.participant.vars["winning_app"])),
-                "diff1": self.participant.vars["MPP_diffs"][0],
-                "diff2": self.participant.vars["MPP_diffs"][1],
-                "diff3": self.participant.vars["MPP_diffs"][2],
                 "guess1": self.participant.vars["MPP_guess"][0],
                 "guess2": self.participant.vars["MPP_guess"][1],
                 "guess3": self.participant.vars["MPP_guess"][2],
+                "diff1": self.participant.vars["MPP_diffs"][0],
+                "diff2": self.participant.vars["MPP_diffs"][1],
+                "diff3": self.participant.vars["MPP_diffs"][2],
+                "loss1": self.participant.vars["MPP_loss"][0],
+                "loss2": self.participant.vars["MPP_loss"][1],
+                "loss3": self.participant.vars["MPP_loss"][2],
                 "chance": self.participant.vars["Chance"],
             }
         elif bool(re.search("Baillon", self.participant.vars["winning_app"])):
             return {
                 "winning_app": "Baillon",
-                "round2": bool(re.search("post", self.participant.vars["winning_app"])),
                 "round": self.participant.vars["baillon_round_to_pay"],
                 "row": self.participant.vars["baillon_choice_to_pay"],
-                "chance": self.participant.vars["Chance"],
+                "chance": self.participant.vars["lottery_chance"],
                 "lottery": self.participant.vars["option_chosen"],
             }
 

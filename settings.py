@@ -22,7 +22,15 @@ SESSION_CONFIGS = [
         name='MPP',
         display_name="MPP_Standalone",
         num_demo_participants=10,
-        app_sequence=["initialize", "MPP", "postMPP"],
+        app_sequence=["initialize", "MPP", "postMPP", "terminate"],
+        location="random",
+        treatment="random"
+    ),
+    dict(
+        name='Baillon',
+        display_name="Baillon_Standalone",
+        num_demo_participants=10,
+        app_sequence=["initialize", "Baillon", "postBaillon", "terminate"],
         location="random",
         treatment="random"
     )
@@ -36,7 +44,7 @@ SESSION_CONFIGS = [
 
 SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00,
-    participation_fee=0.00,
+    participation_fee=3.00,
     doc=""
 )
 

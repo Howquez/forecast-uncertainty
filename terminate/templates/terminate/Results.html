@@ -8,10 +8,24 @@
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="{% static 'global/js/revelation_viz.js' %}"></script>
+    <script src="{% static 'global/js/event_viz.js' %}"></script>
+
 {% endblock %}
 
 {% block content %}
 <body onload="fillText()">
+
+    <div class="alert bg-white border  mb-5">
+        <h1 class="display-4 mb-4"><small class="text-muted">Sie bekommen</small> {{participant.payoff_plus_participation_fee}}<small class="text-muted"> ausgezahlt.</small></h1>
+        <hr class="my-4">
+        <p>
+            Unten zeigen wir Ihnen nun den Ort sowie den Zeitraum auf den sich der Wetterbericht bezieht. Außerdem
+            zeigen wir Ihnen welche Temperaturen im gesamten Zeitraum gemessen wurden. Schließlich erklären wir Ihnen,
+            wie Ihre Auszahlung zustande kommt &mdash; also welche Entscheidungssituation für Ihre Auszahlung relevant
+            ist und wie Sie sich dort entschieden haben.
+        </p>
+    </div>
+
     <div class="card">
         <div class="card-body">
             <h5 class="card-title display-4">{{ participant.vars.location }} Oktober 2020</h5>
@@ -30,8 +44,8 @@
                 {% else %}
                         (Saarland)
                     {% endif %}
-                    im Oktober 2020.
-                    Die Messdaten, die dieser Studie zugrunde liegen und für Ihre Auszahlung relevant sind, finden Sie
+                im Oktober 2020.
+                Die Messdaten, die dieser Studie zugrunde liegen und für Ihre Auszahlung relevant sind, finden Sie
                 {% if participant.vars.location == "Ilomantsi" %}
                     <a href="https://kachelmannwetter.com/de/messwerte/ostfinnland/temperatur/20201019-1100z.html#obs-detail-029390-72h" target="_blank">hier</a> und
                     <a href="https://kachelmannwetter.com/de/messwerte/ostfinnland/temperatur/20201009-1100z.html#obs-detail-029390-72h" target="_blank">hier</a>.
@@ -39,21 +53,30 @@
                     <a href="https://kachelmannwetter.com/de/messwerte/63-e-491-n/temperatur/20201009-1100z.html#obs-detail-J728-72h" target="_blank">hier</a> und
                     <a href="https://kachelmannwetter.com/de/messwerte/63-e-491-n/temperatur/20201019-1100z.html#obs-detail-J728-72h" target="_blank">hier</a>.
                 {% endif %}
+                Die Wettervorhersage, die wir Ihnen ab der zweiten Runde dargestellt haben, stammen von ebenfalls von
+                Kachelmannwetter und wurden mithilfe des Global Euro HD (ECMMF) Ensambles berechnet. Wir haben die Daten
+                am 09.10.2020 um {% if participant.vars.location == "Ilomantsi" %}15:59{%else%}14:29{%endif%} Uhr (MEZ)
+                abgerufen wie Sie <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                diesem Screenshot (unten)</a> entnehmen können.
                 </small>
             </p>
+
+
             <p class="lead">
                 Hier sind Ihre Ergebnisse im Überblick:
             </p>
-                {% if winning_app == "MPP" %}
 
-                <p>
-                    Die für Ihre Auszahlung entscheidende und zufällig ausgewählte Runde ist
-                    <b>Runde # {% if round2 %}2{% else %}1{% endif%}</b>
-                    (in der folgenden Tabelle <a class="text-success">grün</a>
-                    gefärbt). In dieser Runde ergab sich eine Gewinnchance von <b>{{chance}}%</b>.
-                    Wie der Zufall es so will ergibt sich daraus, dass Sie in diesem Teil der Umfrage
-                    <b>{{participant.payoff_plus_participation_fee}}</b> gewinnen können.
-                </p>
+            <p>
+                Für Ihre Auszahlung wurde zufällig <strong>{{ participant.vars.payment_block }}</strong> in
+                <strong>{{ participant.vars.payment_round }}</strong> ausgewählt.
+                {% if winning_app == "Baillon" %}
+                In dieser Runde wurde ebenfalls zufällig die <strong>Entscheidungssituation
+                {{ participant.vars.baillon_round_to_pay }}</strong>  gezogen.
+                {% endif %}
+                In genau dieser Entscheidungssituation haben Sie {{ participant.vars.payment_outcome }}.
+                Hier können Sie Ihre Entscheidung einsehen:
+            </p>
+            {% if winning_app == "MPP" %}
                 <div id="table-wrapper">
                     <div class="table-responsive" id="table-scroll">
                         <table class="table">
@@ -62,6 +85,7 @@
                                     <th scope="col">Kosten</th>
                                     <th scope="col">Ihre Schätzung</th>
                                     <th scope="col">Differenz</th>
+                                    <th scope="col">Einbußen</th>
                                     <th scope="col">Chance</th>
                                 </tr>
                             </thead>
@@ -70,31 +94,97 @@
                                     <td>Überschätzen ist teurer</td>
                                     <td>{{ guess1 }}°C</td>
                                     <td>{{ diff1 }}°C</td>
+                                    <td>{%if loss1 > 1%}-{%endif%}{{ loss1 }} <small>PP</small></td>
                                     <td rowspan="3" style="vertical-align: middle">{{ chance }}%</td>
                                 </tr>
                                 <tr>
                                     <td>Beides gleich teuer</td>
                                     <td>{{ guess2 }}°C</td>
                                     <td>{{ diff2 }}°C</td>
+                                    <td>{%if loss2 > 1%}-{%endif%}{{ loss2 }} <small>PP</small></td>
+
                                 </tr>
                                 <tr>
                                     <td>Unterschätzen ist teurer</td>
                                     <td>{{ guess3 }}°C</td>
                                     <td>{{ diff3 }}°C</td>
+                                    <td>{%if loss3 > 1%}-{%endif%}{{ loss3 }} <small>PP</small></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
+
+                <p>
+                    In diesem Fall hatten Sie, wie Sie in der rechten Spalte sehen, eine Gewinnchance von
+                    <strong>{{ chance }}%</strong>. Sie können sich also wieder vorstellen, dass eine Kugel aus einer
+                    Urne mit 100 Kugeln gezogen wird. {{ chance }} Kugeln sind dabei grün. Wird eine grüne Kugel gezogen
+                    gewinnen Sie.
+                </p>
+                {% if participant.vars.payment_outcome == "gewonnen" %}
+                    <p>
+                        Weil die zufällig gezogene Kugel grün war, haben Sie <strong>gewonnen und in dieser Situation
+                        {{ participant.payoff }} verdient</strong>.
+                    </p>
+                {% else %}
+                    <p>
+                        Weil die zufällig gezogene Kugel rot war, haben Sie <strong> leider nicht gewonnen und in dieser
+                        Situation {{ participant.payoff }} verdient</strong>.
+                    </p>
+                {% endif %}
+
             {% else %}
                 <p>
-                    Für Ihren Gewinn wurde Spiel {{ winning_app }} in Runde {% if round2 %}2{% else %}1{% endif %}
-                    ausgewählt. Dort wurde Runde {{ round }} ausgewählt. In dieser Runde wurde Zeile {{ row }} zufällig
-                    bestimmt. In dieser Zeile haben Sie sich für Lotterie {{ lottery }} entschieden.
-                    Deshalb haben Sie <b>{{participant.payoff_plus_participation_fee}}</b> gewinnen können.
+                    In der ausgewählten Entscheidungssituation hatten Sie die Wahl zwischen einer klassischen und einer
+                    wetterabhängigen Lotterie. Die wetterabhängige Lotterie sah dabei wie folgt aus:
                 </p>
 
+                <div class="container clearfix border-left border-primary w-75 mb-3 bg-light">
+                   <br>
+                    <p id="subHeader">
+                        <em>Sie gewinnen 10 Euro entsprechend der unten dargestellten Grafik (und sonst nichts).</em>
+                    </p>
+
+                    <figure class="highcharts-figure" style="vertical-align: baseline; display: table-cell">
+                        <div class="event_viz"></div>
+                    </figure>
+                </div>
+
+                <p>
+                    Nun wurde zufällig ausgewählt, dass jene Zeile für Ihre Auszahlung relevant ist, in der sich
+                    {{chance}} Prozent grüne Kugeln in der Urne der klassischen Lotterie befinden. In Ihrer Wahl zwischen der
+                    wetterabhängigen Lotterie und der klassischen Lotterie mit einer Gewinnchance von {{chance}} Prozent
+                    haben Sie sich für die <strong>{{lottery}}e Lotterie</strong> entschieden.
+                </p>
+
+                {% if lottery == "wetterabhängig" %}
+                <p>
+                    Weil Sie sich in diesem Fall für die wetterabhängige Lotterie entschieden haben und weil tatsächlich
+                    <strong>{{ participant.vars.observed_temp }}°C</strong> gemessen wurden, haben Sie
+                    <strong>
+                    {{ participant.vars.payment_outcome }} und in dieser Situation {{ participant.payoff }} verdient
+                    </strong>.
+                </p>
+                {% else %}
+                <p>
+                    Sie haben sich dafür entschieden eine klassische Lotterie zu spielen, bei der zufällig eine Kugel
+                    aus einer Urne mit 100 Kugeln gezogen wird und bei der Sie gewinnen, wenn eine zufällig gezogene
+                    Kugel grün ist. Die Urne enthielt in diesem Fall {{chance}} grüne Kugeln und die zufällig gezogene Kugel war
+                    <strong>{% if participant.vars.payment_outcome == "gewonnen" %} grün. {% else %} rot. {% endif %}</strong>
+                    Deshalb haben Sie <strong>{{ participant.vars.payment_outcome }} und in dieser Situation
+                    {{ participant.payoff }} verdient</strong>.
+                </p>
+                {% endif %}
+
             {% endif %}
+        </div>
+        <div class="collapse card-footer bg-light text-secondary" id="collapseExample">
+            {% if participant.vars.location == "Ilomantsi" %}
+                <img class="d-block w-100" src="{% static 'terminate/images/Ilomantsi_Forecast.png' %}" alt="Wettervorhersage für {{ participant.vars.location }}">
+            {% else %}
+                <img class="d-block w-100" src="{% static 'terminate/images/Weiskirchen_Forecast.png' %}" alt="Wettervorhersage für {{ participant.vars.location }}">
+            {% endif %}
+
         </div>
     </div>
 </body>
