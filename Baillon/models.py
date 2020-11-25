@@ -209,10 +209,10 @@ class SharedBasePlayer(BasePlayer):
                         self.participant.vars["payment_outcome"] = "leider verloren"
                         self.participant.vars["payment_event"] = self.event_decision
                         self.participant.vars["lottery_chance"] = self.probability_to_pay
+                        self.is_relevant = True
 
                         if self.success: # the player needs to be successful to win the prize
                             self.payoff = Constants.prize_payoff
-                            self.is_relevant = True
                             self.participant.vars["payment_outcome"] = "gewonnen"
 
 
@@ -226,10 +226,10 @@ class SharedBasePlayer(BasePlayer):
                         self.participant.vars["payment_outcome"] = "leider verloren"
                         self.participant.vars["payment_event"] = self.event_decision
                         self.participant.vars["lottery_chance"] = self.probability_to_pay
+                        self.is_relevant = True
 
                         if self.success: # the player needs to be successful to win the prize
                             self.payoff = Constants.prize_payoff
-                            self.is_relevant = True
                             self.participant.vars["payment_outcome"] = "gewonnen"
 
 

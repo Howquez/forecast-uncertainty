@@ -1,3 +1,4 @@
+
 var example = Highcharts.chart("example_viz", {
     exporting: {
         enabled: false

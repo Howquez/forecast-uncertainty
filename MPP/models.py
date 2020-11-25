@@ -135,18 +135,18 @@ class SharedBasePlayer(BasePlayer):
                 self.participant.vars["payment_round"] = "Runde 1"
                 if not self.subsession.this_app_constants()["treatment_displayed"]: # select pre treatment app
                     self.participant.vars["payment_outcome"] = "leider verloren"
+                    self.is_relevant = True
                     if self.success: # the player needs to be successful to win the prize
                         self.payoff = Constants.prize_payoff
-                        self.is_relevant = True
                         self.store_payoff_info()
                         self.participant.vars["payment_outcome"] = "gewonnen"
             elif bool(re.search("post", self.participant.vars["winning_app"])): # if the post treatment version is chosen:
                 self.participant.vars["payment_round"] = "Runde 2"
                 if self.subsession.this_app_constants()["treatment_displayed"]: # select post treatment app
                     self.participant.vars["payment_outcome"] = "leider verloren"
+                    self.is_relevant = True
                     if self.success: # the player needs to be successful to win the prize
                         self.payoff = Constants.prize_payoff
-                        self.is_relevant = True
                         self.store_payoff_info()
                         self.participant.vars["payment_outcome"] = "gewonnen"
 

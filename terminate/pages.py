@@ -33,9 +33,9 @@ class Results(Page):
                 "diff1": self.participant.vars["MPP_diffs"][0],
                 "diff2": self.participant.vars["MPP_diffs"][1],
                 "diff3": self.participant.vars["MPP_diffs"][2],
-                "loss1": self.participant.vars["MPP_loss"][0],
-                "loss2": self.participant.vars["MPP_loss"][1],
-                "loss3": self.participant.vars["MPP_loss"][2],
+                "loss1": round(self.participant.vars["MPP_loss"][0], 1),
+                "loss2": round(self.participant.vars["MPP_loss"][1], 1),
+                "loss3": round(self.participant.vars["MPP_loss"][2], 1),
                 "chance": self.participant.vars["Chance"],
             }
         elif bool(re.search("Baillon", self.participant.vars["winning_app"])):
