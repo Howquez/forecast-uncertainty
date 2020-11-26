@@ -63,8 +63,7 @@
             <p class="card-text">
                 Die <b>klassische Lotterie</b> funktioniert wie folgt: Stellen Sie sich eine mit 100 Kugeln gefüllte Urne vor.
                 Die Kugeln sind entweder grün oder rot gefärbt. Wird eine rote Kugel aus dieser Urne gezogen, gewinnen Sie
-                nichts. Wird hingegen eine grüne Urne gezogen, gewinnen Sie 10 Euro. Sie können sich als merken, dass Sie
-                bei grün gewinnen und bei rot nicht.
+                nichts. Wird hingegen eine grüne Urne gezogen, gewinnen Sie 10 Euro.
                 Nehmen wir an, dass 75 von 100 Kugeln grün gefärbt sind. Dann liegt die Wahrscheinlichkeit bei einer Ziehung
                 10 Euro zu gewinnen bei 75%. Liegen nur 30 grüne Kugeln in der Urne, liegt die Wahrscheinlichkeit bei 30%.
             </p>
@@ -73,7 +72,7 @@
                 Die <b>wetterabhängige Lotterie</b> funktioniert anders: Hier schätzen Sie die Temperatur an einem Ihnen noch
                 unbekannten Ort zu einem Ihnen unbekannten Datum um 14:00 Uhr (MEZ). Die genaue Temperatur sowie den Ort
                 und das Datum werden Sie am Ende der Umfrage erfahren.
-                Vor ihrer Entscheidung erhalten Sie zunächst Informationen über die Temperaturen der vorangegangenen Tage.
+                Vor Ihrer Entscheidung erhalten Sie zunächst Informationen über die Temperaturen der vorangegangenen Tage.
             </p>
 
             <p class="card-text">
@@ -117,7 +116,8 @@
                 <h6 class="card-subtitle mb-5 text-muted">Baillon</h6>
                 <p class="card-text">
                     Hier sehen Sie, wie genau Ihre Entscheidungssituation aussehen wird. Wie in der Einführung beschrieben,
-                    sehen Sie drei Temperaturbereiche, für die Sie schätzen müssen, für wie wahrscheinlich Sie diese halten.
+                    sehen Sie bei der wetterabhängigen Lotterie drei Temperaturbereiche, für die Sie schätzen müssen,
+                    für wie wahrscheinlich Sie diese halten.
                     Darüber hinaus haben Sie in der "echten" Entscheidungssituation jederzeit die Möglichkeit sich die
                     Wetterdaten erneut anzuschauen, indem Sie auf <em>Wetterdaten ein-/ausblenden</em> klicken.
                 </p>
@@ -125,6 +125,20 @@
                 <div class="container clearfix border-left border-primary w-75 mb-3 bg-light">
                     <div class = "container">
                         <br>
+                        <div class="alert alert-light alert-dismissible fade show mb-4" role="alert">
+                            <p class="lead">Probieren Sie es aus!</p>
+                            <hr class="my-4">
+                            <p class="text-secondary">
+                                Sie müssen nicht in allen {{ num_choices }} Zeilen eine Auswahl treffen. Wenn Sie in
+                                einer bestimmten Zeile die klassische Lotterie wählen, dann wird Ihre Auswahl in allen
+                                folgenden Zeilen automatisch die klassische Lotterie und in allen vorhergehenden Zeilen
+                                die wetterabhängige Lotterie sein. Sie müssen also nur auswählen, ab welcher Zeile Sie
+                                die klassische Lotterie bevorzugen.
+                            </p>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                         <button class="btn btn-outline-secondary" type="button">
                             Wetterdaten ein-/ausblenden
                         </button>
@@ -234,26 +248,18 @@
                 <hr class="my-4 w-75">
 
                 <p class="card-text">
+                    Veranschaulichen wir dies anhand des oben genannten Beispiels für einige Anteile an grünen Kugeln:
                     In der ersten Zeile beträgt die Wahrscheinlichkeit 0% (0 der 100 Kugeln in der virtuellen Urne sind grün).
-                    Das heißt, dass Sie keine Chance haben {{ Constants.prize_payoff }} Euro zu gewinnen, wenn Sie sich für die klassischen Lotterie entscheiden.
-                    Dementsprechend würden Sie vermutlich die wetterabhängie Lotterie bevorzugen und (wie im Beispiel oben) in
+                    Das heißt, dass Sie keine Chance haben {{ Constants.prize_payoff }} Euro zu gewinnen, wenn Sie sich für die
+                    klassische Lotterie entscheiden.
+                    Dementsprechend würden Sie vermutlich die wetterabhängige Lotterie bevorzugen und (wie im Beispiel oben) in
                     der ersten Zeile das linke Feld auswählen.
                 </p>
 
                 <p class="card-text">
                     Andersherum würden Sie die klassische Lotterie der wetterabhängigen Lotterie in der letzten Zeile vorziehen,
                     weil die Gewinnwahrscheinlichkeit dort 100% beträgt. Wenn also eine Kugel aus der virtuellen Urne gezogen
-                    werden sollte, dann wäre sie mit sicherheit grün und Ihr Gewinn beträge {{ Constants.prize_payoff }} Euro.
-                </p>
-                <p class="card-text">
-                    Nehmen wir an, dass die beispielhafte Entscheidungssituation oben von einer Person ausgefüllt wurde,
-                    die schätzt, dass es ungefähr zu 30% wahrscheinlich ist, dass die Temperatur am Sonntag 20°C oder
-                    mehr beträgt. Dann sollte sie die wetterabhängige Lotterie den beiden ersten klassischen Lotterien
-                    mit Anteilen von 0 bzw. 20% an grünen Kugeln vorziehen. Außerdem müsste sie alle klassischen Lotterien
-                    mit mehr als 30% grünen Kugeln besser finden als die wetterabhängige Lotterie, denn sobald sich mehr
-                    als 30% grüne Kugeln in der Urne befinden, ist die Wahrscheinlichkeit mit der klassischen Lotterie
-                    {{ Constants.prize_payoff }} Euro zu gewinnen <u>ihrer Schätzung nach</u> höher als in der
-                    wetterabhängigen Lotterie.
+                    werden sollte, dann wäre sie mit Sicherheit grün und Ihr Gewinn betrüge {{ Constants.prize_payoff }} Euro.
                 </p>
             </div>
         </div>
@@ -274,9 +280,10 @@
             </p>
 
             <p>
-                Dieser Frageblock besteht aus insgesamt sechs Entscheidungssituation, die dem Beispiel ähneln. Diese
-                sechs Entscheidungssituationen unterscheiden sich nur hinsichtlich der wetterabhängigen Lotterie
-                (also der linken Spalte). Im Beispiel kann man 10 Euro gewinnen, wenn die Temperatur mindestens 20°C
+                Dieser Frageblock besteht aus insgesamt sechs Entscheidungssituationen, die dem Beispiel ähneln. Diese
+                sechs Entscheidungssituationen unterscheiden sich hauptsächlich in Bezug auf die hinsichtlich der
+                wetterabhängigen Lotterie (also der linken Spalte).
+                Im Beispiel kann man 10 Euro gewinnen, wenn die Temperatur mindestens 20°C
                 beträgt. Darüber hinaus würden wir (wenn dieses Beispiel "echt" wäre) auch die übrigen unten
                 aufgelisteten Temperaturbereiche abfragen. Also zum Beispiel, wie Sie sich entscheiden würden,
                 wenn Sie in der wetterabhängigen Lotterie gewinnen würden, falls die Temperatur...
@@ -284,10 +291,15 @@
             <ul>
                 <li>...weniger als 14°C beträgt.</li>
                 <li>...zwischen 14 und 20°C beträgt.</li>
+                <li>…8°C  oder mehr beträgt.</li>
                 <li>...weniger als 20°C beträgt.</li>
                 <li>...mindestens 14°C beträgt.</li>
                 <li>...weniger als 14°C oder mindestens 20° beträgt.</li>
             </ul>
+            <p>
+                Beachten Sie: In jeder dieser sechs Entscheidungssituationen können Sie sich erneut entscheiden,
+                ab welcher Zeile Sie die klassische Lotterie bevorzugen.
+            </p>
             <p>
                 Achten Sie daher bitte genau auf den Text in der ersten Spalte, der die wetterabhängige Lotterie
                 beschreibt, sowie auf die grafische Darstellung in der Tabelle &mdash; also welcher Temperaturbereich
@@ -392,14 +404,14 @@
                 <p>
                     Nehmen wir für einen Moment an, dass am Ende der Umfrage dieser Frageblock und genau die oben dargestellte
                     Entscheidungssituation ausgewählt wird. Nehmen wir darüber hinaus an, dass zufällig die vierte Zeile für
-                    die Auszahlung bestimmt wird. In dieser Zeile bestand die Wahl zwischen der wetterabhänngigen Lotterie
-                    und einer klassichen Lotterie mit einer Gewinnchance von 60% &mdash; also mit einer Urne die mit 60
+                    die Auszahlung bestimmt wird. In dieser Zeile bestand die Wahl zwischen der wetterabhängigen Lotterie
+                    und einer klassischen Lotterie mit einer Gewinnchance von 60% &mdash; also mit einer Urne die mit 60
                     grünen Kugeln gefüllt ist.
                 </p>
                 <p>
                     Da die Wahl in dem Beispiel auf die klassische Lotterie gefallen ist, wird die Auszahlung (ob Sie
                     {{ Constants.prize_payoff }} Euro gewinnen oder nicht) darüber bestimmt, ob eine grüne Kugel
-                    gezogen wird. Wenn ja, gewinnen {{ Constants.prize_payoff }} Euro.
+                    gezogen wird. Wenn dann eine grüne Kugel gezogen wird, gewinnen Sie {{ Constants.prize_payoff }} Euro.
                 </p>
                 <p>
                     Nehmen wir an, Sie hätten sich in dem Beispiel anders entschieden und hätten anstelle der klassischen

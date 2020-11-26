@@ -37,7 +37,7 @@ The templates, i.e. the pages the respondents see, are displayed in the followin
 1. [Intro_Welcome](initialize/templates/initialize/Intro_Welcome.html)
 2. [Intro_Instructions](initialize/templates/initialize/Intro_Instructions.html)
 3. [Baillon_Instructions](Baillon/templates/Baillon/Baillon_Instructions.html)
-4. [Baillon_Decision](Baillon/templates/Baillon/Baillon_Instructions.html) (6 rounds)
+4. [Baillon_Decision](Baillon/templates/Baillon/Baillon_Decision.html) (6 rounds)
 5. [MPP_Instructions](MPP/templates/MPP/MPP_Instructions.html)
 6. [MPP_Decision](MPP/templates/MPP/MPP_Decision.html)
 7. [Forecast_Viz](Baillon/templates/Baillon/Forecast_Viz.html)
