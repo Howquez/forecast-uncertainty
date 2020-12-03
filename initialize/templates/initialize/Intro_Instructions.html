@@ -7,6 +7,8 @@
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/timeline.js"></script>
+
     <script src="{% static 'global/js/weather_viz.js' %}"></script>
     <script src="{% static 'global/js/procedure_viz.js' %}"></script>
 {% endblock %}
@@ -88,7 +90,7 @@
         </p>
 
         <figure class="highcharts-figure  mb-5" style="width:95%">
-            <div id="process_viz" class="clearfix"></div>
+            <div id="timeline_viz" class="clearfix"></div>
         </figure>
 
         <p class="lead">
@@ -109,7 +111,7 @@
 
     </div>
     <div class="card-footer bg-light text-secondary">
-        <p><sup>1</sup> Die Zeitangabe MEZ bedeutet nicht automatisch, dass es sich um einen ORT in der MEZ handelt.<br>
+        <p><sup>1</sup> Die Zeitangabe MEZ bedeutet nicht automatisch, dass es sich um einen Ort in der MEZ handelt.<br>
             <sup>2</sup> Dabei handelt es sich um eine echte Wettervorhersage, die wir Ihnen am Ende der Umfrage in Gänze
             zur Verfügung stellen. <br>
             <sup>3</sup> Wir werden Ihnen aber auch zu diesem Zeitpunkt noch nicht verraten, auf welchen Ort und welchen

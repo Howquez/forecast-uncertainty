@@ -1,0 +1,208 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+    <link href="{% static 'global/css/widthme.css' %}" rel="stylesheet">
+    <link href="{% static 'global/css/speech_bubble.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="{% static 'global/js/weather_viz.js' %}"></script>
+    <script src="{% static 'global/js/event_bar.js' %}"></script>
+    <script src="{% static 'global/js/lottery_viz.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<!--
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="25" style="width: 25%" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="5" style="width: 5%" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+    </div>
+-->
+<div class="card w-xl-100 w-lg-75 w-md-75 w-100 mx-auto">
+    <div class="card-body">
+        <h6 class="float-right text-primary">
+            <a>
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-question-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033a.237.237 0 0 1-.24-.247C5.35 4.091 6.737 3.5 8.005 3.5c1.396 0 2.672.73 2.672 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.105a.25.25 0 0 1-.25.25h-.81a.25.25 0 0 1-.25-.246l-.004-.217c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.803 0-1.253.478-1.342 1.134-.018.137-.128.25-.266.25h-.825zm2.325 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z"/>
+                </svg>
+            </a>
+        </h6>
+        <h5 class="card-title display-4 mb-1">
+            <small class="text-muted">Entscheidung</small> {{ player.round_number }} <small class="text-muted">von</small> 6
+        </h5>
+        <h6 class="card-subtitle mb-4 text-muted">
+            Wie viele grüne Kugeln müssen sich mindestens in der Urne befinden, damit Sie die Lotterie vorziehen?
+        </h6>
+        <hr class="my-4">
+
+        <div class="container mb-4">
+            <div class="row">
+                <div class="col-sm border-right">
+                    <h4>Wette</h4>
+                    <p class="card-text mb-3 lead" id="subHeader">
+                        <small>Sie gewinnen 10 Euro entsprechend der unten dargestellten Grafik (und sonst nichts).</small>
+                    </p>
+
+                    <figure class="highcharts-figure">
+                        <div id="event_bar"></div>
+                    </figure>
+                </div>
+                <div class="col-sm border-left">
+                    <h4>Lotterie</h4>
+                    <p class="card-text mb-3 lead">
+                        <small>Sie gewinnen 10 Euro, wenn eine grüne Kugel gezogen wird (und sonst nichts).</small>
+                    </p>
+
+                    <figure class="highcharts-figure">
+                        <div id="pieChart"></div>
+                        <p class="highcharts-description">
+                        </p>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <p class="bubble lead hidden" id="bubbleId">
+                <em>
+                    "Ich finde die Lotterie erst dann besser als die Wette, wenn sich mindestens <span id="quote">X</span>
+                    grüne Kugeln in der Urne befinden."
+                </em>
+            </p>
+            <figure class="highcharts-figure">
+        <div id="tradeoff_bar"></div>
+        <p class="highcharts-description"> </p>
+    </figure>
+        </div>
+
+
+        <form class="col-lg-6 offset-lg-3">
+            <div class="row justify-content-center">
+                <input class="form-control border-primary" type="number" placeholder="#" id="id_probability" name="probability" min="0" max="100" required>
+
+                <button class="btn btn-success ml-3" type="submit">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right-short" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+                    </svg>
+                    Absenden
+                </button>
+            </div>
+        </form>
+        <p class="text-center mt-4 pl-5 pr-5">
+            Wie viele grüne Kugeln müssen sich mindestens in der Urne befinden, damit Sie die Lotterie
+            bevorzugen?
+        </p>
+    </div>
+
+            <!--
+            <div class="input-group">
+                <input type="number" class="form-control border"  id="id_probability" name="probability" min="0" max="100" required>
+                <div class="input-group-append">
+                    <button class="btn btn-success" type="submit">Absenden</button>
+                </div>
+            </div>
+            -->
+
+    <div id="accordion" role="tablist">
+        <div class="card">
+            <div class="card-header" role="tab" id="headingOne">
+                <h4 class="card-title lead mb-1">
+                    <a data-toggle="collapse" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                        Wetterdaten einblenden
+                    </a>
+                </h4>
+            </div>
+
+            <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-footer">
+                    {% if treatment_displayed == "True" %}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <h4 class="lead">
+                                Bitte beachten Sie, dass die Grafik nun auch eine Wettervorhersage enthält.
+                            </h4>
+                            <hr>
+                            <p>
+                                Alle Angaben (also sowohl gemessene als auch vorhergesagte Temperaturen) beziehen sich auf
+                                dieselbe Tageszeit: 14:00 Uhr (MEZ).
+                            </p>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% else %}
+                        <p class="card-text">
+                            Die Temperaturen
+                            <a style="color:#5DE58E">zwischen Mittwoch und Freitag (also im grün gefärbten Bereich)</a>
+                            betrugen jeweils um 14:00 Uhr (MEZ)<sup>1</sup>
+                            <span id="report0"></span>°C, <span id="report1"></span>°C bzw. <span id="report2"></span>°C.
+                        </p>
+                    {% endif %}
+
+                    <figure class="highcharts-figure">
+                        <div id="weather_viz"></div>
+                    </figure>
+
+                    <p class="card-text">
+                        Ohne zu wissen, auf welchen Ort und Zeitpunkt sich das oben dargestellte Wetter bezieht,
+                        müssen Sie für die folgenden Aufgaben abschätzen, welche Temperaturbereiche Sie 9 Tage später,
+                        <a style="color:#C582FF">am Sonntag (also im lila gefärbten Bereich)</a>,
+                        am selben Ort und zur gleichen Tageszeit für wahrscheinlich halten.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--
+    <div class="card-footer bg-light text-secondary">
+        <h3 class="card-title mb-1">
+            Wetterdaten <small class="text-muted">zur Erinnerung</small>
+        </h3>
+
+        {% if treatment_displayed == "True" %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <h4 class="lead">
+                    Bitte beachten Sie, dass die Grafik nun auch eine Wettervorhersage enthält.
+                </h4>
+                <hr>
+                <p>
+                    Alle Angaben (also sowohl gemessene als auch vorhergesagte Temperaturen) beziehen sich auf dieselbe
+                    Tageszeit: 14:00 Uhr (MEZ).
+                </p>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% else %}
+            <p class="card-text">
+                Die Temperaturen
+                <a style="color:#5DE58E">zwischen Mittwoch und Freitag (also im grün gefärbten Bereich)</a>
+                betrugen jeweils um 14:00 Uhr (MEZ)<sup>1</sup>
+                <span id="report0"></span>°C, <span id="report1"></span>°C bzw. <span id="report2"></span>°C.
+            </p>
+        {% endif %}
+
+        <figure class="highcharts-figure">
+            <div id="weather_viz"></div>
+        </figure>
+
+        <p class="card-text">
+            Ohne zu wissen, auf welchen Ort und Zeitpunkt sich das oben dargestellte Wetter bezieht,
+            müssen Sie für die folgenden Aufgaben abschätzen, welche Temperaturbereiche Sie 9 Tage später,
+            <a style="color:#C582FF">am Sonntag (also im lila gefärbten Bereich)</a>,
+            am selben Ort und zur gleichen Tageszeit für wahrscheinlich halten.
+        </p>
+    </div>
+    -->
+
+</div>
+{% endblock %}

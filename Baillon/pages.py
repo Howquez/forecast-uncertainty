@@ -7,6 +7,37 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 
 
+
+class Baillon_Reimagined(Page):
+    form_model = "player"
+
+    def js_vars(self):
+        return dict(
+            ticks = Constants.ticks,
+            event_decision = self.player.event_decision,
+            treatment = self.participant.vars["treatment"],
+            enabledLabel=True,
+            # the following three vars are needed such that the weather viz can be displayed on decision screen as well
+            treatment_displayed = str(self.subsession.this_app_constants()["treatment_displayed"]),
+            page="decision",
+            location=self.participant.vars["location"],
+            small=True,
+
+        )
+
+    def vars_for_template(self):
+        if len(self.player.event_decision) == 3: #compound decision
+            choices = self.player.participant.vars["baillon_compound_choices"]
+        else:
+            choices = self.player.participant.vars["baillon_single_choices"]
+        return {
+            "treatment_displayed" : str(self.subsession.this_app_constants()["treatment_displayed"]),
+            "choices" : choices,
+            "num_choices" : Constants.num_choices
+        }
+
+
+
 class Baillon_Instructions(Page):
     def is_displayed(self):
             # print(self.subsession.this_app_constants()["treatment_displayed"])
@@ -129,7 +160,6 @@ class Baillon_Decision(Page):
 
 
 
-
 class Historic_Viz(Page):
     def is_displayed(self):
         if self.subsession.this_app_constants()["treatment_displayed"] == False and self.round_number == 1:
@@ -143,7 +173,8 @@ class Historic_Viz(Page):
         )
 
 
-page_sequence = [Baillon_Instructions,
+page_sequence = [Baillon_Reimagined,
+                 Baillon_Instructions,
                  # Historic_Viz,
                  Forecast_Viz,
                  Baillon_Decision]
