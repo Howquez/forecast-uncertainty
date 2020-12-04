@@ -12,9 +12,14 @@ class Baillon_Reimagined(Page):
     form_model = "player"
 
     def js_vars(self):
+        if len(self.player.event_decision) == 3:  # compound decision
+            compound = True
+        else:
+            compound = False
         return dict(
             ticks = Constants.ticks,
             event_decision = self.player.event_decision,
+            compound = compound,
             treatment = self.participant.vars["treatment"],
             enabledLabel=True,
             # the following three vars are needed such that the weather viz can be displayed on decision screen as well
@@ -22,7 +27,6 @@ class Baillon_Reimagined(Page):
             page="decision",
             location=self.participant.vars["location"],
             small=True,
-
         )
 
     def vars_for_template(self):

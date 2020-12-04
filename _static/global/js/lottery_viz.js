@@ -1,7 +1,14 @@
+// vars from oTree
+let compound   = js_vars.compound;
+
+
 // initiate variables
-var red = 100;
-var green = 0;
-var primary = "#0275d8"
+var green = 33;
+if (compound) {
+  green = 66;
+}
+var red = 100 - green;
+var primary = "#0275d8";
 
 
 
@@ -29,6 +36,10 @@ document.getElementById("id_probability").addEventListener('input', () => {
 
   document.getElementById("quote").innerHTML = `<b><u>${green}</u></b>`;
   document.getElementById("bubbleId").className = "bubble lead";
+  document.getElementById("submitCheckLabel").innerHTML = `Ja, ich bevorzuge die Lotterie mit ${green} grünen Kugeln.</u></b>`;
+  document.getElementById("submitCheck").setAttribute("checked", "")
+  document.getElementById("submitButton").className = "btn btn-primary ml-3"
+  document.getElementById("submitButton").removeAttribute("disabled")
 
   pie.series[0].update({
     data: [{
@@ -66,6 +77,7 @@ var pie = Highcharts.chart('pieChart', {
     plotBorderWidth: null,
     plotShadow: false,
     type: "pie",
+    // height: "105%",
     backgroundColor: "transparent"
   },
   title: {
@@ -104,14 +116,14 @@ var pie = Highcharts.chart('pieChart', {
     colorByPoint: true,
     data: [{
         name: "rot",
-        y: 50,
+        y: red,
         sliced: true,
         selected: true,
         color: lossColor
       },
       {
         name: "grün",
-        y: 50,
+        y: green,
         sliced: true,
         selected: true,
         color: successColor

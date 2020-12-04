@@ -114,20 +114,22 @@ p.bubble:after {
 }
 .bubble:before {
     border-left: 20px solid transparent;
-    border-top: 20px solid #0275d8;  /*#000000*/
-    bottom: -20px;
+    border-right: 20px solid transparent;
+    border-bottom: 20px solid #0275d8;  /*#000000*/
+    top: -20px;
     content: "";
     position: absolute;
-    left: 40px;
+    right: 30px;
   }
 
 .bubble:after {
     border-left: 20px solid transparent;
-    border-top: 20px solid #FFFFFF;
-    bottom: -19px;
+    border-right: 20px solid transparent;
+    border-bottom: 20px solid #FFFFFF;
+    top: -19px;
     content: "";
     position: absolute;
-    left: 40px;
+    right: 30px;
   }
 
 #bubbleId {
