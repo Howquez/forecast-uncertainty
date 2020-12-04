@@ -1,11 +1,29 @@
-// implement pattern: https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/demo/accessible-pie
-
+// initiate variables
 var red = 100;
 var green = 0;
 var primary = "#0275d8"
 
-document.getElementById("id_probability").addEventListener('input', () => {
 
+
+// get pattern stuff done
+// function getColorPattern() {
+//     var colors = Highcharts.getOptions().colors,
+//         patternColor = lossColor
+
+//     return {
+//         pattern: {
+//             path: pattern,
+//             color: patternColor,
+//             width: 5,
+//             height: 5
+//         }
+//     };
+// }
+
+
+
+// change content on input
+document.getElementById("id_probability").addEventListener('input', () => {
   green = parseInt(document.getElementById("id_probability").value) || 0;
   red = 100 - green;
 
@@ -37,6 +55,8 @@ document.getElementById("id_probability").addEventListener('input', () => {
 
 });
 
+
+// define pie chart
 var pie = Highcharts.chart('pieChart', {
   exporting: {
     enabled: false
@@ -102,7 +122,7 @@ var pie = Highcharts.chart('pieChart', {
 
 
 
-
+// define horizontal trade-off bar
 var tradeoff = Highcharts.chart("tradeoff_bar", {
   exporting: {
     enabled: false

@@ -7,18 +7,38 @@
     console.log(event)
 
 // set constants
-    // const events = ["E1", "E2", "E3", "E12", "E23", "E13"];
-    const successColor = "#63FFC1"//"#5DE58E";
-    const lossColor    = "#FF0066" //"#FF5B66";
+    const pattern = "M 0 0 L 10 10 M 9 -1 L 11 1 M -1 9 L 1 11"; // more patterns here: https://www.highcharts.com/docs/chart-design-and-style/pattern-fills
+    const successColor = "#63FFC1"; //"#5DE58E";
+    const successLabel = {
+        style: {
+            fontWeight: "normal",
+            textOutline: 0,
+            color: "#000000"
+        }
+    };
+    const lossColor = {
+        pattern: {
+            path: pattern,
+            color: "#FF0066", //"#FF5B66";,
+            width: 10,
+            height: 10
+        }
+    };
+    const lossLabel = {
+        style: {
+            color: "#000000"
+        }
+    }
+
 
 // set variables
-    var treatmentDiff = 0; // legacy
     var S1Col = lossColor;
     var S2Col = lossColor;
     var S3Col = lossColor;
-    var S1Label = "#FFFFFF"
-    var S2Label = "#FFFFFF"
-    var S3Label = "#FFFFFF"
+
+    var S1Label = lossLabel
+    var S2Label = lossLabel
+    var S3Label = lossLabel
     var subHeader;
 
     var labelArray = ticksArray;
@@ -33,17 +53,17 @@
 // set color (and implicitly the label) of barchart
     if (/1/.test(event)){
         S1Col = successColor
-        S1Label = "#000000"
+        S1Label = successLabel
     }
 
     if (/2/.test(event)){
         S2Col = successColor
-        S2Label = "#000000"
+        S2Label = successLabel
     }
 
     if (/3/.test(event)){
         S3Col = successColor
-        S3Label = "#000000"
+        S3Label = successLabel
     }
 
 // set subheader of table
@@ -100,7 +120,7 @@ var bar = Highcharts.chart("event_bar", {
                     } else if (label == ticksArray[ticksArray.length - 1]) {
                         return "+"
                     } else {
-                        label = (parseInt(label) - treatmentDiff).toString();
+                        label = parseInt(label).toString();
                         return label.concat("°C")
                     }
                 },
@@ -135,11 +155,6 @@ var bar = Highcharts.chart("event_bar", {
                 dataLabels: {
                     enabled: enabledLabel,
                     borderWidth: 0,
-                    style: {
-                        color: "#FFFFFF",
-                        textOutline: 0,
-                        fontWeight: "normal",
-                    },
                     formatter: function() {                
                         return this.series.name;
                         }
@@ -153,21 +168,21 @@ var bar = Highcharts.chart("event_bar", {
             data: [ticksArray[3] - ticksArray[2]],
             showInLegend: false,
             color: S3Col,
-            dataLabels: {style: {color: S3Label}}
+            dataLabels: S3Label
         }, {
             label: "Series2",
             name: "zwischen 8°C und 14°C", //`${labelArray[1]}°C bis ${labelArray[2]}°C` ,//"8°C bis 14°C",
             data: [ticksArray[2] - ticksArray[1]],
             showInLegend: false,
             color: S2Col,
-            dataLabels: {style: {color: S2Label}}
+            dataLabels: S2Label
         }, {
             label: "Series1",
             name: "unter 8°C", //`bis zu ${labelArray[1]}°C` , //"bis zu 8°C",
             data: [ticksArray[1] - ticksArray[0]],
             showInLegend: false,
             color: S1Col,
-            dataLabels: {style: {color: S1Label}}
+            dataLabels: S1Label
         }]
     });
 
