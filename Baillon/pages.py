@@ -10,6 +10,7 @@ from .models import Constants
 
 class Baillon_Reimagined(Page):
     form_model = "player"
+    form_fields = ["review_weather", "review_instructions"]
 
     def js_vars(self):
         if len(self.player.event_decision) == 3:  # compound decision
@@ -177,8 +178,8 @@ class Historic_Viz(Page):
         )
 
 
-page_sequence = [Baillon_Reimagined,
-                 Baillon_Instructions,
+page_sequence = [Baillon_Instructions,
                  # Historic_Viz,
                  Forecast_Viz,
+                 Baillon_Reimagined,
                  Baillon_Decision]

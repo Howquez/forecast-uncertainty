@@ -163,6 +163,8 @@ class SharedBasePlayer(BasePlayer):
         locals()['choice_' + str(j)] = models.StringField()
     del j
 
+    review_weather = models.IntegerField(doc="Counts the number of times a player reviews weather information.")
+    review_instructions = models.IntegerField(doc="Counts the number of times a player reviews instructions.")
     switching_row = models.IntegerField(doc="First row in which B (weather dependent lottery) was selected.")
     choice_to_pay = models.StringField(doc="Randomly determined row(/choice) that determines the payment.")
     option_to_pay = models.StringField(doc="Lottery chosen in that row(/choice) the payment (weather dependent if == A).")
