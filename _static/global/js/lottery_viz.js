@@ -37,9 +37,12 @@ document.getElementById("id_probability").addEventListener('input', () => {
   document.getElementById("quote").innerHTML = `<b><u>${green}</u></b>`;
   document.getElementById("bubbleId").className = "bubble lead";
   document.getElementById("submitCheckLabel").innerHTML = `Ja, ich bevorzuge die Lotterie mit ${green} grünen Kugeln.</u></b>`;
-  document.getElementById("submitCheck").setAttribute("checked", "")
-  document.getElementById("submitButton").className = "btn btn-primary ml-3"
-  document.getElementById("submitButton").removeAttribute("disabled")
+  document.getElementById("submitCheck").setAttribute("checked", "");
+  document.getElementById("submitButton").removeAttribute("disabled");
+  document.getElementById("collapseSubmit").setAttribute("aria-expanded", "true");
+  document.getElementById("collapseSubmit").className = "";
+
+
 
   pie.series[0].update({
     data: [{
@@ -63,7 +66,6 @@ document.getElementById("id_probability").addEventListener('input', () => {
   tradeoff.yAxis[0].update({
     tickPositions: [0, green, 100]
   });
-
 });
 
 
@@ -134,81 +136,81 @@ var pie = Highcharts.chart('pieChart', {
 
 
 
-// define horizontal trade-off bar
-var tradeoff = Highcharts.chart("tradeoff_bar", {
-  exporting: {
-    enabled: false
-  },
-  chart: {
-    type: "bar",
-    height: 11 + '%',
-  },
-  title: {
-    text: ""
-  },
-  xAxis: {
-    categories: [""]
-  },
-  yAxis: {
-    min: 0,
-    max: 100,
-    tickPositions: [0, 50, 100],
-    labels: {
-      formatter: function() {
-        var label = this.axis.defaultLabelFormatter.call(this);
-        label = (parseInt(label)).toString();
-        if (label == this.axis.tickPositions[1]){
-          return label.concat(" grüne Kugeln")
-        } else {
-          return label//.concat(" Kugeln")
-        }
+// // define horizontal trade-off bar
+// var tradeoff = Highcharts.chart("tradeoff_bar", {
+//   exporting: {
+//     enabled: false
+//   },
+//   chart: {
+//     type: "bar",
+//     height: 11 + '%',
+//   },
+//   title: {
+//     text: ""
+//   },
+//   xAxis: {
+//     categories: [""]
+//   },
+//   yAxis: {
+//     min: 0,
+//     max: 100,
+//     tickPositions: [0, 50, 100],
+//     labels: {
+//       formatter: function() {
+//         var label = this.axis.defaultLabelFormatter.call(this);
+//         label = (parseInt(label)).toString();
+//         if (label == this.axis.tickPositions[1]){
+//           return label.concat(" grüne Kugeln")
+//         } else {
+//           return label//.concat(" Kugeln")
+//         }
         
-      },
-      style: {
-        fontWeight: "normal",
-      }
-    },
-    title: {
-      text: ""
-    }
-  },
-  legend: {
-    reversed: true
-  },
-  plotOptions: {
-    series: {
-      stacking: "normal",
-      pointWidth: 150,
-      dataLabels: {
-        enabled: true,
-        borderWidth: 0,
-        style: {
-          color: primary,
-          textOutline: 0,
-          fontWeight: "normal",
-        },
-        formatter: function() {
-          return "Ich bevorzuge die "+ this.series.name;
-        }
-      }
-    }
-  },
-  series: [{
-    name: "Lotterie",
-    color: "transparent",
-    borderWidth: 2,
-    borderColor: primary,
-    showInLegend: false,
-    data: [50]
-  }, {
-    name: "Wette",
-    color: primary,
-    borderWidth: 2,
-    borderColor: primary,
-    showInLegend: false,
-    dataLabels: {style: {color: "#FFFFFF"}},
-    data: [50]
-  }]
-});
+//       },
+//       style: {
+//         fontWeight: "normal",
+//       }
+//     },
+//     title: {
+//       text: ""
+//     }
+//   },
+//   legend: {
+//     reversed: true
+//   },
+//   plotOptions: {
+//     series: {
+//       stacking: "normal",
+//       pointWidth: 150,
+//       dataLabels: {
+//         enabled: true,
+//         borderWidth: 0,
+//         style: {
+//           color: primary,
+//           textOutline: 0,
+//           fontWeight: "normal",
+//         },
+//         formatter: function() {
+//           return "Ich bevorzuge die "+ this.series.name;
+//         }
+//       }
+//     }
+//   },
+//   series: [{
+//     name: "Lotterie",
+//     color: "transparent",
+//     borderWidth: 2,
+//     borderColor: primary,
+//     showInLegend: false,
+//     data: [50]
+//   }, {
+//     name: "Wette",
+//     color: primary,
+//     borderWidth: 2,
+//     borderColor: primary,
+//     showInLegend: false,
+//     dataLabels: {style: {color: "#FFFFFF"}},
+//     data: [50]
+//   }]
+// });
 
 
