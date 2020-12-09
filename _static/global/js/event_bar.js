@@ -10,12 +10,13 @@
     const pattern = "M 0 0 L 10 10 M 9 -1 L 11 1 M -1 9 L 1 11"; // more patterns here: https://www.highcharts.com/docs/chart-design-and-style/pattern-fills
     const successColor = "#63FFC1"; //"#5DE58E";
     const successLabel = {
+        backgroundColor: "rgba(255, 255, 255, 0.33)",
         style: {
             fontWeight: "normal",
             textOutline: 0,
-            color: "#000000"
-        }
+        },
     };
+
     const lossColor = {
         pattern: {
             path: pattern,
@@ -155,6 +156,14 @@ var bar = Highcharts.chart("event_bar", {
                 dataLabels: {
                     enabled: enabledLabel,
                     borderWidth: 0,
+                    style: {
+                        fontWeight: "bold",
+                        textOutline: 1,
+                    },
+                    color: "#000000",
+                    backgroundColor: "rgba(255, 255, 255, 0.75)",
+                    borderRadius: 5,
+                    padding: 4,
                     formatter: function() {                
                         return this.series.name;
                         }
