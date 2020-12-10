@@ -22,7 +22,7 @@
             path: pattern,
             color: "#FF0066", //"#FF5B66";,
             width: 10,
-            height: 10
+            height: 10,
         }
     };
     const lossLabel = {

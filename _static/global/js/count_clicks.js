@@ -21,6 +21,10 @@ document.getElementById("weather_icon").addEventListener("click", function() {
     countClicks("weather");
 }, false);
 
+document.getElementById("weather_text").addEventListener("click", function() {
+    countClicks("weather");
+}, false);
+
 document.getElementById("instructions_icon").addEventListener("click", function() {
     countClicks("instructions");
 }, false);

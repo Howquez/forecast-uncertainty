@@ -1,125 +1,73 @@
 // read data
 var weiskirchenRange = [
-        [1601992800000, null, null],
-        [1602079200000, null, null],
-        [1602165600000, null, null],
-        [1602252000000, null, null],
-        [1602338400000, null, null],
-        [1602424800000, null, null],
-        [1602511200000, null, null],
-        [1602597600000, null, null],
-        [1602684000000, null, null],
-        [1602770400000, null, null],
-        [1602856800000, null, null],
-        [1602943200000, null, null],
-        [1603029600000, 7.6, 13.8], //20201018 to be displayed
-        [1603116000000, null, null],
+        [1602979200000 - 14400000, 8, 14],
+        [1602979200000 + 14400000, 8, 14],
     ];
 
 var ilomantsiRange = [
-        [1601992800000, null, null],
-        [1602079200000, null, null],
-        [1602165600000, null, null],
-        [1602252000000, null, null],
-        [1602338400000, null, null],
-        [1602424800000, null, null],
-        [1602511200000, null, null],
-        [1602597600000, null, null],
-        [1602684000000, null, null],
-        [1602770400000, null, null],
-        [1602856800000, null, null],
-        [1602943200000, null, null],
-        [1603029600000, 2.0, 8.0], //20201018 to be displayed
-        [1603116000000, null, null],
+        [1602979200000 - 14400000, 2, 8],
+        [1602979200000 + 14400000, 2, 8],
     ];
 
 var weiskirchenBestGuess = [
-        [1601992800000, null],
-        [1602079200000, null],
-        [1602165600000, null],
-        [1602252000000, null],
-        [1602338400000, null],
-        [1602424800000, null],
-        [1602511200000, null],
-        [1602597600000, null],
-        [1602684000000, null],
-        [1602770400000, null],
-        [1602856800000, null],
-        [1602943200000, null],
-        [1603029600000, 12.3], //20201018 to be displayed
-        [1603116000000, null],
+        [1602979200000 - 14400000, 12],
+        [1602979200000 + 14400000, 12],
     ];
 
 var ilomantsiBestGuess = [
-        [1601992800000, null],
-        [1602079200000, null],
-        [1602165600000, null],
-        [1602252000000, null],
-        [1602338400000, null],
-        [1602424800000, null],
-        [1602511200000, null],
-        [1602597600000, null],
-        [1602684000000, null],
-        [1602770400000, null],
-        [1602856800000, null],
-        [1602943200000, null],
-        [1603029600000, 4.2], //20201018 to be displayed
-        [1603116000000, null],
+        [1602979200000 - 14400000, 4],
+        [1602979200000 + 14400000, 4],
     ];
 
 // https://kachelmannwetter.com/de/messwerte/63-e-491-n/temperatur/20201009-1100z.html#obs-detail-J728-72h
 // https://kachelmannwetter.com/de/messwerte/63-e-491-n/temperatur/20201019-1100z.html#obs-detail-J728-72h
 var weiskirchenObserved = [
-        [1601992800000, null], //20201006
-        [1602079200000, 11.8], //20201007 to be displayed
-        [1602165600000, 12.3], //20201008 to be displayed
-        [1602252000000, 12.2], //20201009 to be displayed
-        [1602338400000, 10.6], //20201010
-        [1602424800000, 11.8], //20201011
-        [1602511200000, 9.4],  //20201012
-        [1602597600000, 9.4],  //20201013
-        [1602684000000, 11.0], //20201014
-        [1602770400000, 8.8],  //20201015
-        [1602856800000, 9.1],  //20201016
-        [1602943200000, 8.7],  //20201017
-        [1603029600000, 8.5],  //20201018 to be revealed
-        [1603116000000, null], //20201019
+        [1602028800000, 12], 
+        [1602115200000, 12], 
+        [1602201600000, 12], 
+        [1602288000000, 11], 
+        [1602374400000, 12], 
+        [1602460800000, 9], 
+        [1602547200000, 9], 
+        [1602633600000, 11], 
+        [1602720000000, 9], 
+        [1602806400000, 9], 
+        [1602892800000, 9], 
+        [1602979200000, 9],  
+        [1602979200000 + 14400000, null],  
     ];
 
 // https://kachelmannwetter.com/de/messwerte/ostfinnland/temperatur/20201019-1100z.html#obs-detail-029390-72h
 // https://kachelmannwetter.com/de/messwerte/ostfinnland/temperatur/20201009-1100z.html#obs-detail-029390-72h
 var ilomantsiObserved = [
-        [1601992800000, null], //20201006
-        [1602079200000, 12.0], //20201007 to be displayed
-        [1602165600000, 11.9], //20201008 to be displayed
-        [1602252000000, 12.1], //20201009 to be displayed
-        [1602338400000, 10.1], //20201010
-        [1602424800000, 9.1],  //20201011
-        [1602511200000, 8.9],  //20201012
-        [1602597600000, 8.0],  //20201013
-        [1602684000000, 5.9], //20201014
-        [1602770400000, 3.4],  //20201015
-        [1602856800000, 1.0],  //20201016
-        [1602943200000, 4.1],  //20201017
-        [1603029600000, 3.2],  //20201018 to be revealed
-        [1603116000000, null], //20201019
+        [1602028800000, 12],
+        [1602115200000, 12],
+        [1602201600000, 12],
+        [1602288000000, 10],
+        [1602374400000, 9],
+        [1602460800000, 9],
+        [1602547200000, 8],
+        [1602633600000, 6],
+        [1602720000000, 3],
+        [1602806400000, 1],
+        [1602892800000, 4],
+        [1602979200000, 3],
     ];
 
+
 var instructionsObserved = [
-        [1601992800000, null], //20201006
-        [1602079200000, 48.3], //20201007 to be displayed
-        [1602165600000, 46.9], //20201008 to be displayed
-        [1602252000000, 46.1], //20201009 to be displayed
-        [1602338400000, 46.1], //20201010
-        [1602424800000, 46.1],  //20201011
-        [1602511200000, 46.1],  //20201012
-        [1602597600000, 46.1],  //20201013
-        [1602684000000, 46.1], //20201014
-        [1602770400000, 46.1],  //20201015
-        [1602856800000, 46.1],  //20201016
-        [1602943200000, 46.1],  //20201017
-        [1603029600000, 46.1],  //20201018 to be revealed
-        [1603116000000, null], //20201019
+        [1602115200000, 48], //20201007 to be displayed
+        [1602201600000, 46], //20201008 to be displayed
+        [1602288000000, 46.1], //20201009 to be displayed
+        [1602374400000, 46.1], //20201010
+        [1602460800000, 46.1],  //20201011
+        [1602547200000, 46.1],  //20201012
+        [1602633600000, 46.1],  //20201013
+        [1602720000000, 46.1], //20201014
+        [1602806400000, 46.1],  //20201015
+        [1602892800000, 46.1],  //20201016
+        [1602979200000, 46.1],  //20201017
+        [1603065600000, 46.1],  //20201018 to be revealed
     ];
 
 // get vars from python
@@ -129,17 +77,15 @@ let page = js_vars.page; // equals "historic" or "forecast" or "decision" or "re
 let iteration  = js_vars.treatment_displayed;
 let small = js_vars.small || false; // determines size of visualization
 
-console.log(treatment)
 
 // page and treatment specific operations
 var displayForecast = false;
 var displayBestGuess = false;
 var displayInterval = false;
+var opacity = 0.66;
 var observed;
 var bestGuess;
 var Range;
-var yMin = 0;
-var yMax = 25;
 
 if (village == "Ilomantsi"){
     observed = ilomantsiObserved;
@@ -153,15 +99,10 @@ if (village == "Ilomantsi"){
 
 
 // text operations
-function fillText() {
-    var reportArray = [observed[1][1],
-    observed[2][1],
-    observed[3][1]];
+var rangeText = `Sie halten es für sehr wahrscheinlich, dass die Temperatur um 14:00 Uhr zwischen ${range[1][1]}°C und ${range[1][2]}°C betragen wird. `
+var bestguessText = `Eine Temperatur von ${bestGuess[1][1]}°C halten Sie dabei für am wahrscheinlichsten. `; 
+var forecastText = "&nbsp;";
 
-    document.getElementById("report0").innerHTML = reportArray[0];
-    document.getElementById("report1").innerHTML = reportArray[1];
-    document.getElementById("report2").innerHTML = reportArray[2];
-    }
 
 // display forecast after the first round, i.e. in postBaillon App
 if (page == "forecast"){
@@ -171,13 +112,15 @@ if (page == "forecast"){
 // display forecast during second decision round
 if (iteration == "True"){ //marks the second iteration of an App
     displayForecast = true;
+    opacity = 0;
+
 }
 
 
 // display only the first few data points
 for (var i = 0; i < observed.length; ++i){
     if (page != "revelation"){
-        if (i > 3){
+        if (i > 2){
             observed[i][1] = null;
         }
     }
@@ -186,24 +129,38 @@ for (var i = 0; i < observed.length; ++i){
 // treatment definitions
 if (treatment == "best_guess" && displayForecast){
     displayBestGuess = true;
-} else if (treatment == "interval"){
+    forecastText = bestguessText; 
+} else if (treatment == "interval" && displayForecast){
     displayInterval = true;
-} else if (treatment == "both"){
+    forecastText = rangeText 
+} else if (treatment == "both" && displayForecast){
     displayBestGuess = true;
     displayInterval = true;
+    forecastText = rangeText + bestguessText; 
 }
 
+ // text operations 2
+function fillText() {
+    var reportArray = [observed[1][1],
+    observed[2][1],
+    observed[3][1]];
+    if (displayForecast){
+        document.getElementById("forecastText").innerHTML = forecastText;
+    }
+    
+    // document.getElementById("report0").innerHTML = reportArray[0];
+    // document.getElementById("report1").innerHTML = reportArray[1];
+    // document.getElementById("report2").innerHTML = reportArray[2];
+    }
+
 // color definitions
-var opacity = 0.1;
-var observedColor = "#5DE58E";
-var observedRGBA  = `rgba(93, 229, 142, ${opacity})`;
-var forecastColor = "#C582FF";
-var forecastRGBA  = `rgba(197, 130, 255, ${opacity*1.5})`;
+var observedColor = "#FFCC00"; // "#5DE58E";
+var forecastColor = "#A6219D"; //"#7B6FA6";
 
 // height of chart
 var height = 9;
 if (small){
-    height = 6;
+    height = 9;
 }
 
 
@@ -231,40 +188,70 @@ var chart = Highcharts.chart("weather_viz", {
     },
 
     xAxis: {
+        breaks: [{
+                from: 1602288000000,
+                to: 1602979200000 - 14400000,
+            }],
+        tickInterval: 24 * 3600 * 1000,
         type: "datetime",
-        accessibility: {
-            rangeDescription: ""
-        },
         labels: {
             formatter: function() {
             var dayStr = Highcharts.dateFormat('%a', this.value);
-            return dayStr;
+            if (dayStr == "Sa."){
+                return ""
+            } else if(dayStr == "So."){
+                return "<b>So.</b>"
+            } else {
+                return dayStr
+            };
             }
         },
         plotBands: [{
-            from: 1602079200000 - 39000000, // 43200000
-            to: 1602252000000 + 39000000,
-            color: observedRGBA,
+            from: 1602201600000,
+            to: 1602979200000 - 14400000,
+            color: {
+                pattern: {
+                    path: "M 0 0 L 5 10 L 10 0",
+                    color: "#e8e8e8", //"#FF5B66";,
+                    width: 10,
+                    height: 10,
+                    opacity: 0.75
+                }
+            },
             label: {
-                text: "", // Content of the label. 
+                useHTML: true,
+                text: "+ eine Woche", //'<svg width="2em" height="2em" style="color:#555555" viewBox="0 0 16 16" class="bi bi-calendar-range-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 7V5H0v5h5a1 1 0 1 1 0 2H0v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9h-6a1 1 0 1 1 0-2h6z"/> /svg>',
                 verticalAlign: "middle",
+                align: "center",
+                style: {
+                    fontWeight: "bold"
+                }
             }
         }, {
-            from: 1603029600000 - 52000000, // 43200000,
-            to: 1603029600000 +   52000000, // 43200000
-            color: forecastRGBA,
+            from: 1602979200000 - 14400000,
+            to: 1602979200000 + 14400000,
+            color: {
+                pattern: {
+                    path: "M 0 10 L 10 0 M -1 1 L 1 -1 M 9 11 L 11 9",
+                    color: forecastColor,
+                    width: 10,
+                    height: 10,
+                    opacity: opacity
+                }
+            },
             label: {
                 text: "", // Content of the label. 
                 verticalAlign: "middle",
             }
-        }]
+        }],
     },
+
     yAxis: {
         title: {
             text: "Temperatur in °C"
         },
-        min: yMin,
-        max: yMax,
+        min: 0,
+        max: 20,
     },
 
     tooltip: {
@@ -274,27 +261,55 @@ var chart = Highcharts.chart("weather_viz", {
         xDateFormat: "%A"
     },
 
+    plotOptions: {
+        series: {
+            marker: {
+                enabled: false
+            }
+        },
+        line: {
+            dataLabels: {
+                enabled: true,
+                borderWidth: 0,
+                    style: {
+                        fontWeight: "bold",
+                        textOutline: 0,
+                    },
+                color: "#8E8E8E",
+            },
+        }
+    },
+
     series: [{
-        name: "Beobachtete Temperatur in °C",
+        name: "Gemessene Temperatur",
         data: observed,
         zIndex: 1,
-        color: observedColor,//Highcharts.getOptions().colors[0]
-        marker: {
-            fillColor: "white",
-            lineWidth: 2,
-            lineColor: observedColor//Highcharts.getOptions().colors[0]
-        },
+        color: observedColor,
+        lineWidth: 2.5,
+        // marker: {
+        //     fillColor: "white",
+        //     lineWidth: 2,
+        //     lineColor: observedColor//Highcharts.getOptions().colors[0]
+        // },
         showInLegend: displayForecast,
     }, {
         name: "Wettervorhersage",
         data: bestGuess,
         zIndex: 1,
         color: forecastColor,
-        marker: {
-            fillColor: 'white',
-            lineWidth: 2,
-            lineColor: forecastColor
+        dataLabels: {
+            formatter: function() {
+                if(this.x == 1602979200000 + 14400000){
+                    return this.y
+                }
+            },
+            color: "#000000"
         },
+        // marker: {
+        //     fillColor: 'white',
+        //     lineWidth: 2,
+        //     lineColor: forecastColor
+        // },
         showInLegend: displayForecast && displayBestGuess,
         visible: displayForecast && displayBestGuess
     }, {
@@ -302,13 +317,21 @@ var chart = Highcharts.chart("weather_viz", {
         data: range,
         type: "arearange",
         lineWidth: 0,
-        // linkedTo: ":previous",
+        linkedTo: ":previous",
         color: forecastColor, 
-        fillOpacity: 0.3,
+        fillOpacity: 0.33,
         zIndex: 0,
-        marker: {
-            enabled: true
+        dataLabels: {
+            enabled: true,
+            formatter: function() {
+                if(this.x == 1602979200000 + 14400000){
+                    return this.y
+                }
+            }
         },
+        // marker: {
+        //     enabled: true
+        // },
         showInLegend: displayForecast && displayInterval && treatment !== "both",
         visible: displayForecast && displayInterval,
 

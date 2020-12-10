@@ -182,4 +182,5 @@ page_sequence = [Baillon_Instructions,
                  # Historic_Viz,
                  Forecast_Viz,
                  Baillon_Reimagined,
-                 Baillon_Decision]
+                 # Baillon_Decision
+                 ]
