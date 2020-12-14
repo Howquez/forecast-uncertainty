@@ -215,7 +215,7 @@ var chart = Highcharts.chart("weather_viz", {
                     color: "#e8e8e8", //"#FF5B66";,
                     width: 10,
                     height: 10,
-                    opacity: 0.75
+                    opacity: 0.5
                 }
             },
             label: {
@@ -282,10 +282,21 @@ var chart = Highcharts.chart("weather_viz", {
 
     series: [{
         name: "Gemessene Temperatur",
+        type: "area",
+        fillOpacity: 0.1,
         data: observed,
         zIndex: 1,
         color: observedColor,
         lineWidth: 2.5,
+        dataLabels: {
+                enabled: true,
+                borderWidth: 0,
+                    style: {
+                        fontWeight: "bold",
+                        textOutline: 0,
+                    },
+                color: "#8E8E8E",
+            },
         // marker: {
         //     fillColor: "white",
         //     lineWidth: 2,
@@ -337,3 +348,7 @@ var chart = Highcharts.chart("weather_viz", {
 
     }]
 });
+
+if(displayForecast){
+    chart.tooltip.refresh([chart.series[1].points[1]]);
+}

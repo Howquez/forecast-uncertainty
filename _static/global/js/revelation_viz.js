@@ -1,108 +1,58 @@
+
 // read data
 var weiskirchenRange = [
-        [1601992800000, null, null],
-        [1602079200000, null, null],
-        [1602165600000, null, null],
-        [1602252000000, null, null],
-        [1602338400000, null, null],
-        [1602424800000, null, null],
-        [1602511200000, null, null],
-        [1602597600000, null, null],
-        [1602684000000, null, null],
-        [1602770400000, null, null],
-        [1602856800000, null, null],
-        [1602943200000, null, null],
-        [1603029600000, 7.6, 13.8], //20201018 to be displayed
-        [1603116000000, null, null],
+        [1602979200000 - 14400000, 8, 14],
+        [1602979200000 + 14400000, 8, 14],
     ];
 
 var ilomantsiRange = [
-        [1601992800000, null, null],
-        [1602079200000, null, null],
-        [1602165600000, null, null],
-        [1602252000000, null, null],
-        [1602338400000, null, null],
-        [1602424800000, null, null],
-        [1602511200000, null, null],
-        [1602597600000, null, null],
-        [1602684000000, null, null],
-        [1602770400000, null, null],
-        [1602856800000, null, null],
-        [1602943200000, null, null],
-        [1603029600000, 2.0, 8.0], //20201018 to be displayed
-        [1603116000000, null, null],
+        [1602979200000 - 14400000, 2, 8],
+        [1602979200000 + 14400000, 2, 8],
     ];
 
 var weiskirchenBestGuess = [
-        [1601992800000, null],
-        [1602079200000, null],
-        [1602165600000, null],
-        [1602252000000, null],
-        [1602338400000, null],
-        [1602424800000, null],
-        [1602511200000, null],
-        [1602597600000, null],
-        [1602684000000, null],
-        [1602770400000, null],
-        [1602856800000, null],
-        [1602943200000, null],
-        [1603029600000, 12.3], //20201018 to be displayed
-        [1603116000000, null],
+        [1602979200000 - 14400000, 12],
+        [1602979200000 + 14400000, 12],
     ];
 
 var ilomantsiBestGuess = [
-        [1601992800000, null],
-        [1602079200000, null],
-        [1602165600000, null],
-        [1602252000000, null],
-        [1602338400000, null],
-        [1602424800000, null],
-        [1602511200000, null],
-        [1602597600000, null],
-        [1602684000000, null],
-        [1602770400000, null],
-        [1602856800000, null],
-        [1602943200000, null],
-        [1603029600000, 4.2], //20201018 to be displayed
-        [1603116000000, null],
+        [1602979200000 - 14400000, 4],
+        [1602979200000 + 14400000, 4],
     ];
 
 // https://kachelmannwetter.com/de/messwerte/63-e-491-n/temperatur/20201009-1100z.html#obs-detail-J728-72h
 // https://kachelmannwetter.com/de/messwerte/63-e-491-n/temperatur/20201019-1100z.html#obs-detail-J728-72h
 var weiskirchenObserved = [
-        [1601992800000, null], //20201006
-        [1602079200000, 11.8], //20201007 to be displayed
-        [1602165600000, 12.3], //20201008 to be displayed
-        [1602252000000, 12.2], //20201009 to be displayed
-        [1602338400000, 10.6], //20201010
-        [1602424800000, 11.8], //20201011
-        [1602511200000, 9.4],  //20201012
-        [1602597600000, 9.4],  //20201013
-        [1602684000000, 11.0], //20201014
-        [1602770400000, 8.8],  //20201015
-        [1602856800000, 9.1],  //20201016
-        [1602943200000, 8.7],  //20201017
-        [1603029600000, 8.5],  //20201018 to be revealed
-        [1603116000000, null], //20201019
+        [1602028800000, 12], 
+        [1602115200000, 12], 
+        [1602201600000, 12], 
+        [1602288000000, 11], 
+        [1602374400000, 12], 
+        [1602460800000, 9], 
+        [1602547200000, 9], 
+        [1602633600000, 11], 
+        [1602720000000, 9], 
+        [1602806400000, 9], 
+        [1602892800000, 9], 
+        [1602979200000, 9],  
+        [1602979200000 + 14400000, null],  
     ];
 
 // https://kachelmannwetter.com/de/messwerte/ostfinnland/temperatur/20201019-1100z.html#obs-detail-029390-72h
 // https://kachelmannwetter.com/de/messwerte/ostfinnland/temperatur/20201009-1100z.html#obs-detail-029390-72h
 var ilomantsiObserved = [
-        [1601992800000, null], //20201006
-        [1602079200000, 12.0], //20201007 to be displayed
-        [1602165600000, 11.9], //20201008 to be displayed
-        [1602252000000, 12.1], //20201009 to be displayed
-        [1602338400000, 10.1], //20201010
-        [1602424800000, 9.1],  //20201011
-        [1602511200000, 8.9],  //20201012
-        [1602597600000, 8.0],  //20201013
-        [1602684000000, 5.9], //20201014
-        [1602770400000, 3.4],  //20201015
-        [1602856800000, 1.0],  //20201016
-        [1602943200000, 4.1],  //20201017
-        [1603029600000, 3.2],  //20201018 to be revealed
-        [1603116000000, null], //20201019
+        [1602028800000, 12],
+        [1602115200000, 12],
+        [1602201600000, 12],
+        [1602288000000, 10],
+        [1602374400000, 9],
+        [1602460800000, 9],
+        [1602547200000, 8],
+        [1602633600000, 6],
+        [1602720000000, 3],
+        [1602806400000, 1],
+        [1602892800000, 4],
+        [1602979200000, 3],
     ];
 
 // get vars from python
@@ -133,10 +83,8 @@ function fillText() {
 
 // color definitions
 var opacity = 0.1;
-var observedColor = "#5DE58E";
-var observedRGBA  = `rgba(93, 229, 142, ${opacity})`;
-var forecastColor = "#C582FF";
-var forecastRGBA  = `rgba(197, 130, 255, ${opacity*1.5})`;
+var observedColor = "#FFCC00"; // "#5DE58E";
+var forecastColor = "#A6219D"; //"#7B6FA6";
 
 
 // language plot options
@@ -178,29 +126,25 @@ var chart = Highcharts.chart("weather_viz", {
             rangeDescription: ""
         },
         plotBands: [{
-        from: 1602079200000 - 39000000, // 43200000
-        to: 1602252000000 + 39000000, // 43200000
-        color: observedRGBA,
-        label: {
-            text: "", // Content of the label. 
-            verticalAlign: "middle",
-        }
-      }, {
-        from: 1603029600000 - 52000000, // 43200000
-        to: 1603029600000 + 52000000, // 43200000
-        color: forecastRGBA,
-        label: {
-            text: "", // Content of the label. 
-            verticalAlign: "middle",
-        }
-      }]
+            from: 1602201600000,
+            to: 1602979200000 - 14400000,
+            color: {
+                pattern: {
+                    path: "M 0 0 L 5 10 L 10 0",
+                    color: "#e8e8e8", //"#FF5B66";,
+                    width: 10,
+                    height: 10,
+                    opacity: 0.25
+                }
+            },
+        }]
     },
     yAxis: {
         title: {
             text: "Temperatur in °C"
         },
         min: 0,
-        max: 25,
+        max: 20,
     },
 
     tooltip: {
@@ -209,27 +153,49 @@ var chart = Highcharts.chart("weather_viz", {
         valueSuffix: "°C"
     },
 
+    plotOptions: {
+        series: {
+            marker: {
+                enabled: false
+            }
+        },
+        line: {
+            dataLabels: {
+                enabled: true,
+                borderWidth: 0,
+                    style: {
+                        fontWeight: "bold",
+                        textOutline: 0,
+                    },
+                color: "#8E8E8E",
+            },
+        }
+    },
+
     series: [{
-        name: "Beobachtete Temperatur in °C",
+        name: "Gemessene Temperatur in °C",
         data: observed,
+        type: "area",
+        color: observedColor,
+        fillOpacity: 0.1,
+        lineWidth: 2.5,
+        dataLabels: {
+                enabled: true,
+                borderWidth: 0,
+                    style: {
+                        fontWeight: "bold",
+                        textOutline: 0,
+                    },
+                color: "#8E8E8E",
+            },
         zIndex: 1,
         color: observedColor,//Highcharts.getOptions().colors[0]
-        marker: {
-            fillColor: "white",
-            lineWidth: 2,
-            lineColor: observedColor//Highcharts.getOptions().colors[0]
-        },
         showInLegend: displayForecast,
     }, {
         name: "Wettervorhersage",
         data: bestGuess,
         zIndex: 1,
         color: forecastColor,
-        marker: {
-            fillColor: 'white',
-            lineWidth: 2,
-            lineColor: forecastColor
-        },
         showInLegend: displayForecast,
         visible: displayForecast
     }, {
@@ -241,8 +207,7 @@ var chart = Highcharts.chart("weather_viz", {
         color: forecastColor, 
         fillOpacity: 0.3,
         zIndex: 0,
-        marker: {
-            enabled: true
-        }
     }]
 });
+
+chart.tooltip.refresh([chart.series[0].points[11]]);
