@@ -8,42 +8,16 @@ from .models import Constants
 
 
 
-class Baillon_Reimagined(Page):
-    form_model = "player"
-    form_fields = ["review_weather", "review_instructions"]
-
-    def js_vars(self):
-        if len(self.player.event_decision) == 3:  # compound decision
-            compound = True
-        else:
-            compound = False
-        return dict(
-            ticks = Constants.ticks,
-            event_decision = self.player.event_decision,
-            compound = compound,
-            treatment = self.participant.vars["treatment"],
-            enabledLabel=True,
-            # the following three vars are needed such that the weather viz can be displayed on decision screen as well
-            treatment_displayed = str(self.subsession.this_app_constants()["treatment_displayed"]),
-            page="decision",
-            location=self.participant.vars["location"],
-            small=True,
-        )
-
-    def vars_for_template(self):
-        if len(self.player.event_decision) == 3: #compound decision
-            choices = self.player.participant.vars["baillon_compound_choices"]
-        else:
-            choices = self.player.participant.vars["baillon_single_choices"]
-        return {
-            "treatment_displayed" : str(self.subsession.this_app_constants()["treatment_displayed"]),
-            "choices" : choices,
-            "num_choices" : Constants.num_choices
-        }
-
-
-
 class Baillon_Instructions(Page):
+
+    form_model = "player"
+    form_fields = [#"BaillonQ1",
+                   #"BaillonQ2",
+                   #"BaillonQ3",
+                   #"BaillonQ4",
+                   #"BaillonQ5"
+                    ]
+
     def is_displayed(self):
             # print(self.subsession.this_app_constants()["treatment_displayed"])
         if self.subsession.this_app_constants()["treatment_displayed"] == False and self.round_number == 1:
@@ -51,46 +25,33 @@ class Baillon_Instructions(Page):
 
     def js_vars(self):
         return dict(
-            ticks=[0, 14, 20, 34],
+            ticks=Constants.ticks,
             event_decision="E3",
+            compound=False,
             treatment=self.participant.vars["treatment"],
-            enabledLabel=False,
+            enabledLabel=True,
+            location=self.participant.vars["location"],
         )
 
-    def vars_for_template(self):
-        choices = self.player.participant.vars["baillon_compound_choices"]
-        indices = [0, 1, 3, 7, 11, 19]
-        return {
-            "choices":[choices[i] for i in indices],
-            "num_choices": 6
-        }
-
-    form_model = "player"
-    form_fields = ["BaillonQ1",
-                   "BaillonQ2",
-                   "BaillonQ3",
-                   "BaillonQ4",
-                   "BaillonQ5"]
-
-    def error_message(self, values):
-        solutions = dict(
-            BaillonQ1=False,
-            BaillonQ2=True,
-            BaillonQ4=True,
-            BaillonQ5=True,
-        )
-
-        error_messages = dict(
-            BaillonQ1="Sie müssen die Situation verstanden haben.",
-            BaillonQ2="Sie müssen die Situation verstanden haben.",
-            BaillonQ4="Sie müssen die Situation verstanden haben.",
-            BaillonQ5="Sie müssen die Situation verstanden haben.",
-        )
-
-        for field_name in solutions:
-            if values[field_name] != solutions[field_name]:
-                return error_messages[field_name]  # = 'Wrong answer' # wenn error message dict leer
-                # return error_messages
+    # def error_message(self, values):
+    #     solutions = dict(
+    #         BaillonQ1=False,
+    #         BaillonQ2=True,
+    #         BaillonQ4=True,
+    #         BaillonQ5=True,
+    #     )
+    #
+    #     error_messages = dict(
+    #         BaillonQ1="Sie müssen die Situation verstanden haben.",
+    #         BaillonQ2="Sie müssen die Situation verstanden haben.",
+    #         BaillonQ4="Sie müssen die Situation verstanden haben.",
+    #         BaillonQ5="Sie müssen die Situation verstanden haben.",
+    #     )
+    #
+    #     for field_name in solutions:
+    #         if values[field_name] != solutions[field_name]:
+    #             return error_messages[field_name]  # = 'Wrong answer' # wenn error message dict leer
+    #             # return error_messages
 
 class Forecast_Viz(Page):
     def is_displayed(self):
@@ -105,63 +66,35 @@ class Forecast_Viz(Page):
 
 class Baillon_Decision(Page):
     form_model = "player"
-
-    # form fields
-    def get_form_fields(self):
-        if len(self.player.event_decision) == 3: #compound decision
-            form_fields = [list(t) for t in zip(*self.participant.vars["baillon_compound_choices"])][1]
-        else:
-            form_fields = [list(t) for t in zip(*self.participant.vars["baillon_single_choices"])][1]
-        return form_fields
+    form_fields = ["review_weather", "review_instructions", "baillon_equivalent"]
 
     def js_vars(self):
+        if len(self.player.event_decision) == 3:  # compound decision
+            compound = True
+        else:
+            compound = False
         return dict(
-            ticks = Constants.ticks,
-            event_decision = self.player.event_decision,
-            treatment = self.participant.vars["treatment"],
+            ticks=Constants.ticks,
+            event_decision=self.player.event_decision,
+            compound=compound,
+            treatment=self.participant.vars["treatment"],
             enabledLabel=True,
             # the following three vars are needed such that the weather viz can be displayed on decision screen as well
-            treatment_displayed = str(self.subsession.this_app_constants()["treatment_displayed"]),
+            treatment_displayed=str(self.subsession.this_app_constants()["treatment_displayed"]),
             page="decision",
             location=self.participant.vars["location"],
             small=True,
-
         )
 
     def vars_for_template(self):
-        if len(self.player.event_decision) == 3: #compound decision
-            choices = self.player.participant.vars["baillon_compound_choices"]
-        else:
-            choices = self.player.participant.vars["baillon_single_choices"]
         return {
-            "treatment_displayed" : str(self.subsession.this_app_constants()["treatment_displayed"]),
-            "choices" : choices,
-            "num_choices" : Constants.num_choices
+            "treatment_displayed": str(self.subsession.this_app_constants()["treatment_displayed"]),
         }
 
-    # set player's payoff
     def before_next_page(self):
-        if len(self.player.event_decision) == 3: #compound decision
-            form_fields = [list(t) for t in zip(*self.participant.vars["baillon_compound_choices"])][1]
-            indices = [list(t) for t in zip(*self.participant.vars["baillon_compound_choices"])][0]
-        else:
-            form_fields = [list(t) for t in zip(*self.participant.vars["baillon_single_choices"])][1]
-            indices = [list(t) for t in zip(*self.participant.vars["baillon_single_choices"])][0]
-
-        # unzip indices and form fields from <mpl_choices> list
-        # round_number = self.subsession.round_number
-        # form_fields = [list(t) for t in zip(*self.participant.vars['baillon_choices'])][1]
-        # indices = [list(t) for t in zip(*self.participant.vars['baillon_choices'])][0]
-        # index = indices[round_number - 1]
-
-        for j, choice in zip(indices, form_fields):
-            choice_i = getattr(self.player, choice)
-            self.participant.vars["baillon_choices_made"][j - 1] = choice_i
-
         self.player.prepare_payoffs()
         self.player.set_payoffs()
-        self.player.set_consistency()
-        self.player.set_switching_row()
+    pass
 
 
 
@@ -181,6 +114,5 @@ class Historic_Viz(Page):
 page_sequence = [Baillon_Instructions,
                  # Historic_Viz,
                  Forecast_Viz,
-                 Baillon_Reimagined,
-                 # Baillon_Decision
+                 Baillon_Decision
                  ]

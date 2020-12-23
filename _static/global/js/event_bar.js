@@ -97,7 +97,7 @@ var bar = Highcharts.chart("event_bar", {
 
         chart: {
             type: "column",
-            // height: (height / 15 * 100) + '%', // 16:9 ratio
+            // height: (5 / 15 * 100) + '%', // 16:9 ratio
             backgroundColor: 'transparent'
         },
         title: {

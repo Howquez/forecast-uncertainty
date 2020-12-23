@@ -1,7 +1,7 @@
 // Source: https://www.jqueryscript.net/other/bootstrap-tabs-carousel.html
 
 function bootstrapTabControl(){
-  var i, items = $('.nav-link'), pane = $('.tab-pane');
+  var i, items = $('.back-and-forth'), pane = $('.tab-pane');
   
 // NEXT -----
   $('.nexttab').on('click', function(){

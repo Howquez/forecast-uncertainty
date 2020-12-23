@@ -130,9 +130,8 @@ class SharedBasePlayer(BasePlayer):
 
     def set_payoffs(self):
         if bool(re.search("MPP", self.participant.vars["winning_app"])): # if one of the MPP apps is chosen
-            self.participant.vars["payment_block"] = "Frageblock 2"
             if not bool(re.search("post", self.participant.vars["winning_app"])): # if the pre treatment version is chosen
-                self.participant.vars["payment_round"] = "Runde 1"
+                self.participant.vars["payment_task"] = "Aufgabe 2"
                 if not self.subsession.this_app_constants()["treatment_displayed"]: # select pre treatment app
                     self.participant.vars["payment_outcome"] = "leider verloren"
                     self.is_relevant = True
@@ -142,7 +141,7 @@ class SharedBasePlayer(BasePlayer):
                         self.payoff = Constants.prize_payoff
                         self.participant.vars["payment_outcome"] = "gewonnen"
             elif bool(re.search("post", self.participant.vars["winning_app"])): # if the post treatment version is chosen:
-                self.participant.vars["payment_round"] = "Runde 2"
+                self.participant.vars["payment_task"] = "Aufgabe 4"
                 if self.subsession.this_app_constants()["treatment_displayed"]: # select post treatment app
                     self.participant.vars["payment_outcome"] = "leider verloren"
                     self.is_relevant = True

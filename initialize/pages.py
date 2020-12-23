@@ -3,7 +3,8 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 
 class Intro_Welcome(Page):
-    pass
+    def vars_for_template(self):
+        return {"participation_fee": self.session.config["participation_fee"]}
 
 class Intro_Instructions(Page):
     def js_vars(self):

@@ -8,14 +8,16 @@
 {% endblock %}
 
 
-{% block styles %}
-{% endblock %}
+
 
 {% block content %}
+<body>
+<img src="{% static 'global/images/cool-background.svg' %}" id="bg" alt=""/>
+
 
 <br><br>
 
-    <div class="jumbotron">
+    <div class="jumbotron bg-white border border-ligh">
         <h1 class="card-title display-2 mb-1">
             Willkommen!
         </h1>
@@ -28,18 +30,28 @@
         </p>
         -->
         <p>
-            Wenn Sie die folgenden Instruktionen aufmerksam lesen und alle Regeln beachten, können Sie in dieser Umfrage
-            Geld verdienen. Wie viel Sie genau verdienen hängt von Ihren Entscheidungen ab. Das Geld wird Ihnen im
-            Anschluss an die Umfrage überwiesen und wird sich innerhalb der nächsten X Werktage auf Ihrem Konto befinden.
+            In dieser Studie können Sie Geld verdienen indem Sie Schätzungen zum Wetter abgeben. Je besser Sie schätzen,
+            desto wahrscheinlicher ist es, dass Sie zusätzlich zu einem festen Betrag von {{ participation_fee }}
+            weitere 10 € verdienen.
         </p>
         <p>
+            Für diese Schätzungen benötigen Sie weder besondere Vorkenntnisse noch Ortskenntnisse. Im Laufe der Studie
+            erklären wir Ihnen alles was Sie wissen müssen. Während der gesamten Studie geben Sie Schätzungen zu
+            ein und demselben Wettergeschehen ab &mdash; also immer zum gleichen Ort und Datum. Den Ort und das genaue Datum
+            werden wir Ihnen erst am Ende der Studie nennen.
+        </p>
+        <small>
             Wir bitten Sie, sich auf die Umfrage zu konzentrieren und diese in einem Anlauf an einem PC oder Laptop zu
             beantworten. Die Umfrage ist für die Beantwortung an einem PC oder Laptop optimiert und wird ungefähr <b>X</b>
             Minuten in Anspruch nehmen. <br><br>
-        </p>
-        <button class="btn btn-primary btn-lg" role="button">Umfrage starten</button>
+        </small>
+
+        <div class="row justify-content-md-center align-items-end mt-5">
+            <button class="btn my-warning btn-lg" role="button">Studie beginnen</button>
+        </div>
+
     </div>
 
 
-
+</body>
 {% endblock %}

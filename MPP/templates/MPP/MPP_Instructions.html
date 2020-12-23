@@ -2,7 +2,10 @@
 {% load otree static %}
 
 {% block styles %}
+    <link href="{% static 'global/css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'MPP/css/chat.css' %}" rel="stylesheet">
 {% endblock %}
+
 
 {% block scripts %}
     <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -18,360 +21,347 @@
 {% endblock %}
 
 {% block content %}
+<body>
+<img src="{% static 'global/images/cool-background.svg' %}" id="bg" alt=""/>
 
-<!-- Tab navigation -->
-    <ul class="nav nav-tabs fixed-top navbar-light bg-light justify-content-center " id="myTab" role="tablist">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand sticky-top navbar-light bg-header border-bottom mb-4 mt-0">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link disabled">Einleitung</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">Aufgabe 1</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" style="color:#FC6100"><u>Aufgabe 2</u></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">Aufgabe 3</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">Aufgabe 4</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">Schluss</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav ml-auto">
+            <li>
+                <a class="text-secondary" data-toggle="modal" data-target="#weatherModal" id="weather_icon">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-thermometer-half" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" d="M6 2a2 2 0 1 1 4 0v7.627a3.5 3.5 0 1 1-4 0V2zm2-1a1 1 0 0 0-1 1v7.901a.5.5 0 0 1-.25.433A2.499 2.499 0 0 0 8 15a2.5 2.5 0 0 0 1.25-4.666.5.5 0 0 1-.25-.433V2a1 1 0 0 0-1-1z"/>
+                      <path d="M8.25 2a.25.25 0 0 0-.5 0v9.02a1.514 1.514 0 0 1 .5 0V2z"/>
+                      <path d="M9.5 12.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                    </svg>
+                </a>
+                <a>&nbsp; &nbsp;</a>
+            </li>
+            <li>
+                <a class="text-secondary" data-toggle="modal" data-target="#instructionsModal" id="instructions_icon">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-question-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033a.237.237 0 0 1-.24-.247C5.35 4.091 6.737 3.5 8.005 3.5c1.396 0 2.672.73 2.672 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.105a.25.25 0 0 1-.25.25h-.81a.25.25 0 0 1-.25-.246l-.004-.217c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.803 0-1.253.478-1.342 1.134-.018.137-.128.25-.266.25h-.825zm2.325 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z"/>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
 
-        <li class="nav-item" >
-            <a class="nav-link active" id="part1-tab" data-toggle="tab" href="#part1" role="tab" aria-controls="part1" onclick="topFunction()"> Einführung </a>
-        </li>
+    <!-- Hidden Tracking Fields -->
+    <input type="hidden" name="review_weather" id="id_review_weather" value="0"/>
+    <input type="hidden" name="review_instructions" id="id_review_instructions" value="0"/>
 
-        <li class="nav-item">
-            <a class="nav-link" id="part2-tab" data-toggle="tab" href="#part2" role="tab" aria-controls="part2" onclick="topFunction()"> Beispiel</a>
-        </li>
+    <!-- Instructions -->
+    <div class="card">
+        <div class="card-header">
 
-        <li class="nav-item">
-            <a class="nav-link" id="part3-tab" data-toggle="tab" href="#part3" role="tab" aria-controls="part3" onclick="topFunction()"> Regeln & Verdienst </a>
-        </li>
+            <!-- Card's Tab Navigation -->
+            <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
 
-        <li class="nav-item">
-            <a class="nav-link" id="part4-tab" data-toggle="tab" href="#part4" role="tab" aria-controls="part4" onclick="topFunction()"> Verständnisfragen </a>
-        </li>
-    </ul>
+                <a class="navbar-brand text-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-square-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm8.93 4.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                    </svg>
+                    Aufgabe 3
+                </a>
 
-<div class="tab-content" id="myTabContent">
-    <!-- Part 1: Einführung (no back button) -->
-    <div class="tab-pane show active" id="part1" role="tabpanel" aria-labelledby="part1-tab">
-        <div class="card">
-        <div class="card-body">
-            <h5 class="card-title display-4">Einführung</h5>
-            <h6 class="card-subtitle mb-5 text-muted">Multiple Point Prediction</h6>
-            <p class="card-text">
-                Auch in der nächsten Entscheidungssituation bitten wir Sie Schätzungen zur Temperatur an dem besagten
-                Sonntag einzugeben. Auch hier können Sie {{ Constants.prize_payoff }} Euro gewinnen. Und auch in dieser
-                Situation gilt: Je besser Ihre Schätzungen sind, desto wahrscheinlicher ist es, dass Sie die
-                {{ Constants.prize_payoff }} Euro gewinnen.
-                Anders als in der vorherigen Entscheidungssituation werden wir Sie nach drei Schätzungen fragen.
-                Aus diesen drei Schätzungen errechnet sich dann Ihre Gewinnchance.
-            </p>
+                <li class="nav-item" >
+                    <a class="nav-link back-and-forth active" id="part0-tab" data-toggle="tab" href="#part0" role="tab" aria-controls="part0"> Funktionen </a>
+                </li>
 
-            <hr class="my-4 w-75">
+                <li class="nav-item" >
+                    <a class="nav-link back-and-forth" id="part1-tab" data-toggle="tab" href="#part1" role="tab" aria-controls="part1"> Überblick </a>
+                </li>
 
-            <p class="lead text-center col-md-auto">
-                Generell gilt, dass Ihre Gewinnchance umso höher ausfällt, je dichter Ihre Schätzungen an der tatsächlich
-                gemessenen Temperatur liegen.
-            </p>
+                <li class="nav-item">
+                    <a class="nav-link back-and-forth" id="part2-tab" data-toggle="tab" href="#part2" role="tab" aria-controls="part2"> Aufbau </a>
+                </li>
 
-            <hr class="my-4 w-75">
+                <li class="nav-item">
+                    <a class="nav-link back-and-forth" id="part3-tab" data-toggle="tab" href="#part3" role="tab" aria-controls="part3"> Verdienst </a>
+                </li>
 
-            <p class="card-text">
-                Daraus folgt, dass Ihre Gewinnchance sinkt, wenn Sie sich verschätzen. Wie viele Prozentpunkte Sie durch
-                das verschätzen einbüßen, hängt dabei davon ab, ob Sie die tatsächliche Temperatur über- oder unterschätzen.
-                Die drei Schätzungen, die Sie abgeben müssen, unterscheiden sich nämlich hinsichtlich dieser Einbuße:
-                Mal büßen Sie mehr von Ihrer Gewinnchance ein, wenn Sie die Temperatur überschätzen, als wenn Sie diese
-                unterschätzen. In einer anderen Schätzung verhält es sich andersherum &mdash; Unterschätzen hat einen
-                stärkeren Effekt als Überschätzen. Schließlich werden Sie auch um eine Schätzung gebeten, wenn Unter-
-                und Überschätzen die gleichen Einbußen nach sich ziehen.
-            </p>
-
-            <p class="card-text">
-                Wie genau diese Schätzungen aussehen, zeigen wir Ihnen auf der folgenden Seite. Im Anschluss erklären wir
-                Ihnen wie genau Ihre Gewinnchance von den drei Schätzungen abhängt. Bevor Sie dann Ihre Schätzungen
-                abgeben können, bitten wir Sie ein paar kurze Verständnisfragen zu beantworten.
-            </p>
-        </div>
-    </div>
-        <br><br>
-        <button onclick="topFunction()" type="button" class="nexttab btn-outline-primary btn next float-right">Verstanden</button>
-    </div>
-
-    <!-- Part 2: Beispiel  -->
-    <div class="tab-pane" id="part2" role="tabpanel" aria-labelledby="part2-tab">
-        <div class="card">
-        <div class="card-body">
-            <h5 class="card-title display-4">Beispiel</h5>
-            <h6 class="card-subtitle mb-5 text-muted">Multiple Point Prediction</h6>
-            <p class="card-text">
-                Hier sehen Sie, wie genau Ihre Entscheidungssituation aussehen wird. Wie in der Einführung beschrieben,
-                müssen Sie drei Schätzungen zur Temperatur am Sonntag in 9 Tagen um 14:00 Uhr (MEZ) abgeben. Die drei
-                Fragen unterscheiden sich dabei nur hinsichtlich Ihrer Einbußen, wenn Sie sich verschätzen.<br><br>
-            </p>
-
-            <div class="container clearfix border-left border-primary w-75 bg-light">
-                <br>
-                <figure class="highcharts-figure">
-                    <div id="weather_viz"></div>
-                </figure>
-
-                <p>
-                    <br> Was schätzen Sie, welche Temperatur wurde <a style="color:#C582FF">am Sonntag</a> gemessen,...
-                </p>
-                <table class="table table-hover mb-4">
-                    <tbody>
-                    <tr>
-                        <td>
-                            <label for="id_Q1"><small><em>
-                            ...wenn überschätzen dreimal so teuer wie unterschätzen ist?
-                            </em></small></label>
-                        </td>
-                        <td>
-                            <div class="input-group">
-                                <input type="number" name="Q1" id="id_Q1" class="form-control" step=".1">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">°C</div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="id_Q2"><small><em>
-                            ...wenn überschätzen genauso teuer wie unterschätzen ist?
-                            </em></small></label>
-                        </td>
-                        <td>
-                            <div class="input-group">
-                                <input type="number" name="Q2" id="id_Q2" class="form-control" step=".1">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">°C</div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="id_Q3"><small><em>
-                            ...wenn unterschätzen dreimal so teuer wie überschätzen ist?
-                            </em></small></label>
-                        </td>
-                        <td>
-                            <div class="input-group">
-                                <input type="number" name="Q3" id="id_Q3" class="form-control" step=".1">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">°C</div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <button type="button" id="submit_button" class="btn-outline-success btn float-right mb-3">Absenden</button>
-            </div>
-
-            <p class="card-text">
-                <br>
-                Erst am Ende dieser
-                Umfrage werden wir sowohl den Ort, als auch das entsprechende Datum sowie die Quelle und die am Sonntag
-                eingetretene Temperatur preisgeben.
-            </p>
-
-            <p class="card-text">
-                Die Aufgabe ist schwierig. Wenn Sie sich unsicher sind, welche Temperaturen eintreten könnten und Sie
-                erwarten, dass irgendeine Temperatur zwischen X°C und Y°C eintreten könnte, dann bedenken Sie, dass sie bei
-                der ersten Frage den niedrigeren Wert und bei der dritten Frage den höheren Wert angeben sollten.
-            </p>
-
-            <p class="card-text">
-                Auf der folgenden Seite erklären wir Ihnen die Regeln, und wie Ihre Schätzungen Ihre Gewinnchance
-                beeinflusst.
-            </p>
+                <li class="nav-item">
+                    <a class="nav-link back-and-forth" id="part4-tab" data-toggle="tab" href="#part4" role="tab" aria-controls="part4"> Wetter </a>
+                </li>
+            </ul>
 
         </div>
-    </div>
-        <br><br>
-        <button onclick="topFunction()" type="button" class="prevtab btn-outline-primary btn">Zurück</button>
-        <button onclick="topFunction()" type="button" class="nexttab btn-outline-primary btn float-right">Verstanden</button>
-    </div>
 
-    <!-- Part 3: Verdienst -->
-    <div class="tab-pane" id="part3" role="tabpanel" aria-labelledby="part3-tab">
-        <div class="card">
-        <div class="card-body">
-            <h5 class="card-title display-4">Regeln & Verdienst</h5>
-            <h6 class="card-subtitle mb-5 text-muted">Multiple Point Prediction</h6>
 
-            <p class="card-text">
-                Nachdem Sie Ihre Schätzungen eingegeben und abgesendet haben, wird für jede Ihrer Schätzungen bestimmt, wie weit sie von der
-                tatsächlich gemessenen Temperatur abweicht. Wenn Sie überall die richtige Temperatur geschätzt haben, dann
-                haben Sie keine Einbußen und in dieser Aufgabe eine 100% Gewinnchance {{ Constants.prize_payoff }}
-                Euro zu verdienen. Liegen Sie in ein oder mehreren Schätzungen daneben, reduziert das Ihre Gewinnchance.
-                Je weiter Sie danebenliegen, desto unwahrscheinlicher wird es für Sie {{ Constants.prize_payoff }} Euro
-                zu gewinnen.
-            </p>
+        <div class="tab-content" id="myTabContent">
+            <!-- Part 0: Funktionalitäten (no back button) -->
+            <div class="tab-pane show active" id="part0" role="tabpanel" aria-labelledby="part0-tab">
+                <div class="card-body">
+                    <p class="lead">
+                    Funktionalitäten
+                    </p>
+                    <p>
+                        Viele Bestandteile dieser Studie sind interaktiv. So können Sie zum Beispiel ...
+                    </p>
 
-            <p class="card-text">
-                Abweichungen kosten Sie, je nachdem ob Sie über- oder
-                unterschätzen entweder 2 oder 6 Prozentpunkte pro 1°C. Das bedeutet, dass Ihre Gewinnchance auf
-                {{ Constants.prize_payoff }} Euro um 2 oder gar 6 Prozent sinkt, wenn Sie sich um 1°C verschätzen
-                &mdash; je nachdem in welcher Schätzung und in welche Richtung Sie sich verschätzen.
-            </p>
 
-            <p class="card-text">
-                Nachdem Sie Ihre drei Schätzungen eingegeben und abgesendet haben, berechnen wir die einzelnen
-                Abweichungen sowie Ihre Einbußen. Die Einbußen werden dann zusammengezählt und von den 100% abgezogen.
-                Wenn Sie sich also so verschätzt haben, dass in den Schätzungen insgesamt Einbußen von 20 Prozentpunkten
-                entstehen, dann beträgt Ihre Gewinnchance {{ Constants.prize_payoff }} Euro zu verdienen 80%.
-            </p>
+                    <!-- on Card Navigation  Arrows -->
+                    <div class="row justify-content-md-center mt-5">
+                        <div class="col col-lg-2">
+                            <p class="prevtab text-light text-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                                </svg>
+                            </p>
+                        </div>
 
-            <p class="lead">
-                Die folgende Tabelle erklärt die Auswirkungen vom Über- bzw. Unterschätzen je Frage:
-            </p>
-            <br>
-
-            <div class="container clearfix  w-75">
-                <div class="table-responsive table-hover mb-4" id="table-scroll">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <td scope="col">Frage</td>
-                            <td scope="col">Einbuße beim Unterschätzen</td>
-                            <td scope="col">Einbuße beim Überschätzen</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><small>...wenn Überschätzen dreimal so teuer wie Unterschätzen ist?</small></td>
-                                <td><small>2 Prozentpunkte je °C</small></td>
-                                <td><small>6 Prozentpunkte je °C</small></td>
-                            </tr>
-                            <tr>
-                                <td><small>...wenn Überschätzen genauso teuer wie Unterschätzen ist?</small></td>
-                                <td><small>2 Prozentpunkte je °C</small></td>
-                                <td><small>2 Prozentpunkte je °C</small></td>
-                            </tr>
-                            <tr>
-                                <td><small>...wenn Unterschätzen dreimal so teuer wie Überschätzen ist?</small></td>
-                                <td><small>6 Prozentpunkte je °C</small></td>
-                                <td><small>2 Prozentpunkte je °C</small></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        <div class="col col-lg-2">
+                        <p onclick="topFunction()" class="nexttab text-secondary text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
+                            </svg>
+                        </p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <p class="card-text">
-                Um die Einbußen besser zu verstehen, zeigen wir Ihnen unten noch einmal das auf der vorigen Seite dargestellte
-                Beispiel. Stellen Sie sich vor, die Person, die diese Schätzungen eingegeben hat ist am Ende der Umfrage
-                angelangt und findet heraus, dass sich die Wetterdaten auf die Sahara bezogen, und dass dort an
-                dem Sonntag um 14:00 Uhr (MEZ) 45,0°C gemessen wurden. <br><br>
-            </p>
 
-            <div class="container clearfix border-left border-primary w-75 bg-light">
+            <!-- Part 1: Einführung -->
+            <div class="tab-pane" id="part1" role="tabpanel" aria-labelledby="part1-tab">
+                <div class="card-body">
+                    <p class="lead">
+                    Das Wichtigste in Kürze
+                    </p>
+                    <ul>
+                        <li>Bei der Beantwortung dieser Studie können Sie Geld gewinnen</li>
+                        <li>Dafür müssen Sie eine Wettersituation abschätzen und Fragen beantworten</li>
+                        <li>Für Ihre Schätzungen zeigen wir Ihnen Temperaturen, die einige Tage vorher gemessen wurden</li>
+                        <li>Nachdem Sie Ihre ersten Schätzungen abgegeben haben, zeigen wir Ihnen zusätzlich eine Wettervorhersage,
+                            die Sie für weitere Schätzungen zur Hilfe nehmen können</li>
+                        <li>Schließlich beantworten Sie ein paar Fragen zu Ihrer Person</li>
+                        <li>Am Ende wird zufällig <u>eine</u> Ihrer Schätzungen ausgewählt und für die Berechnung Ihrer Auszahlung verwendet</li>
+                        <li>Zum Schluss erfahren Sie alle Informationen zum Wetter, Ihrer Schätzung und Ihren Gewinn</li>
+                    </ul>
 
-                <figure class="highcharts-figure">
-                    <div id="revelation_viz"></div>
-                </figure>
 
-                <p>
-                    <br> Was schätzen Sie, welche Temperatur wurde <a style="color:#C582FF">am Sonntag</a> gemessen...
-                </p>
-                <table class="table table-hover">
-                    <tbody>
-                    <tr>
-                        <td>
-                            <label for="id_Q1"><small><em>
-                            ...wenn überschätzen dreimal so teuer wie unterschätzen ist?
-                            </em></small></label>
-                        </td>
-                        <td>
-                            <div class="input-group">
-                                <input type="number" name="Q1" id="id_Q1" class="form-control" step=".1" value="45.5" readonly>
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">°C</div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="id_Q2"><small><em>
-                            ...wenn überschätzen genauso teuer wie unterschätzen ist?
-                            </em></small></label>
-                        </td>
-                        <td>
-                            <div class="input-group">
-                                <input type="number" name="Q2" id="id_Q2" class="form-control" step=".1" value="47.0" readonly>
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">°C</div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="id_Q3"><small><em>
-                            ...wenn unterschätzen dreimal so teuer wie überschätzen ist?
-                            </em></small></label>
-                        </td>
-                        <td>
-                            <div class="input-group">
-                                <input type="number" name="Q3" id="id_Q3" class="form-control" step=".1" value="48.5" readonly>
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">°C</div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                    <!-- on Card Navigation  Arrows -->
+                    <div class="row justify-content-md-center mt-5">
+                        <div class="col col-lg-2">
+                        <p onclick="topFunction()" class="prevtab text-secondary text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                            </svg>
+                        </p>
+                        </div>
+
+                        <div class="col col-lg-2">
+                        <p onclick="topFunction()" class="nexttab text-secondary text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
+                            </svg>
+                        </p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <p class="card-text">
-                <br>
-                Dann hat sich die Person, die diese Schätzungen abgegeben hat, in ihrer ersten
-                Schätzung um 0,5°C geirrt und die Temperatur überschätzt. Weil Überschätzen in der ersten Schätzung dreimal
-                so teuer wie Unterschätzen ist, birgt diese Abweichung 6 &middot; 0,5 = 3 Prozentpunkte.
-            </p>
-            <p class="card-text">
-                In der zweiten Schätzung hat die Person 47°C geschätzt und liegt damit um 2°C daneben. Weil Über- und
-                Unterschätzen gleich teuer sind, verliert die Person an dieser Stelle 2 &middot; 2 = 4 Prozentpunkte.
-            </p>
-            <p class="card-text">
-                In der dirtten Schätzung lag die Person mit 48,5°C 3,5°C über dem tatsächlich gemessenen Wert. Die Person
-                hat die Temperatur also auch hier überschätzt. Überschätzen ist in diesem Fall aber nicht so teuer wie
-                Unterschätzen und kostet nur 2 Punkte je °C. Dementsprechend betragen die Kosten hier
-                2 &middot; 3,5 = 7 Prozentpunkte.
-            </p>
-            <p class="card-text">
-                In Summe ergeben sich daraus Einbußen in Höhe von 3 + 4 + 7 = 14 Prozentpunkten. Dementsprechend hat die
-                Person in dieser Entscheidungssituation eine Gewinnchance von 100 - 14 = 86%.
-            </p>
-            <hr class="my-4 w-75">
-            <p class="lead text-center col-md-auto">
-                Ob Sie die {{ Constants.prize_payoff }} Euro gewinnen, wird wieder durch eine virtuelle Urne bestimmt.
-                Bei einer Gewinnchance von beispielsweise 86% werden 86 grüne und 14 rote Kugeln in eine Urne gelegt.
-                Wird daraufhin eine grüne Kugel gezogen, haben Sie in dieser Entscheidungssituation
-                {{ Constants.prize_payoff }} Euro gewonnen.
-            </p>
-            <hr class="my-4 w-75">
-            <p class="card-text">
-                Daher sollten Sie bemüht sein, möglichst gut zu schätzen, damit möglichst viele grüne Kugeln in die Urne
-                gelegt werden &mdash; also damit Sie eine möglichst hohe Gewinnchance haben, falls diese
-                Entscheidungssituation am Ende zufällig für Ihre Auszahlung bestimmt wird.
-            </p>
+
+            <!-- Part 2: Aufbau  -->
+            <div class="tab-pane" id="part2" role="tabpanel" aria-labelledby="part2-tab">
+                <div class="card-body">
+                    <p class="lead">
+                        Aufbau dieser Studie
+                    </p>
+
+                    <p class="card-text">
+                        Mit diesen Informationen müssen Sie dann Fragen beantworten, die sich in zwei Blöcke gliedern lassen.
+                        Alle Fragen beziehen sich auf das von Ihnen zu schätzende Wettergeschehen. Nachdem Sie die beiden Frageblöcke
+                        ein erstes Mal beantwortet haben, zeigen wir Ihnen zusätzlich zu den gemessenen Temperaturen auch eine
+                        Wettervorhersage &mdash; also eine Schätzung von Experten darüber, wie sich die Temperatur entwickeln kann.<sup>1,2</sup>
+                        In der Grafik wird diese Wettervorhersage dann für Sonntag (also im lila hinterlegten Bereich) angezeigt.
+                        Nachdem Sie sich die Wettervorhersage angeschaut haben, durchlaufen Sie die beiden Frageblöcke erneut.
+                    </p>
+
+                    <p>
+                        Anschließend stellen wir Ihnen noch ein paar Fragen zu Ihrer Person.
+                    </p>
+                    <p class="card-text">
+                        Am Ende der Studie erfahren Sie dann auf welchen Ort und Zeitpunkt sich der Wetterbericht bezieht, welche
+                        Temperatur eingetreten ist, welcher Frageblock für Ihren Gewinn entscheidend ist und schließlich, was Sie in
+                        dieser Studie gewinnen. Das folgende Schaubild stellt den Ablauf dieser Studie grafisch dar:
+                    </p>
+
+                    <figure class="highcharts-figure  mb-5" style="width:95%">
+                        <div id="timeline_viz" class="clearfix"></div>
+                    </figure>
+
+
+                    <!-- on Card Navigation  Arrows -->
+                    <div class="row justify-content-md-center mt-5">
+                        <div class="col col-lg-2">
+                        <p onclick="topFunction()" class="prevtab text-secondary text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                            </svg>
+                        </p>
+                        </div>
+
+                        <div class="col col-lg-2">
+                        <p onclick="topFunction()" class="nexttab text-secondary text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
+                            </svg>
+                        </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light text-secondary">
+                    <p><sup>1</sup> Dabei handelt es sich um eine echte Wettervorhersage, die wir Ihnen am Ende der Studie in Gänze
+                        zur Verfügung stellen. <br>
+                        <sup>2</sup> Wir werden Ihnen aber auch zu diesem Zeitpunkt noch nicht verraten, auf welchen Ort und welchen
+                        Zeitraum sich diese Informationen beziehen.
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- Part 3: Verdienst -->
+            <div class="tab-pane" id="part3" role="tabpanel" aria-labelledby="part3-tab">
+                <div class="card-body">
+                    <p class="lead">
+                        Ihr Verdienst/Gewinn in dieser Studie
+                    </p>
+
+                    <p class="card-text">
+                        Bei der Beantwortung der Fragen können Sie Geld verdienen. Dabei gilt grundsätzlich, dass Ihre Chance Geld
+                        zu gewinnen steigt, je besser Sie die Temperatur einschätzen. Wie genau sich Ihre Antworten auf Ihre
+                        Gewinnchancen auswirken, erklären wir Ihnen vor den Aufgaben im Detail. Darüber hinaus haben Sie in jeder
+                        Aufgabe die Möglichkeit die Regeln erneut zu lesen. Dafür müssen Sie einfach auf das
+                        <a class="text-secondary">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-question-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033a.237.237 0 0 1-.24-.247C5.35 4.091 6.737 3.5 8.005 3.5c1.396 0 2.672.73 2.672 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.105a.25.25 0 0 1-.25.25h-.81a.25.25 0 0 1-.25-.246l-.004-.217c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.803 0-1.253.478-1.342 1.134-.018.137-.128.25-.266.25h-.825zm2.325 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z"/>
+                            </svg>
+                        </a> -Symbol oben rechts klicken sobald es blau erscheint.
+                    </p>
+                    <p>
+                        An dieser Stelle müssen Sie nur wissen, dass am Ende eine der Aufgaben zufällig ausgewählt wird,
+                        um Ihren Gewinn zu bestimmen &mdash; Sie wissen vorab aber nicht, welche Aufgabe es sein wird.
+                        Das heißt, dass jede Ihrer Entscheidungen für ihre Auszahlung relevant sein könnte.
+                        Deswegen sollten Sie Ihre Entscheidungen sorgfältig treffen. Der Betrag, den Sie in dieser zufällig
+                        ausgewählten Entscheidung verdient haben, wird Ihnen ausgezahlt.
+                    </p>
+
+
+                    <!-- on Card Navigation  Arrows -->
+                    <div class="row justify-content-md-center mt-5">
+                        <div class="col col-lg-2">
+                        <p onclick="topFunction()" class="prevtab text-secondary text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                            </svg>
+                        </p>
+                        </div>
+
+                        <div class="col col-lg-2">
+                        <p onclick="topFunction()" class="nexttab text-secondary text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
+                            </svg>
+                        </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Part 4: Wetter -->
+            <div class="tab-pane" id="part4" role="tabpanel" aria-labelledby="part3-tab">
+                <div class="card-body">
+                    <p class="card-text">
+                        In der Grafik sehen Sie Wetterdaten. Dort sind jeweils Temperaturen von drei aufeinanderfolgenden
+                        Tagen um 14:00 Uhr (MEZ)<sup>1</sup> dargestellt. Ihre Schätzung soll sich nun
+                        auf den Sonntag 9 Tage später (also den lila schraffierten Bereich) beziehen.
+                    </p>
+
+                    <div class="container clearfix border-left border-primary w-75 bg-light">
+                        <figure class="highcharts-figure">
+                            <div id="weather_viz"></div>
+                            <figcaption>
+
+                            </figcaption>
+                        </figure>
+                    </div>
+
+                    <p class="card-text">
+                        Sie können diese Grafik in jeder Aufgabe abrufen. Dafür müssen Sie einfach das
+                        <a class="text-secondary">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-thermometer-half" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" d="M6 2a2 2 0 1 1 4 0v7.627a3.5 3.5 0 1 1-4 0V2zm2-1a1 1 0 0 0-1 1v7.901a.5.5 0 0 1-.25.433A2.499 2.499 0 0 0 8 15a2.5 2.5 0 0 0 1.25-4.666.5.5 0 0 1-.25-.433V2a1 1 0 0 0-1-1z"/>
+                              <path d="M8.25 2a.25.25 0 0 0-.5 0v9.02a1.514 1.514 0 0 1 .5 0V2z"/>
+                              <path d="M9.5 12.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                            </svg>
+                        </a> -Symbol oben rechts klicken sobald es blau erscheint. Die Informationen, die wir Ihnen zeigen,
+                        beziehen sich dabei immer auf denselben Ort zum selben Zeitpunkt.
+                    </p>
+                    <p>
+                        In Aufgabe 3 und Aufgabe 4 zeigen wir Ihnen eine Wettervorhersage für den Sonntag. Diese wird dann
+                        in derselben Grafik in lila erscheinen.
+                    </p>
+
+                    <!-- on Card Navigation  Arrows -->
+                    <div class="row justify-content-md-center mt-5">
+                        <div class="col col-lg-2">
+                        <button onclick="topFunction()" class="btn prevtab bg-white btn-outline-white text-secondary" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                            </svg>
+                        </button>
+                        </div>
+
+                        <div class="col col-lg-4">
+                            <button class="btn bg-white btn-outline-white" style="color: #FC6100" type="submit">
+                                <small><u> Mit Aufgabe 2 beginnen </u></small>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-11.5.5a.5.5 0 0 1 0-1h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer bg-light text-secondary">
+                    <p><sup>1</sup> Die Zeitangabe MEZ bedeutet nicht automatisch, dass es sich um einen Ort in der MEZ handelt.</p>
+                </div>
+            </div>
         </div>
     </div>
-        <br><br>
-        <button onclick="topFunction()" type="button" class="prevtab btn-outline-primary btn ">Zurück</button>
-        <button onclick="topFunction()" type="button" class="nexttab btn-outline-primary btn float-right">Verstanden</button>
-    </div>
 
-    <!-- Part 4: Verständnisfragen -->
-    <div class="tab-pane" id="part4" role="tabpanel" aria-labelledby="part3-tab">
-        <div class="card">
-        <div class="card-body">
-            <h5 class="card-title display-4">Verständnisfragen</h5>
-            <h6 class="card-subtitle mb-5 text-muted">Multiple Point Prediction</h6>
-            <p class="card-text">
-                ...
-            </p>
-        </div>
-    </div>
-        <br><br>
-        <button onclick="topFunction()" type="button" class="prevtab btn-outline-primary btn ">Zurück</button>
-        <button class="nexttab btn-outline-primary btn float-right">Los geht's</button>
-    </div>
-
-</div>
+</body>
 
 {% endblock %}

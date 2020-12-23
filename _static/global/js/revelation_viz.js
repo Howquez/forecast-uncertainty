@@ -78,7 +78,7 @@ if (village == "Ilomantsi"){
 // text operations
 function fillText() {
 
-    document.getElementById("revelation").innerHTML = observed[12][1];
+    document.getElementById("revelation").innerHTML = observed[11][1];
     }
 
 // color definitions
@@ -104,7 +104,7 @@ var chart = Highcharts.chart("weather_viz", {
     },
 
     chart: {
-        height: (9 / 16 * 100) + '%', // 16:9 ratio
+        height: (4 / 16 * 100) + '%', // 16:9 ratio
         backgroundColor: 'transparent'
     },
 

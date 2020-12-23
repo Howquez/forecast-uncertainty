@@ -1,5 +1,6 @@
 let cloudiness = js_vars.opacity || 1;
 
+
 var timeline = Highcharts.chart("timeline_viz", {
   exporting: {
     enabled: false

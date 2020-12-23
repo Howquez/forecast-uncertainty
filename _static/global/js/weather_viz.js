@@ -350,5 +350,11 @@ var chart = Highcharts.chart("weather_viz", {
 });
 
 if(displayForecast){
-    chart.tooltip.refresh([chart.series[1].points[1]]);
+    if(displayBestGuess){
+        chart.tooltip.refresh([chart.series[1].points[1]]);
+    }
+    if(displayInterval){
+        chart.tooltip.refresh([chart.series[2].points[1]]);
+    }
+    
 }

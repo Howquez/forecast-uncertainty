@@ -2,52 +2,8 @@
 {% load otree static %}
 
 {% block styles %}
-<style>
-    .scroll {
-    max-height: 600px;
-    overflow-y: auto;
-}
-
-
-@keyframes fadeInUp {
-    from {
-        transform: translate3d(0,40px,0)
-    }
-
-    to {
-        transform: translate3d(0,0,0);
-        opacity: 1
-    }
-}
-
-@-webkit-keyframes fadeInUp {
-    from {
-        transform: translate3d(0,40px,0)
-    }
-
-    to {
-        transform: translate3d(0,0,0);
-        opacity: 1
-    }
-}
-
-.animated {
-    animation-duration: 1s;
-    animation-fill-mode: both;
-    -webkit-animation-duration: 1s;
-    -webkit-animation-fill-mode: both
-}
-
-.animatedFadeInUp {
-    opacity: 0
-}
-
-.fadeInUp {
-    opacity: 0;
-    animation-name: fadeInUp;
-    -webkit-animation-name: fadeInUp;
-}
-</style>
+    <link href="{% static 'global/css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'MPP/css/chat.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block scripts %}
@@ -61,15 +17,16 @@
     <script src="http://code.highcharts.com/modules/broken-axis.js"></script>
     <script src="{% static 'global/js/weather_viz.js' %}"></script>
     <script src="{% static 'global/js/chat_trigger.js' %}"></script>
-
 {% endblock %}
 
 {% block content %}
 
 <body onload="fillText()">
+<img src="{% static 'global/images/cool-background.svg' %}" id="bg" alt=""/>
+
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand sticky-top navbar-light bg-white border-bottom mb-4">
+    <nav class="navbar navbar-expand sticky-top navbar-light bg-header border-bottom mb-4">
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link disabled">Einleitung</a>
@@ -81,7 +38,7 @@
                 {% if treatment_displayed == "True" %}
                 <a class="nav-link disabled">Aufgabe 2</a>
                 {% else %}
-                <a class="nav-link active"><u>Aufgabe 2</u></a>
+                <a class="nav-link active" style="color:#FC6100"><u>Aufgabe 2</u></a>
                 {% endif %}
             </li>
             <li class="nav-item">
@@ -89,7 +46,7 @@
             </li>
             <li class="nav-item">
                 {% if treatment_displayed == "True" %}
-                <a class="nav-link active"><u>Aufgabe 4</u></a>
+                <a class="nav-link active" style="color:#FC6100"><u>Aufgabe 4</u></a>
                 {% else %}
                 <a class="nav-link disabled">Aufgabe 4</a>
                 {% endif %}
@@ -376,6 +333,22 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="mt-5 collapse mb-3" id="submit_button">
+                    <p class="card-text">
+                        Vielen Dank für Ihre Antworten. Sie können Ihre Angaben nun ändern, wenn Sie wünschen. Sobald Sie
+                        mit Ihren Antworten zufrieden sind, können Sie auf "Absenden" klicken.
+                    </p>
+
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn my-warning ">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                            </svg>
+                            Absenden
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -458,7 +431,7 @@
     <br><br>
 
 
-    <button type="submit" id="submit_button" class="btn btn-primary float-right collapse">
+    <button type="submit" id="submit_button" class="btn my-warning float-right collapse">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
         </svg>

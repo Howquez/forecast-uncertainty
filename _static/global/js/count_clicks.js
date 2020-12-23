@@ -29,6 +29,8 @@ document.getElementById("instructions_icon").addEventListener("click", function(
     countClicks("instructions");
 }, false);
 
-document.getElementById("instructions_text").addEventListener("click", function() {
-    countClicks("instructions");
-}, false);
+if(document.getElementById("instructions_text")){
+	document.getElementById("instructions_text").addEventListener("click", function() {
+	    countClicks("instructions");
+	}, false);
+};

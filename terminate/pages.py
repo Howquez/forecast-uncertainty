@@ -16,8 +16,9 @@ class Results(Page):
         return dict(
             page = "revelation",
             location=self.participant.vars["location"],
-            event_decision=event,
+
             ticks=ticks,
+            event_decision=event,
             enabledLabel = True,
             results=True,
         )
@@ -27,6 +28,7 @@ class Results(Page):
         if bool(re.search("MPP", self.participant.vars["winning_app"])):
             print(self.participant.vars["MPP_guess"])
             return {
+                "task": self.participant.vars["payment_task"],
                 "winning_app": "MPP",
                 "guess1": self.participant.vars["MPP_guess"][0],
                 "guess2": self.participant.vars["MPP_guess"][1],
@@ -41,11 +43,12 @@ class Results(Page):
             }
         elif bool(re.search("Baillon", self.participant.vars["winning_app"])):
             return {
+                "task": self.participant.vars["payment_task"],
                 "winning_app": "Baillon",
                 "round": self.participant.vars["baillon_round_to_pay"],
-                "row": self.participant.vars["baillon_choice_to_pay"],
-                "chance": self.participant.vars["lottery_chance"],
-                "lottery": self.participant.vars["option_chosen"],
+                "pivotal_equivalent": self.participant.vars["pivotal_equivalent"],
+                "chance": self.participant.vars["pivotal_lottery"],
+                "payment_mechanism": self.participant.vars["payment_mechanism"],
             }
 
 
