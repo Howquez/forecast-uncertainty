@@ -38,7 +38,7 @@
                 {% if treatment_displayed == "True" %}
                 <a class="nav-link disabled">Aufgabe 2</a>
                 {% else %}
-                <a class="nav-link active" style="color:#FC6100"><u>Aufgabe 2</u></a>
+                <a class="nav-link active" style=""><u>Aufgabe 2</u></a>
                 {% endif %}
             </li>
             <li class="nav-item">
@@ -46,7 +46,7 @@
             </li>
             <li class="nav-item">
                 {% if treatment_displayed == "True" %}
-                <a class="nav-link active" style="color:#FC6100"><u>Aufgabe 4</u></a>
+                <a class="nav-link active" style=""><u>Aufgabe 4</u></a>
                 {% else %}
                 <a class="nav-link disabled">Aufgabe 4</a>
                 {% endif %}
@@ -79,6 +79,9 @@
     <!-- Hidden Tracking Fields -->
     <input type="hidden" name="review_weather" id="id_review_weather" value="0"/>
     <input type="hidden" name="review_instructions" id="id_review_instructions" value="0"/>
+    <input type="hidden" name="window_width" id="id_window_width" value="0"/>
+    <input type="hidden" name="window_height" id="id_window_height" value="0"/>
+    <input type="hidden" name="browser" id="id_browser" value="0"/>
 
     <!-- Content -->
     <div class="card">
@@ -166,7 +169,7 @@
                                 <div class="col-11 order-2 order-sm-1">
                                     <small id="answerQ2" class="form-text mb-2">Ich schätze...</small>
                                     <div class="input-group">
-                                        <input class="form-control border-primary" type="number" name="Q2" id="id_Q2" class="form-control" step=".1" placeholder="... °C">
+                                        <input class="form-control border-primary" type="number" name="best_guess" id="id_best_guess" class="form-control" step=".1" placeholder="... °C">
                                         <div class="input-group-append">
                                             <button class="btn btn-outline-primary" type="button" id="buttonA1">
                                                 Senden
@@ -230,7 +233,7 @@
                                 <div class="col-11 order-2 order-sm-1">
                                     <small id="answerQ1" class="form-text mb-2">Unter diesen Bedingungen tippe ich auf...</small>
                                     <div class="input-group">
-                                        <input class="form-control border-primary" type="number" name="Q1" id="id_Q1" class="form-control" step=".1" placeholder="... °C">
+                                        <input class="form-control border-primary" type="number" name="lower_bound" id="id_lower_bound" class="form-control" step=".1" placeholder="... °C">
                                         <div class="input-group-append">
                                             <button class="btn btn-outline-primary" type="button" id="buttonA2">
                                                 Senden
@@ -294,7 +297,7 @@
                                 <div class="col-11 order-2 order-sm-1">
                                     <small id="answerQ3" class="form-text mb-2">Unter diesen Bedingungen tippe ich auf...</small>
                                     <div class="input-group">
-                                        <input class="form-control border-primary" type="number" name="Q3" id="id_Q3" class="form-control" step=".1" placeholder="... °C">
+                                        <input class="form-control border-primary" type="number" name="upper_bound" id="id_upper_bound" class="form-control" step=".1" placeholder="... °C">
                                         <div class="input-group-append">
                                             <button class="btn btn-outline-primary" type="button" id="buttonA3">
                                                 Senden

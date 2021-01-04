@@ -37,13 +37,15 @@ The templates, i.e. the pages the respondents see, are displayed in the followin
 1. [Intro_Welcome](initialize/templates/initialize/Intro_Welcome.html)
 2. [Intro_Instructions](initialize/templates/initialize/Intro_Instructions.html)
 3. [Baillon_Instructions](Baillon/templates/Baillon/Baillon_Instructions.html)
-4. [Baillon_Decision](Baillon/templates/Baillon/Baillon_Decision.html) (6 rounds)
-5. [MPP_Instructions](MPP/templates/MPP/MPP_Instructions.html)
-6. [MPP_Decision](MPP/templates/MPP/MPP_Decision.html)
-7. [Forecast_Viz](Baillon/templates/Baillon/Forecast_Viz.html)
-8. [Baillon_Decision](Baillon/templates/Baillon/Baillon_Decision.html) (6 rounds)
-9. [MPP_Decision](MPP/templates/MPP/MPP_Decision.html)
-10. [Results](terminate/templates/terminate/Results.html)
+4. [Baillon_Confirmation](Baillon/templates/Baillon/Baillon_Confirmation.html)
+5. [Baillon_Decision](Baillon/templates/Baillon/Baillon_Decision.html) (6 rounds)
+6. [MPP_Instructions](MPP/templates/MPP/MPP_Instructions.html)
+7. [MPP_Confirmation](MPP/templates/MPP/MPP_Confirmation.html)
+8. [MPP_Decision](MPP/templates/MPP/MPP_Decision.html)
+9. [Forecast_Viz](Baillon/templates/Baillon/Forecast_Viz.html)
+10. [Baillon_Decision](Baillon/templates/Baillon/Baillon_Decision.html) (6 rounds)
+11. [MPP_Decision](MPP/templates/MPP/MPP_Decision.html)
+12. [Results](terminate/templates/terminate/Results.html)
 
 These templates utilize variables attached to the models (player, group, subsession, participant,...) as well as
 variables passed to the template via `vars_for_template` method or variables passed to the js files via `js_vars` method

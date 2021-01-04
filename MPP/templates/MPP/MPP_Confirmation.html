@@ -1,0 +1,89 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+    <link href="{% static 'global/css/global.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block scripts %}
+{% endblock %}
+
+{% block content %}
+<body>
+<img src="{% static 'global/images/cool-background.svg' %}" id="bg" alt=""/>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand sticky-top navbar-light bg-header border-bottom mb-4 mt-0">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link disabled">Einleitung</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">Aufgabe 1</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" style=""><u>Aufgabe 2</u></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">Aufgabe 3</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">Aufgabe 4</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">Schluss</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav ml-auto">
+            <li>
+                <a class="text-secondary" data-toggle="modal" data-target="#weatherModal" id="weather_icon">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-thermometer-half" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" d="M6 2a2 2 0 1 1 4 0v7.627a3.5 3.5 0 1 1-4 0V2zm2-1a1 1 0 0 0-1 1v7.901a.5.5 0 0 1-.25.433A2.499 2.499 0 0 0 8 15a2.5 2.5 0 0 0 1.25-4.666.5.5 0 0 1-.25-.433V2a1 1 0 0 0-1-1z"/>
+                      <path d="M8.25 2a.25.25 0 0 0-.5 0v9.02a1.514 1.514 0 0 1 .5 0V2z"/>
+                      <path d="M9.5 12.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                    </svg>
+                </a>
+                <a>&nbsp; &nbsp;</a>
+            </li>
+            <li>
+                <a class="text-secondary" data-toggle="modal" data-target="#instructionsModal" id="instructions_icon">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-question-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033a.237.237 0 0 1-.24-.247C5.35 4.091 6.737 3.5 8.005 3.5c1.396 0 2.672.73 2.672 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.105a.25.25 0 0 1-.25.25h-.81a.25.25 0 0 1-.25-.246l-.004-.217c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.803 0-1.253.478-1.342 1.134-.018.137-.128.25-.266.25h-.825zm2.325 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z"/>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Hidden Tracking Fields -->
+    <input type="hidden" name="review_weather" id="id_review_weather" value="0"/>
+    <input type="hidden" name="review_instructions" id="id_review_instructions" value="0"/>
+
+    <!-- Card -->
+    <div class="card mb-5">
+        <div class="card-body">
+
+            <h5 class="card-title text-success text-center mt-5 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-check2-circle" viewBox="0 0 16 16">
+                    <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z"/>
+                    <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/>
+                </svg>
+            </h5>
+            <h6 class="card-subtitle text-muted text-center mb-5">Sie haben alle Fragen richtig beantwortet und können nun mit Aufgabe 2 beginnen.</h6>
+
+            <div class="row justify-content-center mb-4">
+                <button type="submit" class="btn btn-sm my-warning ">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                    </svg>
+                    Mit Aufgabe 2 beginnen
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+{% endblock %}

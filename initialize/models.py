@@ -27,8 +27,8 @@ class Constants(BaseConstants):
 
     locations = ["Weiskirchen", "Ilomantsi"]  # ["confirmation", "contradiction"]
     treatments = ["best_guess", "interval", "both"]
-    Weiskirchen_temp = 8.5
-    Ilomantsi_temp = 3.2
+    Weiskirchen_temp = 9 # 8.5
+    Ilomantsi_temp = 3 # 3.2
 
     null_payoff = 0
     prize_payoff = 10

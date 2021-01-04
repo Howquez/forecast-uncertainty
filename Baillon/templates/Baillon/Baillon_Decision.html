@@ -19,6 +19,7 @@
     <script src="{% static 'global/js/weather_viz.js' %}"></script>
     <script src="{% static 'global/js/event_bar.js' %}"></script>
     <script src="{% static 'global/js/lottery_viz.js' %}"></script>
+    <script src="{% static 'global/js/general_information.js' %}"></script>
     <script src="{% static 'global/js/count_clicks.js' %}"></script>
 {% endblock %}
 
@@ -37,7 +38,7 @@
                 {% if treatment_displayed == "True" %}
                 <a class="nav-link disabled">Aufgabe 1</a>
                 {% else %}
-                <a class="nav-link active" style="color:#FC6100"><u>Aufgabe 1</u></a>
+                <a class="nav-link active" style=""><u>Aufgabe 1</u></a>
                 {% endif %}
             </li>
             <li class="nav-item">
@@ -45,7 +46,7 @@
             </li>
             <li class="nav-item">
                 {% if treatment_displayed == "True" %}
-                <a class="nav-link active" style="color:#FC6100"><u>Aufgabe 3</u></a>
+                <a class="nav-link active" style=""><u>Aufgabe 3</u></a>
                 {% else %}
                 <a class="nav-link disabled">Aufgabe 3</a>
                 {% endif %}
@@ -81,6 +82,10 @@
     <!-- Hidden Tracking Fields -->
     <input type="hidden" name="review_weather" id="id_review_weather" value="0"/>
     <input type="hidden" name="review_instructions" id="id_review_instructions" value="0"/>
+    <input type="hidden" name="window_width" id="id_window_width" value="0"/>
+    <input type="hidden" name="window_height" id="id_window_height" value="0"/>
+    <input type="hidden" name="browser" id="id_browser" value="0"/>
+
 
 
 

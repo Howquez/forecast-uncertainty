@@ -1,0 +1,393 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+    <link href="{% static 'global/css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'MPP/css/chat.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/pattern-fill.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/broken-axis.js"></script>
+    <script src="{% static 'global/js/weather_viz.js' %}"></script>
+    <script src="{% static 'global/js/chat_trigger.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+<body onload="fillText()">
+<img src="{% static 'global/images/cool-background.svg' %}" id="bg" alt=""/>
+
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand sticky-top navbar-light bg-header border-bottom mb-4">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link disabled">Einleitung</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">Aufgabe 1</a>
+            </li>
+            <li class="nav-item">
+                {% if treatment_displayed == "True" %}
+                <a class="nav-link disabled">Aufgabe 2</a>
+                {% else %}
+                <a class="nav-link active" style=""><u>Aufgabe 2</u></a>
+                {% endif %}
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">Aufgabe 3</a>
+            </li>
+            <li class="nav-item">
+                {% if treatment_displayed == "True" %}
+                <a class="nav-link active" style=""><u>Aufgabe 4</u></a>
+                {% else %}
+                <a class="nav-link disabled">Aufgabe 4</a>
+                {% endif %}
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">Schluss</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav ml-auto">
+            <li>
+                <a class="text-primary" data-toggle="modal" data-target="#weatherModal" id="weather_icon">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-thermometer-half" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" d="M6 2a2 2 0 1 1 4 0v7.627a3.5 3.5 0 1 1-4 0V2zm2-1a1 1 0 0 0-1 1v7.901a.5.5 0 0 1-.25.433A2.499 2.499 0 0 0 8 15a2.5 2.5 0 0 0 1.25-4.666.5.5 0 0 1-.25-.433V2a1 1 0 0 0-1-1z"/>
+                      <path d="M8.25 2a.25.25 0 0 0-.5 0v9.02a1.514 1.514 0 0 1 .5 0V2z"/>
+                      <path d="M9.5 12.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                    </svg>
+                </a>
+                <a>&nbsp; &nbsp;</a>
+            </li>
+            <li>
+                <a class="text-primary" data-toggle="modal" data-target="#instructionsModal" id="instructions_icon">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-question-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033a.237.237 0 0 1-.24-.247C5.35 4.091 6.737 3.5 8.005 3.5c1.396 0 2.672.73 2.672 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.105a.25.25 0 0 1-.25.25h-.81a.25.25 0 0 1-.25-.246l-.004-.217c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.803 0-1.253.478-1.342 1.134-.018.137-.128.25-.266.25h-.825zm2.325 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z"/>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Hidden Tracking Fields -->
+    <input type="hidden" name="review_weather" id="id_review_weather" value="0"/>
+    <input type="hidden" name="review_instructions" id="id_review_instructions" value="0"/>
+    <input type="hidden" name="window_width" id="id_window_width" value="0"/>
+    <input type="hidden" name="window_height" id="id_window_height" value="0"/>
+    <input type="hidden" name="browser" id="id_browser" value="0"/>
+
+    <!-- Content -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title display-4">Wie wird das Wetter in 9 Tagen?</h5>
+            <h6 class="card-subtitle mb-5 text-muted">Was schätzen Sie?</h6>
+
+            <p class="lead">
+                {% if treatment_displayed == "True" %}
+                Im Folgenden werden wir Ihnen dieselben drei Fragen wie vorhin stellen. Sie beziehen sich alle auf
+                dasselbe Wettergeschehen - nur dass Sie dieses mal eine Vorhersage einsehen können.
+                {% else %}
+                Im Folgenden werden wir Ihnen nacheinander drei Fragen stellen, die sich alle auf dasselbe
+                Wettergeschehen beziehen, das Sie schon aus der vorigen Aufgabe kennen.
+                {% endif %}
+            </p>
+            <p>
+                Natürlich können Sie sich die Informationen zu diesem Wettergeschehen nochmal ansehen, indem Sie auf das
+                <a class="text-primary" data-toggle="modal" data-target="#weatherModal" id="weather_text">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-thermometer-half" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" d="M6 2a2 2 0 1 1 4 0v7.627a3.5 3.5 0 1 1-4 0V2zm2-1a1 1 0 0 0-1 1v7.901a.5.5 0 0 1-.25.433A2.499 2.499 0 0 0 8 15a2.5 2.5 0 0 0 1.25-4.666.5.5 0 0 1-.25-.433V2a1 1 0 0 0-1-1z"/>
+                      <path d="M8.25 2a.25.25 0 0 0-.5 0v9.02a1.514 1.514 0 0 1 .5 0V2z"/>
+                      <path d="M9.5 12.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                    </svg>
+                </a> -Symbol oben rechts klicken. Auf dem
+                <a class="text-primary" data-toggle="modal" data-target="#instructionsModal" id="instructions_text">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-question-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033a.237.237 0 0 1-.24-.247C5.35 4.091 6.737 3.5 8.005 3.5c1.396 0 2.672.73 2.672 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.105a.25.25 0 0 1-.25.25h-.81a.25.25 0 0 1-.25-.246l-.004-.217c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.803 0-1.253.478-1.342 1.134-.018.137-.128.25-.266.25h-.825zm2.325 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z"/>
+                    </svg>
+                </a> -Symbol daneben können Sie die Anleitungen zu diesen Fragen erneut abrufen.
+            </p>
+
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <p class="lead mb-0">
+                        Was würden Sie schätzen, wenn...
+                    </p>
+                    <hr class="my-4 w-75 mb-5">
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="alert border collapse animated animatedFadeInUp fadeInUp" id="Q2" style="background:#E6CEDD">
+                            <h5 class="mt-3 mb-4" style="color:#aa598c">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-bar-up" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 10a.5.5 0 0 0 .5-.5V3.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 3.707V9.5a.5.5 0 0 0 .5.5zm-7 2.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5z"/>
+                                </svg>
+                            </h5>
+                            <h6 class="subtitle mb-4" style="color:#2a1522">...Unterschätzen schlimmer ist?</h6>
+                            <p style="color:#2a1522">
+                                <small>
+                                    Für jedes °C, das Sie überschätzen, werden 2 grüne Kugeln durch 2 rote Kugeln
+                                    ausgetauscht.
+                                    <strong>Für jedes °C, das Sie unterschätzen, werden sogar 6 grüne Kugeln ausgetauscht.</strong>
+                                </small>
+                            </p>
+                            <div class="input-group justify-content-center mt-4">
+                                <input class="form-control" type="number" name="upper_bound" id="id_upper_bound" class="form-control" step="1" placeholder="... °C" required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-primary" type="button" id="buttonA2">
+                                        ok
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="alert border" id="Q1" style="background:#E7EEFB">
+                            <h5 class="mt-3 mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+                                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                </svg>
+                            </h5>
+                            <h6 class="subtitle mb-4">...Ihre Gewinnchance sinkt, sollten Sie daneben liegen?</h6>
+                            <p>
+                                <small>
+                                    Für jedes °C, das Sie daneben liegen, werden 2 grüne Kugeln durch 2 rote Kugeln
+                                    ausgetauscht.
+                                    <strong> Dabei ist es egal ob Sie Über- oder Unterschätzen. </strong>
+                                    <br><br>
+                                </small>
+                            </p>
+                            <div class="input-group justify-content-center mt-4">
+                                <input class="form-control" type="number" name="best_guess" id="id_best_guess" class="form-control" step="1" placeholder="... °C" required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-primary" type="button" id="buttonA1">
+                                        ok
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="alert border collapse animated animatedFadeInUp fadeInUp" id="Q3" style="background:#c7d4ff">
+                            <h5 class="mt-3 mb-4" style="color:#2a5cff">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-bar-down" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z"/>
+                                </svg>
+                            </h5>
+                            <h6 class="subtitle mb-4" style="color:#00124b">...Überschätzen schlimmer ist?</h6>
+                            <p style="color:#00124b">
+                                <small>
+                                    Für jedes °C, das Sie unterschätzen, werden 2 grüne Kugeln durch 2 rote Kugeln
+                                    ausgetauscht.
+                                    <strong>Für jedes °C, das Sie überschätzen, werden sogar 6 grüne Kugeln ausgetauscht.</strong>
+                                </small>
+                            </p>
+                            <div class="input-group justify-content-center mt-4">
+                                <input class="form-control" type="number" name="lower_bound" id="id_lower_bound" class="form-control" step="1" placeholder="... °C" required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-primary" type="button" id="buttonA3">
+                                        ok
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="mt-5 mb-3 collapse animated animatedFadeInUp fadeInUp" id="submit_button">
+                <p class="card-text">
+                    Sie können Ihre Angaben nun ändern, wenn Sie wünschen. Sobald Sie
+                    mit Ihren Antworten zufrieden sind, können Sie auf "Absenden" klicken.
+                </p>
+
+                <div class="row justify-content-center">
+                    <button type="submit" class="btn my-warning ">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                        </svg>
+                        Absenden
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title display-4">Wie wird das Wetter in 9 Tagen?</h5>
+            <h6 class="card-subtitle mb-5 text-muted">Was schätzen Sie?</h6>
+
+            <p class="lead">
+                Was schätzen Sie, welche Temperatur wurde <a style="color:#C582FF">am Sonntag</a> um 14:00 Uhr
+                MEZ<sup>1</sup> gemessen,...
+            </p>
+
+            <table class="table table-hover">
+
+                <tbody>
+                <tr>
+                    <td>
+                        <label for="id_Q1">
+                        ...wenn Überschätzen drei Mal so teuer wie Unterschätzen ist?
+                        </label>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input type="number" name="Q1" id="id_Q1" class="form-control" step=".1">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">°C</div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="id_Q2">
+                        ...wenn Überschätzen genau so teuer wie Unterschätzen ist?
+                        </label>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input type="number" name="Q2" id="id_Q2" class="form-control" step=".1">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">°C</div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="id_Q3">
+                        ...wenn Unterschätzen drei Mal so teuer wie Überschätzen ist?
+                        </label>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input type="number" name="Q3" id="id_Q3" class="form-control" step=".1">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">°C</div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer bg-light text-secondary">
+            <p class="card-text">
+                Am Ende der Umfrage werden wir sowohl den Ort, das Datum sowie die Quelle und die am Sonntag
+                eingetretene Temperatur preisgeben.
+            </p>
+            <p>
+                <sup>1</sup> Die Zeitangabe MEZ bedeutet nicht automatisch, dass es sich um einen Ort in der MEZ handelt.
+            </p>
+        </div>
+    </div>
+
+    -->
+
+    <br><br>
+
+
+    <button type="submit" id="submit_button" class="btn my-warning float-right collapse">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+        </svg>
+        Absenden
+    </button>
+
+
+    <!-- Weather Modal -->
+    <div class="modal fade bd-example-modal-lg" id="weatherModal" tabindex="-1" role="dialog" aria-labelledby="weatherModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {% if treatment_displayed == "True" %}
+                        <!--
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <h4 class="lead">
+                                Bitte beachten Sie, dass die Grafik nun auch eine Wettervorhersage enthält.
+                            </h4>
+                            <hr>
+                            <p>
+                                Alle Angaben (also sowohl gemessene als auch vorhergesagte Temperaturen) beziehen sich auf
+                                dieselbe Tageszeit: 14:00 Uhr.
+                            </p>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        -->
+
+                        <p class="lead">Experten haben am Freitag eine Vorhersage für den Sonntag <u>9 Tage später</u> getroffen:</p>
+                        <p><span id="forecastText"></span></p>
+                    {% else %}
+                        <p class="lead">
+                            Die Temperaturen betrugen zwischen Mittwoch und Freitag jeweils 12°C <small>(um 14:00 Uhr)</small>.
+                        </p>
+                    {% endif %}
+
+                    <figure class="highcharts-figure">
+                        <div id="weather_viz"></div>
+                    </figure>
+
+                    <p class="card-text">
+                        <small>
+                        Ohne zu wissen, auf welchen Ort und Zeitpunkt sich das oben dargestellte Wetter bezieht,
+                        müssen Sie für die folgenden Aufgaben abschätzen, welche Temperaturbereiche Sie
+                            {% if treatment_displayed == "False" %}
+                            am Sonntag <u>9 Tage später</u>
+                            <a style="color:#A6219D">(also im lila schraffiert Bereich)</a>
+                            {% else %}
+                            am Sonntag <u>9 Tage später</u>
+                            {% endif %}
+                        am selben Ort und zur gleichen Tageszeit für wahrscheinlich halten.
+                        </small>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Schließen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instructions Modal -->
+    <div class="modal fade bd-example-modal-lg" id="instructionsModal" tabindex="-1" role="dialog" aria-labelledby="instructionsModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="instructionsModalTitle">Anleitung</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Schließen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+{% endblock %}
+
+

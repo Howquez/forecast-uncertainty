@@ -15,5 +15,8 @@ class Intro_Instructions(Page):
             small=True,
         )
 
+    def vars_for_template(self):
+        return {"participation_fee": self.session.config["participation_fee"]}
+
 
 page_sequence = [Intro_Welcome, Intro_Instructions]

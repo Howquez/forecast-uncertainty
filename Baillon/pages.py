@@ -53,6 +53,15 @@ class Baillon_Instructions(Page):
     #             return error_messages[field_name]  # = 'Wrong answer' # wenn error message dict leer
     #             # return error_messages
 
+
+class Baillon_Confirmation(Page):
+    def is_displayed(self):
+        if not self.subsession.this_app_constants()["treatment_displayed"]:
+            return True
+
+    timeout_seconds = 30
+
+
 class Forecast_Viz(Page):
     def is_displayed(self):
         if self.subsession.this_app_constants()["treatment_displayed"] == True and self.round_number == 1: # as defined in post_baillon/models
@@ -66,7 +75,8 @@ class Forecast_Viz(Page):
 
 class Baillon_Decision(Page):
     form_model = "player"
-    form_fields = ["review_weather", "review_instructions", "baillon_equivalent"]
+    form_fields = ["review_weather", "review_instructions", "window_width", "window_height", "browser",
+                   "baillon_equivalent"]
 
     def js_vars(self):
         if len(self.player.event_decision) == 3:  # compound decision
@@ -112,6 +122,7 @@ class Historic_Viz(Page):
 
 
 page_sequence = [Baillon_Instructions,
+                 Baillon_Confirmation,
                  # Historic_Viz,
                  Forecast_Viz,
                  Baillon_Decision

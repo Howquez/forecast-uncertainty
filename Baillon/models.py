@@ -116,6 +116,10 @@ class SharedBasePlayer(BasePlayer):
 
     review_weather = models.IntegerField(doc="Counts the number of times a player reviews weather information.")
     review_instructions = models.IntegerField(doc="Counts the number of times a player reviews instructions.")
+    window_width = models.IntegerField(doc="Documents the respondent's browser window's width.")
+    window_height = models.IntegerField(doc="Documents the respondent's browser window's height.")
+    browser = models.StringField(doc="Documents the respondent's browser (incl. its version).")
+
     baillon_equivalent = models.IntegerField(doc="Main variable")
     pivotal_lottery = models.IntegerField(doc="Random lottery that decides the outcome if it is larger than the respondent's baillon_equivalent")
     payment_mechanism = models.StringField(doc="Mechanism determining the payment in this round.")

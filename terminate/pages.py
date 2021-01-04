@@ -5,6 +5,17 @@ from .models import Constants
 import re
 
 
+class Demographic_Questions(Page):
+    form_model = "player"
+    form_fields = ["Age", "Gender", "Education", "Income"]
+
+class Domain_Questions(Page):
+    pass
+
+class CLICCS_Questions(Page):
+    form_model = "player"
+    form_fields = ["CLICCS1", "CLICCS2"]
+
 class Results(Page):
 
     def js_vars(self):
@@ -52,4 +63,7 @@ class Results(Page):
             }
 
 
-page_sequence = [Results]
+page_sequence = [Domain_Questions,
+                 CLICCS_Questions,
+                 Demographic_Questions,
+                 Results]

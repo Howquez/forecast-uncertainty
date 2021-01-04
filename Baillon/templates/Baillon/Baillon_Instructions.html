@@ -41,7 +41,7 @@
                 <a class="nav-link disabled">Einleitung</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" style="color:#FC6100"><u>Aufgabe 1</u></a>
+                <a class="nav-link active" style=""><u>Aufgabe 1</u></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link disabled">Aufgabe 2</a>
@@ -133,18 +133,19 @@
                     </p>
                     <p>
                         Bei der Wette setzen Sie auf bestimmte Temperaturen. Wenn diese Temperaturen tatsächlich
-                        gemessen wurden, gewinnen Sie {{ participant.payoff }} und sonst nichts. Sie bekommen
+                        gemessen wurden, gewinnen Sie {{ Constants.prize_payoff }},00 € und sonst nichts. Sie bekommen
                         Informationen über eine Woche zuvor gemessene Temperaturen aber erfahren vorerst nicht, auf
                         welchen Ort und welchen genauen Zeitpunkt sich die Wette bezieht.
                     </p>
                     <p>
-                        Für die Lotterie können Sie sich eine Urne mit 100 Kugeln darin vorstellen, die entweder grün
-                        oder rot gefärbt sind und aus der zufällig eine Kugel gezogen wird. Ist die gezogene Kugel grün,
-                        gewinnen Sie {{ participant.payoff }}. Wenn die Kugel hingegen rot ist, gewinnen Sie nichts.
+                        Für die Lotterie können Sie sich eine Urne mit 100 Kugeln darin vorstellen. Die Kugeln sind
+                        entweder grün oder rot gefärbt. Nun wird aus der Urne zufällig eine Kugel gezogen.
+                        Ist die gezogene Kugel grün, gewinnen Sie {{ Constants.prize_payoff }},00 €.
+                        Wenn die Kugel hingegen rot ist, gewinnen Sie nichts.
                     </p>
                     <p>
-                        Wir wollen nun von Ihnen wissen, wie viele grüne Kugeln sich mindestens in der Urne befinden
-                        müssen, damit Sie die Lotterie gerade so der Wette vorziehen.
+                        In dieser Aufgabe wollen wir von Ihnen wissen, wie viele grüne Kugeln sich mindestens in der
+                        Urne befinden müssen, damit Sie die Lotterie gerade so der Wette vorziehen.
                     </p>
 
 
@@ -178,6 +179,16 @@
                     <p class="lead">
                         Beispiel
                     </p>
+                    <small>
+                        Ihre Entscheidungssituation wird wie unten dargestellt aussehen. In der linken Spalte wird die
+                        Wette abgebildet. In der rechten Spalte stellen wir die Lotterie dar, die Sie mithilfe des
+                        Eingabefelds konfigurieren müssen, indem Sie angeben, wie viele grüne Kugeln sich mindestens
+                        darin befinden müssen.
+                        <br><br>
+                        Schauen Sie sich die Entscheidungssituation genau an und probieren Sie verschiedene Eingaben aus.
+                        Achten Sie dabei darauf, wie sich die Darstellungen verändern.
+                        <br><br>
+                    </small>
 
                     <div class="container clearfix border-left border-primary w-75 bg-light">
                         <h5 class="card-title display-4 mb-1">
@@ -289,7 +300,7 @@
                             <div class="row justify-content-center">
                                 <label>
                                     <small class="text-muted">
-                                        {{ player.round_number }} von {{ Constants.num_rounds }}
+                                        (Die Absenden-Funktion ist in der Anleitung deaktiviert)
                                     </small>
                                 </label>
                             </div>
@@ -343,14 +354,16 @@
                     </p>
 
                     <p>
-                        Dementsprechend verspricht die Wetter inn der einen Entscheidungssituation nur dann einen Gewinn
-                        von {{ participant.payoff }}, wenn mindestens 14°C gemessen werden, während Sie in einer anderen
-                        Entscheidungssituation nicht gewinnen würden, wenn eine Temperatur von mehr als 14°C eintritt.
+                        Dementsprechend verspricht die Wette in der einen Entscheidungssituation nur dann einen Gewinn
+                        von {{ Constants.prize_payoff }},00 €, wenn mindestens 14°C gemessen wurde, während Sie in einer
+                        anderen Entscheidungssituation nicht gewinnen würden, wenn eine Temperatur von mehr als 14°C
+                        eintrat.
                     </p>
 
                     <p>
                         Achten Sie daher bitte genau darauf unter welchen Bedingungen die Wette einen Gewinn verspricht
-                        bevor Sie die jeweilige Wette mit der Lotterie abwägen.
+                        und schauen Sie sich die Darstellung sowie die Beschreibung der Wette genau an, bevor Sie die
+                        jeweilige Wette mit der Lotterie abwägen.
                     </p>
 
 
@@ -392,25 +405,50 @@
                     <p class="lead">
                         Ihr Verdienst/Gewinn in dieser Aufgabe
                     </p>
-
-                    <p class="card-text">
-                        Bei der Beantwortung der Fragen können Sie Geld verdienen. Dabei gilt grundsätzlich, dass Ihre Chance Geld
-                        zu gewinnen steigt, je besser Sie die Temperatur einschätzen. Wie genau sich Ihre Antworten auf Ihre
-                        Gewinnchancen auswirken, erklären wir Ihnen vor den Aufgaben im Detail. Darüber hinaus haben Sie in jeder
-                        Aufgabe die Möglichkeit die Regeln erneut zu lesen. Dafür müssen Sie einfach auf das
-                        <a class="text-secondary">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-question-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033a.237.237 0 0 1-.24-.247C5.35 4.091 6.737 3.5 8.005 3.5c1.396 0 2.672.73 2.672 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.105a.25.25 0 0 1-.25.25h-.81a.25.25 0 0 1-.25-.246l-.004-.217c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.803 0-1.253.478-1.342 1.134-.018.137-.128.25-.266.25h-.825zm2.325 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z"/>
-                            </svg>
-                        </a> -Symbol oben rechts klicken sobald es blau erscheint.
+                    <p>
+                        In jeder der 6 Entscheidungssituationen geben Sie an, unter welchen Bedingungen Sie die Lotterie
+                        der Wette vorziehen. Am Ende dieser Studie wird aus all Ihren Entscheidungen (in allen Aufgaben)
+                        zufällig <u>eine</u> Entscheidungssituation ausgewählt, um zu bestimmen, ob Sie
+                        {{ Constants.prize_payoff }},00 € zusätzlich gewinnen oder nicht.
                     </p>
                     <p>
-                        An dieser Stelle müssen Sie nur wissen, dass am Ende eine der Aufgaben zufällig ausgewählt wird,
-                        um Ihren Gewinn zu bestimmen &mdash; Sie wissen vorab aber nicht, welche Aufgabe es sein wird.
-                        Das heißt, dass jede Ihrer Entscheidungen für ihre Auszahlung relevant sein könnte.
-                        Deswegen sollten Sie Ihre Entscheidungen sorgfältig treffen. Der Betrag, den Sie in dieser zufällig
-                        ausgewählten Entscheidung verdient haben, wird Ihnen ausgezahlt.
+                        Wenn eine Entscheidungssituation aus dieser Aufgabe ausgewählt wird, bestimmt sich Ihr Gewinn
+                        wie folgt: Sowohl die Wette als auch die Lotterie verspricht einen Gewinn von
+                        {{ Constants.prize_payoff }},00 €, wenn die entsprechenden Temperaturen gemessen wurden bzw.
+                        wenn eine grüne Kugel aus der Urne gezogen wird und sonst nichts.
                     </p>
+                    <p>
+                        Während Sie abwägen, wie viele grüne Kugeln sich mindestens in der Urne befinden müssen,
+                        damit Sie die Lotterie gegenüber der Wette bevorzugen, wird im Hintergrund eine Urne vorbereitet,
+                        die 100 Kugeln enthält und bei der die Anzahl der grünen Kugeln zufällig ausgewählt wird.
+                        Wenn diese Lotterie mit der zufällig zusammengestellten Urne nun <u>weniger</u> grüne Kugeln
+                        enthält, als Sie mindestens haben wollen, um eine Lotterie zu bevorzugen, dann entscheidet die
+                        Wette über Ihren Gewinn. Wenn die zufällig zusammengestellten Urne nun <u>mehr</u> grüne Kugeln
+                        enhält, als Sie mindestens haben wollen, dann entscheidet genau diese Lotterie über Ihren Gewinn.
+                        <br><br>
+                    </p>
+
+                    <p class="lead">
+                        Nehmen Sie an, Sie haben sich in einer Situation dafür Entschieden, dass Sie eine Lotterie erst
+                        dann besser als die Wette finden, wenn sich mindestens <strong>76</strong> grüne Kugeln in der Urne befinden und
+                        dass genau diese Entscheidung am Ende ausgewählt wird, um Ihren Gewinn zu bestimmen.
+                    </p>
+                    <p>
+                        <u>Fall 1:</u> Angenommen während Ihrer Abwägung wäre eine Lotterie mit einer Urne 43 grünen
+                        Kugeln zusammengestellt worden. Dann würden Sie die Wette gemäß Ihren Angaben dieser Lotterie
+                        vorziehen, weil Sie sich von der Wette eine höhere Gewinnchance erhoffen. Dementsprechend wird
+                        die Wette auch Ihren Gewinn bestimmen und Sie gewinnen {{ Constants.prize_payoff }},00 €, wenn
+                        die entsprechenden Temperaturen tatsächlich gemessen wurden.
+                    </p>
+                    <p>
+                        <u>Fall 2:</u> Angenommen während Ihrer Abwägung wäre eine Lotterie mit einer Urne 80 grünen
+                        Kugeln zusammengestellt worden. Dann würden Sie, gemäß Ihrer Angaben, die Lotterie der Wette
+                        vorziehen, weil sich mehr als 76 grüne Kugeln in der Urne befinden und Sie sich von der Lotterie
+                        eine höhere Gewinnchance erhoffen. Dementsprechend wird die Lotterie Ihren Gewinn bestimmen und
+                        Sie gewinnen {{ Constants.prize_payoff }},00 €, wenn eine grüne Kugel aus dieser im Hintergrund
+                        zufällig zusammengestellten Urne gezogen wird.
+                    </p>
+
 
 
                     <!-- on Card Navigation  Arrows -->
@@ -456,8 +494,8 @@
                         <div class="col col-lg-4">
                             <button class="btn bg-white btn-outline-white" style="color: #FC6100" type="submit">
                                 <small><u> Mit Aufgabe 1 beginnen </u></small>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-11.5.5a.5.5 0 0 1 0-1h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5z"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
                                 </svg>
                             </button>
                         </div>

@@ -3,6 +3,11 @@
   display: none;
 }
 
+/* Hide Timer */
+.otree-timer {
+    display: none;
+}
+
 /* Background image*/
 #bg {
   position: fixed;
