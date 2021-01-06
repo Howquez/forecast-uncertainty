@@ -1,31 +1,54 @@
-You can find the experiment's demo [here](https://forecastsurvey.herokuapp.com/demo/). 
+# 🌦 What makes a (weather) forecast credible?
 
-# Structure
-### Overview
-This oTree experiment consists of two elements: 
-- An elicitation of the respondents' ambiguity attitudes 
-(using Baillon et al.'s [(2018, Econometrica)]( https://doi.org/10.3982/ECTA14370)  Method)
-- An elicitation of the respondent's beliefs
+## 🎓 What the project is about
+This project is the foundation of an economic experiment that exposes respondents to forecasts and manipulates the 
+corresponding communication strategy between subjects. We elicit the respondents' belief distribution (MPP) and 
+ambiguity attitudes (Baillon) before and after exposure to assess forecasts' credibility.
 
-The belief elicitation is either done using a quadratic scoring rule (BSR) for distributions or Eyting & Schmidt's 
+We retrieve the belief distributions using Eyting & Schmidt's 
 [(2020, Working Paper)](https://download.uni-mainz.de/RePEc/pdf/Discussion_Paper_1818.pdf)
-Multiple Point Predictions (MPP). Both are implemented in a binarized fashion using Hossain & Okui's 
+Multiple Point Predictions (MPP) which is implemented in a binarized fashion using Hossain & Okui's 
 [(2013, Review of Economic Studies)](https://www.jstor.org/stable/43551453) 
-binarized scoring rule.
+binarized scoring rule. The ambiguity attitudes are elicited using Baillon et al.'s [(2018, Econometrica)]( https://doi.org/10.3982/ECTA14370) 
+Method. 
+
+
+## 🚏 How you can open it
+You can find the experiment's demo [here](https://forecastsurvey.herokuapp.com/demo/). The link allows you to open 
+three apps
+- Baillon_MPP,
+- MPP_Standalone,
+- Baillon_Standalone.
+The two standalone are slices of the _Baillon_MPP_ app which were created to save time if one is solely interested in one
+of the implementations. To get the better user experience, I recommend to click through the complete (i.e. the 
+_Baillon_MPP_) app.
+
+A click onn one of the apps will create a session and redirect you to a page containing lots of URLs. Click on the
+_Session-wide link_ to open the experiment.
+
+## 📖 Read the docs
+I am creating a wiki [over here](https://github.com/Howquez/forecast-uncertainty/wiki).
+
+## 🛠 How we build it
+
+### Tech stack
+The experiment itself is based on oTree, a Python module designed to build surveys and experiments. It utilizes on 
+Python, JavaScript, HTML & CSS (mostly bootstrap). The corresponding analysis is done with R.
 
 ### App Sequence
 As a consequence, there are two different groups of apps. One relying on Baillon+BSR and another one relying on 
 Baillon+MPP.
 
-The survey first elicits uncertainty attitudes, then beliefs. Afterwards an information treatment is 
-provided. Subsequently, uncertainty attitudes and beliefs are elicited once more. The survey closes with
-a payoff calculation and revelation. Because the apps (Baillon, BSR or MPP) are played twice, the structure of this 
-survey is a little unusual because it cannot solely rely on rounds but also utilizes clones of these apps.
+The experiment first elicits uncertainty attitudes, then beliefs. Afterwards an information treatment is 
+provided. Subsequently, uncertainty attitudes and beliefs are elicited once more. The experiment closes with
+a payoff calculation, a short questionnaire and  the payoff revelation. Because the apps (Baillon and MPP) are played 
+twice, the structure of this experiment is a little unusual because it cannot solely rely on rounds but also utilizes 
+clones of these apps.
 
-As a consequence, the survey is based on one of the following app sequences: 
-- [[initialize](initialize), [Baillon](Baillon), [MPP](MPP), [postBaillon](postBaillon), [postMPP](postMPP), 
+As a consequence, the experiment is based on the following app sequence: 
+
+[[initialize](initialize), [Baillon](Baillon), [MPP](MPP), [postBaillon](postBaillon), [postMPP](postMPP), 
 [terminate](terminate)]
-- [initialize, Baillon, [BSR](BSR), postBaillon, [postBSR](postBSR), terminate]
 
 where _initialize_ is an app that initially writes some variables into the participant scope that are 
 retrieved later on. Similarly, _terminate_ is an app that closes the survey by providing information stored
@@ -58,6 +81,9 @@ These templates utilize variables attached to the models (player, group, subsess
 variables passed to the template via `vars_for_template` method or variables passed to the js files via `js_vars` method
 (both is done within the respective pages.py files). These variables are then used as arguments in 
 [twig(?)](https://twig.symfony.com/doc/2.x/intro.html) logic such as if statements and loops in the templates.
+
+## To do
+
 
 
 
