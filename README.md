@@ -26,6 +26,9 @@ _Baillon_MPP_) app.
 A click onn one of the apps will create a session and redirect you to a page containing lots of URLs. Click on the
 _Session-wide link_ to open the experiment.
 
+[![](figures/Baillon_Decision_Screen.png)](https://forecastsurvey.herokuapp.com/demo/)
+
+
 ## 📖 Read the docs
 I am creating a wiki [over here](https://github.com/Howquez/forecast-uncertainty/wiki).
 
