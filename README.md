@@ -1,8 +1,10 @@
 # 🌦 What makes a (weather) forecast credible?
+[![Generic badge](https://img.shields.io/badge/Status:-WIP-yellow.svg)](https://shields.io/)
+
 
 ## 🎓 What the project is about
 This project is the foundation of an economic experiment that exposes respondents to forecasts and manipulates the 
-corresponding communication strategy between subjects. We elicit the respondents' belief distribution (MPP) and 
+forecasts' communication strategies between subjects. We elicit the respondents' belief distribution (MPP) and 
 ambiguity attitudes (Baillon) before and after exposure to assess forecasts' credibility.
 
 We retrieve the belief distributions using Eyting & Schmidt's 
@@ -13,18 +15,20 @@ binarized scoring rule. The ambiguity attitudes are elicited using Baillon et al
 Method. 
 
 
-## 🚏 How you can open it
+## 🚏 How you can access it
 You can find the experiment's demo [here](https://forecastsurvey.herokuapp.com/demo/). The link allows you to open 
 three apps
-- Baillon_MPP,
-- MPP_Standalone,
-- Baillon_Standalone.
-The two standalone are slices of the _Baillon_MPP_ app which were created to save time if one is solely interested in one
-of the implementations. To get the better user experience, I recommend to click through the complete (i.e. the 
-_Baillon_MPP_) app.
+- `Baillon_MPP`,
+- `MPP_Standalone`,
+- `Baillon_Standalone`.
 
-A click onn one of the apps will create a session and redirect you to a page containing lots of URLs. Click on the
-_Session-wide link_ to open the experiment.
+The two standalone are slices of the `Baillon_MPP` app which were created to save time if one is solely interested in one
+of the implementations. To get the better user experience, I recommend to click through the complete (i.e. the 
+Baillon_MPP) app.
+
+A click on one of the apps will create a session and redirect you to a page containing lots of URLs. Click on the
+_Session-wide link_ to open the experiment. After reading through the instructions, you should end up seeing a decision 
+screen looking like this one:
 
 [![](figures/Baillon_Decision_Screen.png)](https://forecastsurvey.herokuapp.com/demo/)
 
@@ -35,8 +39,9 @@ I am creating a wiki [over here](https://github.com/Howquez/forecast-uncertainty
 ## 🛠 How we build it
 
 ### Tech stack
-The experiment itself is based on oTree, a Python module designed to build surveys and experiments. It utilizes on 
-Python, JavaScript, HTML & CSS (mostly bootstrap). The corresponding analysis is done with R.
+The experiment itself is based on [oTree](https://www.sciencedirect.com/science/article/pii/S2214635016000101), 
+a Python module designed to build surveys and experiments. It utilizes 
+Python, JavaScript, HTML & CSS (mostly bootstrap 4.1.x). The corresponding analysis is done with R.
 
 ### App Sequence
 As a consequence, there are two different groups of apps. One relying on Baillon+BSR and another one relying on 
@@ -86,7 +91,7 @@ variables passed to the template via `vars_for_template` method or variables pas
 [twig(?)](https://twig.symfony.com/doc/2.x/intro.html) logic such as if statements and loops in the templates.
 
 ## To do
-
+[Here](https://github.com/Howquez/forecast-uncertainty/projects/1) is the corresponding kanban board.
 
 
 
