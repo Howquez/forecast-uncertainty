@@ -17,32 +17,7 @@ class MPP_Confirmation(Page):
         if not self.subsession.this_app_constants()["treatment_displayed"]:
             return True
 
-
 class MPP_Decision(Page):
-    form_model = "player"
-    form_fields = ["review_weather", "review_instructions", "window_width", "window_height", "browser",
-                   "lower_bound", "upper_bound", "best_guess"]
-
-    def before_next_page(self):
-        self.player.prepare_payoffs()
-        self.player.set_payoffs()
-
-    def js_vars(self):
-        return dict(
-            location=self.participant.vars["location"],
-            treatment_displayed=str(self.subsession.this_app_constants()["treatment_displayed"]),
-            page="decision",
-            treatment=self.participant.vars["treatment"],
-            small=True,
-        )
-
-    def vars_for_template(self):
-        return {
-            "treatment_displayed" : str(self.subsession.this_app_constants()["treatment_displayed"]),
-        }
-
-
-class MPP_Reimagined(Page):
     form_model = "player"
     form_fields = ["review_weather", "review_instructions", "window_width", "window_height", "browser",
                    "lower_bound", "upper_bound", "best_guess"
@@ -93,4 +68,4 @@ class MPP_Revelation(Page):
         }
 
 
-page_sequence = [MPP_Instructions, MPP_Confirmation, MPP_Reimagined, MPP_Direct]
+page_sequence = [MPP_Instructions, MPP_Confirmation, MPP_Decision, MPP_Direct]
