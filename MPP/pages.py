@@ -17,6 +17,7 @@ class MPP_Confirmation(Page):
         if not self.subsession.this_app_constants()["treatment_displayed"]:
             return True
 
+
 class MPP_Decision(Page):
     form_model = "player"
     form_fields = ["review_weather", "review_instructions", "window_width", "window_height", "browser",
