@@ -10,15 +10,6 @@ SESSION_CONFIGS = [
         treatment="random"
     ),
     dict(
-        name='Baillon_BSR',
-        display_name="Baillon_BSR",
-        num_demo_participants=10,
-        app_sequence=["initialize", "Baillon", "BSR", "postBaillon", "postBSR"],
-        BSR_weight=0.5,
-        location="random",
-        treatment="random"
-    ),
-    dict(
         name='MPP',
         display_name="MPP_Standalone",
         num_demo_participants=10,

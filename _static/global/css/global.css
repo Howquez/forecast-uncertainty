@@ -32,5 +32,16 @@
 }
 
 
-/* Navbar background */
+/* display style */
+.displaystyle-leftborder {
+    padding: 15px;
+    margin: 15px;
+    background-color: #FFFFFF;
+    border-left: 9px solid ;
+    margin-bottom: 10px;
+}
+
+.displaystyle-my-warning {
+        border-color: #FC6100;
+    }
 

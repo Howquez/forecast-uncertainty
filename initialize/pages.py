@@ -18,5 +18,8 @@ class Intro_Instructions(Page):
     def vars_for_template(self):
         return {"participation_fee": self.session.config["participation_fee"]}
 
+    def before_next_page(self):
+        self.player.store_information()
+
 
 page_sequence = [Intro_Welcome, Intro_Instructions]

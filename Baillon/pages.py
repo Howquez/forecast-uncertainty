@@ -54,12 +54,11 @@ class Baillon_Instructions(Page):
     #             # return error_messages
 
 
+
 class Baillon_Confirmation(Page):
     def is_displayed(self):
-        if not self.subsession.this_app_constants()["treatment_displayed"]:
+        if not self.subsession.this_app_constants()["treatment_displayed"] and self.round_number == 1:
             return True
-
-    timeout_seconds = 30
 
 
 class Forecast_Viz(Page):
@@ -71,6 +70,7 @@ class Forecast_Viz(Page):
         return dict(
             opacity = 0.2,
         )
+
 
 
 class Baillon_Decision(Page):
@@ -108,22 +108,20 @@ class Baillon_Decision(Page):
 
 
 
-class Historic_Viz(Page):
+class Baillon_Direct(Page):
+
     def is_displayed(self):
-        if self.subsession.this_app_constants()["treatment_displayed"] == False and self.round_number == 1:
+        if self.round_number == Constants.num_rounds:
             return True
 
-    def js_vars(self):
-        return dict(
-            page = "historic",
-            treatment=self.participant.vars["treatment"],
-            location=self.participant.vars["location"],
-        )
+    def vars_for_template(self):
+        return {
+            "treatment_displayed": str(self.subsession.this_app_constants()["treatment_displayed"]),
+        }
 
 
 page_sequence = [Baillon_Instructions,
                  Baillon_Confirmation,
-                 # Historic_Viz,
-                 Forecast_Viz,
-                 Baillon_Decision
+                 Baillon_Decision,
+                 Baillon_Direct
                  ]

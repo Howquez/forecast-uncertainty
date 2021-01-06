@@ -21,6 +21,7 @@
     <script src="{% static 'global/js/lottery_viz.js' %}"></script>
     <script src="{% static 'global/js/general_information.js' %}"></script>
     <script src="{% static 'global/js/count_clicks.js' %}"></script>
+    <script src="{% static 'global/js/buttons.js' %}"></script>
 {% endblock %}
 
 
@@ -253,7 +254,7 @@
                         müssen Sie für die folgenden Aufgaben abschätzen, welche Temperaturbereiche Sie
                             {% if treatment_displayed == "False" %}
                             am Sonntag <u>9 Tage später</u>
-                            <a style="color:#A6219D">(also im lila schraffiert Bereich)</a>
+                            <a style="color:#A6219D">(also im lila schraffierten Bereich)</a>
                             {% else %}
                             am Sonntag <u>9 Tage später</u>
                             {% endif %}
@@ -273,13 +274,216 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="instructionsModalTitle">Anleitung</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <!-- Card's Tab Navigation -->
+                    <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+
+                        <a class="navbar-brand text-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-square-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm8.93 4.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                            </svg>
+                        </a>
+
+                        <li class="nav-item" >
+                            <a class="nav-link back-and-forth active" id="part1-tab" data-toggle="tab" href="#part1" role="tab" aria-controls="part1"> Überblick </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link back-and-forth" id="part3-tab" data-toggle="tab" href="#part3" role="tab" aria-controls="part3"> Aufbau </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link back-and-forth" id="part4-tab" data-toggle="tab" href="#part4" role="tab" aria-controls="part4"> Verdienst </a>
+                        </li>
+                    </ul>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <div class="tab-content" id="myTabContent">
+                        <!-- Part 1: Einführung -->
+                        <div class="tab-pane show active" id="part1" role="tabpanel" aria-labelledby="part1-tab">
+                            <div class="card-body">
+                                <p class="lead">
+                                Das Wichtigste in Kürze
+                                </p>
+                                <p>
+                                    In dieser Aufgabe müssen Sie zwischen einer <strong>Wette</strong> und
+                                    <strong>Lotterien</strong> abwägen.
+                                </p>
+                                <p>
+                                    Bei der Wette setzen Sie auf bestimmte Temperaturen. Wenn diese Temperaturen tatsächlich
+                                    gemessen wurden, gewinnen Sie {{ Constants.prize_payoff }},00 € und sonst nichts. Sie bekommen
+                                    Informationen über eine Woche zuvor gemessene Temperaturen aber erfahren vorerst nicht, auf
+                                    welchen Ort und welchen genauen Zeitpunkt sich die Wette bezieht.
+                                </p>
+                                <p>
+                                    Für die Lotterie können Sie sich eine Urne mit 100 Kugeln darin vorstellen. Die Kugeln sind
+                                    entweder grün oder rot gefärbt. Nun wird aus der Urne zufällig eine Kugel gezogen.
+                                    Ist die gezogene Kugel grün, gewinnen Sie {{ Constants.prize_payoff }},00 €.
+                                    Wenn die Kugel hingegen rot ist, gewinnen Sie nichts.
+                                </p>
+                                <p>
+                                    In dieser Aufgabe wollen wir von Ihnen wissen, wie viele grüne Kugeln sich mindestens in der
+                                    Urne befinden müssen, damit Sie die Lotterie gerade so der Wette vorziehen.
+                                </p>
+
+
+                                <!-- on Card Navigation  Arrows -->
+                                <div class="row justify-content-md-center mt-5">
+                                    <div class="col col-lg-2">
+                                    <p class="prevtab text-light text-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                            <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                                        </svg>
+                                    </p>
+                                    </div>
+
+                                    <div class="col col-lg-2">
+                                    <p onclick="topFunction()" class="nexttab text-secondary text-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
+                                        </svg>
+                                    </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Part 3: Aufbau  -->
+                        <div class="tab-pane" id="part3" role="tabpanel" aria-labelledby="part3-tab">
+                            <div class="card-body">
+                                <p class="lead">
+                                    Diese Aufgabe besteht aus 6 Entscheidungssituationen
+                                </p>
+
+                                <p class="card-text">
+                                    In dieser Aufgabe werden wir Sie insgesamt 6 mal bitten, zwischen der Wette und der Lotterie
+                                    abzuwägen. Dafür müssen Sie jedes Mal entscheiden, wie viele grüne Kugeln sich mindestens in der
+                                    Urne befinden müssen, damit Sie die Lotterie gerade so der Wette vorziehen.
+                                </p>
+
+                                <p>
+                                    Obwohl sich die 6 Entscheidungssituationen sehr ähnlich sehen werden, unterscheiden Sie sich
+                                    doch in einem Punkt: In jeder Entscheidungssituation müssen Sie eine andere Wette abwägen.
+                                    Zwar werden sich alle Wetten auf den gleichen Ort und den gleichen Zeitpunkt beziehen, aber die
+                                    Temperaturen, bei deren Eintreten Sie gewinnen, unterscheiden sich.
+                                </p>
+
+                                <p>
+                                    Dementsprechend verspricht die Wette in der einen Entscheidungssituation nur dann einen Gewinn
+                                    von {{ Constants.prize_payoff }},00 €, wenn mindestens 14°C gemessen wurde, während Sie in einer
+                                    anderen Entscheidungssituation nicht gewinnen würden, wenn eine Temperatur von mehr als 14°C
+                                    eintrat.
+                                </p>
+
+                                <p>
+                                    Achten Sie daher bitte genau darauf unter welchen Bedingungen die Wette einen Gewinn verspricht
+                                    und schauen Sie sich die Darstellung sowie die Beschreibung der Wette genau an, bevor Sie die
+                                    jeweilige Wette mit der Lotterie abwägen.
+                                </p>
+
+
+
+                                <!-- on Card Navigation  Arrows -->
+                                <div class="row justify-content-md-center mt-5">
+                                    <div class="col col-lg-2">
+                                    <p onclick="topFunction()" class="prevtab text-secondary text-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                            <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                                        </svg>
+                                    </p>
+                                    </div>
+
+                                    <div class="col col-lg-2">
+                                    <p onclick="topFunction()" class="nexttab text-secondary text-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
+                                        </svg>
+                                    </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Part 3: Verdienst -->
+                        <div class="tab-pane" id="part4" role="tabpanel" aria-labelledby="part4-tab">
+                            <div class="card-body">
+                                <p class="lead">
+                                    Ihr Verdienst/Gewinn in dieser Aufgabe
+                                </p>
+                                <p>
+                                    In jeder der 6 Entscheidungssituationen geben Sie an, unter welchen Bedingungen Sie die Lotterie
+                                    der Wette vorziehen. Am Ende dieser Studie wird aus all Ihren Entscheidungen (in allen Aufgaben)
+                                    zufällig <u>eine</u> Entscheidungssituation ausgewählt, um zu bestimmen, ob Sie
+                                    zusätzlich {{ Constants.prize_payoff }},00 € gewinnen oder nicht.
+                                </p>
+                                <p>
+                                    Wenn eine Entscheidungssituation aus dieser Aufgabe ausgewählt wird, bestimmt sich Ihr Gewinn
+                                    wie folgt: Sowohl die Wette als auch die Lotterie verspricht einen Gewinn von
+                                    {{ Constants.prize_payoff }},00 €, wenn die entsprechenden Temperaturen gemessen wurden bzw.
+                                    wenn eine grüne Kugel aus der Urne gezogen wird und sonst nichts.
+                                </p>
+                                <p>
+                                    Während Sie abwägen, wie viele grüne Kugeln sich mindestens in der Urne befinden müssen,
+                                    damit Sie die Lotterie gegenüber der Wette bevorzugen, wird im Hintergrund eine Urne vorbereitet,
+                                    die 100 Kugeln enthält und bei der die Anzahl der grünen Kugeln zufällig ausgewählt wird.
+                                    Wenn diese Lotterie mit der zufällig zusammengestellten Urne nun <u>weniger</u> grüne Kugeln
+                                    enthält, als Sie mindestens haben wollen, um eine Lotterie zu bevorzugen, dann entscheidet die
+                                    Wette über Ihren Gewinn. Wenn die zufällig zusammengestellten Urne nun <u>mehr</u> grüne Kugeln
+                                    enhält, als Sie mindestens haben wollen, dann entscheidet genau diese Lotterie über Ihren Gewinn.
+                                    <br><br>
+                                </p>
+
+                                <p class="lead">
+                                    Nehmen Sie an, Sie haben sich in einer Situation dafür Entschieden, dass Sie eine Lotterie erst
+                                    dann besser als die Wette finden, wenn sich mindestens <strong>76</strong> grüne Kugeln in der Urne befinden und
+                                    dass genau diese Entscheidung am Ende ausgewählt wird, um Ihren Gewinn zu bestimmen.
+                                </p>
+                                <p>
+                                    <u>Fall 1:</u> Angenommen während Ihrer Abwägung wäre eine Lotterie mit einer Urne 43 grünen
+                                    Kugeln zusammengestellt worden. Dann würden Sie die Wette gemäß Ihren Angaben dieser Lotterie
+                                    vorziehen, weil Sie sich von der Wette eine höhere Gewinnchance erhoffen. Dementsprechend wird
+                                    die Wette auch Ihren Gewinn bestimmen und Sie gewinnen {{ Constants.prize_payoff }},00 €, wenn
+                                    die entsprechenden Temperaturen tatsächlich gemessen wurden.
+                                </p>
+                                <p>
+                                    <u>Fall 2:</u> Angenommen während Ihrer Abwägung wäre eine Lotterie mit einer Urne 80 grünen
+                                    Kugeln zusammengestellt worden. Dann würden Sie, gemäß Ihrer Angaben, die Lotterie der Wette
+                                    vorziehen, weil sich mehr als 76 grüne Kugeln in der Urne befinden und Sie sich von der Lotterie
+                                    eine höhere Gewinnchance erhoffen. Dementsprechend wird die Lotterie Ihren Gewinn bestimmen und
+                                    Sie gewinnen {{ Constants.prize_payoff }},00 €, wenn eine grüne Kugel aus dieser im Hintergrund
+                                    zufällig zusammengestellten Urne gezogen wird.
+                                </p>
+
+
+
+                                <!-- on Card Navigation  Arrows -->
+                                <div class="row justify-content-md-center mt-5">
+                                    <div class="col col-lg-2">
+                                    <p onclick="topFunction()" class="prevtab text-secondary text-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                            <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                                        </svg>
+                                    </p>
+                                    </div>
+
+                                    <div class="col col-lg-2">
+                                    <p onclick="topFunction()" class="nexttab text-light text-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
+                                        </svg>
+                                    </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Schließen</button>

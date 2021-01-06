@@ -17,9 +17,6 @@ class MPP_Confirmation(Page):
         if not self.subsession.this_app_constants()["treatment_displayed"]:
             return True
 
-    timeout_seconds = 30
-
-
 
 class MPP_Decision(Page):
     form_model = "player"
@@ -70,6 +67,14 @@ class MPP_Reimagined(Page):
         }
 
 
+class MPP_Direct(Page):
+    def vars_for_template(self):
+        return {
+            "treatment_displayed": str(self.subsession.this_app_constants()["treatment_displayed"]),
+        }
+
+
+
 class MPP_Revelation(Page):
 
     def is_displayed(self):
@@ -88,4 +93,4 @@ class MPP_Revelation(Page):
         }
 
 
-page_sequence = [MPP_Instructions, MPP_Confirmation, MPP_Reimagined]
+page_sequence = [MPP_Instructions, MPP_Confirmation, MPP_Reimagined, MPP_Direct]

@@ -85,7 +85,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-square-fill" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm8.93 4.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
                     </svg>
-                    Aufgabe 1
+                    Aufgabe 2
                 </a>
 
                 <li class="nav-item" >
@@ -188,7 +188,7 @@
                         <br><br>
                     </small>
 
-                    <div class="container clearfix border-left border-primary w-75 bg-light">
+                    <div class="container clearfix displaystyle-leftborder displaystyle-my-warning w-75 bg-light">
                         <br>
 
                         <h5 class="card-title display-4">Wie wird das Wetter in 9 Tagen?</h5>
@@ -376,10 +376,12 @@
                         sonst nichts. <br><br>
                     </p>
 
-                    <p class="lead">
+                    <hr class="my-4 w-75">
+                    <p class="lead text-center">
                         Die drei Fragen ähneln sich untereinander zwar &mdash; sind aber doch sehr unterschiedlich: So hat jede
                         Frage unterschiedliche Auswirkungen auf Ihre Gewinnchancen, wenn Sie sich verschätzen.
                     </p>
+                    <hr class="my-4 w-75">
 
                     <p>
                         <br>
@@ -432,7 +434,7 @@
             </div>
 
 
-            <!-- Part 3: Verdienst -->
+            <!-- Part 4: Verdienst -->
             <div class="tab-pane" id="part4" role="tabpanel" aria-labelledby="part4-tab">
                 <div class="card-body">
                     <p class="lead">
@@ -441,14 +443,14 @@
                     <p>
                         Am Ende dieser Studie wird aus all Ihren Entscheidungen (in allen Aufgaben)
                         zufällig <u>eine</u> Entscheidungssituation ausgewählt, um zu bestimmen, ob Sie
-                        {{ Constants.prize_payoff }},00 € zusätzlich gewinnen oder nicht.
+                        zusätzlich {{ Constants.prize_payoff }},00 € gewinnen oder nicht.
                         Wenn eine Entscheidungssituation aus dieser Aufgabe ausgewählt wird, bestimmt sich Ihr Gewinn
                         wie folgt:
                     </p>
                     <p>
                         Zu Beginn dieser Aufgabe erhalten Sie eine Urne mit 100 grünen Kugeln darin.
-                        Am Ende dieser Aufgabe wird je Frage geprüft, um wie viel °C Sie sich verschätzt haben, und ob
-                        Sie denn tatsächlich gemessenen Wert über- oder unterschätzt haben. Daraus ergibt sich, wie
+                        Am Ende dieser Aufgabe wird für jede Frage geprüft, um wie viel °C Sie sich verschätzt haben,
+                        und ob Sie den tatsächlich gemessenen Wert über- oder unterschätzt haben. Daraus ergibt sich, wie
                         viele grüne Kugeln der Urne durch rote Kugeln ersetzt werden. Dabei werden die auf der letzten
                         Seite beschriebenen Regeln berücksichtigt, die in dieser Tabelle nochmals zusammengefasst werden:
                     </p>
@@ -486,6 +488,15 @@
                         86 grüne und 14 rote Kugeln. Dementsprechend hätten Sie dann eine Gewinnchance von 86 Prozent,
                         weil Sie nur dann gewinnen, wenn zufällig eine grüne Kugel gezogen wird.
                     </p>
+
+                    <hr class="my-4 w-75">
+                    <p class="lead text-center">
+                        Wenn Sie sich verschätzen und grüne gegen rote Kugeln ausgetauscht werden, dann verschlechtert
+                        sich Ihre Gewinnchance dadurch. Für jede grüne Kugel, die ausgetauscht wird, verschlechtert sich
+                        Ihre Chance um ein Prozent.
+                    </p>
+                    <hr class="my-4 w-75">
+
                     <p>
                         Der Tabelle können Sie entnehmen, dass es zwischen den Fragen einen Unterschied macht, ob Ihre
                         Schätzung über oder unter dem tatsächlich gemessenen Wert liegt. Wenn Sie sich unsicher sind,
@@ -519,7 +530,7 @@
             </div>
 
 
-            <!-- Part 4: Verständnisfragen -->
+            <!-- Part 5: Verständnisfragen -->
             <div class="tab-pane" id="part5" role="tabpanel" aria-labelledby="part5-tab">
                 <div class="card-body">
 

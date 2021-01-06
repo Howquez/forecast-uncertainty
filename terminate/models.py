@@ -63,6 +63,61 @@ class Player(BasePlayer):
                                  label="Bitte nennen Sie Ihr ungefähres Nettoeinkommen.",
                                  blank=True)
 
+    Comprehension = models.StringField(doc="Respondent's understanding of the tasks",
+                                        label="Haben Sie die Aufgaben gut verstanden?",
+                                        choices=[
+                                            ["no", "Nein"],
+                                            ["rather not", "Eher nicht"],
+                                            ["rather yes", "Eher schon"],
+                                            ["yes", "Ja"]
+                                        ],
+                                       widget=widgets.RadioSelect)
+
+    Usage = models.IntegerField(doc="Respondent's usage of the weather forecasts",
+                                label="Wie häufig nutzen Sie Wettervorhersagen im Durchschnitt",
+                                choices=[
+                                   [5, "Mehrmals täglich"],
+                                   [4, "Täglich"],
+                                   [3, "Merhmals wöchentlich"],
+                                   [2, "Wöchentlich"],
+                                   [1, "Seltener"],
+                                   [0, "Nie"]
+                                ],
+                                widget=widgets.RadioSelect)
+
+    Accuracy = models.IntegerField(doc="Respondent's assessment of message's accuracy",
+                                   label="Für wie akkurat halten Sie die Aussage?",
+                                   choices=[
+                                       [-2, ""],
+                                       [-1, ""],
+                                       [0, ""],
+                                       [1, ""],
+                                       [2, ""]
+                                   ],
+                                   widget=widgets.RadioSelectHorizontal)
+
+    Authenticity = models.IntegerField(doc="Respondent's assessment of message's authenticity",
+                                   label="Für wie authentisch halten Sie die Aussage?",
+                                   choices=[
+                                       [-2, ""],
+                                       [-1, ""],
+                                       [0, ""],
+                                       [1, ""],
+                                       [2, ""]
+                                   ],
+                                   widget=widgets.RadioSelectHorizontal)
+
+    Credibility = models.IntegerField(doc="Respondent's assessment of message's credibility",
+                                      label="Für wie glaubwürdig halten Sie die Aussage?",
+                                      choices=[
+                                          [-2, ""],
+                                          [-1, ""],
+                                          [0, ""],
+                                          [1, ""],
+                                          [2, ""]
+                                      ],
+                                      widget=widgets.RadioSelectHorizontal)
+
 
     # CLICCS common questions
     CLICCS1 = models.LongStringField(doc="CLICCS' common question #1",

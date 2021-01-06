@@ -79,4 +79,9 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    pass
+    Location = models.StringField(doc="Treatment location")
+    Information = models.StringField(doc="Treatment information")
+
+    def store_information(self):
+        self.Location = self.participant.vars["location"]
+        self.Information = self.participant.vars["treatment"]

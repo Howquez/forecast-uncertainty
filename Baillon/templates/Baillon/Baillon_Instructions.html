@@ -132,8 +132,8 @@
                         <strong>Lotterien</strong> abwägen.
                     </p>
                     <p>
-                        Bei der Wette setzen Sie auf bestimmte Temperaturen. Wenn diese Temperaturen tatsächlich
-                        gemessen wurden, gewinnen Sie {{ Constants.prize_payoff }},00 € und sonst nichts. Sie bekommen
+                        Bei der Wette setzen Sie auf bestimmte Temperaturen. Wenn eine dieser Temperaturen tatsächlich
+                        gemessen wurde, gewinnen Sie {{ Constants.prize_payoff }},00 € und sonst nichts. Sie bekommen
                         Informationen über eine Woche zuvor gemessene Temperaturen aber erfahren vorerst nicht, auf
                         welchen Ort und welchen genauen Zeitpunkt sich die Wette bezieht.
                     </p>
@@ -179,18 +179,16 @@
                     <p class="lead">
                         Beispiel
                     </p>
-                    <small>
                         Ihre Entscheidungssituation wird wie unten dargestellt aussehen. In der linken Spalte wird die
                         Wette abgebildet. In der rechten Spalte stellen wir die Lotterie dar, die Sie mithilfe des
                         Eingabefelds konfigurieren müssen, indem Sie angeben, wie viele grüne Kugeln sich mindestens
-                        darin befinden müssen.
+                        in der Urne befinden müssen.
                         <br><br>
                         Schauen Sie sich die Entscheidungssituation genau an und probieren Sie verschiedene Eingaben aus.
                         Achten Sie dabei darauf, wie sich die Darstellungen verändern.
                         <br><br>
-                    </small>
 
-                    <div class="container clearfix border-left border-primary w-75 bg-light">
+                    <div class="container clearfix displaystyle-leftborder displaystyle-my-warning w-75 bg-light">
                         <h5 class="card-title display-4 mb-1">
                             <small class="text-muted">Entscheidung</small> {{ player.round_number }}
                             <small class="text-muted">von</small> {{ Constants.num_rounds }}
@@ -389,13 +387,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer bg-light text-secondary">
-                    <p><sup>1</sup> Dabei handelt es sich um eine echte Wettervorhersage, die wir Ihnen am Ende der Studie in Gänze
-                        zur Verfügung stellen. <br>
-                        <sup>2</sup> Wir werden Ihnen aber auch zu diesem Zeitpunkt noch nicht verraten, auf welchen Ort und welchen
-                        Zeitraum sich diese Informationen beziehen.
-                    </p>
-                </div>
             </div>
 
 
@@ -409,11 +400,11 @@
                         In jeder der 6 Entscheidungssituationen geben Sie an, unter welchen Bedingungen Sie die Lotterie
                         der Wette vorziehen. Am Ende dieser Studie wird aus all Ihren Entscheidungen (in allen Aufgaben)
                         zufällig <u>eine</u> Entscheidungssituation ausgewählt, um zu bestimmen, ob Sie
-                        {{ Constants.prize_payoff }},00 € zusätzlich gewinnen oder nicht.
+                        zusätzlich {{ Constants.prize_payoff }},00 € gewinnen oder nicht.
                     </p>
                     <p>
                         Wenn eine Entscheidungssituation aus dieser Aufgabe ausgewählt wird, bestimmt sich Ihr Gewinn
-                        wie folgt: Sowohl die Wette als auch die Lotterie verspricht einen Gewinn von
+                        wie folgt: Sowohl die Wette als auch die Lotterie versprechen einen Gewinn von
                         {{ Constants.prize_payoff }},00 €, wenn die entsprechenden Temperaturen gemessen wurden bzw.
                         wenn eine grüne Kugel aus der Urne gezogen wird und sonst nichts.
                     </p>
@@ -423,7 +414,7 @@
                         die 100 Kugeln enthält und bei der die Anzahl der grünen Kugeln zufällig ausgewählt wird.
                         Wenn diese Lotterie mit der zufällig zusammengestellten Urne nun <u>weniger</u> grüne Kugeln
                         enthält, als Sie mindestens haben wollen, um eine Lotterie zu bevorzugen, dann entscheidet die
-                        Wette über Ihren Gewinn. Wenn die zufällig zusammengestellten Urne nun <u>mehr</u> grüne Kugeln
+                        Wette über Ihren Gewinn. Wenn die zufällig zusammengestellte Urne nun <u>mehr</u> grüne Kugeln
                         enhält, als Sie mindestens haben wollen, dann entscheidet genau diese Lotterie über Ihren Gewinn.
                         <br><br>
                     </p>
@@ -434,17 +425,18 @@
                         dass genau diese Entscheidung am Ende ausgewählt wird, um Ihren Gewinn zu bestimmen.
                     </p>
                     <p>
-                        <u>Fall 1:</u> Angenommen während Ihrer Abwägung wäre eine Lotterie mit einer Urne 43 grünen
-                        Kugeln zusammengestellt worden. Dann würden Sie die Wette gemäß Ihren Angaben dieser Lotterie
-                        vorziehen, weil Sie sich von der Wette eine höhere Gewinnchance erhoffen. Dementsprechend wird
+                        <u>Fall 1:</u> Angenommen während Ihrer Abwägung wäre im Hintergrund eine Lotterie mit einer
+                        Urne 43 grünen Kugeln zusammengestellt worden. Dann würden Sie die Wette dieser Lotterie
+                        vorziehen, weil Sie ja angegeben haben, dass Sie Lotterien nur dann besser als die Wette finden,
+                        wenn sich mindestens 76 grüne Kugeln in der Urne befinden. Dementsprechend wird
                         die Wette auch Ihren Gewinn bestimmen und Sie gewinnen {{ Constants.prize_payoff }},00 €, wenn
                         die entsprechenden Temperaturen tatsächlich gemessen wurden.
                     </p>
                     <p>
-                        <u>Fall 2:</u> Angenommen während Ihrer Abwägung wäre eine Lotterie mit einer Urne 80 grünen
-                        Kugeln zusammengestellt worden. Dann würden Sie, gemäß Ihrer Angaben, die Lotterie der Wette
-                        vorziehen, weil sich mehr als 76 grüne Kugeln in der Urne befinden und Sie sich von der Lotterie
-                        eine höhere Gewinnchance erhoffen. Dementsprechend wird die Lotterie Ihren Gewinn bestimmen und
+                        <u>Fall 2:</u> Angenommen während Ihrer Abwägung wäre im Hintergrund eine Lotterie mit einer
+                        Urne 80 grünen Kugeln zusammengestellt worden. Dann würden Sie, gemäß Ihrer Angaben, die
+                        Lotterie der Wette vorziehen, weil sich mehr als 76 grüne Kugeln in der Urne befinden.
+                        Dementsprechend wird die  Lotterie Ihren Gewinn bestimmen und
                         Sie gewinnen {{ Constants.prize_payoff }},00 €, wenn eine grüne Kugel aus dieser im Hintergrund
                         zufällig zusammengestellten Urne gezogen wird.
                     </p>

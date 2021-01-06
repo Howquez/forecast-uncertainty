@@ -9,8 +9,19 @@ class Demographic_Questions(Page):
     form_model = "player"
     form_fields = ["Age", "Gender", "Education", "Income"]
 
-class Domain_Questions(Page):
-    pass
+class Domain_Questions_1(Page):
+    form_model = "player"
+    form_fields = ["Accuracy", "Authenticity", "Credibility"]
+
+    def js_vars(self):
+        return dict(
+            location=self.participant.vars["location"],
+            treatment=self.participant.vars["treatment"],
+        )
+
+class Domain_Questions_2(Page):
+    form_model = "player"
+    form_fields = ["Comprehension", "Usage"]
 
 class CLICCS_Questions(Page):
     form_model = "player"
@@ -63,7 +74,9 @@ class Results(Page):
             }
 
 
-page_sequence = [Domain_Questions,
+page_sequence = [Domain_Questions_1,
+                 Domain_Questions_2,
                  CLICCS_Questions,
+                 Demographic_Questions,
                  Demographic_Questions,
                  Results]
