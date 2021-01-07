@@ -15,7 +15,7 @@ binarized scoring rule. The ambiguity attitudes are elicited using Baillon et al
 Method. 
 
 
-## 🚏 How you can access it
+## 🚏 How you can access a demo
 You can find the experiment's demo [here](https://forecastsurvey.herokuapp.com/demo/). The link allows you to open 
 three apps
 - `Baillon_MPP`,
@@ -32,8 +32,11 @@ screen looking like this one:
 
 [![](figures/Baillon_Decision_Screen.png)](https://forecastsurvey.herokuapp.com/demo/)
 
+## 🧐 How we analyzed it 
+The analysis plan will be pre-registered, which means that we declare what we are analyzing and how we are analyzing it 
+before seeing the data.
 
-## 📖 Read the docs
+### 📖 Read the docs
 I am creating a wiki [over here](https://github.com/Howquez/forecast-uncertainty/wiki). It will contain more detailed 
 information needed to analyze the resulting data.
 

@@ -1,0 +1,4 @@
+"","participant.code","location","information","prior_LB","prior_BG","prior_UB","prior_AAI","prior_AGII","post_LB","post_BG","post_UB","stated_accuracy","stated_authenticity","stated_credibility"
+"1","jqy0pseo","Ilomantsi","best_guess",10,12,14,0.23,1.33,8,4,6,-2,0,-1
+"2","kqm6yrq9","Ilomantsi","interval",10,12,14,0.00999999999999995,0.0099999999999999,2,5,8,-2,0,2
+"3","h6o2mfht","Ilomantsi","interval",3,5,7,0,1,2,3,5,-2,-1,-2

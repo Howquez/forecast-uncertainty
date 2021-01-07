@@ -37,7 +37,7 @@ class Constants(BaseConstants):
     Ilomantsi_temp   = 3 # 3.2
 
     players_per_group = None
-    num_rounds = 2
+    num_rounds = 6
 
     null_payoff = 0
     prize_payoff = 10
