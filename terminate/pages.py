@@ -78,5 +78,4 @@ page_sequence = [Domain_Questions_1,
                  Domain_Questions_2,
                  CLICCS_Questions,
                  Demographic_Questions,
-                 Demographic_Questions,
                  Results]
