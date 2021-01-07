@@ -38,7 +38,7 @@ before seeing the data.
 
 ### 📖 Read the docs
 I am creating a wiki [over here](https://github.com/Howquez/forecast-uncertainty/wiki). It will contain more detailed 
-information needed to analyze the resulting data.
+information needed to understand the resulting data and replicate the analysis.
 
 ## 🛠 How we built it
 
