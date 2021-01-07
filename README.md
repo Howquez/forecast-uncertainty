@@ -1,6 +1,6 @@
 # 🌦 What makes a (weather) forecast credible?
 [![Generic badge](https://img.shields.io/badge/Status:-WIP-yellow.svg)](https://shields.io/)
-Made with oTree and ❤️
+Made with [oTree](https://www.sciencedirect.com/science/article/pii/S2214635016000101) and ❤️
 
 ## 🎓 What the project is about
 This project is the foundation of an economic experiment that exposes respondents to forecasts and manipulates the 
@@ -34,7 +34,8 @@ screen looking like this one:
 
 
 ## 📖 Read the docs
-I am creating a wiki [over here](https://github.com/Howquez/forecast-uncertainty/wiki).
+I am creating a wiki [over here](https://github.com/Howquez/forecast-uncertainty/wiki). It will contain more detailed 
+information needed to analyze the resulting data.
 
 ## 🛠 How we built it
 
