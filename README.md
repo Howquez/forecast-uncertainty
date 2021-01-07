@@ -22,7 +22,7 @@ three apps
 - `MPP_Standalone`,
 - `Baillon_Standalone`.
 
-The two standalone are slices of the `Baillon_MPP` app which were created to save time if one is solely interested in one
+The two standalone apps are slices of the `Baillon_MPP` app which were created to save time if one is solely interested in one
 of the implementations. To get the better user experience, I recommend to click through the complete (i.e. the 
 Baillon_MPP) app.
 
