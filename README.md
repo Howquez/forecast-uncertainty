@@ -66,25 +66,28 @@ in the participant.vars. The reason I built these apps was to decouple the other
 ### Page Sequence 
 I haven't been working on the BSR app recently. For this reason I will explain the Baillon+MPP survey in what follows.
 The templates, i.e. the pages the respondents see, are displayed in the following order:
-1. [Intro_Welcome](initialize/templates/initialize/Intro_Welcome.html)
-2. [Intro_Instructions](initialize/templates/initialize/Intro_Instructions.html)
-3. [Baillon_Instructions](Baillon/templates/Baillon/Baillon_Instructions.html)
-4. [Baillon_Confirmation](Baillon/templates/Baillon/Baillon_Confirmation.html)
-5. [Baillon_Decision](Baillon/templates/Baillon/Baillon_Decision.html) (6 rounds)
-6. [Baillon_Direct](Baillon/templates/Baillon/Baillon_Direct.html)
-7. [MPP_Instructions](MPP/templates/MPP/MPP_Instructions.html)
-8. [MPP_Confirmation](MPP/templates/MPP/MPP_Confirmation.html)
-9. [MPP_Decision](MPP/templates/MPP/MPP_Decision.html)
-10. [MPP_Direct](MPP/templates/MPP/MPP_Direct.html)
-11. [Baillon_Decision](Baillon/templates/Baillon/Baillon_Decision.html) (6 rounds)
-12. [Baillon_Direct](Baillon/templates/Baillon/Baillon_Direct.html) 
-13. [MPP_Decision](MPP/templates/MPP/MPP_Decision.html)
-14. [MPP_Direct](MPP/templates/MPP/MPP_Direct.html)
-15. [Domain_Questions_1](terminate/templates/terminate/Domain_Questions_1.html)
-16. [Domain_Questions_2](terminate/templates/terminate/Domain_Questions_2.html)
-17. [CLICCS_Questions](terminate/templates/terminate/CLICCS_Questions.html)
-18. [Demographic_Questions](terminate/templates/terminate/Demographic_Questions.html)
-19. [Results](terminate/templates/terminate/Results.html)
+
+| Template                                                                                | Rounds | App         |
+|-----------------------------------------------------------------------------------------|--------|-------------|
+| [Intro_Welcome](oTree/initialize/templates/initialize/Intro_Welcome.html)               | 1      | initialize  |
+| [Intro_Instructions](oTree/initialize/templates/initialize/Intro_Instructions.html)     | 1      | initialize  |
+| [Baillon_Instructions](oTree/Baillon/templates/Baillon/Baillon_Instructions.html)       | 1      | Baillon     |
+| [Baillon_Confirmation](oTree/Baillon/templates/Baillon/Baillon_Confirmation.html)       | 1      | Baillon     |
+| [Baillon_Decision](oTree/Baillon/templates/Baillon/Baillon_Decision.html)               | 6      | Baillon     |
+| [Baillon_Direct](oTree/Baillon/templates/Baillon/Baillon_Direct.html)                   | 1      | Baillon     |
+| [MPP_Instructions](oTree/MPP/templates/MPP/MPP_Instructions.html)                       | 1      | MPP         |
+| [MPP_Confirmation](oTree/MPP/templates/MPP/MPP_Confirmation.html)                       | 1      | MPP         |
+| [MPP_Decision](oTree/MPP/templates/MPP/MPP_Decision.html)                               | 1      | MPP         |
+| [MPP_Direct](oTree/MPP/templates/MPP/MPP_Direct.html)                                   | 1      | MPP         |
+| [Baillon_Decision](oTree/Baillon/templates/Baillon/Baillon_Decision.html)               | 6      | postBaillon |
+| [Baillon_Direct](oTree/Baillon/templates/Baillon/Baillon_Direct.html)                   | 1      | postBaillon |
+| [MPP_Decision](oTree/MPP/templates/MPP/MPP_Decision.html)                               | 1      | postMPP     |
+| [MPP_Direct](oTree/MPP/templates/MPP/MPP_Direct.html)                                   | 1      | postMPP     |
+| [Domain_Questions_1](oTree/terminate/templates/terminate/Domain_Questions_1.html)       | 1      | terminate   |
+| [Domain_Questions_2](oTree/terminate/templates/terminate/Domain_Questions_2.html)       | 1      | terminate   |
+| [CLICCS_Questions](oTree/terminate/templates/terminate/CLICCS_Questions.html)           | 1      | terminate   |
+| [Demographic_Questions](oTree/terminate/templates/terminate/Demographic_Questions.html) | 1      | terminate   |
+| [Results](oTree/terminate/templates/terminate/Results.html)                             | 1      | terminate   |
 
 These templates utilize variables attached to the models (player, group, subsession, participant,...) as well as
 variables passed to the template via `vars_for_template` method or variables passed to the js files via `js_vars` method
