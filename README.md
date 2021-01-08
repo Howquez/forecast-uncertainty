@@ -2,7 +2,7 @@
 [![Generic badge](https://img.shields.io/badge/Status:-WIP-yellow.svg)](https://shields.io/)
 Made with [oTree](https://www.sciencedirect.com/science/article/pii/S2214635016000101) and ❤️
 
-## 🎓 What the project is about
+## 🧐 What the project is about
 This project is the foundation of an economic experiment that exposes respondents to forecasts and manipulates the 
 forecasts' communication strategies between subjects. We elicit the respondents' belief distribution (MPP) and 
 ambiguity attitudes (Baillon) before and after exposure to assess forecasts' credibility.
@@ -32,7 +32,10 @@ screen looking like this one:
 
 [![](figures/Baillon_Decision_Screen.png)](https://forecastsurvey.herokuapp.com/demo/)
 
-## 🧐 How we analyzed it 
+## 🎓 Academic Contributions
+TBD
+
+## 📊 How we analyzed the data 
 The analysis plan will be pre-registered, which means that we declare what we are analyzing and how we are analyzing it 
 before seeing the data.
 
