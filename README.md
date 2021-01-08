@@ -38,7 +38,7 @@ before seeing the data.
 
 ### 📖 Read the docs
 I am creating a wiki [over here](https://github.com/Howquez/forecast-uncertainty/wiki). It will contain more detailed 
-information needed to understand the resulting data and replicate the analysis.
+information needed to understand the resulting data and to replicate the analysis.
 
 ## 🛠 How we built it
 
@@ -48,10 +48,7 @@ a Python module designed to build surveys and experiments. It utilizes
 Python, JavaScript, HTML & CSS (mostly bootstrap 4.1.x). The corresponding analysis is done with R.
 
 ### App Sequence
-As a consequence, there are two different groups of apps. One relying on Baillon+BSR and another one relying on 
-Baillon+MPP.
-
-The experiment first elicits uncertainty attitudes, then beliefs. Afterwards an information treatment is 
+The experiment first elicits uncertainty attitudes, then beliefs. Afterwards, an information treatment is 
 provided. Subsequently, uncertainty attitudes and beliefs are elicited once more. The experiment closes with
 a payoff calculation, a short questionnaire and  the payoff revelation. Because the apps (Baillon and MPP) are played 
 twice, the structure of this experiment is a little unusual because it cannot solely rely on rounds but also utilizes 

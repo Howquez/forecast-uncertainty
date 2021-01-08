@@ -8,6 +8,11 @@ recentFile <- allFiles[allFiles$mtime == max(allFiles$mtime), ] %>% row.names()
 # read data -----
 dt <- read_excel(recentFile) %>% data.table()
 
+
+# for the time being, ignore the last 11 lines and load the simulated data
+dt <- read.csv(file="data/simulation/all_apps_wide.csv",
+               stringsAsFactors = FALSE) %>% data.table()
+
 # select relevant columns for main- and control variables separately
 mainRegex <- "^participant\\.code$|_index_in_pages|Location$|Information$|baillon_equivalent$|event_decision$|lower_bound$|best_guess$|upper_bound$|Accuracy$|Authenticity$|Credibility$|Comprehension$"
 mainVariables <- str_subset(string = names(dt),
@@ -31,12 +36,12 @@ for(app in c("Baillon", "postBaillon")){
     col = glue("{app}.{round}.event_decision")
     
     set(x = mt,
-        i = which(mt[[col]] %>% nchar() > 2),
+        i = which(mt[[col]] %>% as.character() %>% nchar() > 2),
         j = col,
         value = "composite")
     
     set(x = mt,
-        i = which(mt[[col]] %>% nchar() == 2),
+        i = which(mt[[col]] %>% as.character() %>% nchar() == 2),
         j = col,
         value = "single")
   }
@@ -108,6 +113,8 @@ main <- mt[terminate.1.Comprehension != "no",
              post_LB = postMPP.1.lower_bound,
              post_BG = postMPP.1.best_guess,
              post_UB = postMPP.1.upper_bound,
+             post_AAI,
+             post_AGII,
              stated_accuracy = terminate.1.Accuracy,
              stated_authenticity = terminate.1.Authenticity,
              stated_credibility = terminate.1.Credibility)]
