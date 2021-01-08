@@ -15,7 +15,7 @@ SESSION_CONFIGS = [
         num_demo_participants=10,
         app_sequence=["initialize", "MPP", "postMPP", "terminate"],
         location="random",
-        treatment="random"
+        treatment="random",
     ),
     dict(
         name='Baillon',
@@ -23,7 +23,7 @@ SESSION_CONFIGS = [
         num_demo_participants=10,
         app_sequence=["initialize", "Baillon", "postBaillon", "terminate"],
         location="random",
-        treatment="random"
+        treatment="random",
     )
 
 ]

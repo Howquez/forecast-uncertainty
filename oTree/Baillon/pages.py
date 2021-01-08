@@ -61,17 +61,6 @@ class Baillon_Confirmation(Page):
             return True
 
 
-class Forecast_Viz(Page):
-    def is_displayed(self):
-        if self.subsession.this_app_constants()["treatment_displayed"] == True and self.round_number == 1: # as defined in post_baillon/models
-            return True
-
-    def js_vars(self):
-        return dict(
-            opacity = 0.2,
-        )
-
-
 
 class Baillon_Decision(Page):
     form_model = "player"
