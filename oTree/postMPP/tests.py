@@ -8,11 +8,13 @@ import random
 
 class PlayerBot(Bot):
     def play_round(self):
-        temp = random.randint(8, 16)
+        temp = random.randint(8, 14)
+        if self.participant.vars["location"] == "Ilomantsi":
+            temp = random.randint(2, 8)
         yield pages.MPP_Decision, dict(window_width=16, window_height=9, browser="Chrome Test",
                                        review_weather=random.randint(1, 2),
                                        review_instructions=0,
-                                       lower_bound=temp - random.randint(1, 3),
+                                       lower_bound=temp - random.randint(1, 2),
                                        best_guess=temp,
                                        upper_bound=temp + random.randint(1, 3))
         yield pages.MPP_Direct
