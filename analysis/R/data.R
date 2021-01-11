@@ -99,22 +99,48 @@ for(row in 1:NROW(mt)){
   }
 }
 
+# declare the information resulting from treatment
+FC_LB <- ifelse(test = mt$initialize.1.Location == "Weiskirchen",
+                yes  = GER_LB,
+                no   = FIN_LB)
+FC_BG <- ifelse(test = mt$initialize.1.Location == "Weiskirchen",
+                yes  = GER_BG,
+                no   = FIN_BG)
+FC_UB <- ifelse(test = mt$initialize.1.Location == "Weiskirchen",
+                yes  = GER_UB,
+                no   = FIN_UB)
+FC_TEMP <- ifelse(test = mt$initialize.1.Location == "Weiskirchen",
+                  yes  = GER_TEMP,
+                  no   = FIN_TEMP)
+
 # store data -----
 # write new data table with the variables of most interest...
 main <- mt[terminate.1.Comprehension != "no", 
            .(participant.code,
              location = initialize.1.Location,
              information = initialize.1.Information,
-             prior_LB = MPP.1.lower_bound, 
-             prior_BG = MPP.1.best_guess,
-             prior_UB = MPP.1.upper_bound,
+             # variables from round 1
+             # temperature guesses (LB, BG, UB) are normalized by the forecasts
+             prior_LB = MPP.1.lower_bound - FC_LB, 
+             prior_BG = MPP.1.best_guess - FC_BG,
+             prior_UB = MPP.1.upper_bound - FC_UB,
+             prior_width = MPP.1.lower_bound - MPP.1.upper_bound,
              prior_AAI,
              prior_AGII,
-             post_LB = postMPP.1.lower_bound,
-             post_BG = postMPP.1.best_guess,
-             post_UB = postMPP.1.upper_bound,
+             # variables from round 2
+             # temperature guesses (LB, BG, UB) are normalized by the forecasts
+             post_LB = postMPP.1.lower_bound - FC_LB,
+             post_BG = postMPP.1.best_guess - FC_BG,
+             post_UB = postMPP.1.upper_bound - FC_UB,
+             post_width = postMPP.1.lower_bound - postMPP.1.upper_bound,
              post_AAI,
              post_AGII,
+             # differences between both rounds
+             diff_BG = postMPP.1.best_guess - MPP.1.best_guess,
+             diff_width = (MPP.1.lower_bound - MPP.1.upper_bound) - (postMPP.1.lower_bound - postMPP.1.upper_bound), # prior_width - post_width,
+             diff_AAI = prior_AAI - post_AAI,
+             diff_AGII = prior_AGII - post_AGII,
+             # stated variables
              stated_accuracy = terminate.1.Accuracy,
              stated_authenticity = terminate.1.Authenticity,
              stated_credibility = terminate.1.Credibility)]
@@ -129,4 +155,6 @@ write.csv(x = control,
           file = "data/processed/control_variables.csv")
 
 # tidy up -----
-rm(list = ls()[!(ls() %in% c("control" , "main"))])
+keep <- str_subset(string = ls(),
+                   pattern = "^[[:upper:]]*_[[:upper:]]*$|^control$|^main$")
+rm(list = ls()[!(ls() %in% keep)])

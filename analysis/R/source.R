@@ -1,3 +1,5 @@
 rm(list=ls())
 source("analysis/R/config.R")
 source("analysis/R/data.R")
+source("analysis/R/analyses.R")
+source("analysis/R/visualization.R")

@@ -60,7 +60,7 @@ class Player(BasePlayer):
                                    widget=widgets.RadioSelect)
 
     Income = models.IntegerField(doc="Respondent's income",
-                                 label="Bitte nennen Sie Ihr ungefähres Nettoeinkommen.",
+                                 label="Bitte nennen Sie Ihr ungefähres jährliches Nettoeinkommen.",
                                  blank=True)
 
     Comprehension = models.StringField(doc="Respondent's understanding of the tasks",
