@@ -30,8 +30,8 @@ var primary = "#0275d8";
 
 
 // change content on input
-document.getElementById("id_baillon_equivalent").addEventListener('input', () => {
-  green = parseInt(document.getElementById("id_baillon_equivalent").value) || 0;
+document.getElementById("id_matching_probability").addEventListener('input', () => {
+  green = parseInt(document.getElementById("id_matching_probability").value) || 0;
   red = 100 - green;
 
   document.getElementById("quote").innerHTML = `<b><u>${green}</u></b>`;

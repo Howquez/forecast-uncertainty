@@ -65,7 +65,7 @@ class Baillon_Confirmation(Page):
 class Baillon_Decision(Page):
     form_model = "player"
     form_fields = ["review_weather", "review_instructions", "window_width", "window_height", "browser",
-                   "baillon_equivalent"]
+                   "matching_probability"]
 
     def js_vars(self):
         if len(self.player.event_decision) == 3:  # compound decision

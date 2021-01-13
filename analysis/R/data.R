@@ -14,7 +14,7 @@ dt <- read.csv(file="data/simulation/all_apps_wide.csv",
                stringsAsFactors = FALSE) %>% data.table()
 
 # select relevant columns for main- and control variables separately
-mainRegex <- "^participant\\.code$|_index_in_pages|Location$|Information$|baillon_equivalent$|event_decision$|lower_bound$|best_guess$|upper_bound$|Accuracy$|Authenticity$|Credibility$|Comprehension$"
+mainRegex <- "^participant\\.code$|_index_in_pages|Location$|Information$|matching_probability$|event_decision$|lower_bound$|best_guess$|upper_bound$|Accuracy$|Authenticity$|Credibility$|Comprehension$"
 mainVariables <- str_subset(string = names(dt),
                             pattern = mainRegex)
 mt <- dt[, ..mainVariables] #"mt" for Main Table (in contrast to "Control Table" oder "Data Table")
@@ -61,10 +61,10 @@ for(row in 1:NROW(mt)){
     # consider composite events first and get the round numbers where composite events were shown
     cEvents = str_which(string = vector,
                          pattern = "composite")
-    # now loop over these rounds to add the respective baillon_equivalents
+    # now loop over these rounds to add the respective matching_probabilities
     CEPs = NULL # Compound-Event Probabilities
     for(compositeRound in cEvents){
-      col <- glue("{app}.{compositeRound}.baillon_equivalent")
+      col <- glue("{app}.{compositeRound}.matching_probability")
       increment <- mt[row, get(col)]
       CEPs <- append(CEPs, increment)
     }
@@ -76,7 +76,7 @@ for(row in 1:NROW(mt)){
                          pattern = "single")
     SEPs = NULL
     for(singleRound in sEvents){
-      col <- glue("{app}.{singleRound}.baillon_equivalent")
+      col <- glue("{app}.{singleRound}.matching_probability")
       increment <- mt[row, get(col)]
       SEPs <- append(SEPs, increment)
     }

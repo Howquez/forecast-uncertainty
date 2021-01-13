@@ -120,8 +120,8 @@ class SharedBasePlayer(BasePlayer):
     window_height = models.IntegerField(doc="Documents the respondent's browser window's height.")
     browser = models.StringField(doc="Documents the respondent's browser (incl. its version).")
 
-    baillon_equivalent = models.IntegerField(doc="Main variable")
-    pivotal_lottery = models.IntegerField(doc="Random lottery that decides the outcome if it is larger than the respondent's baillon_equivalent")
+    matching_probability = models.IntegerField(doc="Main variable")
+    pivotal_lottery = models.IntegerField(doc="Random lottery that decides the outcome if it is larger than the respondent's matching_probability")
     payment_mechanism = models.StringField(doc="Mechanism determining the payment in this round.")
     random_draw = models.IntegerField(doc="Random draw determining the pivotal lottery's outcome (win if it is smaller than the pivotal_lottery.")
     event_decision = models.StringField(doc="Event that represents the weather dependent lottery in this round.")
@@ -132,7 +132,7 @@ class SharedBasePlayer(BasePlayer):
         self.pivotal_lottery = random.randint(0, 100)
         self.random_draw = random.randint(0, 100)
 
-        if self.pivotal_lottery >= self.baillon_equivalent: # lottery determines outcome
+        if self.pivotal_lottery >= self.matching_probability: # lottery determines outcome
             self.payment_mechanism = "Lotterie"
             if self.random_draw <= self.pivotal_lottery:
                 self.success = True
@@ -155,7 +155,7 @@ class SharedBasePlayer(BasePlayer):
                         self.participant.vars["payment_outcome"] = "leider verloren"
                         self.participant.vars["payment_event"] = self.event_decision
                         self.participant.vars["pivotal_lottery"] = self.pivotal_lottery
-                        self.participant.vars["pivotal_equivalent"] = self.baillon_equivalent
+                        self.participant.vars["pivotal_equivalent"] = self.matching_probability
                         self.is_relevant = True
 
                         if self.success: # the player needs to be successful to win the prize
@@ -174,7 +174,7 @@ class SharedBasePlayer(BasePlayer):
                         self.participant.vars["payment_outcome"] = "leider verloren"
                         self.participant.vars["payment_event"] = self.event_decision
                         self.participant.vars["pivotal_lottery"] = self.pivotal_lottery
-                        self.participant.vars["pivotal_equivalent"] = self.baillon_equivalent
+                        self.participant.vars["pivotal_equivalent"] = self.matching_probability
                         self.is_relevant = True
 
                         if self.success: # the player needs to be successful to win the prize
