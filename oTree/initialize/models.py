@@ -15,8 +15,8 @@ import re
 author = 'Hauke Roggenkamp'
 
 doc = """
-This app initializes the remainder of the survey and sets participant vars that are used in Baillon and BSR apps.
-It is also a convenient place to carry general app overarching instructions.
+Initiate the remainder of the survey and sets participant vars that are used in Baillon and BSR apps.
+It is also a convenient place to carry general app-overarching instructions.
 """
 
 

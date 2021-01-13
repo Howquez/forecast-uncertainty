@@ -4,7 +4,11 @@ from MPP.models import Constants as OriginalConstants, SharedBaseSubsession, Sha
 author = "Hauke Roggenkamp"
 
 doc = """
-Your app description
+This app is a clone of another app (MPP) that is designed to elicit beliefs via  Multiple Point Prediction (MPP) as 
+proposed in Eyting & Schmidt (2020, Working Paper).
+
+As such, this app is just an iteration of the original app. The only element that is new in this app is the introduction
+of additional information.
 """
 
 

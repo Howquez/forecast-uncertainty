@@ -13,7 +13,8 @@ from otree.api import (
 author = "Hauke Roggenkamp"
 
 doc = """
-Your app description
+Similar to the initialize app, this app wraps the survey/experiment and closes it. It utilizes participant vars to display
+results and payoffs. In addition, it contains a little survey for control variables.
 """
 
 
