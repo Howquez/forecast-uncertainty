@@ -39,7 +39,7 @@ TBD
 The analysis plan will be pre-registered, which means that we declare what we are analyzing and how we are analyzing it 
 before seeing the data.
 
-### 📖 Read the docs
+📖 Read the docs: 
 I am creating a wiki [over here](https://github.com/Howquez/forecast-uncertainty/wiki). It will contain more detailed 
 information needed to understand the resulting data and to replicate the analysis.
 
