@@ -156,5 +156,5 @@ write.csv(x = control,
 
 # tidy up -----
 keep <- str_subset(string = ls(),
-                   pattern = "^[[:upper:]]*_[[:upper:]]*$|^control$|^main$")
+                   pattern = "^[[:upper:]]*_[[:upper:]]*$|^control$|^main$|^style_")
 rm(list = ls()[!(ls() %in% keep)])

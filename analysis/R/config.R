@@ -1,5 +1,8 @@
-# Setup -----
-# ** Packages -----
+# Packages -----
+
+
+
+# ** load -----
 listOfPackages <- c("rmarkdown",
                     "knitr",
                     "glue",          # get some python-like string operations
@@ -17,17 +20,19 @@ listOfPackages <- c("rmarkdown",
                     "openxlsx",      # write xlsx files
                     "readxl")        # read xlsx files
 
-newPackages <- listOfPackages[!(listOfPackages %in% installed.packages()[, "Package"])]
-
-if(length(newPackages) > 0){
-  install.packages(newPackages)
-}
+# newPackages <- listOfPackages[!(listOfPackages %in% installed.packages()[, "Package"])]
+# 
+# if(length(newPackages) > 0){
+#   install.packages(newPackages)
+# }
 
 for(package in listOfPackages){
   require(package, character.only = TRUE)
 }
 
-# ** Hard coded variables -----
+
+# Hard coded variables -----
+# ** temperatures -----
 # temperatures & forecasts in Weiskirchen...
 GER_TEMP <- 9
 GER_BG   <- 12
@@ -38,3 +43,9 @@ FIN_TEMP <- 3
 FIN_BG   <- 4
 FIN_LB   <- 2
 FIN_UB   <- 8
+
+
+# ** design -----
+style_primary <- "#FF0066"
+style_secondary <- "#63FFC1"
+
