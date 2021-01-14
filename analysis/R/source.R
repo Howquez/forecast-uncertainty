@@ -1,3 +1,6 @@
+# We strongly recommend you to read the docs which you can find here:
+# https://github.com/Howquez/forecast-uncertainty/wiki
+
 rm(list=ls())
 
 #  RENV 
