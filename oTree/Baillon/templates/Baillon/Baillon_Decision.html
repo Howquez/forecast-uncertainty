@@ -17,11 +17,15 @@
     <script src="https://code.highcharts.com/modules/pattern-fill.js"></script>
     <script src="https://code.highcharts.com/modules/broken-axis.js"></script>
     <script src="{% static 'global/js/weather_viz.js' %}"></script>
+    {% if subsession.round_number == 1 %}
+        <script src="{% static 'global/js/trigger_modal.js' %}"></script>
+    {% endif %}
     <script src="{% static 'global/js/event_bar.js' %}"></script>
     <script src="{% static 'global/js/lottery_viz.js' %}"></script>
     <script src="{% static 'global/js/general_information.js' %}"></script>
     <script src="{% static 'global/js/count_clicks.js' %}"></script>
     <script src="{% static 'global/js/buttons.js' %}"></script>
+
 {% endblock %}
 
 
