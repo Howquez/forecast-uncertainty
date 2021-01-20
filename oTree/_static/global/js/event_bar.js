@@ -68,14 +68,14 @@
     }
 
 // set subheader of table
-    var E1SubHeader  = "<small>Sie gewinnen 10 Euro, wenn die Temperatur bis unter 8,0°C beträgt (und sonst nichts).</small>";
-    var E2SubHeader  = "<small>Sie gewinnen 10 Euro, wenn die Temperatur zwischen 8,0°C und 13,9°C beträgt (und sonst nichts).</small>";
+    var E1SubHeader  = "<small>Sie gewinnen 10 Euro, wenn die Temperatur unter 8°C beträgt (und sonst nichts).</small>";
+    var E2SubHeader  = "<small>Sie gewinnen 10 Euro, wenn die Temperatur zwischen 8°C und 14°C beträgt (und sonst nichts).</small>";
     // var E3SubHeader  = "<em>Sie gewinnen 10 Euro, wenn die Temperatur mindestens 14,0°C beträgt (und sonst nichts).</em>";
     var E3SubHeader  = `<small>Sie gewinnen 10 Euro, wenn die Temperatur mindestens ${labelArray[2]}°C (und sonst nichts).</small>`;
     // var E12SubHeader = "<em>Sie gewinnen 10 Euro, wenn die Temperatur höchstens 13,9°C beträgt (und sonst nichts).</em>";
-    var E12SubHeader = `<small>Sie gewinnen 10 Euro, wenn die Temperatur unter ${labelArray[2]},0°C beträgt (und sonst nichts).</small>`;
-    var E23SubHeader = `<small>Sie gewinnen 10 Euro, wenn die Temperatur mindestens ${labelArray[1]},0°C beträgt (und sonst nichts).</small>`;
-    var E13SubHeader = "<small>Sie gewinnen 10 Euro, wenn die Temperatur unnter 8,0°C oder über 14,0°C beträgt (und sonst nichts).</small>";
+    var E12SubHeader = `<small>Sie gewinnen 10 Euro, wenn die Temperatur unter ${labelArray[2]}°C beträgt (und sonst nichts).</small>`;
+    var E23SubHeader = `<small>Sie gewinnen 10 Euro, wenn die Temperatur mindestens ${labelArray[1]}°C beträgt (und sonst nichts).</small>`;
+    var E13SubHeader = "<small>Sie gewinnen 10 Euro, wenn die Temperatur unter 8°C oder über 14°C beträgt (und sonst nichts).</small>";
 
     // var E1SubHeader  = `<em>Sie gewinnen 10 Euro, wenn die Temperatur bis einschließlich ${labelArray[1]}°C beträgt (und sonst nichts).</em>`;
     // var E2SubHeader  = `<em>Sie gewinnen 10 Euro, wenn die Temperatur ${labelArray[1]}°C bis ${labelArray[2]}°C beträgt (und sonst nichts).</em>`;
