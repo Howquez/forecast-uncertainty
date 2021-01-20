@@ -7,7 +7,7 @@
     console.log(event)
 
 // set constants
-    const pattern = "M 3 0 L 3 10 M 8 0 L 8 10"; //"M 0 0 L 10 10 M 9 -1 L 11 1 M -1 9 L 1 11"; // more patterns here: https://www.highcharts.com/docs/chart-design-and-style/pattern-fills
+    const pattern = "M 0 0 L 10 10 M 9 -1 L 11 1 M -1 9 L 1 11"; //"M 3 0 L 3 10 M 8 0 L 8 10"; // more patterns here: https://www.highcharts.com/docs/chart-design-and-style/pattern-fills
     const successColor = "#63FFC1"; //"#5DE58E";
     const successLabel = {
         backgroundColor: "rgba(255, 255, 255, 0.33)",
@@ -23,6 +23,7 @@
             color: "#FF0066", //"#FF5B66";,
             width: 10,
             height: 10,
+            patternTransform: "scale(2)"
         }
     };
     const lossLabel = {
