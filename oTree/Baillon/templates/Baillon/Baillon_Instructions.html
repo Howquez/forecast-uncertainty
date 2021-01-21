@@ -415,36 +415,48 @@
                         wenn eine grüne Kugel aus der Urne gezogen wird und sonst nichts.
                     </p>
                     <p>
-                        Während Sie abwägen, wie viele grüne Kugeln sich mindestens in der Urne befinden müssen,
-                        damit Sie die Lotterie gegenüber der Wette bevorzugen, wird im Hintergrund eine Urne vorbereitet,
-                        die 100 Kugeln enthält und bei der die Anzahl der grünen Kugeln zufällig ausgewählt wird.
-                        Wenn diese Lotterie mit der zufällig zusammengestellten Urne nun <u>weniger</u> grüne Kugeln
-                        enthält, als Sie mindestens haben wollen, um eine Lotterie zu bevorzugen, dann entscheidet die
-                        Wette über Ihren Gewinn. Wenn die zufällig zusammengestellte Urne nun <u>mehr</u> grüne Kugeln
-                        enhält, als Sie mindestens haben wollen, dann entscheidet genau diese Lotterie über Ihren Gewinn.
+                        In jeder Ihrer Entscheidungen wägen Sie ab, wie viele grüne Kugeln sich mindestens in der Urne
+                        befinden müssen, damit Sie die entsprechende Lotterie gegenüber der Wette bevorzugen. Wir
+                        bezeichnen diese Urnen als <strong><em>Basisurnen</em></strong>, weil sie Ihre Mindestanforderungen an eine Lotterie
+                        widerspiegeln.
+                    </p>
+                    <p>
+                        Während Sie abwägen, wie viele grüne Kugeln sich mindestens in der jeweiligen Basisurne befinden
+                        müssen, damit Sie die Lotterie gegenüber der Wette bevorzugen, wird im Hintergrund eine weitere
+                        Urne vorbereitet, die ebenfalls 100 Kugeln enthält und bei der die Anzahl der grünen Kugeln
+                        <u>zufällig</u> ausgewählt wird. Diese Urne nennen wir <strong><em>Verdiensturne</em></strong>,
+                        weil Sie am Ende darüber bestimmen wird, ob Sie gewinnen oder nicht.
+                        Wenn diese Lotterie mit der Verdiensturne nun weniger grüne Kugeln als die Basisurne enthält,
+                        dann entscheidet die Wette über Ihren Gewinn. Wenn die zufällig zusammengestellte Verdiensturne
+                        nun mehr grüne Kugeln als die Basisurne enhält, dann entscheidet genau diese Lotterie mit der
+                        Verdiensturne über Ihren Gewinn.
                         <br><br>
                     </p>
 
                     <p class="lead">
-                        Nehmen Sie an, Sie haben sich in einer Situation dafür Entschieden, dass Sie eine Lotterie erst
-                        dann besser als die Wette finden, wenn sich mindestens <strong>76</strong> grüne Kugeln in der Urne befinden und
-                        dass genau diese Entscheidung am Ende ausgewählt wird, um Ihren Gewinn zu bestimmen.
+                        Nehmen Sie an, Sie haben sich in einer Situation dafür entschieden, dass Sie eine Lotterie erst
+                        dann besser als die Wette finden, wenn sich mindestens <strong>76</strong> grüne Kugeln in der
+                        Basisurne befinden und dass genau diese Entscheidung am Ende ausgewählt wird, um Ihren Gewinn zu
+                        bestimmen.
                     </p>
                     <p>
                         <u>Fall 1:</u> Angenommen während Ihrer Abwägung wäre im Hintergrund eine Lotterie mit einer
-                        Urne 43 grünen Kugeln zusammengestellt worden. Dann würden Sie die Wette dieser Lotterie
+                        Verdiensturne 43 grünen Kugeln zusammengestellt worden. Dann würden Sie die Wette dieser Lotterie
                         vorziehen, weil Sie ja angegeben haben, dass Sie Lotterien nur dann besser als die Wette finden,
-                        wenn sich mindestens 76 grüne Kugeln in der Urne befinden. Dementsprechend wird
-                        die Wette auch Ihren Gewinn bestimmen und Sie gewinnen {{ Constants.prize_payoff }},00 €, wenn
-                        die entsprechenden Temperaturen tatsächlich gemessen wurden.
+                        wenn sich mindestens 76 grüne Kugeln in der Urne befinden. Dementsprechend enthält die
+                        Verdiensturne weniger grüne Kugeln als sie mit Ihrer Basisurne fordern.
+                        Daher wird die Wette Ihren Gewinn bestimmen und Sie gewinnen {{ Constants.prize_payoff }},00 €,
+                        wenn die entsprechenden Temperaturen tatsächlich gemessen wurden.
                     </p>
                     <p>
                         <u>Fall 2:</u> Angenommen während Ihrer Abwägung wäre im Hintergrund eine Lotterie mit einer
-                        Urne 80 grünen Kugeln zusammengestellt worden. Dann würden Sie, gemäß Ihrer Angaben, die
-                        Lotterie der Wette vorziehen, weil sich mehr als 76 grüne Kugeln in der Urne befinden.
-                        Dementsprechend wird die  Lotterie Ihren Gewinn bestimmen und
-                        Sie gewinnen {{ Constants.prize_payoff }},00 €, wenn eine grüne Kugel aus dieser im Hintergrund
-                        zufällig zusammengestellten Urne gezogen wird.
+                        Verdiensturne 80 grünen Kugeln zusammengestellt worden. Dann würden Sie, gemäß Ihrer Angaben, die
+                        Lotterie der Wette vorziehen, weil sich mehr als 76 grüne Kugeln in der Verdiensturne befinden.
+                        Das heißt, dass die Verdiensturne mehr grüne Kugeln beiinhaltet als Sie durch Ihre Basisurne
+                        fordern.
+                        Dementsprechend wird die Lotterie mit der Verdiensturne (und den 80 grünen Kugeln darin) Ihren
+                        Gewinn bestimmen und Sie gewinnen {{ Constants.prize_payoff }},00 €, wenn eine grüne Kugel
+                        gezogen wird.
                     </p>
 
 
