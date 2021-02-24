@@ -1,0 +1,67 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+    <link href="{% static 'global/css/global.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block content %}
+<body onload="">
+<img src="{% static 'global/images/cool-background.svg' %}" id="bg" alt=""/>
+
+
+    <div class="card mt-5">
+        <div class="card-body">
+            <h1 class="display-4">Willkommen!</h1>
+            <p class="lead">Vielen Dank für Ihre Bereitschaft an der Studie teilzunehmen.</p>
+
+            <table class="table mt-5 mb-5">
+                <tbody>
+                    <tr>
+                        <th scope="row">Name der Studie</th>
+                        <td>Wettervorhersagen</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Dauer der Studie</th>
+                        <td>ungefähr 30 Minuten</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Bezahlung</th>
+                        <td>
+                            {{ session.config.participation_fee }} sowie ein Bonus dessen Betrag von Ihren
+                            Entscheidungen abhängt.
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Technische Vorraussetzungen</th>
+                        <td>
+                            Die Studie funktioniert sowohl auf Smartphones und Tablets als auch auf Laptops und PCs. Außerdem
+                            funktioniert sie in allen modernen Browsern. Für einen möglichst reibungslosen Ablauf raten wir
+                            dazu, einen Laptop oder PC mit stabiler Internetverbindung zu benutzen.
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Einwilligung</th>
+                        <td>
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+                                <label class="form-check-label" for="exampleCheck1">
+                                    Ich stimme der anonymisierten Analyse meiner Antworten zum Zwecke der
+                                    wissenschaftlichen Auswertung zu. Außerdem bin ich bereit die Studie ohne
+                                    Unterbrechungen zu beantworten.
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-center mb-5">
+                <button class="btn btn-primary btn-lg" role="button">Experiment starten</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+{% endblock %}

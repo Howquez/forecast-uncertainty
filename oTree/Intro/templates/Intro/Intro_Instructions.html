@@ -1,0 +1,567 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+    <link href="{% static 'global/css/global.css' %}" rel="stylesheet">
+    <!-- change ul-style as it affects the check-boxes in the multiple choice comprehension questions -->
+    <style>
+        ul {
+            list-style-type: none;
+        }
+    </style>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="{% static 'global/js/landscape_view.js' %}"></script>
+
+
+<script src="{% static 'global/js/basics.js' %}"></script>
+<script src="{% static 'global/js/time_series.js' %}"></script>
+<script src="{% static 'global/js/buttons.js' %}"></script>
+<script src="{% static 'global/js/decision.js' %}"></script>
+<script src="{% static 'global/js/general_information.js' %}"></script>
+<script src="{% static 'global/js/weather_viz.js' %}"></script>
+
+{% endblock %}
+
+
+{% block content %}
+<body onload="">
+<img src="{% static 'global/images/cool-background.svg' %}" id="bg" alt=""/>
+
+    <!-- Header
+     <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist"> -->
+    <nav class="navbar bg-header border-bottom mb-4 justify-content-between" role="tablist">
+
+        <ul class="nav" id="myTab" role="tablist">
+            <li class="nav-item" >
+                <a class="nav-link back-and-forth active" id="part1-tab" data-toggle="tab" href="#part1" role="tab" aria-controls="part1"> Allgemeines </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link back-and-forth" id="part2-tab" data-toggle="tab" href="#part2" role="tab" aria-controls="part2"> Verdienst </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link back-and-forth" id="part3-tab" data-toggle="tab" href="#part3" role="tab" aria-controls="part3"> Wetter </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link back-and-forth" id="part4-tab" data-toggle="tab" href="#part4" role="tab" aria-controls="part4"> Demo </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link back-and-forth" id="part5-tab" data-toggle="tab" href="#part5" role="tab" aria-controls="part5"> Beispiele </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link back-and-forth" id="part6-tab" data-toggle="tab" href="#part6" role="tab" aria-controls="part6"> Verständnisfragen </a>
+            </li>
+        </ul>
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#666666" class="bi bi-book-fill" viewBox="0 0 16 16"
+        data-toggle="modal" data-target="#instructionsModal" id="instructions_icon">
+            <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
+        </svg>
+
+    </nav>
+
+    <!-- Hidden Tracking Fields -->
+    <input type="hidden" name="window_width" id="id_window_width" value="0"/>
+    <input type="hidden" name="window_height" id="id_window_height" value="0"/>
+    <input type="hidden" name="browser" id="id_browser" value="0"/>
+
+
+    <!-- Landscape View Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="card-title text-center mt-4 mb-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-laptop" viewBox="0 0 16 16">
+                            <path d="M13.5 3a.5.5 0 0 1 .5.5V11H2V3.5a.5.5 0 0 1 .5-.5h11zm-11-1A1.5 1.5 0 0 0 1 3.5V12h14V3.5A1.5 1.5 0 0 0 13.5 2h-11zM0 12.5h16a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5z"/>
+                        </svg>
+                    </h5>
+                    <p>
+                        Diese Studie ist für die Beantwortung an einem PC, Laptop oder Tablet optimiert. Sie können den
+                        Einladungslink aus Ihrer eMail verwenden, um die Studie an einem dieser Geräte fortzufahren.
+                    </p>
+                    <h5 class="card-title text-center mt-5 mb-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-phone-landscape" viewBox="0 0 16 16">
+                            <path d="M1 4.5a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-6zm-1 6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v6z"/>
+                            <path d="M14 7.5a1 1 0 1 0-2 0 1 1 0 0 0 2 0z"/>
+                        </svg>
+                    </h5>
+                    <p>
+                        Sollte es Ihnen nicht möglich sein, eines dieser Geräte zu verwenden, bitten wir Sie Ihr Smartphone im
+                        Querformat zu nutzen und diese Seite neu zu laden.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Instructions -->
+    <div class="card mt-5">
+
+        <div class="tab-content" id="myTabContent">
+
+            <!-- Part 1: Allgemeines -->
+            <div class="tab-pane show active" id="part1" role="tabpanel" aria-labelledby="part1-tab">
+                <div class="card-header bg-white border-bottom-0 mt-3 sticky-top">
+                    <p class="h4">Allgemeines</p>
+                </div>
+                <div class="card-body">
+
+                    <h5>
+                        <span class="badge badge-primary mt-4">
+                            Ablauf
+                        </span>
+                    </h5>
+                    <p>
+                        In dieser Studie können Sie einen Bonus in Höhe von {{ Constants.bonus }} € gewinnen.
+                        Dafür müssen Sie in insgesamt 2 mal 6 Runden Abwägungen treffen. Danach  stellen wir Ihnen
+                        einige Fragen zu Ihrer Person. Zum Schluss zeigen wir Ihnen, wie viel Geld Sie in dieser Studie
+                        verdient haben.
+                    </p>
+                    <p>
+                        In jeder Runde müssen Sie zwischen einer Lotterie und einer Wette über das Wetter abwägen.
+                        Um die Wette besser beurteilen zu können, bekommen Sie Informationen über zuvor gemessene
+                        Temperaturen aber erfahren vorerst nicht, auf welchen Ort und welchen genauen Zeitpunkt sich die
+                        Wette bezieht. Nach den ersten 6 Runden bekommen Sie zusätzlich eine Wettervorhersage angezeigt
+                        und müssen die 6 Runden ein zweites (und letztes) Mal durchlaufen.
+                    </p>
+
+                    <h5>
+                        <span class="badge badge-primary mt-4">
+                            Wette
+                        </span>
+                    </h5>
+                    <p>
+                        Bei der Wette setzen Sie auf bestimmte Temperaturen, also zum Beispiel darauf, dass die
+                        Temperatur in einem bestimmten Zeitraum mindestens 14°C betragen wird. Wenn die Temperatur dann
+                        tatsächlich über 14°C beträgt, gewinnen Sie {{ Constants.bonus }} €.
+                    </p>
+                    <p>
+                        Die Wette wird sich in allen 6 Runden auf den gleichen Ort und Zeitraum beziehen, aber
+                        hinsichtlich der Temperaturbereiche unterscheiden. Das heißt, dass Sie in einer Runde zum
+                        Beispiel darauf wetten können, dass die Temperatur mindestens 14°C beträgt und einer anderen
+                        Runde darauf wetten, dass die Temperatur höchstens 8°C beträgt. Aus diesem Grund müssen Sie sich
+                        zu Beginn einer jeden Runde genau anschauen, bei welchen Temperaturbereichen Sie gewinnen und
+                        verlieren.
+                    </p>
+
+                    <h5>
+                        <span class="badge badge-primary mt-4">
+                            Lotterie
+                        </span>
+                    </h5>
+                    <p>
+                        Für die Lotterie können Sie sich eine virtuelle Urne (also einen Lostopf) mit 100 Kugeln darin
+                        vorstellen. Die Kugeln sind entweder grün oder rot gefärbt. Nun wird aus der Urne zufällig eine
+                        Kugel gezogen. Ist die gezogene Kugel grün, gewinnen Sie 10,00 €. Wenn die Kugel hingegen rot
+                        ist, gewinnen Sie nichts.
+                    </p>
+
+                    <h5>
+                        <span class="badge badge-primary mt-4">
+                            Aufgabe
+                        </span>
+                    </h5>
+                    <p>
+                        Ihre Aufgabe besteht nun in jeder Runde darin, abzuwägen, unter welchen Bedingungen Sie die
+                        Lotterie der Wette gerade so vorziehen würden. Sie werden deshalb gefragt, wie viele von
+                        insgesamt 100 Kugeln grün sein müssen, damit Sie die Lotterie bevorzugen.
+                    </p>
+
+
+
+
+                    <!-- on Card Navigation  Arrows -->
+                    <div class="row justify-content-md-center mt-5">
+                        <div class="col col-lg-2">
+                        <p class="prevtab text-secondary text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#829FD9" class="bi-arrow-left-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                            </svg>
+                        </p>
+                        </div>
+
+                        <div class="col col-lg-2">
+                        <p onclick="topFunction()" class="nexttab text-center" data-toggle="tooltip" data-placement="top" title="Weiter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#0029FA" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
+                            </svg>
+                        </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Part 2: Verdienst  -->
+            <div class="tab-pane" id="part2" role="tabpanel" aria-labelledby="part2-tab">
+                <div class="card-header bg-white border-bottom-0 mt-3 sticky-top">
+                    <p class="h4">Verdienst</p>
+                </div>
+                <div class="card-body">
+                    <h5>
+                        <span class="badge badge-primary mt-4">
+                            Tag
+                        </span>
+                    </h5>
+                    <p>
+                        Am Ende dieser Studie wird ihren insgesamt 12 Abwägungen zufällig eine Runde ausgewählt, um zu
+                        bestimmen, ob Sie {{ Constants.bonus }} € gewinnen oder nicht. Deshalb kann jede Runde
+                        entscheidend für Ihre Auszahlung sein.
+                    </p>
+
+                    <h5>
+                        <span class="badge badge-primary mt-4">
+                            Tag
+                        </span>
+                    </h5>
+                    <p>
+                        Während Sie diese Anleitung lesen, bereitet ein Computerprogramm eine Lotterie mit insgesamt 100
+                        Kugeln vor. Die Zusammensetzung roten und grünen Kugeln ist dabei rein zufällig. Ob sich nun 5
+                        oder 91 grüne Kugeln in der Urne befinden, ist genauso wahrscheinlich, wie dass sich 0, 100 oder
+                        irgendeine Anzahl an grünen Kugeln inmitten dieser Extreme in der Urne befindet. Wenn diese
+                        zufällig erstellte Lotterie weniger grüne Kugeln enthält, als Sie in der entscheidenden Runde
+                        mindestens gefordert haben, dann entscheidet die Wette darüber, ob Sie gewinnen. In diesem Fall
+                        bekommen Sie {{ Constants.bonus }} €, wenn das Wetter, auf das Sie gesetzt haben, tatsächlich
+                        eintritt und sonst nichts.
+                    </p>
+
+                    <h5>
+                        <span class="badge badge-primary mt-4">
+                            Tag
+                        </span>
+                    </h5>
+                    <p>
+                        Wenn diese zufällig erstellte Lotterie hingegen mehr grüne Kugeln enthält, als Sie mindestens
+                        gefordert haben, dann entscheidet genau diese zufällig erstellte Lotterie über Ihren Gewinn und
+                        Sie erhalten 10,00 €, wenn zufällig eine grüne Kugel aus dieser Urne gezogen wird.
+                    </p>
+
+
+
+
+
+                    <!-- on Card Navigation  Arrows -->
+                    <div class="row justify-content-md-center mt-5">
+                        <div class="col col-lg-2">
+                        <p onclick="topFunction()" class="prevtab text-center" data-toggle="tooltip" data-placement="top" title="Zurück">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#0029FA" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                            </svg>
+                        </p>
+                        </div>
+
+                        <div class="col col-lg-2">
+                        <p onclick="topFunction()" class="nexttab text-center" data-toggle="tooltip" data-placement="top" title="Weiter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#0029FA" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
+                            </svg>
+                        </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Part 3: Wetter  -->
+            <div class="tab-pane" id="part3" role="tabpanel" aria-labelledby="part3-tab">
+                <div class="card-header bg-white border-bottom-0 mt-3 sticky-top">
+                    <p class="h4">Wetter</p>
+                </div>
+                <div class="card-body">
+                    <p>
+                        Das Wettergeschehen, auf das sich diese Studie bezieht, liegt in der Vergangenheit.
+                        Dementsprechend zeigen wir Ihnen historische Wetterdaten und Wettervorhersagen.
+                        Dadurch können wir Ihren Gewinn sofort berechnen, sollte Ihr Gewinn auf Grundlage einer Wette
+                        bestimmt werden. Der Ort, der Zeitraum und die Informationen, die wir Ihnen darstellen, wurden
+                        zu Beginn der Studie bestimmt und können nicht durch Ihre Entscheidungen beeinflusst werden.
+                        Darüber hinaus kann sich das Wettergeschehen auf einen beliebigen Ort der Welt zu einem
+                        beliebigen Zeitraum beziehen. Dadurch stellen wir sicher, dass Sie nur die von uns
+                        bereitgestellten Informationen für die Abwägungen verwenden können.
+                    </p>
+                    <p>
+                        In der Grafik sehen Sie die bereits genannten Wetterdaten. Dort sind jeweils Temperaturen von
+                        drei aufeinanderfolgenden Tagen um 14:00 Uhr (MEZ)<sup>1</sup> dargestellt. Ihre Schätzung soll sich nun
+                        auf den Sonntag 9 Tage später (also den lila schraffierten Bereich) beziehen. Wie bereits
+                        beschrieben, werden wir Ihnen nach der 6ten Runde zusätzlich eine Wettervorhersage zeigen.
+                        Diese wird dann im lila schraffierten Bereich der Grafik dargestellt.
+                    </p>
+                    <p>
+                        Alle dargestellten Daten sind echt, also von Experten gemessen oder, im Falle der Vorhersage,
+                        berechnet. Wir runden die Daten der Einfachheit halber. Am Ende der Studie werden wir Ihnen die
+                        Quellen zu den jeweiligen Daten zeigen.
+                    </p>
+                    <p>
+                        Beachten Sie, dass Sie die Grafik sowie die Instruktionen jederzeit abrufen können.
+                        Für eine erneute Betrachtung der Grafik klicken Sie einfach auf das X-Symbol. Für eine erneute
+                        Betrachtung der Instruktionen klicken Sie einfach auf das Y-Symbol.
+                    </p>
+
+                    <div class="container clearfix border-left border-primary w-75 bg-light">
+                    <figure class="highcharts-figure">
+                        <div id="weather_viz"></div>
+                        <figcaption>
+
+                        </figcaption>
+                    </figure>
+                </div>
+
+                    <!-- on Card Navigation  Arrows -->
+                    <div class="row justify-content-md-center mt-5">
+                        <div class="col col-lg-2">
+                            <p onclick="topFunction()" class="prevtab text-center" data-toggle="tooltip" data-placement="top" title="Zurück">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#0029FA" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                                </svg>
+                            </p>
+                        </div>
+
+                        <div class="col col-lg-2">
+                            <p onclick="topFunction()" class="nexttab text-center" data-toggle="tooltip" data-placement="top" title="Weiter">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#0029FA" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
+                                </svg>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light text-secondary">
+                    <p><sup>1</sup> Die Zeitangabe MEZ bedeutet nicht automatisch, dass es sich um einen Ort in der MEZ handelt.</p>
+                </div>
+            </div>
+
+
+            <!-- Part 4: Demo  -->
+            <div class="tab-pane" id="part4" role="tabpanel" aria-labelledby="part4-tab">
+                <div class="card-header bg-white border-bottom-0 mt-3 sticky-top">
+                    <p class="h4">Demo</p>
+                </div>
+                <div class="card-body">
+                    <p>
+                        Ihre Entscheidungssituation wird wie unten dargestellt aussehen. In der linken Spalte wird die
+                        Wette abgebildet. In der rechten Spalte stellen wir die Lotterie dar, die Sie mithilfe des
+                        Eingabefelds konfigurieren müssen: Dort geben Sie also an, wie viele grüne Kugeln sich
+                        mindestens in der Urne befinden müssen.
+                    </p>
+                    <p>
+                        Schauen Sie sich die Entscheidungssituation genau an und probieren Sie verschiedene Eingaben
+                        aus. Achten Sie dabei darauf, wie sich die Darstellungen verändern.
+                    </p>
+
+                    <div class="container clearfix displaystyle-leftborder displaystyle-my-warning w-75 bg-light">
+                        <div class="row justify-content-center">
+                            <div class="card mt-5 mb-5 w-75">
+                               <div class="card-body">
+
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- on Card Navigation  Arrows -->
+                    <div class="row justify-content-md-center mt-5">
+                        <div class="col col-lg-2">
+                        <p onclick="topFunction()" class="prevtab text-center" data-toggle="tooltip" data-placement="top" title="Zurück">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#0029FA" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                            </svg>
+                        </p>
+                        </div>
+
+                        <div class="col col-lg-2">
+                        <p onclick="topFunction()" class="nexttab text-center" data-toggle="tooltip" data-placement="top" title="Weiter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#0029FA" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
+                            </svg>
+                        </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Part 5: Beispiele -->
+            <div class="tab-pane" id="part5" role="tabpanel" aria-labelledby="part5-tab">
+                <div class="card-header bg-white border-bottom-0 mt-3 sticky-top">
+                    <p class="h4">Beispiele</p>
+                </div>
+                <div class="card-body">
+                    <p>
+                        Lorem ipsum
+                    </p>
+                    <div class="row mt-4">
+                        <div class="col">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <p class="lead">Sie investieren viel, die anderen wenig</p>
+                                    <p><small>
+                                        Lorem ipsum
+                                    </small></p>
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row" colspan="2">Guthaben zu Beginn dieser Runde</th>
+                                                <td>40</td>
+                                            </tr>
+                                            <tr>
+                                                <td>-</td>
+                                                <td>Ihre Investition</th>
+                                                <td>30</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>+</td>
+                                                <td>Ihr Anteil vom Ertrag</th>
+                                                <td>&asymp;17</td>
+                                            </tr>
+                                            <tr>
+                                                <td>=</td>
+                                                <th scope="row">Guthaben in der nächsten Runde</th>
+                                                <td>27</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <p class="lead">Sie investieren viel, die anderen auch</p>
+                                    <p><small>
+                                        Lorem ipsum
+                                    </small></p>
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row" colspan="2">Guthaben zu Beginn dieser Runde</th>
+                                                <td>40</td>
+                                            </tr>
+                                            <tr>
+                                                <td>-</td>
+                                                <td>Ihre Investition</th>
+                                                <td>40</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>+</td>
+                                                <td>Ihr Anteil vom Ertrag</th>
+                                                <td>50</td>
+                                            </tr>
+                                            <tr>
+                                                <td>=</td>
+                                                <th scope="row">Guthaben in der nächsten Runde</th>
+                                                <td>50</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <!-- on Card Navigation  Arrows -->
+                    <div class="row justify-content-md-center mt-5">
+                        <div class="col col-lg-2">
+                        <p onclick="topFunction()" class="prevtab text-center" data-toggle="tooltip" data-placement="top" title="Zurück">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#0029FA" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                            </svg>
+                        </p>
+                        </div>
+
+                        <div class="col col-lg-2">
+                        <p onclick="topFunction()" class="nexttab text-center" data-toggle="tooltip" data-placement="top" title="Weiter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#0029FA" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
+                            </svg>
+                        </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Part 6: Verständnisfragen -->
+            <div class="tab-pane" id="part6" role="tabpanel" aria-labelledby="part6-tab">
+                <div class="card-header bg-white border-bottom-0 mt-3 sticky-top">
+                    <p class="h4">Verständnisfragen</p>
+                </div>
+                <div class="card-body">
+                    <p>
+                        Bitte beantworten Sie die nachfolgenden Fragen, durch die wir sicherstellen wollen, dass alle
+                        Teilnehmer die Instruktionen sorgfältig gelesen und verstanden haben.
+                    </p>
+
+
+                    <!-- on Card Navigation  Arrows -->
+                    <div class="row justify-content-md-center mt-5">
+                        <div class="col col-lg-2">
+                            <p onclick="topFunction()" class="prevtab text-center" data-toggle="tooltip" data-placement="top" title="Zurück">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#0029FA" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                                </svg>
+                            </p>
+                        </div>
+
+                        <div class="col col-lg-2">
+                            {% next_button %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Instructions Modal -->
+    <div class="modal fade bd-example-modal-lg" id="instructionsModal" tabindex="-1" role="dialog" aria-labelledby="instructionsModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>
+                        In diesem Fesnter werden Sie die Instruktionen naschlagen können, sobald Sie sich auf dem
+                        Entscheidungsbildschirm befinden.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Schließen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+{% endblock %}

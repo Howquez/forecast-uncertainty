@@ -1,0 +1,308 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+    <link href="{% static 'global/css/global.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block scripts %}
+<script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/pattern-fill.js"></script>
+    <script src="https://code.highcharts.com/modules/broken-axis.js"></script>
+    <script src="{% static 'global/js/basics.js' %}"></script>
+    <script src="{% static 'global/js/weather_viz.js' %}"></script>
+    {% if subsession.round_number == 1 %}
+        <script src="{% static 'global/js/trigger_modal.js' %}"></script>
+    {% endif %}
+    {% if subsession.round_number == 7 %}
+        <script src="{% static 'global/js/trigger_modal.js' %}"></script>
+    {% endif %}
+    <script src="{% static 'global/js/event_bar.js' %}"></script>
+    <script src="{% static 'global/js/lottery_viz.js' %}"></script>
+    <script src="{% static 'global/js/count_clicks.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<body onload="fillText()">
+<img src="{% static 'global/images/cool-background.svg' %}" id="bg" alt=""/>
+
+
+<!-- Header -->
+<nav class="navbar sticky-top mb-4 justify-content-between">
+
+    <h5>
+        <span class="badge badge-dark badge-pill mt-4" data-toggle="tooltip" data-placement="bottom" title="Runde {{ player.round_number }}">
+            #{{ player.round_number }}
+        </span>
+    </h5>
+    <div style="cursor: pointer;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="dark" class="bi bi-thermometer-half" viewBox="0 0 16 16" data-toggle="modal" data-target="#weatherModal" id="weather_icon">
+            <path d="M9.5 12.5a1.5 1.5 0 1 1-2-1.415V6.5a.5.5 0 0 1 1 0v4.585a1.5 1.5 0 0 1 1 1.415z"/>
+            <path d="M5.5 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0V2.5zM8 1a1.5 1.5 0 0 0-1.5 1.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0l-.166-.15V2.5A1.5 1.5 0 0 0 8 1z"/>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="dark" class="bi bi-info-circle-fill" viewBox="0 0 16 16" data-toggle="modal" data-target="#instructionsModal" id="instructions_icon">
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+        </svg>
+    </div>
+</nav>
+
+
+<!-- Hidden tracking Fields -->
+<input type="hidden" name="review_weather" id="id_review_weather" value="0"/>
+<input type="hidden" name="review_instructions" id="id_review_instructions" value="0"/>
+
+
+<!-- Decision Card -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-10 col-lg-8">
+
+            <div class="card mt-5">
+                <div class="card-header bg-white border-bottom mt-1 sticky-top">
+                    <p>
+                        Wie viele grüne Kugeln müssen sich mindestens in der Urne befinden, damit Sie die Lotterie vorziehen?
+                    </p>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm border-right">
+                                <h4>Wette</h4>
+                                <p class="card-text mb-3 lead" id="subHeader">
+                                    <small>Sie gewinnen 10 Euro entsprechend der unten dargestellten Grafik (und sonst nichts).</small>
+                                </p>
+                            </div>
+
+                            <div class="col-sm border-left">
+                                <h4>Lotterie</h4>
+                                <p class="card-text mb-3 lead">
+                                    <small>Sie gewinnen 10 Euro, wenn eine grüne Kugel gezogen wird (und sonst nichts).</small>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm border-right">
+                                <small mb-4>
+                                    Die Wette bezieht sich auf dieselbe Wettersituation, die Ihnen eben vorgestellt wurde.
+                                    Bei Bedarf können Sie sich diese
+                                    <a data-toggle="modal" data-target="#weatherModal" id="weather_text"><u>hier</u></a>
+                                    nochmals anschauen. <br><br>
+                                </small>
+                            </div>
+
+                            <div class="col-sm border-left">
+                                <small>
+                                    In der Urne befinden sich insgesamt 100 Kugeln, die entweder grün oder rot sind. Den Anteil der
+                                    grünen Kugeln bestimmen Sie in dieser Entscheidungssituation.
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm border-right">
+                                <figure class="highcharts-figure">
+                                    <div id="event_bar"></div>
+                                </figure>
+                            </div>
+
+                            <div class="col-sm border-left">
+                                <figure class="highcharts-figure">
+                                    <div id="pieChart"></div>
+                                    <p class="highcharts-description">
+                                    </p>
+                                </figure>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm border-right">
+                            </div>
+                            <div class="col-sm border-left">
+                                <form class="">
+                                    <div class="row justify-content-center">
+                                        <small class="form-text mt-4 pl-3 pr-3 mb-4">
+                                            Wie viele grüne Kugeln müssen sich <u>mindestens</u> in der Urne befinden, damit Sie die
+                                            Lotterie gerade so bevorzugen?
+                                        </small>
+                                        <input class="form-control border-primary mb-1" type="number" placeholder="#" id="id_matching_probability" name="matching_probability" min="0" max="100" required>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="collapseSubmit" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="row justify-content-center mt-4 mb-2">
+                            <div class="form-check">
+                                {% if player.round_number == 1 %}
+                                <input type="checkbox" class="form-check-input" id="submitCheck" required>
+                                {% else %}
+                                <input type="checkbox" class="form-check-input" id="submitCheck" required checked>
+                                {% endif %}
+                                <label class="form-check-label" for="submitCheck" id="submitCheckLabel">
+                                    <small>Ja, so bevorzuge ich die Lotterie.</small>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mb-3">
+                            <button class="btn btn-primary" type="submit" id="submitButton" disabled style="border-radius: 40px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                                </svg>
+                                Absenden
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Weather Modal -->
+<div class="modal fade bd-example-modal-lg" id="weatherModal" tabindex="-1" role="dialog" aria-labelledby="weatherModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% if treatment_displayed %}
+                    <!--
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <h4 class="lead">
+                            Bitte beachten Sie, dass die Grafik nun auch eine Wettervorhersage enthält.
+                        </h4>
+                        <hr>
+                        <p>
+                            Alle Angaben (also sowohl gemessene als auch vorhergesagte Temperaturen) beziehen sich auf
+                            dieselbe Tageszeit: 14:00 Uhr.
+                        </p>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    -->
+
+                    <p class="lead">Experten haben am Freitag eine Vorhersage für den Sonntag <u>9 Tage später</u> getroffen:</p>
+                    <p><span id="forecastText"></span></p>
+                {% else %}
+                    <p class="lead">
+                        Die Temperaturen betrugen zwischen Mittwoch und Freitag jeweils 12°C <small>(um 14:00 Uhr)</small>.
+                    </p>
+                {% endif %}
+
+                <figure class="highcharts-figure">
+                    <div id="weather_viz"></div>
+                </figure>
+
+                <p class="card-text">
+                    <small>
+                    Ohne zu wissen, auf welchen Ort und Zeitpunkt sich das oben dargestellte Wetter bezieht,
+                    müssen Sie für die folgenden Aufgaben abschätzen, welche Temperaturbereiche Sie
+                        {% if treatment_displayed %}
+                        am Sonntag <u>9 Tage später</u>
+                        <a style="color:#A6219D">(also im lila schraffierten Bereich)</a>
+                        {% else %}
+                        am Sonntag <u>9 Tage später</u>
+                        {% endif %}
+                    am selben Ort und zur gleichen Tageszeit für wahrscheinlich halten.
+                    </small>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Schließen</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Instructions Modal -->
+    <div class="modal fade bd-example-modal-lg" id="instructionsModal" tabindex="-1" role="dialog" aria-labelledby="instructionsModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- Card's Tab Navigation -->
+                    <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+
+                        <li class="nav-item" >
+                            <a class="nav-link back-and-forth active" id="part1-tab" data-toggle="tab" href="#part1" role="tab" aria-controls="part1"> Überblick </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link back-and-forth" id="part3-tab" data-toggle="tab" href="#part3" role="tab" aria-controls="part3"> Aufbau </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link back-and-forth" id="part4-tab" data-toggle="tab" href="#part4" role="tab" aria-controls="part4"> Verdienst </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content" id="myTabContent">
+                        <!-- Part 1: Einführung -->
+                        <div class="tab-pane show active" id="part1" role="tabpanel" aria-labelledby="part1-tab">
+                            <div class="card-body">
+                                <p class="lead">
+                                Das Wichtigste in Kürze
+                                </p>
+                                <p>
+                                    In dieser Aufgabe müssen Sie zwischen einer <strong>Wette</strong> und
+                                    <strong>Lotterien</strong> abwägen.
+                                </p>
+
+                            </div>
+                        </div>
+
+
+                        <!-- Part 3: Aufbau  -->
+                        <div class="tab-pane" id="part3" role="tabpanel" aria-labelledby="part3-tab">
+                            <div class="card-body">
+                                <p class="lead">
+                                    Diese Aufgabe besteht aus 6 Entscheidungssituationen
+                                </p>
+
+                                <p class="card-text">
+                                    In dieser Aufgabe werden wir Sie insgesamt 6 mal bitten, zwischen der Wette und der Lotterie
+                                    abzuwägen. Dafür müssen Sie jedes Mal entscheiden, wie viele grüne Kugeln sich mindestens in der
+                                    Urne befinden müssen, damit Sie die Lotterie gerade so der Wette vorziehen.
+                                </p>
+
+                            </div>
+                        </div>
+
+
+                        <!-- Part 3: Verdienst -->
+                        <div class="tab-pane" id="part4" role="tabpanel" aria-labelledby="part4-tab">
+                            <div class="card-body">
+                                <p class="lead">
+                                    Ihr Verdienst/Gewinn in dieser Aufgabe
+                                </p>
+                                <p>
+                                    In jeder der 6 Entscheidungssituationen geben Sie an, unter welchen Bedingungen Sie die Lotterie
+                                    der Wette vorziehen. Am Ende dieser Studie wird aus all Ihren Entscheidungen (in allen Aufgaben)
+                                    zufällig <u>eine</u> Entscheidungssituation ausgewählt, um zu bestimmen, ob Sie
+                                    zusätzlich {{ Constants.prize_payoff }},00 € gewinnen oder nicht.
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Schließen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}

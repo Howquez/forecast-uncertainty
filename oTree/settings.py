@@ -2,26 +2,10 @@ from os import environ
 
 SESSION_CONFIGS = [
     dict(
-        name='Baillon_MPP',
-        display_name="Baillon_MPP",
+        name="Baillon",
+        display_name="Baillon",
         num_demo_participants=10,
-        app_sequence=["initialize", "Baillon", "MPP", "postBaillon", "postMPP", "terminate"],
-        location="random",
-        treatment="random"
-    ),
-    dict(
-        name='MPP',
-        display_name="MPP_Standalone",
-        num_demo_participants=10,
-        app_sequence=["initialize", "MPP", "postMPP", "terminate"],
-        location="random",
-        treatment="random",
-    ),
-    dict(
-        name='Baillon',
-        display_name="Baillon_Standalone",
-        num_demo_participants=10,
-        app_sequence=["initialize", "Baillon", "postBaillon", "terminate"],
+        app_sequence=["Intro", "Uncertainty", "Outro"],
         location="random",
         treatment="random",
     )

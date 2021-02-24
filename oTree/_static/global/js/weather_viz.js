@@ -100,7 +100,7 @@ if (village == "Ilomantsi"){
 
 // text operations
 var rangeText = `Sie halten es für sehr wahrscheinlich, dass die Temperatur um 14:00 Uhr zwischen ${range[1][1]}°C und ${range[1][2]}°C betragen wird. `
-var bestguessText = `Eine Temperatur von ${bestGuess[1][1]}°C halten Sie dabei für am wahrscheinlichsten. `; 
+var bestguessText = `Eine Temperatur von ${bestGuess[1][1]}°C halten sie für am wahrscheinlichsten. `;
 var forecastText = "&nbsp;";
 
 
@@ -110,7 +110,7 @@ if (page == "forecast"){
 }
 
 // display forecast during second decision round
-if (iteration == "True"){ //marks the second iteration of an App
+if (iteration){ //marks the second iteration of an App
     displayForecast = true;
     opacity = 0;
 
@@ -184,7 +184,7 @@ var chart = Highcharts.chart("weather_viz", {
     },
 
     title: {
-        text: `Treatment: "${treatment}" in ${village}`
+        text: "" //`Treatment: "${treatment}" in ${village}`
     },
 
     xAxis: {
@@ -251,7 +251,7 @@ var chart = Highcharts.chart("weather_viz", {
             text: "Temperatur in °C"
         },
         min: 0,
-        max: 20,
+        max: 30,
     },
 
     tooltip: {

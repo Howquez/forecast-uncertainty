@@ -97,7 +97,7 @@ variables passed to the template via `vars_for_template` method or variables pas
 (both is done within the respective pages.py files). These variables are then used as arguments in 
 [twig(?)](https://twig.symfony.com/doc/2.x/intro.html) logic such as if statements and loops in the templates.
 
-## To do
+## ✅ To do
 [Here](https://github.com/Howquez/forecast-uncertainty/projects/1) is the corresponding kanban board.
 
 

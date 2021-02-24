@@ -10,56 +10,31 @@ if (compound) {
 var red = 100 - green;
 var primary = "#0275d8";
 
-
-
-// get pattern stuff done
-// function getColorPattern() {
-//     var colors = Highcharts.getOptions().colors,
-//         patternColor = lossColor
-
-//     return {
-//         pattern: {
-//             path: pattern,
-//             color: patternColor,
-//             width: 5,
-//             height: 5
-//         }
-//     };
-// }
-
-
-
 // change content on input
 document.getElementById("id_matching_probability").addEventListener('input', () => {
-  green = parseInt(document.getElementById("id_matching_probability").value) || 0;
-  red = 100 - green;
+    green = parseInt(document.getElementById("id_matching_probability").value) || 0;
+    red = 100 - green;
 
-  document.getElementById("quote").innerHTML = `<b><u>${green}</u></b>`;
-  document.getElementById("bubbleId").className = "bubble lead";
-  if(green>0){
-    document.getElementById("submitCheckLabel").innerHTML = `<small>Bei ${green - 1} oder weniger grünen Kugeln würde ich mich für die Wette entscheiden.</small>`;//`Ja, ich bevorzuge die Lotterie mit ${green} grünen Kugeln.</u></b>`;
-  } else {
-    document.getElementById("submitCheckLabel").innerHTML = `<small>Ich würde mich nie für die Wette entscheiden.</small>`;//`Ja, ich bevorzuge die Lotterie mit ${green} grünen Kugeln.</u></b>`;
-  }
-  
-  document.getElementById("submitCheck").setAttribute("checked", "");
-  document.getElementById("submitButton").removeAttribute("disabled");
-  document.getElementById("collapseSubmit").setAttribute("aria-expanded", "true");
-  document.getElementById("collapseSubmit").className = "";
+    if(green>0){
+        document.getElementById("submitCheckLabel").innerHTML = `<small>Bei ${green - 1} oder weniger grünen Kugeln würde ich mich für die Wette entscheiden.</small>`;
+    } else {
+        document.getElementById("submitCheckLabel").innerHTML = `<small>Ich würde mich nie für die Wette entscheiden.</small>`;
+    }
 
+    //document.getElementById("submitCheck").setAttribute("checked", "");
+    document.getElementById("submitButton").removeAttribute("disabled");
+    document.getElementById("collapseSubmit").setAttribute("aria-expanded", "true");
+    document.getElementById("collapseSubmit").className = "";
 
-
-  pie.series[0].update({
-    data: [{
-        y: red,
-      },
-      {
-        y: green,
-      }
-    ]
-
-  });
-
+    pie.series[0].update({
+        data: [{
+            y: red,
+          },
+          {
+            y: green,
+          }
+        ]
+    });
 });
 
 
