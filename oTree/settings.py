@@ -25,10 +25,10 @@ SESSION_CONFIG_DEFAULTS = dict(
 
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans
-LANGUAGE_CODE = 'de'
+LANGUAGE_CODE = "de"
 
 # e.g. EUR, GBP, CNY, JPY
-REAL_WORLD_CURRENCY_CODE = 'EUR'
+REAL_WORLD_CURRENCY_CODE = "EUR"
 USE_POINTS = False
 
 ROOMS = []
@@ -39,7 +39,7 @@ ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
 
 DEMO_PAGE_INTRO_HTML = """ """
 
-SECRET_KEY = '5u#9u6l4*4117vf%n-*+oqh)^!=s3(p#9!5$n&9d$2mwzyo)4l'
+SECRET_KEY = 'abc'
 
 # if an app is included in SESSION_CONFIGS, you don't need to list it here
 INSTALLED_APPS = ['otree']
