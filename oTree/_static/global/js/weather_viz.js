@@ -85,7 +85,7 @@ var displayInterval = false;
 var opacity = 0.66;
 var observed;
 var bestGuess;
-var Range;
+var range;
 
 if (village == "Ilomantsi"){
     observed = ilomantsiObserved;

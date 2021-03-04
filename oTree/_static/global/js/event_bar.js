@@ -88,110 +88,116 @@
     console.log(subHeader)
     document.getElementById("subHeader").innerHTML = subHeader;
 
+$(function () {
+	$(document).ready(function(){
 
-var bar = Highcharts.chart("event_bar", {
-        exporting: {
-            enabled: false
-        },
-
-        chart: {
-            type: "column",
-            // height: (5 / 15 * 100) + '%', // 16:9 ratio
-            backgroundColor: 'transparent'
-        },
-        title: {
-            text: "" //event,
-        },
-        subtitle: {
-            text: "",
-        },
-        xAxis: {
-            categories: [""],
-        },
-        yAxis: {
-            min: 0,
-            max: 24,
-            tickPositions: ticksArray,
-            labels: {
-                formatter: function () {
-                    var label = this.axis.defaultLabelFormatter.call(this);
-                    if (label == ticksArray[0]) {
-                        return "-"
-                    } else if (label == ticksArray[ticksArray.length - 1]) {
-                        return "+"
-                    } else {
-                        label = parseInt(label).toString();
-                        return label.concat("°C")
-                    }
-                },
-                style: {
-                        fontWeight: "normal",
-                    }
-            },
-            //showFirstLabel: false,
-            //showLastLabel: false,
-            title: {
-                text: ""
-            }
-        },
-        legend: {
-            reversed: true
-        },
-
-        tooltip: {
-            formatter: function() {
-                if (this.series.color == successColor) {
-                    return "Sie gewinnen 10 Euro.";
-                } else {
-                    return "Sie gewinnen nichts."
-                }
-            }
-        },
-
-        plotOptions: {
-            series: {
-                stacking: "normal",
-                pointWidth: 150,
-                dataLabels: {
-                    enabled: enabledLabel,
-                    borderWidth: 0,
-                    style: {
-                        fontWeight: "bold",
-                        textOutline: 1,
+		$('.event_bar').each(function(){
+            var bar = new Highcharts.chart({
+                    exporting: {
+                        enabled: false
                     },
-                    color: "#000000",
-                    backgroundColor: "rgba(255, 255, 255, 0.75)",
-                    borderRadius: 5,
-                    padding: 4,
-                    formatter: function() {                
-                        return this.series.name;
+
+                    chart: {
+                        renderTo: this,
+                        type: "column",
+                        // height: (5 / 15 * 100) + '%', // 16:9 ratio
+                        backgroundColor: 'transparent'
+                    },
+                    title: {
+                        text: "" //event,
+                    },
+                    subtitle: {
+                        text: "",
+                    },
+                    xAxis: {
+                        categories: [""],
+                    },
+                    yAxis: {
+                        min: 0,
+                        max: 24,
+                        tickPositions: ticksArray,
+                        labels: {
+                            formatter: function () {
+                                var label = this.axis.defaultLabelFormatter.call(this);
+                                if (label == ticksArray[0]) {
+                                    return "-"
+                                } else if (label == ticksArray[ticksArray.length - 1]) {
+                                    return "+"
+                                } else {
+                                    label = parseInt(label).toString();
+                                    return label.concat("°C")
+                                }
+                            },
+                            style: {
+                                    fontWeight: "normal",
+                                }
+                        },
+                        //showFirstLabel: false,
+                        //showLastLabel: false,
+                        title: {
+                            text: ""
                         }
-                }
-            }
-        },
+                    },
+                    legend: {
+                        reversed: true
+                    },
 
-        series: [{
-            label: "Series3",
-            name: "über 14°C", //`${labelArray[2]}°C und drüber` ,// "14°C und drüber",
-            data: [ticksArray[3] - ticksArray[2]],
-            showInLegend: false,
-            color: S3Col,
-            dataLabels: S3Label
-        }, {
-            label: "Series2",
-            name: "von enschließlich 8°C bis <br> einschließlich 14°C", //`${labelArray[1]}°C bis ${labelArray[2]}°C` ,//"8°C bis 14°C",
-            data: [ticksArray[2] - ticksArray[1]],
-            showInLegend: false,
-            color: S2Col,
-            dataLabels: S2Label
-        }, {
-            label: "Series1",
-            name: "unter 8°C", //`bis zu ${labelArray[1]}°C` , //"bis zu 8°C",
-            data: [ticksArray[1] - ticksArray[0]],
-            showInLegend: false,
-            color: S1Col,
-            dataLabels: S1Label
-        }]
-    });
+                    tooltip: {
+                        formatter: function() {
+                            if (this.series.color == successColor) {
+                                return "Sie gewinnen 10 Euro.";
+                            } else {
+                                return "Sie gewinnen nichts."
+                            }
+                        }
+                    },
 
+                    plotOptions: {
+                        series: {
+                            stacking: "normal",
+                            pointWidth: 150,
+                            dataLabels: {
+                                enabled: enabledLabel,
+                                borderWidth: 0,
+                                style: {
+                                    fontWeight: "bold",
+                                    textOutline: 1,
+                                },
+                                color: "#000000",
+                                backgroundColor: "rgba(255, 255, 255, 0.75)",
+                                borderRadius: 5,
+                                padding: 4,
+                                formatter: function() {
+                                    return this.series.name;
+                                    }
+                            }
+                        }
+                    },
+
+                    series: [{
+                        label: "Series3",
+                        name: "über 14°C", //`${labelArray[2]}°C und drüber` ,// "14°C und drüber",
+                        data: [ticksArray[3] - ticksArray[2]],
+                        showInLegend: false,
+                        color: S3Col,
+                        dataLabels: S3Label
+                    }, {
+                        label: "Series2",
+                        name: "von enschließlich 8°C bis <br> einschließlich 14°C", //`${labelArray[1]}°C bis ${labelArray[2]}°C` ,//"8°C bis 14°C",
+                        data: [ticksArray[2] - ticksArray[1]],
+                        showInLegend: false,
+                        color: S2Col,
+                        dataLabels: S2Label
+                    }, {
+                        label: "Series1",
+                        name: "unter 8°C", //`bis zu ${labelArray[1]}°C` , //"bis zu 8°C",
+                        data: [ticksArray[1] - ticksArray[0]],
+                        showInLegend: false,
+                        color: S1Col,
+                        dataLabels: S1Label
+                    }]
+            });
+        });
+	});
+});
 

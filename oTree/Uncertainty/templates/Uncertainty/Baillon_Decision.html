@@ -7,7 +7,7 @@
 
 
 {% block scripts %}
-<script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/pattern-fill.js"></script>
@@ -32,7 +32,6 @@
 
 <!-- Header -->
 <nav class="navbar sticky-top mb-4 justify-content-between">
-
     <h5>
         <span class="badge badge-dark badge-pill mt-4" data-toggle="tooltip" data-placement="bottom" title="Runde {{ player.round_number }}">
             #{{ player.round_number }}
@@ -105,13 +104,13 @@
                         <div class="row">
                             <div class="col-sm border-right">
                                 <figure class="highcharts-figure">
-                                    <div id="event_bar"></div>
+                                    <div class="event_bar"></div>
                                 </figure>
                             </div>
 
                             <div class="col-sm border-left">
                                 <figure class="highcharts-figure">
-                                    <div id="pieChart"></div>
+                                    <div class="pieChart"></div>
                                     <p class="highcharts-description">
                                     </p>
                                 </figure>
@@ -176,21 +175,17 @@
             </div>
             <div class="modal-body">
                 {% if treatment_displayed %}
-                    <!--
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
                         <h4 class="lead">
-                            Bitte beachten Sie, dass die Grafik nun auch eine Wettervorhersage enthält.
+                            Bitte beachten Sie, dass die Grafik nun auch eine <strong>Wettervorhersage</strong> enthält.
                         </h4>
-                        <hr>
-                        <p>
-                            Alle Angaben (also sowohl gemessene als auch vorhergesagte Temperaturen) beziehen sich auf
-                            dieselbe Tageszeit: 14:00 Uhr.
-                        </p>
+
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    -->
+
 
                     <p class="lead">Experten haben am Freitag eine Vorhersage für den Sonntag <u>9 Tage später</u> getroffen:</p>
                     <p><span id="forecastText"></span></p>
