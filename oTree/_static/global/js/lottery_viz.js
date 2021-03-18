@@ -37,6 +37,7 @@ document.getElementById("id_matching_probability").addEventListener('input', () 
     });
 });
 
+var pie;
 
 // define pie chart
 $(function () {
@@ -44,7 +45,7 @@ $(function () {
 
 		$('.pieChart').each(function(){
 
-            var pie = new Highcharts.chart({
+            pie = new Highcharts.chart({
               exporting: {
                 enabled: false
               },

@@ -3,31 +3,34 @@
 
 {% block styles %}
     <link href="{% static 'global/css/global.css' %}" rel="stylesheet">
-+{% endblock %}
+{% endblock %}
 
 {% block scripts %}
+    <script src="{% static 'global/js/treatment_text.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-<body>
+<body onload="fillText()">
 <img src="{% static 'global/images/cool-background.svg' %}" id="bg" alt=""/>
 
     <div class="card mt-5">
         <div class="card-body">
             <h5 class="card-title display-4">Abschließende Fragen</h5>
             <div class="progress" style="height:10px">
-                <div class="progress-bar bg-secondary" role="progressbar" style="height:10px; width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" style="height:10px; width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Seite 5</div>
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" style="height:10px; width: 25%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Seite 1</div>
             </div>
             <h5 class="card-title display-4"></h5>
-            <h6 class="card-subtitle mb-2 text-muted">
+            <h6 class="card-subtitle mb-5 text-muted">
 
             </h6>
-            <br><br>
+            <p class="lead">
+                Hatten Sie in den ersten Runden eine ungefähre Schätzung, welche Temperatur am besagten Sonntag
+                eintreten könnte?
+                <small>Wenn ja, welche Temperatur haben Sie geschätzt?</small>
+            </p>
 
-            {% formfields %}
-
-            <br>
+            {% formfield player.Belief label="" %}
+            <p><small>Lassen Sie die Frage einfach unbeantwortet, wenn Sie völlig unsicher waren.</small></p>
 
             <div class="row justify-content-center mb-3">
                 <button class="btn btn-primary" type="submit" style="border-radius: 40px;">

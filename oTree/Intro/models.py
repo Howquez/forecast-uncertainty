@@ -9,8 +9,6 @@ from otree.api import (
     currency_range,
 )
 
-from django.forms.widgets import CheckboxSelectMultiple
-import re
 import random
 
 author = "Hauke Roggenkamp"
@@ -24,7 +22,7 @@ class Constants(BaseConstants):
     name_in_url = "Intro"
     players_per_group = None
     num_rounds = 1
-    bonus = 10
+    bonus = 10 # same as Constants.prize_payoff in Uncertainty
 
     locations = ["Weiskirchen", "Ilomantsi"]  # ["confirmation", "contradiction"]
     treatments = ["best_guess", "interval", "both"]

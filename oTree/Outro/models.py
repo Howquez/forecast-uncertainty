@@ -33,6 +33,11 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
+
+    # Beliefs
+    Belief = models.IntegerField(doc="Respondent's stated initial belief",
+                                 blank=True)
+
     # Demographics
     Age = models.IntegerField(doc="Respondent's age",
                               label="Wie alt sind Sie?")
@@ -67,6 +72,7 @@ class Player(BasePlayer):
                                  label="Bitte nennen Sie Ihr ungefähres jährliches Nettoeinkommen.",
                                  blank=True)
 
+    # Domain questions
     Comprehension = models.StringField(doc="Respondent's understanding of the tasks",
                                        label="Haben Sie die Aufgaben gut verstanden?",
                                        choices=[
@@ -89,36 +95,39 @@ class Player(BasePlayer):
                                 ],
                                 widget=widgets.RadioSelect)
 
+    Temp = models.IntegerField(doc="Current temperature in Respondent's location",
+                               label="Wie viel °C beträgt die Außentemperatur in Ihrer Umgebung jetzt gerade?")
+
     Accuracy = models.IntegerField(doc="Respondent's assessment of message's accuracy",
                                    label="Für wie akkurat halten Sie die Aussage?",
                                    choices=[
-                                       [-2, ""],
-                                       [-1, ""],
                                        [0, ""],
                                        [1, ""],
-                                       [2, ""]
+                                       [2, ""],
+                                       [3, ""],
+                                       [4, ""]
                                    ],
                                    widget=widgets.RadioSelectHorizontal)
 
     Authenticity = models.IntegerField(doc="Respondent's assessment of message's authenticity",
                                        label="Für wie authentisch halten Sie die Aussage?",
                                        choices=[
-                                           [-2, ""],
-                                           [-1, ""],
                                            [0, ""],
                                            [1, ""],
-                                           [2, ""]
+                                           [2, ""],
+                                           [3, ""],
+                                           [4, ""]
                                        ],
                                        widget=widgets.RadioSelectHorizontal)
 
     Credibility = models.IntegerField(doc="Respondent's assessment of message's credibility",
                                       label="Für wie glaubwürdig halten Sie die Aussage?",
                                       choices=[
-                                          [-2, ""],
-                                          [-1, ""],
                                           [0, ""],
                                           [1, ""],
-                                          [2, ""]
+                                          [2, ""],
+                                          [3, ""],
+                                          [4, ""]
                                       ],
                                       widget=widgets.RadioSelectHorizontal)
 

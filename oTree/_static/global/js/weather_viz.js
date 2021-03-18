@@ -324,7 +324,7 @@ var chart = Highcharts.chart("weather_viz", {
         showInLegend: displayForecast && displayBestGuess,
         visible: displayForecast && displayBestGuess
     }, {
-        name: "Wahrscheinlichster Bereich",
+        name: "Wahrscheinlicher Bereich",
         data: range,
         type: "arearange",
         lineWidth: 0,

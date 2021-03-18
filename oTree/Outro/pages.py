@@ -2,6 +2,10 @@ from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
 from .models import Constants
 
+class Outro_Belief(Page):
+    form_model = "player"
+    form_fields = ["Belief"]
+
 class Demographic_Questions(Page):
     form_model = "player"
     form_fields = ["Age", "Gender", "Education", "Income"]
@@ -9,6 +13,11 @@ class Demographic_Questions(Page):
 class Domain_Questions_1(Page):
     form_model = "player"
     form_fields = ["Accuracy", "Authenticity", "Credibility"]
+
+    def vars_for_template(self):
+        return dict(
+            choices=[0, 1, 2, 3, 4],
+        )
 
     def js_vars(self):
         return dict(
@@ -18,7 +27,7 @@ class Domain_Questions_1(Page):
 
 class Domain_Questions_2(Page):
     form_model = "player"
-    form_fields = ["Comprehension", "Usage"]
+    form_fields = ["Comprehension", "Usage", "Temp"]
 
 class CLICCS_Questions(Page):
     form_model = "player"
@@ -37,7 +46,8 @@ class Results(Page):
         )
 
 
-page_sequence = [Domain_Questions_1,
+page_sequence = [Outro_Belief,
+                 Domain_Questions_1,
                  Domain_Questions_2,
                  CLICCS_Questions,
                  Demographic_Questions,
