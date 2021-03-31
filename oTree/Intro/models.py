@@ -65,6 +65,8 @@ class Player(BasePlayer):
     window_width = models.IntegerField(doc="Documents the respondent's browser window's width.")
     window_height = models.IntegerField(doc="Documents the respondent's browser window's height.")
     browser = models.StringField(doc="Documents the respondent's browser (incl. its version).")
+    wrong_answer_1 = models.IntegerField(doc="Counts the number of wrong guesses for CQ_1.", initial=0)
+    wrong_answer_2 = models.IntegerField(doc="Counts the number of wrong guesses for CQ_2.", initial=0)
 
     CQ_1 = models.BooleanField(
         widget=widgets.RadioSelect,
@@ -78,6 +80,7 @@ class Player(BasePlayer):
     )
     def CQ_1_error_message(self, value):
         if not value:
+            self.wrong_answer_2 += 1
             return "Versuchen Sie es noch einmal."
 
     CQ_2 = models.BooleanField(
@@ -93,4 +96,5 @@ class Player(BasePlayer):
 
     def CQ_2_error_message(self, value):
         if not value:
+            self.wrong_answer_1 += 1
             return "Versuchen Sie es noch einmal."
