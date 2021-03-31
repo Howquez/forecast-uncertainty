@@ -224,7 +224,8 @@ var chart = Highcharts.chart("weather_viz", {
                 verticalAlign: "middle",
                 align: "center",
                 style: {
-                    fontWeight: "bold"
+                    fontWeight: "bold",
+                    zIndex: -1
                 }
             }
         }, {
@@ -251,10 +252,11 @@ var chart = Highcharts.chart("weather_viz", {
             text: "Temperatur in °C"
         },
         min: 0,
-        max: 30,
+        max: 35,
     },
 
     tooltip: {
+        backgroundColor: "rgba(255,255,255, 1)",
         crosshairs: true,
         shared: true,
         valueSuffix: "°C",

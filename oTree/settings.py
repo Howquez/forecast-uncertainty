@@ -4,7 +4,7 @@ SESSION_CONFIGS = [
     dict(
         name="Baillon",
         display_name="Baillon",
-        num_demo_participants=10,
+        num_demo_participants=1,
         app_sequence=["Intro", "Uncertainty", "Outro"],
         location="random",
         treatment="random",
@@ -19,7 +19,7 @@ SESSION_CONFIGS = [
 
 SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00,
-    participation_fee=3.00,
+    participation_fee=5.00,
     doc=""
 )
 

@@ -17,8 +17,8 @@
         <div class="card-body">
             <h5 class="card-title display-4">Abschließende Fragen</h5>
             <div class="progress" style="height:10px">
-                <div class="progress-bar bg-secondary" role="progressbar" style="height:10px; width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" style="height:10px; width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Seite 2</div>
+                <div class="progress-bar bg-secondary" role="progressbar" style="height:10px; width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" style="height:10px; width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">Seite 3</div>
             </div>
             <h5 class="card-title display-4"></h5>
             <h6 class="card-subtitle mb-5 text-muted">
@@ -29,35 +29,36 @@
             </p>
 
             <div class="container clearfix displaystyle-leftborder displaystyle-my-warning w-75 mb-5 bg-light">
+                <p><em>Experten haben am Freitag eine Vorhersage für den Sonntag 9 Tage später getroffen:</em></p>
                 <p><span id="forecastText" class=""></span></p>
             </div>
 
             <table class="table w-75">
-                        <colgroup>
-                           <col span="1" style="width: 50%;">
-                           <col span="1" style="width: 8%;">
-                           <col span="1" style="width: 8%;">
-                           <col span="1" style="width: 8%;">
-                           <col span="1" style="width: 8%;">
-                           <col span="1" style="width: 8%;">
-                        </colgroup>
-                        <tr>
-                            <td></td>
-                            <td colspan="2"><small>trifft überhaupt nicht zu</small></td>
-                            <td></td>
-                            <td colspan="2" class="text-right"><small>trifft voll und ganz zu</small></td>
-                        </tr>
-                        {% for field in form %}
-                            <tr>
-                                <th>{{ field.label }}</th>
-                                {% for choice in choices %}
-                                    <td>
-                                        <input type="radio" name="{{field.name}}" value="{{choice}}" id="id_{{field.name}}_{{choice}}" required="" class="form-check-input" style="margin: 0; display: block; text-align: right;">
-                                    </td>
-                                {% endfor %}
-                            </tr>
+                <colgroup>
+                   <col span="1" style="width: 50%;">
+                   <col span="1" style="width: 8%;">
+                   <col span="1" style="width: 8%;">
+                   <col span="1" style="width: 8%;">
+                   <col span="1" style="width: 8%;">
+                   <col span="1" style="width: 8%;">
+                </colgroup>
+                <tr>
+                    <td></td>
+                    <td colspan="2"><small>trifft überhaupt nicht zu</small></td>
+                    <td></td>
+                    <td colspan="2" class="text-right"><small>trifft voll und ganz zu</small></td>
+                </tr>
+                {% for field in form %}
+                    <tr>
+                        <th>{{ field.label }}</th>
+                        {% for choice in choices %}
+                            <td>
+                                <input type="radio" name="{{field.name}}" value="{{choice}}" id="id_{{field.name}}_{{choice}}" required="" class="form-check-input" style="margin: 0; display: block; text-align: right;">
+                            </td>
                         {% endfor %}
-                    </table>
+                    </tr>
+                {% endfor %}
+            </table>
 
             <br>
 

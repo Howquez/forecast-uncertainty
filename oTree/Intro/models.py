@@ -69,22 +69,28 @@ class Player(BasePlayer):
     CQ_1 = models.BooleanField(
         widget=widgets.RadioSelect,
         choices=[
-            [True, "10 Euro"],
+            [False, "10 Euro"],
+            [False, "7 Euro"],
             [False, "3 Euro"],
+            [True, "0 Euro"],
+            [False, "Weiß nicht"]
         ]
     )
     def CQ_1_error_message(self, value):
         if not value:
-            return "Leider falsch."
+            return "Versuchen Sie es noch einmal."
 
     CQ_2 = models.BooleanField(
         widget=widgets.RadioSelect,
         choices=[
-            [True, "10 Euro"],
+            [False, "10 Euro"],
+            [False, "7 Euro"],
             [False, "3 Euro"],
+            [True, "0 Euro"],
+            [False, "Weiß nicht"]
         ]
     )
 
     def CQ_2_error_message(self, value):
         if not value:
-            return "Leider falsch."
+            return "Versuchen Sie es noch einmal."

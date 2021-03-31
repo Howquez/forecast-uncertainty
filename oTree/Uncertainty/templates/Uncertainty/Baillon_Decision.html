@@ -176,19 +176,13 @@
             <div class="modal-body">
                 {% if treatment_displayed %}
 
-                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                        <h4 class="lead">
-                            Bitte beachten Sie, dass die Grafik nun auch eine <strong>Wettervorhersage</strong> enthält.
-                        </h4>
+                    <div class="alert alert-success" role="alert">
 
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <p class="lead">Experten haben am Freitag eine Vorhersage für den Sonntag <u>9 Tage später</u> getroffen:</p>
+                        <p><span id="forecastText"></span></p>
+
                     </div>
 
-
-                    <p class="lead">Experten haben am Freitag eine Vorhersage für den Sonntag <u>9 Tage später</u> getroffen:</p>
-                    <p><span id="forecastText"></span></p>
                 {% else %}
                     <p class="lead">
                         Die Temperaturen betrugen zwischen Mittwoch und Freitag jeweils 12°C <small>(um 14:00 Uhr)</small>.

@@ -40,7 +40,7 @@ if (village == "Ilomantsi"){
 
 // text operations
 var rangeText = `Sie halten es für sehr wahrscheinlich, dass die Temperatur um 14:00 Uhr zwischen ${range[1][1]}°C und ${range[1][2]}°C betragen wird.`
-var bestguessText = `Eine Temperatur von ${bestGuess[1][1]}°C halten Sie für am wahrscheinlichsten.`; 
+var bestguessText = `Eine Temperatur von ${bestGuess[1][1]}°C halten sie für am wahrscheinlichsten.`;
 var forecastText = "&nbsp;";
 
 // treatment definitions
@@ -55,6 +55,6 @@ if (treatment == "best_guess" && displayForecast){
  // text operations 2
 function fillText() {
     if (displayForecast){
-        document.getElementById("forecastText").innerHTML = '<em>"' + forecastText + '"<em>';
+        document.getElementById("forecastText").innerHTML = '<em>' + forecastText + '<em>';
     }
 }
