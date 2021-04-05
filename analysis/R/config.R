@@ -5,6 +5,7 @@
 # ** load -----
 listOfPackages <- c("rmarkdown",
                     "knitr",
+                    "distill",
                     "glue",          # get some python-like string operations
                     "stringr",       # working with strings
                     "lubridate",     # working with dates

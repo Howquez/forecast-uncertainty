@@ -46,6 +46,10 @@ class Subsession(BaseSubsession):
                     p.participant.vars["location"] = self.session.config["location"]
                     p.participant.vars["treatment"] = self.session.config["treatment"]
 
+                # store information in Player Class
+                p.location = p.participant.vars["location"]
+                p.treatment = p.participant.vars["treatment"]
+
                 # set winning temperature conditional on location and link it to baillon event
                 if p.participant.vars["location"] == "Weiskirchen":
                     p.participant.vars["observed_temp"] = Constants.Weiskirchen_temp
@@ -68,6 +72,10 @@ class Player(BasePlayer):
     wrong_answer_1 = models.IntegerField(doc="Counts the number of wrong guesses for CQ_1.", initial=0)
     wrong_answer_2 = models.IntegerField(doc="Counts the number of wrong guesses for CQ_2.", initial=0)
 
+    # Treatment Info
+    location = models.StringField()
+    treatment = models.StringField()
+
     CQ_1 = models.BooleanField(
         widget=widgets.RadioSelect,
         choices=[
@@ -80,7 +88,7 @@ class Player(BasePlayer):
     )
     def CQ_1_error_message(self, value):
         if not value:
-            self.wrong_answer_2 += 1
+            self.wrong_answer_1 += 1
             return "Versuchen Sie es noch einmal."
 
     CQ_2 = models.BooleanField(
@@ -96,5 +104,5 @@ class Player(BasePlayer):
 
     def CQ_2_error_message(self, value):
         if not value:
-            self.wrong_answer_1 += 1
+            self.wrong_answer_2 += 1
             return "Versuchen Sie es noch einmal."

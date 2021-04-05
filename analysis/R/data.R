@@ -14,7 +14,7 @@ dt <- read.csv(file="data/simulation/all_apps_wide.csv",
                stringsAsFactors = FALSE) %>% data.table()
 
 # select relevant columns for main- and control variables separately
-mainRegex <- "^participant\\.code$|_index_in_pages|Location$|Information$|matching_probability$|event_decision$|lower_bound$|best_guess$|upper_bound$|Accuracy$|Authenticity$|Credibility$|Comprehension$"
+mainRegex <- "^participant\\.code$|_index_in_pages|location$|Information$|matching_probability$|event_decision$|lower_bound$|best_guess$|upper_bound$|Accuracy$|Authenticity$|Credibility$|Comprehension$"
 mainVariables <- str_subset(string = names(dt),
                             pattern = mainRegex)
 mt <- dt[, ..mainVariables] #"mt" for Main Table (in contrast to "Control Table" oder "Data Table")

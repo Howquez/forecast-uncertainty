@@ -106,7 +106,7 @@ class Player(BasePlayer):
                                      [3, "2.001-3.000 €"],
                                      [4, "3.001-4.000 €"],
                                      [5, "mehr als 4.000 €"],
-                                     [9999, "keine Angabe"]
+                                     [99999, "keine Angabe"]
                                  ],
                                  blank=True,
                                  widget=widgets.RadioSelect)
