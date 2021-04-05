@@ -25,9 +25,10 @@ library(kableExtra)
 library(downloadthis)
 library(stringr)
 library(magrittr)
-# library(tidyverse)
+library(tidyverse)
+library(wesanderson)
 library(glue)
-
+library(gridExtra)
 ```
 
 
@@ -50,7 +51,7 @@ DT %>%
 ```
 
 
-This document reads simulated data generated with 200 rather simple oTree [@oTree] bots that looks as follows:
+This document reads simulated data generated with `r NROW(DT)` rather simple oTree [@oTree] bots that looks as follows:
 
 ```{r showData1}
 DT %>% 
@@ -114,7 +115,15 @@ for(round in 1:12){
 
 # Calculate indices
 
-This process is a little messy. To calculate the indices, we need to differentiate between composite and single events and calculate compound-event probabilities (CEPs) as well as single-event probabilities (SEPs) and their means for each observation. Having done so, one can calculate Baillon et al's _ambiguity-generated insensitivity (a-insensitivity) index_ (called AGII) as well as the _ambiguity aversion index_ (called AAI).
+This process is a little messy. To calculate the indices, we need to differentiate between composite and single events and calculate compound-event probabilities (CEPs) as well as single-event probabilities (SEPs) and their means for each observation. Having done so, one can calculate Baillon et al's _ambiguity aversion index_ (called AAI) as well as the _ambiguity-generated insensitivity (a-insensitivity) index_ (called AGII) which are defined as follows:
+
+$$
+\begin{align}
+\text{AAI}&=1-\overline{m_c} - \overline{m_s} \\
+\text{AGII}&=3 \times \bigg(\frac{1}{3}- \overline{m_c} - \overline{m_s}\bigg)
+\end{align}
+$$
+Where the bar indicates the average of single ($s$) or ($c$) composite events. As a consequence $\overline{m_{s,c}}$ represents the ```ASEP``` or ```ACEP``` in the code chunk below.
 
 The subjects played the Baillon-tasks twice in the same order of events. Due to laziness, the calculation of the two sets of indices (one pre- and one post-treatment) lacks elegance and is done in two code chunks.^[Eventually, we should write either a function or a nested loop.] The pre-treatment indices are calculated as follows:
 
@@ -290,9 +299,10 @@ data <- merge(MT, DT,
 save(data, file = "../data/processed/simulations.rda")
 ```
 
-# Download
 
-You can find the processed data [here](https://github.com/Howquez/forecast-uncertainty/blob/Baillon/data/processed/simulations.rda) or download it using the button below.
+# Download data
+
+You can find the processed data [as an .rda file here](https://github.com/Howquez/forecast-uncertainty/blob/Baillon/data/processed/simulations.rda) or download a .csv file using the button below.
 
 ```{r} 
 data %>% 
@@ -302,5 +312,64 @@ data %>%
         button_label = "Download processed data",
         button_type = "default",
       )
+```
+
+
+# Balance
+
+Because the data was generated using bots, there is not much one can learn from analyzing it. However, one can use it to check whether the survey's randomization mechanisms work. This applies to the location, the treatments as well as the events in any round to be more precise.
+
+
+```{r}
+layout <- theme(panel.background = element_rect(fill = "white"),
+                panel.grid = element_line(colour="gray", size=0),
+                panel.grid.major.y = element_line(colour="gray", size=0.25),
+                legend.key = element_rect(fill = "white"),
+                axis.line.x.bottom = element_line(size = 0.25),
+                axis.line.y.left = element_line(size = 0.25),
+                plot.margin = unit(c(1,1,1,1), "cm"),
+                legend.title = element_blank()
+)
+```
+
+
+```{r treatmentBalance, layout="l-body-outset"}
+
+col <- wes_palette("Zissou1")[1]
+len <- NROW(DT)
+
+p1 <- ggplot(DT, 
+             aes(x=Intro.1.player.treatment)) + 
+  geom_bar(fill = col) +
+  geom_hline(yintercept = len/3, lty = 2) +
+  layout +
+  labs(x="treatment")
+
+p2 <- ggplot(DT, 
+             aes(x=Intro.1.player.location)) + 
+  geom_bar() +
+  geom_bar(fill = col) +
+  geom_hline(yintercept = len/2, lty = 2) +
+  layout +
+  labs(x="location",
+       y="")
+
+p3 <- ggplot(DT, 
+             aes(x=Uncertainty.6.player.event_decision)) + 
+  geom_bar() +
+  geom_bar(fill = col) +
+  geom_hline(yintercept = len/6, lty = 2) +
+  layout +
+  labs(x="6th round's events",
+       y="")
+
+grid.arrange(
+  p1,
+  p2,
+  p3,
+  nrow = 1,
+  top = "Balance",
+  bottom = "Dashed line indicates perfect balance."
+)
 ```
 

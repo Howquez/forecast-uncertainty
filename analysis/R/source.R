@@ -14,3 +14,7 @@ source("analysis/R/config.R")
 source("analysis/R/data.R")
 source("analysis/R/analyses.R")
 source("analysis/R/visualization.R", echo=TRUE)
+
+# create_article("reports/data.Rmd")
+
+# install.packages("gridExtra")
