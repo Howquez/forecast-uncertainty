@@ -302,7 +302,7 @@ save(data, file = "../data/processed/simulations.rda")
 
 # Download data
 
-You can find the processed data [as an .rda file here](https://github.com/Howquez/forecast-uncertainty/blob/Baillon/data/processed/simulations.rda) or download a .csv file using the button below.
+You can find the processed data [as a .rda file here](https://github.com/Howquez/forecast-uncertainty/blob/Baillon/data/processed/simulations.rda) or download a .csv file using the button below.
 
 ```{r} 
 data %>% 
@@ -368,7 +368,7 @@ grid.arrange(
   p2,
   p3,
   nrow = 1,
-  top = "Balance",
+  top = "",
   bottom = "Dashed line indicates perfect balance."
 )
 ```

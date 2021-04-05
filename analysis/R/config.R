@@ -31,6 +31,7 @@ for(package in listOfPackages){
   require(package, character.only = TRUE)
 }
 
+renv::snapshot()
 
 # Hard coded variables -----
 # ** temperatures -----
