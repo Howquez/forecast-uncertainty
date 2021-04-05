@@ -33,7 +33,7 @@ library(glue)
 
 # Load & subset data
 
-To rerun the code you can download the whole Github repository or the raw data which you can find [here]() or behind the  button below. Note that you'll have to adjust the path accordingly, if you proceed with the latter options.
+To rerun the code you can download the whole [Github repository](https://github.com/Howquez/forecast-uncertainty) or the raw data which you can find [here](https://github.com/Howquez/forecast-uncertainty/blob/Baillon/data/simulation/all_apps_wide.csv) or behind the  button below. Note that you'll have to adjust the path accordingly, if you proceed with the latter options.
 
 ```{r readData}
 # read data
@@ -62,7 +62,7 @@ DT %>%
               fixed_thead = TRUE)
 ```
 
-Because most of the variables are secondary, I subset the data we are most interested in, that is, the variables needed to identify subjects (IDs) as well as the variables needed to calculate @Baillon2018as' indices. To conduct analyses with covariates and treatment information, one can use the IDs and merge the data.
+Because most of the variables are secondary, I subset the data we are most interested in, that is, the variables needed to identify subjects (IDs) as well as the variables needed to calculate @Baillon2018a's indices. To conduct analyses with covariates and treatment information, one can use the IDs and merge the data.
 
 ```{r subsetData}
 # select relevant columns for main- and control variables separately
@@ -248,7 +248,14 @@ post <- mt[,
            status = "post")]
 
 MT <- rbindlist(list(pre, post))[order(participant.code)]
-MT
+
+MT %>% 
+  head(n = 10) %>%
+  kbl() %>%
+  scroll_box(width="120%") %>%
+  kable_paper("hover", 
+              full_width = TRUE,
+              fixed_thead = TRUE)
 ```
 
 # Merge data
@@ -285,14 +292,14 @@ save(data, file = "../data/processed/simulations.rda")
 
 # Download
 
-You can find the data [here]() or download it using the button below.
+You can find the processed data [here](https://github.com/Howquez/forecast-uncertainty/blob/Baillon/data/processed/simulations.rda) or download it using the button below.
 
 ```{r} 
 data %>% 
   download_this(
-        output_name = "data",
+        output_name = "processedData",
         output_extension = ".csv", # CSV output
-        button_label = "Download csv",
+        button_label = "Download processed data",
         button_type = "default",
       )
 ```
