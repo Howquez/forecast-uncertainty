@@ -33,11 +33,20 @@ library(glue)
 
 # Load & subset data
 
+To rerun the code you can download the whole Github repository or the raw data which you can find [here]() or behind the  button below. Note that you'll have to adjust the path accordingly, if you proceed with the latter options.
+
 ```{r readData}
 # read data
 DT <- read.csv(file="../data/simulation/all_apps_wide.csv",
                stringsAsFactors = FALSE) %>% data.table()
 
+DT %>% 
+  download_this(
+        output_name = "rawData",
+        output_extension = ".csv", # CSV output
+        button_label = "Download raw data",
+        button_type = "default",
+      )
 ```
 
 
@@ -251,7 +260,6 @@ controlRegex <- "^participant\\.code$|time_started$|visited$|participant\\.payof
 controlVariables <- str_subset(string = names(DT),
                                pattern = controlRegex)
 ct <- DT[, ..controlVariables]
-ct
 ```
 
 
@@ -271,6 +279,21 @@ setnames(x=ct,
 # merge with raw data instead of ct
 data <- merge(MT, DT,
               by = "participant.code")
-data
+
+save(data, file = "../data/processed/simulations.rda")
+```
+
+# Download
+
+You can find the data [here]() or download it using the button below.
+
+```{r} 
+data %>% 
+  download_this(
+        output_name = "data",
+        output_extension = ".csv", # CSV output
+        button_label = "Download csv",
+        button_type = "default",
+      )
 ```
 
