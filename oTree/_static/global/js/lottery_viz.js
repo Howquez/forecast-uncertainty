@@ -15,10 +15,12 @@ document.getElementById("id_matching_probability").addEventListener('input', () 
     green = parseInt(document.getElementById("id_matching_probability").value) || 0;
     red = 100 - green;
 
-    if(green>0){
-        document.getElementById("submitCheckLabel").innerHTML = `<small>Bei ${green - 1} oder weniger grünen Kugeln würde ich mich für die Wette entscheiden.</small>`;
-    } else {
+    if(green<=0){
         document.getElementById("submitCheckLabel").innerHTML = `<small>Ich würde mich nie für die Wette entscheiden.</small>`;
+    } else if (green > 100) {
+        document.getElementById("submitCheckLabel").innerHTML = `<small>Ich würde mich immer für die Wette entscheiden.</small>`;
+    } else {
+        document.getElementById("submitCheckLabel").innerHTML = `<small>Bei ${green - 1} oder weniger grünen Kugeln würde ich mich für die Wette entscheiden.</small>`;
     }
 
     //document.getElementById("submitCheck").setAttribute("checked", "");

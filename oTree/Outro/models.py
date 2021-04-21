@@ -94,8 +94,7 @@ class Player(BasePlayer):
 
     Kids=models.IntegerField(doc="Respondent's number of children",
                              label="Haben Sie Kinder? Wenn ja, wie viele?",
-                             blank=True,
-                             initial=0)
+                             blank=True)
 
     Income = models.IntegerField(doc="Respondent's income",
                                  label="Welches monatliche Budget haben Sie zur Verfügung? Bitte geben Sie Ihr monatliches Nettoeinkommen an.",
@@ -171,11 +170,6 @@ class Player(BasePlayer):
     CLICCS2 = models.LongStringField(doc="CLICCS' common question #2",
                                      label="Wie gehen Sie damit um?",
                                      blank = True)
-
-    # other
-    openText = models.LongStringField(doc="Suggestions, Questions,...",
-                                      label="Haben Sie Fragen oder Anmerkungen?",
-                                      blank=True)
 
     # Risk
     Risk_General = models.IntegerField(doc="Respondent's general risk self-assessment",

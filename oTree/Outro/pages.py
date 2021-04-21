@@ -44,7 +44,6 @@ class CLICCS_Questions(Page):
 
 class Results(Page):
     form_model = "player"
-    form_fields = ["openText"]
 
     def js_vars(self):
         return dict(
@@ -58,7 +57,7 @@ class Results(Page):
         )
 
 
-page_sequence = [Outro_Belief,
+page_sequence = [#Outro_Belief,
                  Outro_Risk,
                  Domain_Questions_1,
                  Domain_Questions_2,

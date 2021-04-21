@@ -183,7 +183,7 @@ $(function () {
                         dataLabels: S3Label
                     }, {
                         label: "Series2",
-                        name: "von enschließlich 8°C bis <br> einschließlich 14°C", //`${labelArray[1]}°C bis ${labelArray[2]}°C` ,//"8°C bis 14°C",
+                        name: "von einschließlich 8°C bis <br> einschließlich 14°C", //`${labelArray[1]}°C bis ${labelArray[2]}°C` ,//"8°C bis 14°C",
                         data: [ticksArray[2] - ticksArray[1]],
                         showInLegend: false,
                         color: S2Col,

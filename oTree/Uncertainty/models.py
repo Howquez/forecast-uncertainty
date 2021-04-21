@@ -59,7 +59,7 @@ class Subsession(BaseSubsession):
 
                 # prepare lottery outcome for pivotal decision ex ante
                 p.participant.vars["pivotal_lottery"] = random.randint(0, 100)
-                p.participant.vars["pivotal_draw"] = random.randint(0, 100)
+                p.participant.vars["pivotal_draw"] = random.randint(0, 99)
                 p.participant.vars["lottery_success"] = False
                 if p.participant.vars["pivotal_lottery"] > p.participant.vars["pivotal_draw"]:
                     p.participant.vars["lottery_success"] = True
@@ -82,9 +82,16 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
 
-    review_weather = models.IntegerField(doc="Counts the number of times a player reviews weather information.")
-    review_instructions = models.IntegerField(doc="Counts the number of times a player reviews instructions.")
-    matching_probability = models.IntegerField(doc="Main variable")
+    review_weather = models.IntegerField(doc="Counts the number of times a player reviews weather information.",
+                                         initial=0,
+                                         blank=True)
+    review_instructions = models.IntegerField(doc="Counts the number of times a player reviews instructions.",
+                                         initial=0,
+                                         blank=True)
+    review_contact = models.IntegerField(doc="Counts the number of times a player reviews contact information.",
+                                         initial=0,
+                                         blank=True)
+    matching_probability = models.IntegerField(doc="Main variable", min=0, max=101)
     event_decision = models.StringField(doc="Weather event code the bet corresponds to.")
     payment_mechanism = models.StringField(doc="Describes whether player is paid via lottery or bet.")
     pivotal_lottery = models.IntegerField(doc="listed for debugging purposes")
@@ -98,7 +105,7 @@ class Player(BasePlayer):
             self.participant.vars["payment_event"] = self.event_decision # for revelation_viz on last screen
             self.participant.vars["pivotal_matching_probability"] = self.matching_probability
             self.pivotal_lottery = self.participant.vars["pivotal_lottery"]
-            if self.matching_probability < self.pivotal_lottery:
+            if self.matching_probability <= self.pivotal_lottery:
                 self.payment_mechanism = "lottery"
                 self.participant.vars["mechanism"] = "Lotterie"
                 self. pivotal_draw = self.participant.vars["pivotal_draw"]

@@ -62,13 +62,16 @@
             </li>
         </ul>
 
-        <div style="cursor: not-allowed;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#666666" class="bi bi-thermometer-half" viewBox="0 0 16 16" data-toggle="tooltip" data-placement="bottom" title="Hier werden Sie Wetterinformationen finden.">
+        <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#666666" class="bi bi-thermometer-half" viewBox="0 0 16 16" data-toggle="tooltip" data-placement="bottom" title="Hier werden Sie Wetterinformationen finden." style="cursor: not-allowed;">
             <path d="M9.5 12.5a1.5 1.5 0 1 1-2-1.415V6.5a.5.5 0 0 1 1 0v4.585a1.5 1.5 0 0 1 1 1.415z"/>
             <path d="M5.5 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0V2.5zM8 1a1.5 1.5 0 0 0-1.5 1.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0l-.166-.15V2.5A1.5 1.5 0 0 0 8 1z"/>
         </svg>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#666666" class="bi bi-info-circle-fill" viewBox="0 0 16 16" data-toggle="tooltip" data-placement="bottom" title="Hier werden Sie die Instruktionen nachlesen können.">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#666666" class="bi bi-info-circle-fill" viewBox="0 0 16 16" data-toggle="tooltip" data-placement="bottom" title="Hier werden Sie die Instruktionen nachlesen können." style="cursor: not-allowed;">
             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="dark" class="bi bi-headset" viewBox="0 0 16 16" data-toggle="modal" data-target="#contactModal" id="contact_icon" style="cursor: pointer;">
+            <path d="M8 1a5 5 0 0 0-5 5v1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a6 6 0 1 1 12 0v6a2.5 2.5 0 0 1-2.5 2.5H9.366a1 1 0 0 1-.866.5h-1a1 1 0 1 1 0-2h1a1 1 0 0 1 .866.5H11.5A1.5 1.5 0 0 0 13 12h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1V6a5 5 0 0 0-5-5z"/>
         </svg>
     </div>
 
@@ -235,7 +238,7 @@
                         Während Sie diese Anleitung lesen, bereitet ein Computerprogramm eine Lotterie mit insgesamt 100
                         Kugeln vor. Die Zusammensetzung roten und grünen Kugeln ist dabei rein zufällig. Ob sich nun 5
                         oder 91 grüne Kugeln in der Urne befinden, ist genauso wahrscheinlich, wie dass sich 0 oder 100
-                        grünen Kugeln in der Urne befinden.
+                        grüne Kugeln in der Urne befinden.
                     </p>
 
                     <h5>
@@ -257,10 +260,10 @@
                         </span>
                     </h5>
                     <p>
-                        Wenn diese zufällig erstellte Lotterie hingegen mehr grüne Kugeln enthält, als Sie in der
-                        entscheidenden Runde mindestens gefordert haben, dann entscheidet genau diese zufällig erstellte
-                        Lotterie über Ihren Gewinn und Sie erhalten 10,00 €, wenn zufällig eine grüne Kugel aus dieser
-                        Urne gezogen wird.
+                        Wenn diese zufällig erstellte Lotterie hingegen mindestens so viele grüne Kugeln enthält, wie
+                        Sie in der entscheidenden Runde mindestens gefordert haben, dann entscheidet genau diese
+                        zufällig erstellte Lotterie über Ihren Gewinn und Sie erhalten 10,00 €, wenn zufällig eine grüne
+                        Kugel aus dieser Urne gezogen wird.
                     </p>
 
 
@@ -321,12 +324,22 @@
                     <p>
                         In der Grafik sehen Sie die bereits genannten Wetterdaten. Dort sind jeweils Temperaturen von
                         drei aufeinanderfolgenden Tagen um 14:00 Uhr (MEZ)<sup>1</sup> dargestellt. Ihre Schätzung soll sich nun
-                        auf den Sonntag 9 Tage später (also den lila schraffierten Bereich) beziehen. Wie bereits
-                        beschrieben, werden wir Ihnen nach der sechsten Runde zusätzlich eine Wettervorhersage zeigen.
-                        Diese wird dann im lila schraffierten Bereich der Grafik dargestellt.
+                        auf den Sonntag 9 Tage später (also den lila schraffierten Bereich) beziehen. <br><br>
+                        <strong>
+                            Ab der siebten Runde werden wir IIhnen zusätzlich die erwähnte Wettervorhersage zeigen.
+                        </strong>
+                        Diese wird dann im sowohl in der Textbox als auch in dem derzeit lila schraffierten Bereich der
+                        Grafik dargestellt.
                     </p>
 
-                    <div class="container clearfix border-left border-primary w-75 bg-light">
+                    <div class="container clearfix border-left border-primary w-75 bg-light" my-4>
+                        <br>
+                        <div class="alert alert-primary" role="alert">
+                            <p class="text-center">
+                                <em>Hier wird ab der siebten Runde eine Wettervorhersage angezeigt.</em>
+                            </p>
+                        </div>
+
                         <figure class="highcharts-figure">
                             <div id="weather_viz"></div>
                         </figure>
@@ -339,8 +352,8 @@
                     </h5>
                     <p>
                         Alle dargestellten Daten sind echt, also von Experten gemessen oder, im Falle der Vorhersage,
-                        berechnet. Wir runden die Daten der Einfachheit halber. Am Ende der Studie werden wir Ihnen die
-                        Quellen zu den jeweiligen Daten zeigen.
+                        berechnet. Wir runden die Daten der Einfachheit halber auf ganze Gradzahlen. Am Ende der Studie
+                        werden wir Ihnen die Quellen zu den jeweiligen Daten zeigen.
                     </p>
 
                     <h5>
@@ -354,10 +367,16 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-thermometer-half" viewBox="0 0 16 16">
                             <path d="M9.5 12.5a1.5 1.5 0 1 1-2-1.415V6.5a.5.5 0 0 1 1 0v4.585a1.5 1.5 0 0 1 1 1.415z"/>
                             <path d="M5.5 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0V2.5zM8 1a1.5 1.5 0 0 0-1.5 1.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0l-.166-.15V2.5A1.5 1.5 0 0 0 8 1z"/>
-                        </svg>-Symbol. Für eine erneute Betrachtung der Instruktionen klicken Sie einfach auf das
+                        </svg>-Symbol oben rechts im Bild. Für eine erneute Betrachtung der Instruktionen klicken Sie
+                        einfach auf das
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
                             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-                        </svg>-Symbol.
+                        </svg>-Symbol daneben. <br><br>
+                        Sollten Sie Fragen haben, können Sie uns zu bestimmten Zeiten telefonisch oder per eMail
+                        erreichen. Die entsprechenden Kontaktinformationen erfahren Sie, indem sie auf das
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="dark" class="bi bi-headset" viewBox="0 0 16 16" data-toggle="modal" data-target="#contactModal" id="contact_icon" style="cursor: pointer;">
+                            <path d="M8 1a5 5 0 0 0-5 5v1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a6 6 0 1 1 12 0v6a2.5 2.5 0 0 1-2.5 2.5H9.366a1 1 0 0 1-.866.5h-1a1 1 0 1 1 0-2h1a1 1 0 0 1 .866.5H11.5A1.5 1.5 0 0 0 13 12h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1V6a5 5 0 0 0-5-5z"/>
+                        </svg>-Symbol oben rechts im Bild
                     </p>
 
 
@@ -439,7 +458,7 @@
                                                         <div class="col-sm border-right">
                                                             <small mb-4>
                                                                 Die Wette bezieht sich auf dieselbe Wettersituation, die Ihnen eben vorgestellt wurde.
-                                                                Bei Bedarf können Sie sich diese
+                                                                Im Hauptteil der Studie können Sie sich diese
                                                                 <a data-toggle="modal" data-target="#weatherModal" id="weather_text"><u>hier</u></a>
                                                                 nochmals anschauen. <br><br>
                                                             </small>
@@ -479,7 +498,7 @@
                                                                         Wie viele grüne Kugeln müssen sich <u>mindestens</u> in der Urne befinden, damit Sie die
                                                                         Lotterie gerade so bevorzugen?
                                                                     </small>
-                                                                    <input class="form-control border-primary mb-1" type="number" placeholder="#" id="id_matching_probability" name="matching_probability" min="0" max="100">
+                                                                    <input class="form-control border-primary mb-1" type="number" placeholder="#" id="id_matching_probability" name="matching_probability" min="0" max="101">
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -508,7 +527,7 @@
                                                         </button>
                                                     </div>
                                                     <div class="row justify-content-center mb-3 text-secondary">
-                                                        <small>(Der Button ist in der Demo deaktiviert.)</small>
+                                                        <small>(Der obenstehende Button ist in der Demo deaktiviert.)</small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -553,7 +572,7 @@
 
                 <div class="card-body">
                     <p>
-                        Schauen Sie sich die Beispielhafte Entscheidung unten genau an und beantworten Sie die Fragen.
+                        Schauen Sie sich die beispielhafte Entscheidung unten genau an und beantworten Sie die Fragen.
                         Anschließend können Sie mit der Studie beginnen.
                     </p>
 
@@ -740,6 +759,42 @@
             </div>
         </div>
     </div>
+
+<!-- Contact Modal -->
+<div class="modal fade bd-modal-lg" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="contactModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <p class="lead">
+                    Bitte rufen Sie im Falle von technischen Problemen oder Fragen unsere Service-Hotline an:
+                </p>
+                <address>
+                    WiSo-Forschungslabor <br>
+                    Fakultät für Wirtschafts- und Sozialwissenschaften<br>
+                    Universität Hamburg <br>
+                    Von-Melle-Park 5 <br>
+                    Raum 2155/56 <br>
+                    20144 Hamburg <br><br>
+                    <a href="mailto:experiments.wiso@uni-hamburg.de?subject=CLICCS B5 Umfrage">experiments.wiso@uni-hamburg.de</a><br>
+                    <a href="tel:+4940428389334">+49 40 42 838 - 9334</a>
+                </address>
+                <p>
+                    Sie können sich Montags bis Freitags von 10:00 Uhr bis 18:00 Uhr an uns wenden.
+                </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Schließen</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Instructions Modal -->
     <div class="modal fade bd-example-modal-lg" id="instructionsModal" tabindex="-1" role="dialog" aria-labelledby="instructionsModalTitle" aria-hidden="true">

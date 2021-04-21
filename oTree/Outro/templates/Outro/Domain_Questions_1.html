@@ -17,16 +17,22 @@
         <div class="card-body">
             <h5 class="card-title display-4">Abschließende Fragen</h5>
             <div class="progress" style="height:10px">
-                <div class="progress-bar bg-secondary" role="progressbar" style="height:10px; width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" style="height:10px; width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">Seite 3</div>
+                <div class="progress-bar bg-secondary" role="progressbar" style="height:10px; width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" style="height:10px; width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Seite 2</div>
             </div>
             <h5 class="card-title display-4"></h5>
             <h6 class="card-subtitle mb-5 text-muted">
 
             </h6>
             <p class="lead">
-                Bitte bewerten Sie die Aussage: <br>
+                Bitte bewerten Sie die Aussage:
             </p>
+            <small>
+                Bitte kreuzen Sie ein Feld auf der Skala an, wobei der Wert 0 bedeutet, dass die Aussage überhaupt
+                nicht zutrifft und 4, dass Sie voll und ganz zutrifft. Mit den Werten dazwischen können Sie Ihre
+                Bewertung abstufen.” <br>
+            </small>
+
 
             <div class="container clearfix displaystyle-leftborder displaystyle-my-warning w-75 mb-5 bg-light">
                 <p><em>Experten haben am Freitag eine Vorhersage für den Sonntag 9 Tage später getroffen:</em></p>
@@ -48,9 +54,17 @@
                     <td></td>
                     <td colspan="2" class="text-right"><small>trifft voll und ganz zu</small></td>
                 </tr>
+                <tr>
+                    <td></td>
+                    <td><small>0</small></td>
+                    <td><small>1</small></td>
+                    <td><small>2</small></td>
+                    <td><small>3</small></td>
+                    <td><small>4</small></td>
+                </tr>
                 {% for field in form %}
                     <tr>
-                        <th>{{ field.label }}</th>
+                        <td>{{ field.label }}</td>
                         {% for choice in choices %}
                             <td>
                                 <input type="radio" name="{{field.name}}" value="{{choice}}" id="id_{{field.name}}_{{choice}}" required="" class="form-check-input" style="margin: 0; display: block; text-align: right;">

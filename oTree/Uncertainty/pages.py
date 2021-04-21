@@ -5,7 +5,7 @@ from .models import Constants
 
 class Baillon_Decision(Page):
     form_model = "player"
-    form_fields = ["review_weather", "review_instructions",
+    form_fields = ["review_weather", "review_instructions", "review_contact",
                    "matching_probability"]
 
     def js_vars(self):

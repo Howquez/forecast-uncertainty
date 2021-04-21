@@ -34,7 +34,7 @@
 <nav class="navbar sticky-top mb-4 justify-content-between">
     <h5>
         <span class="badge badge-dark badge-pill mt-4" data-toggle="tooltip" data-placement="bottom" title="Runde {{ player.round_number }}">
-            #{{ player.round_number }}
+            Runde {{ player.round_number }}
         </span>
     </h5>
     <div style="cursor: pointer;">
@@ -45,6 +45,9 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="dark" class="bi bi-info-circle-fill" viewBox="0 0 16 16" data-toggle="modal" data-target="#instructionsModal" id="instructions_icon">
             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
         </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="dark" class="bi bi-headset" viewBox="0 0 16 16" data-toggle="modal" data-target="#contactModal" id="contact_icon">
+            <path d="M8 1a5 5 0 0 0-5 5v1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a6 6 0 1 1 12 0v6a2.5 2.5 0 0 1-2.5 2.5H9.366a1 1 0 0 1-.866.5h-1a1 1 0 1 1 0-2h1a1 1 0 0 1 .866.5H11.5A1.5 1.5 0 0 0 13 12h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1V6a5 5 0 0 0-5-5z"/>
+        </svg>
     </div>
 </nav>
 
@@ -52,6 +55,7 @@
 <!-- Hidden tracking Fields -->
 <input type="hidden" name="review_weather" id="id_review_weather" value="0"/>
 <input type="hidden" name="review_instructions" id="id_review_instructions" value="0"/>
+<input type="hidden" name="review_contact" id="id_review_contact" value="0"/>
 
 
 <!-- Decision Card -->
@@ -88,7 +92,7 @@
                                 <small mb-4>
                                     Die Wette bezieht sich auf dieselbe Wettersituation, die Ihnen eben vorgestellt wurde.
                                     Bei Bedarf können Sie sich diese
-                                    <a data-toggle="modal" data-target="#weatherModal" id="weather_text"><u>hier</u></a>
+                                    <a data-toggle="modal" data-target="#weatherModal" id="weather_text" style="cursor: pointer;"><u>hier</u></a>
                                     nochmals anschauen. <br><br>
                                 </small>
                             </div>
@@ -127,7 +131,7 @@
                                             Wie viele grüne Kugeln müssen sich <u>mindestens</u> in der Urne befinden, damit Sie die
                                             Lotterie gerade so bevorzugen?
                                         </small>
-                                        <input class="form-control border-primary mb-1" type="number" placeholder="#" id="id_matching_probability" name="matching_probability" min="0" max="100" required>
+                                        <input class="form-control border-primary mb-1" type="number" placeholder="#" id="id_matching_probability" name="matching_probability" min="0" max="101" required>
                                     </div>
                                 </form>
                             </div>
@@ -164,6 +168,42 @@
     </div>
 </div>
 
+<!-- Contact Modal -->
+<div class="modal fade bd-modal-lg" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="contactModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <p class="lead">
+                    Bitte rufen Sie im Falle von technischen Problemen oder Fragen unsere Service-Hotline an:
+                </p>
+                <address>
+                    WiSo-Forschungslabor <br>
+                    Fakultät für Wirtschafts- und Sozialwissenschaften<br>
+                    Universität Hamburg <br>
+                    Von-Melle-Park 5 <br>
+                    Raum 2155/56 <br>
+                    20144 Hamburg <br><br>
+                    <a href="mailto:experiments.wiso@uni-hamburg.de?subject=CLICCS B5 Umfrage">experiments.wiso@uni-hamburg.de</a><br>
+                    <a href="tel:+4940428389334">+49 40 42 838 - 9334</a>
+                </address>
+                <p>
+                    Sie können sich Montags bis Freitags von 10:00 Uhr bis 18:00 Uhr an uns wenden.
+                </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Schließen</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Weather Modal -->
 <div class="modal fade bd-example-modal-lg" id="weatherModal" tabindex="-1" role="dialog" aria-labelledby="weatherModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -174,6 +214,11 @@
                 </button>
             </div>
             <div class="modal-body">
+
+                <p class="lead">
+                    Die Temperaturen betrugen zwischen Mittwoch und Freitag jeweils 12°C <small>(um 14:00 Uhr)</small>.
+                </p>
+
                 {% if treatment_displayed %}
 
                     <div class="alert alert-success" role="alert">
@@ -183,18 +228,14 @@
 
                     </div>
 
-                {% else %}
-                    <p class="lead">
-                        Die Temperaturen betrugen zwischen Mittwoch und Freitag jeweils 12°C <small>(um 14:00 Uhr)</small>.
-                    </p>
                 {% endif %}
+
 
                 <figure class="highcharts-figure">
                     <div id="weather_viz"></div>
                 </figure>
 
                 <p class="card-text">
-                    <small>
                     Ohne zu wissen, auf welchen Ort und Zeitpunkt sich das oben dargestellte Wetter bezieht,
                     müssen Sie für die folgenden Aufgaben abschätzen, welche Temperaturbereiche Sie
                         {% if treatment_displayed %}
@@ -204,7 +245,6 @@
                         am Sonntag <u>9 Tage später</u>
                         {% endif %}
                     am selben Ort und zur gleichen Tageszeit für wahrscheinlich halten.
-                    </small>
                 </p>
             </div>
             <div class="modal-footer">
@@ -399,8 +439,11 @@
                                 <p>
                                     In der Grafik sehen Sie die bereits genannten Wetterdaten. Dort sind jeweils Temperaturen von
                                     drei aufeinanderfolgenden Tagen um 14:00 Uhr (MEZ) dargestellt. Ihre Schätzung soll sich nun
-                                    auf den Sonntag 9 Tage später (also den lila schraffierten Bereich) beziehen. Wie bereits
-                                    beschrieben, werden Sie nach der sechsten Runde zusätzlich eine Wettervorhersage sehen.
+                                    auf den Sonntag 9 Tage später (also den lila schraffierten Bereich) beziehen.
+                                    <strong>
+                                        Sie können ab der siebten Runde zusätzlich eine Wettervorhersage einsehen.
+                                    </strong>
+
                                 </p>
 
 
