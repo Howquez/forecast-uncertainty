@@ -92,8 +92,8 @@ class Player(BasePlayer):
                                    ],
                                    widget=widgets.RadioSelect)
 
-    Kids=models.IntegerField(doc="Respondent's number of children",
-                             label="Haben Sie Kinder? Wenn ja, wie viele?")
+    Kids=models.BooleanField(doc="Respondent's number of children",
+                             label="Haben Sie Kinder?")
 
     Income = models.IntegerField(doc="Respondent's income",
                                  label="Welches monatliche Budget haben Sie zur Verfügung? Bitte geben Sie Ihr eigenes monatliches Nettoeinkommen an.",
@@ -111,6 +111,16 @@ class Player(BasePlayer):
     ZIP=models.StringField(doc="Respondent's ZIP Code",
                            label="Von wo füllen Sie die Studie aus? Bitte geben Sie Ihre Postleitzahl an",
                            blank=True)
+
+    Vac = models.StringField(doc="Vaccination status",
+                                       label="Wir interessieren uns für das aktuelle Impfgeschehen in Deutschland und bitten Sie Ihren aktuellen Impfstatus (gegen Covid-19) anzugeben:",
+                                       choices=[
+                                           ["yes", "Ich habe mich bereits impfen lassen."],
+                                           ["no", "Ich plane mich noch impfen zu lassen."],
+                                           ["no interest", "Ich möchte mich nicht impfen."],
+                                           ["NA", "Keine Angabe."]
+                                       ],
+                                       widget=widgets.RadioSelect)
 
     # Domain questions
     Comprehension = models.StringField(doc="Respondent's understanding of the tasks",

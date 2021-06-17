@@ -17,7 +17,7 @@ class Outro_Risk(Page):
 
 class Demographic_Questions(Page):
     form_model = "player"
-    form_fields = ["Age", "Gender", "Family", "Kids", "Education", "Income", "ZIP"]
+    form_fields = ["Age", "Gender", "Family", "Kids", "Education", "Income", "ZIP", "Vac"]
 
 class Domain_Questions_1(Page):
     form_model = "player"
