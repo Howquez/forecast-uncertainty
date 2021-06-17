@@ -60,8 +60,8 @@ class Player(BasePlayer):
                                         [3, "Mittlere Reife, Realschul- oder gleichwertiger Abschluss"],
                                         [4, "Abgeschlossene Lehre"],
                                         [5, "Fachabitur, Fachhochschulreife"],
-                                        [6, "Fachhochschul-/Hochschulabschluss"],
-                                        [7, "Abitur, Hochschulreife"],
+                                        [6, "Abitur, Hochschulreife"],
+                                        [7, "Fachhochschul-/Hochschulabschluss"],
                                         [8, "Anderer Abschluss"],
                                     ],
                                    # choices=[
@@ -93,11 +93,10 @@ class Player(BasePlayer):
                                    widget=widgets.RadioSelect)
 
     Kids=models.IntegerField(doc="Respondent's number of children",
-                             label="Haben Sie Kinder? Wenn ja, wie viele?",
-                             blank=True)
+                             label="Haben Sie Kinder? Wenn ja, wie viele?")
 
     Income = models.IntegerField(doc="Respondent's income",
-                                 label="Welches monatliche Budget haben Sie zur Verfügung? Bitte geben Sie Ihr monatliches Nettoeinkommen an.",
+                                 label="Welches monatliche Budget haben Sie zur Verfügung? Bitte geben Sie Ihr eigenes monatliches Nettoeinkommen an.",
                                  choices=[
                                      [0, "0-500 €"],
                                      [1, "501-1.000 €"],
@@ -107,7 +106,6 @@ class Player(BasePlayer):
                                      [5, "mehr als 4.000 €"],
                                      [99999, "keine Angabe"]
                                  ],
-                                 blank=True,
                                  widget=widgets.RadioSelect)
 
     ZIP=models.StringField(doc="Respondent's ZIP Code",

@@ -4,12 +4,12 @@ from .models import Constants
 
 
 class Intro_Welcome(Page):
-    pass
+    form_model = "player"
+    form_fields = ["window_width", "window_height", "browser"]
 
 class Intro_Instructions(Page):
     form_model = "player"
-    form_fields = ["window_width", "window_height", "browser",
-                   "CQ_1", "CQ_2"]
+    form_fields = ["CQ_1", "CQ_2"]
 
     def js_vars(self):
         return dict(

@@ -3,9 +3,9 @@ let compound   = js_vars.compound;
 
 
 // initiate variables
-var green = 33;
+var green = 34;
 if (compound) {
-  green = 66;
+  green = 67;
 }
 var red = 100 - green;
 var primary = "#0275d8";

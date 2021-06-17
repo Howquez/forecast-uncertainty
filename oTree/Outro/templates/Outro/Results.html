@@ -33,7 +33,7 @@
                 <div id="weather_viz"></div>
             </figure>
             <p class="card-text">
-                <small>Der Wetterbericht den wir Ihnen gezeigt haben und auf dem Ihre Entscheidungen sowie
+                <small>Der Wetterbericht, den wir Ihnen gezeigt haben und auf dem Ihre Entscheidungen sowie
                 Ihre möglichen Auszahlungen basieren, bezieht sich auf das Wetter in {{ participant.vars.location }}
                 {% if participant.vars.location == "Ilomantsi" %}
                         (Finnland)
@@ -49,10 +49,10 @@
                     <a href="https://kachelmannwetter.com/de/messwerte/63-e-491-n/temperatur/20201009-1100z.html#obs-detail-J728-72h" target="_blank">hier</a> und
                     <a href="https://kachelmannwetter.com/de/messwerte/63-e-491-n/temperatur/20201019-1100z.html#obs-detail-J728-72h" target="_blank">hier</a>.
                 {% endif %}
-                Die Wettervorhersage, die wir Ihnen ab der zweiten Runde dargestellt haben, stammen von ebenfalls von
-                Kachelmannwetter und wurden mithilfe des Global Euro HD (ECMMF) Ensambles berechnet. Wir haben die Daten
+                Die Wettervorhersage, die wir Ihnen ab der zweiten Runde dargestellt haben, stammen ebenfalls von
+                Kachelmannwetter und wurden mithilfe des Global Euro HD (ECMMF) Ensembles berechnet. Wir haben die Daten
                 am 09.10.2020 um {% if participant.vars.location == "Ilomantsi" %}15:59{%else%}14:29{%endif%} Uhr (MEZ)
-                abgerufen wie Sie <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                abgerufen, wie Sie <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                 diesem Screenshot (unten)</a> entnehmen können.
                 </small>
             </p>
@@ -129,8 +129,8 @@
 
                     <p>
                         Sie haben angegeben, dass Sie eine Lotterie erst dann besser als die Wette finden, wenn sich
-                        mindestens {{ participant.vars.pivotal_matching_probability }} grüne Kugeln in der Urne befinden. Die Urne, die im Hintergrund
-                        vorbereitet wurde, enthält {{ participant.vars.pivotal_lottery }} grüne Kugeln.
+                        mindestens {{ participant.vars.pivotal_matching_probability }} grüne Kugeln in dem Lostopf befinden.
+                        Der Lostopf, der im Hintergrund vorbereitet wurde, enthält {{ participant.vars.pivotal_lottery }} grüne Kugeln.
                     </p>
 
                     <p>
