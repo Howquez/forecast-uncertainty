@@ -5,10 +5,23 @@ SESSION_CONFIGS = [
         name="Baillon",
         display_name="Baillon",
         num_demo_participants=1,
+
         app_sequence=["Intro", "Baillon", "Outro"],
         location="random",
         treatment="random",
     ),
+]
+
+ROOMS = [
+    dict(
+        name="Baillon",
+        display_name="Baillon",
+        participant_label_file="_rooms/test.txt"
+    ),
+    dict(
+        name="noLabel",
+        display_name="noLabel"
+    )
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs

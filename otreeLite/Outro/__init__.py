@@ -261,6 +261,12 @@ class Results(Page):
             results=True,
         )
 
+    @staticmethod
+    def vars_for_template(self):
+        return dict(
+            redirect="https://mingle.respondi.com/s/XXXXX/ospe.php3?c_0002=1&return_tic="+self.participant.label,
+        )
+
 
 page_sequence = [Outro_Risk,
                  Domain_Questions_1,
