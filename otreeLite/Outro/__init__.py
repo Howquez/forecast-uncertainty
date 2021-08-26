@@ -262,14 +262,13 @@ class Results(Page):
         )
 
     @staticmethod
-    def vars_for_template(self):
-        print(self.participant.label)
-        if self.participant.label is not None:
-            tic = self.participant.label
+    def vars_for_template(player):
+        if player.participant.label is not None:
+            tic = player.participant.label
         else:
             tic = "tic_is_missing"
         return dict(
-                    redirect="https://mingle.respondi.com/s/XXXXX/ospe.php3?c_0002=1&return_tic="+tic,
+                    redirect="https://mingle.respondi.com/s/1523917/ospe.php3?c_0002=1&return_tic="+tic,
                 )
 
 

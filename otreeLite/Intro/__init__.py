@@ -57,20 +57,6 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect
     )
 
-    # def CQ_1_error_message(player, value):
-    #     if value is False:
-    #         player.wrong_answer_1 += 1
-    #         return "Versuchen Sie es noch einmal."
-    #         print("Versuchen Sie es noch einmal.")
-    #
-    # def CQ_2_error_message(player, value):
-    #     if value is False:
-    #         player.wrong_answer_2 += 1
-    #         return "Versuchen Sie es noch einmal."
-    #         print("Versuchen Sie es noch einmal.")
-    #     else:
-    #         print("all good")
-
 
 # FUNCTIONS
 def creating_session(subsession: BaseSubsession):
@@ -125,9 +111,29 @@ class Intro_Instructions(Page):
     @staticmethod
     def error_message(player, values):
         if values['CQ_1'] != 0:
+            player.wrong_answer_1 += 1
             return 'Fehler in Frage 1. Versuchen Sie es noch einmal.'
         if values['CQ_2'] != 0:
+            player.wrong_answer_2 += 1
             return 'Fehler in Frage 2. Versuchen Sie es noch einmal.'
+
+    @staticmethod
+    def vars_for_template(player):
+        print(player.wrong_answer_1 + player.wrong_answer_2)
+        if player.wrong_answer_1 + player.wrong_answer_2 > 2:
+            screenout = True
+        else:
+            screenout = False
+
+        if player.participant.label is not None:
+            tic = player.participant.label
+        else:
+            tic = "tic_is_missing"
+
+        return dict(
+            screenout=screenout,
+            redirect="https://mingle.respondi.com/s/1523917/ospe.php3?c_0002=0&return_tic="+tic,
+        )
 
 
 page_sequence = [Intro_Welcome, Intro_Instructions]
