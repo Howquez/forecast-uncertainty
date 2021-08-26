@@ -119,7 +119,6 @@ class Intro_Instructions(Page):
 
     @staticmethod
     def vars_for_template(player):
-        print(player.wrong_answer_1 + player.wrong_answer_2)
         if player.wrong_answer_1 + player.wrong_answer_2 > 2:
             screenout = True
         else:
