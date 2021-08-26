@@ -17,8 +17,106 @@
 <body class="bg-light.bg-gradient" onload="fillText();">
 <img src="https://github.githubassets.com/images/modules/site/actions/hero-bg.jpg" id="bg" alt="" style="z-index: -1; position: fixed; left: 30; opacity: 0.90;">
 
+<div class="card mt-5 shadow-lg">
+    <div class="card-body">
+        <h1 class="display-4 mb-4"><small class="text-muted">Sie bekommen</small> {{participant.payoff_plus_participation_fee}}<small class="text-muted"> ausgezahlt.</small></h1>
+        <hr class="my-4">
+        <p class="lead">
+            Wenn Sie alle Informationen gelesen haben, klicken Sie bitte auf den folgenden Button. Dies ist zwingend
+            notwendig, weil Ihr Ergebnis durch den Klick an Respondi übermittelt wird. So wird sichergestellt, dass
+            Sie Ihre Auszahlung erhalten können.
+        </p>
+        <div class="d-flex justify-content-center my-5">
+            <a class="btn btn-success btn-lg shadow-lg" href="{{redirect}}" role="button" style="border-radius: 40px;">
+                Zur Zahlungsabwicklung
+            </a>
+        </div>
+        <small>
+            Unten erklären wir Ihnen, wie Ihre Auszahlung zustande kommt &mdash; also welche Entscheidungssituation für
+            Ihre Auszahlung relevant ist und wie Sie sich dort entschieden haben.
+        </small>
+    </div>
 
-    <div class="card mt-5 shadow-lg">
+    <div id="accordion" role="tablist">
+        <div class="card-header bg-white" role="tab" id="headingOne">
+            <p class="lead mb-1">
+                <a data-bs-toggle="collapse" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
+                    <small>
+                        Details anzeigen
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                    </small>
+                </a>
+            </p>
+        </div>
+
+        <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-footer bg-white">
+                <p>
+                    Es wurde zufällig bestimmt, dass Ihre Abwägung aus
+                    <strong>Runde {{ participant.vars.round_to_pay }}</strong>
+                    Ihre Auszahlung bestimmt.
+
+                <p>
+                    In der ausgewählten Runde hatten Sie die Wahl zwischen einer Lotterie und einer
+                    Wette. Die Wette sah dabei wie folgt aus:
+                </p>
+
+                <div class="container clearfix border-left border-primary w-75 mb-3 bg-light">
+                    <br>
+                    <p id="subHeader">
+                        <em>Sie gewinnen 10 Euro entsprechend der unten dargestellten Grafik (und sonst nichts).</em>
+                    </p>
+
+                    <figure class="highcharts-figure">
+                        <div class="event_bar"></div>
+                    </figure>
+                </div>
+
+                <p>
+                    Sie haben angegeben, dass Sie eine Lotterie erst dann besser als die Wette finden, wenn sich
+                    mindestens {{ participant.vars.pivotal_matching_probability }} grüne Kugeln in dem Lostopf befinden.
+                    Der Lostopf, der im Hintergrund vorbereitet wurde, enthält {{ participant.vars.pivotal_lottery }} grüne Kugeln.
+                </p>
+
+                <p>
+                    <strong>
+                        Deshalb wurde Ihre Auszahlung in dieser Runde durch die {{ participant.vars.mechanism }}
+                        bestimmt.
+                    </strong>
+                </p>
+
+                {% if participant.vars.mechanism == "Wette" %}
+                {% if participant.vars.bet_success %}
+                <p>
+                    Weil die Temperatur entsprechend Ihrer Wette eingetreten ist, haben Sie gewonnen.
+                </p>
+                {% else %}
+                <p>
+                    Weil die Temperatur nicht entsprechend Ihrer Wette eingetreten ist, haben Sie leider nicht
+                    gewonnen.
+                </p>
+                {% endif %}
+                {% else %}
+                {% if participant.vars.lottery_success %}
+                <p>
+                    Weil zufällig eine grüne Kugel gezogen wurde, haben Sie gewonnen.
+                </p>
+                {% else %}
+                <p>
+                    Weil zufällig eine rote Kugel gezogen wurde, haben Sie leider nicht
+                    gewonnen.
+                </p>
+                {% endif %}
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-5 shadow-lg">
         <div class="card-body">
             <h5 class="card-title display-4">{{ participant.vars.location }} Oktober 2020</h5>
             <h6 class="card-subtitle mb-2 text-muted">Am <b>Sonntag</b>, dem 18. Oktober um 14:00 Uhr wurden hier
@@ -59,101 +157,6 @@
             {% else %}
                 <img class="d-block w-100" src="{% static 'global/images/Weiskirchen_Forecast.png' %}" alt="Wettervorhersage für {{ participant.vars.location }}">
             {% endif %}
-        </div>
-    </div>
-
-
-    <div class="card mt-5 shadow-lg">
-        <div class="card-body">
-            <h1 class="display-4 mb-4"><small class="text-muted">Sie bekommen</small> {{participant.payoff_plus_participation_fee}}<small class="text-muted"> ausgezahlt.</small></h1>
-            <hr class="my-4">
-            <p>
-                Unten erklären wir Ihnen, wie Ihre Auszahlung zustande kommt &mdash; also welche Entscheidungssituation für
-                Ihre Auszahlung relevant ist und wie Sie sich dort entschieden haben.
-            </p>
-            <div class="d-flex justify-content-center my-5">
-                <a class="btn btn-primary shadow-lg" href="{{redirect}}" role="button" style="border-radius: 40px;">
-                    Zur Zahlungsabwicklung
-                </a>
-            </div>
-        </div>
-
-        <div id="accordion" role="tablist">
-            <div class="card-header bg-white" role="tab" id="headingOne">
-                <p class="lead mb-1">
-                    <a data-bs-toggle="collapse" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
-                        <small>
-                            Details anzeigen
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-                            </svg>
-                        </small>
-                    </a>
-                </p>
-            </div>
-
-            <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
-                <div class="card-footer bg-white">
-                    <p>
-                    Es wurde zufällig bestimmt, dass Ihre Abwägung aus
-                    <strong>Runde {{ participant.vars.round_to_pay }}</strong>
-                    Ihre Auszahlung bestimmt.
-
-                    <p>
-                        In der ausgewählten Runde hatten Sie die Wahl zwischen einer Lotterie und einer
-                        Wette. Die Wette sah dabei wie folgt aus:
-                    </p>
-
-                    <div class="container clearfix border-left border-primary w-75 mb-3 bg-light">
-                       <br>
-                        <p id="subHeader">
-                            <em>Sie gewinnen 10 Euro entsprechend der unten dargestellten Grafik (und sonst nichts).</em>
-                        </p>
-
-                        <figure class="highcharts-figure">
-                            <div class="event_bar"></div>
-                        </figure>
-                    </div>
-
-                    <p>
-                        Sie haben angegeben, dass Sie eine Lotterie erst dann besser als die Wette finden, wenn sich
-                        mindestens {{ participant.vars.pivotal_matching_probability }} grüne Kugeln in dem Lostopf befinden.
-                        Der Lostopf, der im Hintergrund vorbereitet wurde, enthält {{ participant.vars.pivotal_lottery }} grüne Kugeln.
-                    </p>
-
-                    <p>
-                        <strong>
-                            Deshalb wurde Ihre Auszahlung in dieser Runde durch die {{ participant.vars.mechanism }}
-                            bestimmt.
-                        </strong>
-                    </p>
-
-                    {% if participant.vars.mechanism == "Wette" %}
-                        {% if participant.vars.bet_success %}
-                        <p>
-                            Weil die Temperatur entsprechend Ihrer Wette eingetreten ist, haben Sie gewonnen.
-                        </p>
-                        {% else %}
-                        <p>
-                            Weil die Temperatur nicht entsprechend Ihrer Wette eingetreten ist, haben Sie leider nicht
-                            gewonnen.
-                        </p>
-                        {% endif %}
-                    {% else %}
-                        {% if participant.vars.lottery_success %}
-                        <p>
-                            Weil zufällig eine grüne Kugel gezogen wurde, haben Sie gewonnen.
-                        </p>
-                        {% else %}
-                        <p>
-                            Weil zufällig eine rote Kugel gezogen wurde, haben Sie leider nicht
-                            gewonnen.
-                        </p>
-                        {% endif %}
-                    {% endif %}
-
-                </div>
-            </div>
         </div>
     </div>
 

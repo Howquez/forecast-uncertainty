@@ -47,9 +47,6 @@ class Player(BasePlayer):
     review_instructions = models.IntegerField(doc="Counts the number of times a player reviews instructions.",
                                               initial=0,
                                               blank=True)
-    review_contact = models.IntegerField(doc="Counts the number of times a player reviews contact information.",
-                                         initial=0,
-                                         blank=True)
 
     matching_probability = models.IntegerField(doc="Main variable", min=0, max=101)
     event_decision = models.StringField(doc="Weather event code the bet corresponds to.")
@@ -128,7 +125,7 @@ def set_payoffs(player: Player):
 # PAGES
 class Baillon_Decision(Page):
     form_model = "player"
-    form_fields = ["review_weather", "review_instructions", "review_contact",
+    form_fields = ["review_weather", "review_instructions",
                    "matching_probability"]
 
     @staticmethod

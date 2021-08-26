@@ -161,6 +161,9 @@ var height = 9;
 if (small){
     height = 9;
 }
+if (page == "decision"){
+    height = 16;
+}
 
 
 // language plot options

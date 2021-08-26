@@ -32,7 +32,7 @@
 <!-- Hidden tracking Fields -->
 <input type="hidden" name="review_weather" id="id_review_weather" value="0"/>
 <input type="hidden" name="review_instructions" id="id_review_instructions" value="0"/>
-<input type="hidden" name="review_contact" id="id_review_contact" value="0"/>
+
 
 <!-- Header -->
 <nav class="navbar sticky-top mb-4 justify-content-between">
@@ -48,9 +48,6 @@
         </svg>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="dark" class="bi bi-info-circle-fill" viewBox="0 0 16 16" data-bs-toggle="offcanvas" data-bs-target="#offcanvasInstructions" aria-controls="offcanvasInstructions" id="instructions_icon">
             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-        </svg>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="dark" class="bi bi-headset" viewBox="0 0 16 16" data-bs-toggle="offcanvas" data-bs-target="#offcanvasContact" aria-controls="offcanvasContact" id="contact_icon">
-            <path d="M8 1a5 5 0 0 0-5 5v1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a6 6 0 1 1 12 0v6a2.5 2.5 0 0 1-2.5 2.5H9.366a1 1 0 0 1-.866.5h-1a1 1 0 1 1 0-2h1a1 1 0 0 1 .866.5H11.5A1.5 1.5 0 0 0 13 12h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1V6a5 5 0 0 0-5-5z"/>
         </svg>
     </div>
 </nav>
@@ -165,35 +162,6 @@
 </div>
 
 
-<!-- Contact Offcanvas -->
-<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasContact" aria-labelledby="offcanvasContact">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasContactLabel">
-            Kontakt
-        </h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        <p class="lead">
-            Bitte rufen Sie im Falle von technischen Problemen oder Fragen unsere Service-Hotline an:
-        </p>
-        <address>
-            WiSo-Forschungslabor <br>
-            Fakultät für Wirtschafts- und Sozialwissenschaften<br>
-            Universität Hamburg <br>
-            Von-Melle-Park 5 <br>
-            Raum 2155/56 <br>
-            20144 Hamburg <br><br>
-            <a href="mailto:experiments.wiso@uni-hamburg.de?subject=CLICCS B5 Umfrage">experiments.wiso@uni-hamburg.de</a><br>
-            <a href="tel:+4940428389334">+49 40 42 838 - 9334</a>
-        </address>
-        <p>
-            Sie können sich Montags bis Freitags von 10:00 Uhr bis 18:00 Uhr an uns wenden.
-        </p>
-    </div>
-</div>
-
-
 <!-- Weather Offcanvas -->
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWeather" aria-labelledby="offcanvasWeather">
     <div class="offcanvas-header">
@@ -207,21 +175,18 @@
             Die Temperaturen betrugen zwischen Mittwoch und Freitag jeweils 12°C <small>(um 14:00 Uhr)</small>.
         </p>
 
-        {% if treatment_displayed %}
-
-            <div class="alert alert-success" role="alert">
-
-                <p class="lead">Experten haben am Freitag eine Vorhersage für den Sonntag <u>9 Tage später</u> getroffen:</p>
-                <p><span id="forecastText"></span></p>
-
-            </div>
-
-        {% endif %}
-
-
         <figure class="highcharts-figure">
             <div id="weather_viz"></div>
         </figure>
+
+        {% if treatment_displayed %}
+
+        <div class="alert alert-success" role="alert">
+            <p>Experten haben am Freitag eine Vorhersage für den Sonntag <u>9 Tage später</u> getroffen:</p>
+            <p><span id="forecastText"></span></p>
+        </div>
+
+        {% endif %}
 
         <p class="card-text">
             Ohne zu wissen, auf welchen Ort und Zeitpunkt sich das oben dargestellte Wetter bezieht,

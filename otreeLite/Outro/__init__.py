@@ -263,9 +263,14 @@ class Results(Page):
 
     @staticmethod
     def vars_for_template(self):
+        print(self.participant.label)
+        if self.participant.label is not None:
+            tic = self.participant.label
+        else:
+            tic = "tic_is_missing"
         return dict(
-            redirect="https://mingle.respondi.com/s/XXXXX/ospe.php3?c_0002=1&return_tic="+self.participant.label,
-        )
+                    redirect="https://mingle.respondi.com/s/XXXXX/ospe.php3?c_0002=1&return_tic="+tic,
+                )
 
 
 page_sequence = [Outro_Risk,
