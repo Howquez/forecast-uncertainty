@@ -157,8 +157,15 @@ class Baillon_Decision(Page):
         treatment_displayed = False
         if player.round_number > 6:
             treatment_displayed = True
+
+        if player.participant.label is not None:
+            tic = player.participant.label
+        else:
+            tic = "tic_is_missing"
+
         return {
             "treatment_displayed": treatment_displayed,
+            "redirect": "https://mingle.respondi.com/s/1523917/ospe.php3?c_0002=0&return_tic="+tic
         }
 
     @staticmethod

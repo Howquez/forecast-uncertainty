@@ -17,9 +17,9 @@ function countClicks(button){
 // 	document.getElementById(element).value = newValue;
 // } false);
 
-document.getElementById("contact_icon").addEventListener("click", function() {
-    countClicks("contact");
-}, false);
+// document.getElementById("contact_icon").addEventListener("click", function() {
+//     countClicks("contact");
+// }, false);
 
 document.getElementById("weather_icon").addEventListener("click", function() {
     countClicks("weather");
