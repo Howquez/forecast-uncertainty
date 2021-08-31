@@ -90,7 +90,7 @@
                                 <small mb-4>
                                     Die Wette bezieht sich auf dieselbe Wettersituation, die Ihnen eben vorgestellt wurde.
                                     Bei Bedarf können Sie sich diese
-                                    <a data-toggle="modal" data-target="#weatherModal" id="weather_text" style="cursor: pointer;"><u>hier</u></a>
+                                    <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasWeather" id="weather_text" style="cursor: pointer;"><u>hier</u></a>
                                     nochmals anschauen. <br><br>
                                 </small>
                             </div>
@@ -175,22 +175,21 @@
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-        <p class="lead">
-            Die Temperaturen betrugen zwischen Mittwoch und Freitag jeweils 12°C <small>(um 14:00 Uhr)</small>.
-        </p>
+
+        {% if treatment_displayed %}
+            <div class="alert alert-success" role="alert">
+                <p>Experten haben am Freitag eine Vorhersage für den Sonntag <u>9 Tage später</u> getroffen:</p>
+                <p><span id="forecastText"></span></p>
+            </div>
+        {% endif %}
 
         <figure class="highcharts-figure">
             <div id="weather_viz"></div>
         </figure>
 
-        {% if treatment_displayed %}
-
-        <div class="alert alert-success" role="alert">
-            <p>Experten haben am Freitag eine Vorhersage für den Sonntag <u>9 Tage später</u> getroffen:</p>
-            <p><span id="forecastText"></span></p>
-        </div>
-
-        {% endif %}
+        <p>
+            Die Temperaturen betrugen zwischen Mittwoch und Freitag jeweils 12°C <small>(um 14:00 Uhr)</small>.
+        </p>
 
         <p class="card-text">
             Ohne zu wissen, auf welchen Ort und Zeitpunkt sich das oben dargestellte Wetter bezieht,
