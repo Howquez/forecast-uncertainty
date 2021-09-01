@@ -1,6 +1,6 @@
 console.log("trigger")
 
-var offcanvasWeather = document.getElementById("offcanvasWeather")
+var modalWeather = document.getElementById("modalWeather")
 
 // document.addEventListener('DOMContentLoaded', function() {
 //    $(weatherModal).modal('show')
@@ -11,5 +11,5 @@ var offcanvasWeather = document.getElementById("offcanvasWeather")
 // }
 
 $(document).ready(function(){
-	$(offcanvasWeather).offcanvas('show')
+	$(modalWeather).modal('show')
 });

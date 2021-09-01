@@ -158,12 +158,12 @@ var forecastColor = "#A6219D";
 
 // height of chart
 var height = 9;
-if (small){
-    height = 9;
-}
-if (page == "decision"){
-    height = 16;
-}
+// if (small){
+//     height = 9;
+// }
+// if (page == "decision"){
+//     height = 16;
+// }
 
 
 // language plot options

@@ -42,7 +42,7 @@
         </span>
     </h5>
     <div style="cursor: pointer;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="dark" class="bi bi-thermometer-half" viewBox="0 0 16 16" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWeather" aria-controls="offcanvasWeather" id="weather_icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="dark" class="bi bi-thermometer-half" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modalWeather" aria-controls="modalWeather" id="weather_icon">
             <path d="M9.5 12.5a1.5 1.5 0 1 1-2-1.415V6.5a.5.5 0 0 1 1 0v4.585a1.5 1.5 0 0 1 1 1.415z"/>
             <path d="M5.5 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0V2.5zM8 1a1.5 1.5 0 0 0-1.5 1.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0l-.166-.15V2.5A1.5 1.5 0 0 0 8 1z"/>
         </svg>
@@ -88,10 +88,10 @@
                         <div class="row">
                             <div class="col-sm">
                                 <small mb-4>
-                                    Die Wette bezieht sich auf dieselbe Wettersituation, die Ihnen eben vorgestellt wurde.
-                                    Bei Bedarf können Sie sich diese
-                                    <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasWeather" id="weather_text" style="cursor: pointer;"><u>hier</u></a>
-                                    nochmals anschauen. <br><br>
+                                    Die Wette bezieht sich auf dieselbe Wettersituation und Tageszeit (9 Tage später),
+                                    die Ihnen eben vorgestellt wurde. Bei Bedarf können Sie sich diese
+                                    <a data-bs-toggle="modal" data-bs-target="#modalWeather" id="weather_text" style="cursor: pointer;"><u>hier</u></a>
+                                    nochmals anschauen. <br><br><br>
                                 </small>
                             </div>
 
@@ -165,8 +165,49 @@
     </div>
 </div>
 
+<!-- Weather Modal -->
+<div class="modal fade bd-example-modal-lg" id="modalWeather" tabindex="-1" role="dialog" aria-labelledby="modalWeatherLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalWeatherLabel">
+                    Wetter
+                </h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% if treatment_displayed %}
+                <div class="alert alert-success" role="alert">
+                    <p>Experten haben am Freitag eine Vorhersage für den Sonntag <u>9 Tage später</u> 14:00 Uhr (MEZ) getroffen:</p>
+                    <strong><span id="forecastText"></span></strong>
+                </div>
+                {% endif %}
 
-<!-- Weather Offcanvas -->
+                <figure class="highcharts-figure">
+                    <div id="weather_viz"></div>
+                </figure>
+
+                <p>
+                    Die Temperaturen betrugen zwischen Mittwoch und Freitag jeweils 12°C <small>(um 14:00 Uhr)</small>.
+                </p>
+
+                <p class="card-text">
+                    Ohne zu wissen, auf welchen Ort und Zeitpunkt sich das oben dargestellte Wetter bezieht,
+                    müssen Sie für die folgenden Aufgaben abschätzen, welche Temperaturbereiche Sie
+                    {% if treatment_displayed %}
+                    am Sonntag <u>9 Tage später</u>
+                    <a style="color:#A6219D">(also im lila schraffierten Bereich)</a>
+                    {% else %}
+                    am Sonntag <u>9 Tage später</u>
+                    {% endif %}
+                    am selben Ort und zur gleichen Tageszeit für wahrscheinlich halten.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Weather Offcanvas
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWeather" aria-labelledby="offcanvasWeather">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasWeatherLabel">
@@ -204,7 +245,7 @@
         </p>
     </div>
 </div>
-
+-->
 
 <!-- Instructions Offcanvas -->
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasInstructions" aria-labelledby="offcanvasInstructions">
@@ -254,8 +295,8 @@
                     </p>
                     <p>
                         Bei der Wette setzen Sie auf bestimmte Temperaturen, also zum Beispiel darauf, dass die
-                        Temperatur in einem bestimmten Zeitraum mindestens 14°C betragen wird. Wenn die Temperatur dann
-                        tatsächlich über 14°C beträgt, gewinnen Sie {{ Constants.prize_payoff }} €.
+                        Temperatur am Sonntag um 14:00 Uhr (MEZ)<sup>1</sup> mindestens 17°C betragen wird.
+                        Wenn die Temperatur dann tatsächlich über 17°C beträgt, gewinnen Sie {{ Constants.prize_payoff }} €.
                     </p>
                     <p>
                         Die Wette wird sich in allen Runden auf den gleichen Ort und Zeitraum beziehen, aber
