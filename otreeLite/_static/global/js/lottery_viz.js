@@ -14,13 +14,6 @@ if (compound) {
 var red = 100 - green;
 var primary = "#0275d8";
 
-// disable scrolling on number-input
-document.addEventListener("wheel", function(event){
-    if(document.activeElement.type === "number"){
-        document.activeElement.blur();
-    }
-});
-
 // change content on input
 document.getElementById("id_matching_probability").addEventListener('input', () => {
     green = parseInt(document.getElementById("id_matching_probability").value) || 0;

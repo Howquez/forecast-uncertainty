@@ -85,7 +85,7 @@ console.log("barchart ready!")
 
 
     subHeader = window[event.concat("SubHeader")];
-    console.log(subHeader)
+    // console.log(subHeader)
     document.getElementById("subHeader").innerHTML = subHeader;
 
 $(function () {

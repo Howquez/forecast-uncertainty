@@ -14,6 +14,7 @@
     <script src="{% static 'global/js/event_bar.js' %}"></script>
     <script src="{% static 'global/js/lottery_viz.js' %}"></script>
     <script src="{% static 'global/js/lottery_demo.js' %}"></script>
+    <script src="{% static 'global/js/scroll_input.js' %}"></script>
 {{ endblock }}
 
 {{ block content }}
@@ -340,13 +341,13 @@
                         Bedienungshilfen
                     </p>
                     <p>
-                        Beachten Sie, dass Sie die Grafik sowie die Instruktionen jederzeit abrufen können.
-                        Für eine erneute Betrachtung der Grafik klicken Sie einfach auf das
+                        Beachten Sie, dass Sie die Grafik sowie die Instruktionen später jederzeit abrufen können.
+                        Für eine erneute Betrachtung der Grafik klicken Sie dann einfach auf das
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-thermometer-half" viewBox="0 0 16 16">
                             <path d="M9.5 12.5a1.5 1.5 0 1 1-2-1.415V6.5a.5.5 0 0 1 1 0v4.585a1.5 1.5 0 0 1 1 1.415z"/>
                             <path d="M5.5 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0V2.5zM8 1a1.5 1.5 0 0 0-1.5 1.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0l-.166-.15V2.5A1.5 1.5 0 0 0 8 1z"/>
                         </svg>-Symbol oben rechts im Bild. Für eine erneute Betrachtung der Instruktionen klicken Sie
-                        einfach auf das
+                        dann einfach auf das
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
                             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
                         </svg>-Symbol daneben.
@@ -453,10 +454,9 @@
                                                     <div class="row">
                                                         <div class="col-sm">
                                                             <small mb-4>
-                                                                Die Wette bezieht sich auf dieselbe Wettersituation, die Ihnen eben vorgestellt wurde.
-                                                                Bei Bedarf können Sie sich diese
-                                                                <a data-toggle="modal" data-target="#weatherModal" id="weather_text" style="cursor: pointer;"><u>hier</u></a>
-                                                                nochmals anschauen. <br><br>
+                                                                Die Wette bezieht sich auf dieselbe Wettersituation und Tageszeit (9 Tage später),
+                                                                die Ihnen eben vorgestellt wurde. Bei Bedarf können Sie sich diese
+                                                                <a>hier</a> nochmals anschauen. <br><br><br>
                                                             </small>
                                                         </div>
 
@@ -587,7 +587,7 @@
                 <div class="card-body">
                     <p>
                         Schauen Sie sich die beispielhafte Entscheidung unten genau an und beantworten Sie die Fragen.
-                        Anschließend können Sie mit der Studie beginnen.
+                        Sobald Sie die Fragen korrekt beantwortet haben, können Sie mit der Studie beginnen.
                     </p>
 
                     <div class="container clearfix displaystyle-leftborder displaystyle-my-warning w-100 bg-light">
@@ -622,10 +622,9 @@
                                                     <div class="row">
                                                         <div class="col-sm">
                                                             <small mb-4>
-                                                                Die Wette bezieht sich auf dieselbe Wettersituation, die Ihnen eben vorgestellt wurde.
-                                                                Bei Bedarf können Sie sich diese
-                                                                <a data-toggle="modal" data-target="#weatherModal" id="weather_text" style="cursor: pointer;"><u>hier</u></a>
-                                                                nochmals anschauen. <br><br>
+                                                                Die Wette bezieht sich auf dieselbe Wettersituation und Tageszeit (9 Tage später),
+                                                                die Ihnen eben vorgestellt wurde. Bei Bedarf können Sie sich diese
+                                                                <a >hier</a> nochmals anschauen. <br><br>
                                                             </small>
                                                         </div>
 

@@ -113,16 +113,16 @@ class Intro_Instructions(Page):
         if values['CQ_1'] != 0:
             if values['CQ_2'] == 0:
                 player.wrong_answer_1 += 1
-                return 'Fehler in Frage 1. Versuchen Sie es noch einmal.'
+                return 'Fehler in Frage 1. Versuchen Sie es noch einmal. Um mit der Studie fortfahren zu können, müssen Sie diese Frage richtig beantwortet haben.'
         if values['CQ_2'] != 0:
             if values['CQ_1'] == 0:
                 player.wrong_answer_2 += 1
-                return 'Fehler in Frage 2. Versuchen Sie es noch einmal.'
+                return 'Fehler in Frage 2. Versuchen Sie es noch einmal. Um mit der Studie fortfahren zu können, müssen Sie diese Frage richtig beantwortet haben.'
         if values['CQ_2'] != 0:
             if values['CQ_1'] != 0:
                 player.wrong_answer_1 += 1
                 player.wrong_answer_2 += 1
-                return 'Fehler in Frage 1 und 2. Versuchen Sie es noch einmal.'
+                return 'Fehler in Frage 1 und 2. Versuchen Sie es noch einmal. Um mit der Studie fortfahren zu können, müssen Sie diese beiden Fragen richtig beantwortet haben.'
 
     @staticmethod
     def vars_for_template(player):
