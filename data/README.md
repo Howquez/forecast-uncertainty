@@ -1,8 +1,4 @@
-[![Generic badge](https://img.shields.io/badge/Status:-WIP-yellow.svg)](https://shields.io/)
-Made with [oTree](https://www.sciencedirect.com/science/article/pii/S2214635016000101) and ❤️
-# 🌦 What makes a (weather) forecast credible?
-
-## Codebook
+# Codebook
 
 
 | Variable Name | Format | Description |
@@ -44,7 +40,7 @@ Made with [oTree](https://www.sciencedirect.com/science/article/pii/S22146350160
 | Outro.1.Usage | numeric | Respondent's usage of the weather forecasts: 5 = "several times a day", 4 = "on a daily basis", 3 = "several times a week", 2 = "on a weekly basis", 1 = "less than that", 0 = "never" |
 | Outro.1.Temp | numeric | The respondent's location's temperature. |
 | Outro.1.Accuracy | numeric | Respondent's assessment of message's accuracy. Ranging from `0` to `4`. The higher the value the more accurate the forecast. |
-| Outro.1.Credibility | Respondent's assessment of message's credibility. Ranging from `0` to `4`. The higher the value the more credible the forecast. |
+| Outro.1.Credibility | numeric | Respondent's assessment of message's credibility. Ranging from `0` to `4`. The higher the value the more credible the forecast. |
 | Outro.1.CLICCS1 | long string | Answer to "What do you see as the biggest challenge with respect to a changing climate?" |
 | Outro.1.CLICCS2 | long string | Answer to "How are youe dealing with it?" |
 | Outro.1.Risk_General | numeric | Respondent's general risk self-assessment. Ranging from `0` to `10`. The higher the value the the more risk loving. |
