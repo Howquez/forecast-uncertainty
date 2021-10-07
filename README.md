@@ -1,6 +1,17 @@
 [![Generic badge](https://img.shields.io/badge/Status:-WIP-yellow.svg)](https://shields.io/)
 Made with [oTree](https://www.sciencedirect.com/science/article/pii/S2214635016000101) and ❤️
-# 🌦 What makes a (weather) forecast credible?
+# 🌦 (In)credible Forecasts?
+
+Uncertainty is an inherent quality of forecasts. Yet, many forecasts are communicated as point estimates. 
+One may fear that communication of uncertainty, for instance, via confidence intervals, signals some sort of 
+incompetency or dispute in the community. In addition, it may simply be too complicated to convey to laypersons.
+
+However, not-acknowledging uncertainty results in forecasts that may seem too precise and therefore incredible. 
+Because of this potentially ambiguous and conflicting signals, we want to investigate the acknowledgement of uncertainty.
+Doing so, we created an experiment and recruited more than 1.700 participants. This repository contains the experiment's
+software, the analysis plans used to evaluate the data as well as some documentation.
+
+___
 
 ## 🧐 What the project is about
 This repository is the foundation of an economic experiment that exposes respondents to (real) forecasts and manipulates 
