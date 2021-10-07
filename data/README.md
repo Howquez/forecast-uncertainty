@@ -1,7 +1,7 @@
 # Codebook
 
 
-## General Information Convention
+## General Information
 
 The following tables describe variables listed in
 [this .csv](https://github.com/Howquez/forecast-uncertainty/blob/Baillon/data/processed/respondi_main.csv) or the
