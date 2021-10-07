@@ -16,6 +16,7 @@ listOfPackages <- c("rmarkdown",
                     "magrittr",      # get %>% and %<>% opeartors
                     "DT",            #
                     "data.table",    #
+                    "sjPlot",
                     # "roperators",  # get the += operator
                     "writexl",       # write xlsx files
                     "openxlsx",      # write xlsx files

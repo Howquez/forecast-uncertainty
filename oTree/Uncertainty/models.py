@@ -39,7 +39,7 @@ class Constants(BaseConstants):
 
     currency = "EUR"
 
-    ticks = [0, 8, 14, 22]  # min and max value is only needed for plotting options, the second and third value is important
+    ticks = [0, 8, 14, 22]  # min and max value is only needed for plotting options, the second and third values are important
     events = ["E1", "E2", "E3", "E12", "E23", "E13"]
 
 
@@ -108,7 +108,7 @@ class Player(BasePlayer):
             if self.matching_probability <= self.pivotal_lottery:
                 self.payment_mechanism = "lottery"
                 self.participant.vars["mechanism"] = "Lotterie"
-                self. pivotal_draw = self.participant.vars["pivotal_draw"]
+                self.pivotal_draw = self.participant.vars["pivotal_draw"]
                 if self.participant.vars["lottery_success"]:
                     self.payoff = Constants.prize_payoff
             else:

@@ -1,0 +1,723 @@
+---
+title: "Baillon: Weather Forecasts"
+description: |
+  Quality Assurance - Respondi Data.
+author:
+  - name: Hauke Roggenkamp 
+    url: https://github.com/Howquez
+    affiliation: CLICCS
+    affiliation_url: https://www.cliccs.uni-hamburg.de/
+date: "`r Sys.Date()`"
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 2
+    toc_float: false
+---
+
+```{r setup, results = "hide", echo = FALSE}
+if(knitr::is_html_output()){
+  knitr::opts_chunk$set(echo = FALSE)
+}else{
+  knitr::opts_chunk$set(echo = TRUE)
+}
+# 
+# Sys.setlocale(category = "LC_ALL",
+#               locale = "en_US.UTF-8")
+```
+
+```{r  packages}
+library(data.table)
+library(kableExtra)
+library(downloadthis)
+library(Rmisc)
+library(stringr)
+library(lubridate)
+library(magrittr)
+library(tidyverse)
+library(wesanderson)
+library(glue)
+library(gridExtra)
+library(patchwork)
+library(sjPlot)
+```
+
+```{r layout}
+layout <- theme(panel.background = element_rect(fill = "white"),
+                panel.grid = element_blank(),
+                panel.grid.major.y = element_line(colour="gray", size=0.25),
+                legend.key = element_rect(fill = "white"),
+                axis.line.x.bottom = element_line(size = 0.25),
+                axis.line.y.left = element_line(size = 0.25),
+                axis.title.y = element_text(size = rel(0.75)),
+                plot.margin = unit(c(0.25,0.25,0.25,0.25), "cm"),
+                legend.title = element_blank()
+                )
+colors <- c("#F3B05C", "#1E4A75", "#65B5C0", "#AD5E21")
+```
+
+```{r readData}
+# read data
+DT <- read.csv(file="../data/raw/all_apps_wide_2021-09-15.csv",
+               stringsAsFactors = FALSE) %>% data.table()
+
+DT[, participant.time_started_utc := participant.time_started_utc %>% ymd_hms()]
+
+timeSpent <- read.csv(file = "../data/raw/PageTimes-2021-09-15.csv") %>% data.table()
+```
+
+```{r subsetData}
+# select relevant columns for main- and control variables separately
+mainRegex <- "^participant\\.code$|^participant\\.label$|_index_in_pages|time_started_utc|matching_probability$|event_decision$|Comprehension$"
+mainVariables <- str_subset(string = names(DT),
+                            pattern = mainRegex)
+
+mt <- DT[participant._index_in_pages > 0 & participant.label %>% nchar() == 32, 
+         ..mainVariables]
+
+attrition <- round(1 - NROW(mt[participant._index_in_pages == 20]) / NROW(mt[participant._index_in_pages > 0]), digits = 3)*100
+```
+
+# Sample Size 
+
+We count `r mt[participant._index_in_pages > 0, .N]` people who initialized the survey. `r attrition`% of them failed to complete the survey which leaves us with `r mt[participant._index_in_pages == 20, .N]` complete observations. The following visualization shows that most of the dropouts did not manage to read through the instructions. After having read them, few
+(`r mt[participant._index_in_pages < 20 & participant._index_in_pages > 2, .N]` or `r (mt[participant._index_in_pages < 20 & participant._index_in_pages > 2, .N] / mt[participant._index_in_pages > 0, .N] * 100) %>% round(digits = 1)`%)
+people dropped out.
+
+```{r renameData}
+oldNames <- names(mt)
+newNames <- str_replace_all(string=oldNames,
+                            pattern="\\.player",
+                            replacement="")
+setnames(x=mt,
+         old=oldNames,
+         new=newNames)
+```
+
+
+```{r events}
+
+for(round in 1:12){
+  
+  col = glue("Baillon.{round}.event_decision")
+  
+  set(x = mt,
+      i = which(mt[[col]] %>% as.character() %>% nchar() > 2),
+      j = col,
+      value = "composite")
+  
+  set(x = mt,
+      i = which(mt[[col]] %>% as.character() %>% nchar() == 2),
+      j = col,
+      value = "single")
+}
+```
+
+```{r calcIndices1}
+
+#..calculate Baillons Indices
+for(row in 1:NROW(mt)){
+  
+  #..first get a vector of event types
+  vector = c()
+  for(round in 1:6){
+    col = glue("Baillon.{round}.event_decision")
+    vector = append(vector, mt[row, get(col)])
+  }
+  
+  # consider composite events first and get the round numbers where composite events were shown
+  cEvents = str_which(string = vector,
+                       pattern = "composite")
+  # now loop over these rounds to add the respective matching_probabilities
+  CEPs = NULL # Compound-Event Probabilities
+  for(compositeRound in cEvents){
+    col <- glue("Baillon.{compositeRound}.matching_probability")
+    increment <- mt[row, get(col)]
+    CEPs <- append(CEPs, increment)
+  }
+  # average
+  ACEP = mean(CEPs, na.rm=TRUE)/100
+  
+  # do the same for single events
+  sEvents <- str_which(string = vector,
+                       pattern = "single")
+  SEPs = NULL
+  for(singleRound in sEvents){
+    col <- glue("Baillon.{singleRound}.matching_probability")
+    increment <- mt[row, get(col)]
+    SEPs <- append(SEPs, increment)
+  }
+  ASEP = mean(SEPs, na.rm=TRUE)/100
+  
+  # calculate Ambiguity Aversion Index (AAI)
+  AAI = 1 - ACEP - ASEP
+  
+  # calculate  ambiguity-generated insensitivity (a-insensitivity) index (AGII)
+  AGII = 3 * (1/3 - (ACEP - ASEP))
+  
+  # write averages 
+  mt[row,
+     pre_ASEP := ASEP]
+  mt[row,
+     pre_ACEP := ACEP]
+  # write indices
+  mt[row,
+     pre_AAI := AAI]
+  mt[row,
+     pre_AGII := AGII]
+}
+```
+
+
+```{r calcIndices2}
+
+#..calculate Baillons Indices
+for(row in 1:NROW(mt)){
+  
+  #..first get a vector of event types
+  vector = c()
+  for(round in 1:6){
+    col = glue("Baillon.{round}.event_decision")
+    vector = append(vector, mt[row, get(col)])
+  }
+  
+  # consider composite events first and get the round numbers where composite events were shown
+  cEvents = str_which(string = vector,
+                       pattern = "composite") + 6
+  # now loop over these rounds to add the respective matching_probabilities
+  CEPs = NULL # Compound-Event Probabilities
+  for(compositeRound in cEvents){
+    col <- glue("Baillon.{compositeRound}.matching_probability")
+    increment <- mt[row, get(col)]
+    CEPs <- append(CEPs, increment)
+  }
+  # average
+  ACEP = mean(CEPs, na.rm=TRUE)/100
+  
+  # do the same for single events
+  sEvents <- str_which(string = vector,
+                       pattern = "single") + 6
+  SEPs = NULL
+  for(singleRound in sEvents){
+    col <- glue("Baillon.{singleRound}.matching_probability")
+    increment <- mt[row, get(col)]
+    SEPs <- append(SEPs, increment)
+  }
+  ASEP = mean(SEPs, na.rm=TRUE)/100
+  
+  # calculate Ambiguity Aversion Index (AAI)
+  AAI = 1 - ACEP - ASEP
+  
+  # calculate  ambiguity-generated insensitivity (a-insensitivity) index (AGII)
+  AGII = 3 * (1/3 - (ACEP - ASEP))
+  
+  # write averages 
+  mt[row,
+     post_ASEP := ASEP]
+  mt[row,
+     post_ACEP := ACEP]
+  
+  # write indices
+  mt[row,
+     post_AAI := AAI]
+  mt[row,
+     post_AGII := AGII]
+}
+```
+
+```{r}
+pre <- mt[,
+          .(participant.label,
+            participant.time_started_utc,
+            ASEP = pre_ASEP,
+            ACEP = pre_ACEP,
+            AAI = pre_AAI,
+            AGII = pre_AGII,
+            treated = FALSE)]
+post <- mt[,
+           .(participant.label,
+             participant.time_started_utc,
+             ASEP = post_ASEP,
+             ACEP = post_ACEP,
+             AAI = post_AAI,
+             AGII = post_AGII,
+             treated = TRUE)]
+
+MT <- rbindlist(list(pre, post))[order(participant.time_started_utc)]
+```
+
+
+```{r selectCovariates, eval = FALSE}
+controlRegex <- "^participant\\.code$|^participant\\.label|visited$|participant\\.payoff$|^Baillon.1.player.window.*|^Baillon.1.player.browser$|_index_in_pages|player\\.location$|player\\.treatment$|review_|Accuracy$|Credibility$|Comprehension$|Age$|Gender$|Education$|Income$|Usage$"
+controlVariables <- str_subset(string = names(DT),
+                               pattern = controlRegex)
+ct <- DT[, ..controlVariables]
+```
+
+```{r mergeData}
+# rename treatment variables
+oldNames <- c("Intro.1.player.location", "Intro.1.player.treatment")
+newNames <- c("location", "forecast")
+setnames(x=DT,
+         old=oldNames,
+         new=newNames,
+         skip_absent=TRUE)
+
+# merge with raw data instead of ct
+data <- merge(MT, DT[participant._index_in_pages > 0 & participant.label %>% nchar() == 32],
+              by = "participant.label")
+```
+
+
+```{r dropouts}
+data[participant._index_in_pages > 0 & participant._index_in_pages < 20,
+     is_dropout := TRUE]
+
+data[participant._index_in_pages == 20,
+     is_dropout := FALSE]
+```
+
+```{r fig.cap = "Dropouts by Page."}
+ggplot(data[participant._index_in_pages < 20 & treated == FALSE], 
+       aes(x=participant._index_in_pages)) + 
+  geom_histogram(binwidth=1, fill = colors[1]) +
+  scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
+  layout +
+  labs(x = "Pages",
+       y = "Count") +
+  scale_x_continuous(breaks = c(2, 9),
+                     labels = c("Instructions", "Treatment")) # + 
+  # facet_zoom(xlim = c(3.5, 20), ylim = c(0, 10), show.area = FALSE)
+
+# data[treated ==  TRUE, .N, by = participant._index_in_pages][order(participant._index_in_pages)]
+```
+
+
+```{r observationsTimeSeries, fig.cap = "Complete Observations over Time."}
+ggplot(data = DT[participant._index_in_pages == 20 & !(is.na(participant.time_started_utc)),
+                 .N,
+                 by = participant.time_started_utc %>% format("%Y-%m-%d") %>% as.Date()],
+       mapping = aes(x = participant.time_started_utc,
+                     y = N)) +
+  geom_area(fill = colors[1], alpha = 0.33) +
+  geom_line(col = colors[1]) +
+  layout +
+  scale_y_continuous(expand = c(0, NA)) +
+  labs(x = "",
+       y = "Complete Observations")
+
+```
+
+`r data[treated & Outro.1.player.Comprehension %>% str_detect(pattern = ".*yes"), .N]` participants state that they understood the instructions. `r data[treated & Outro.1.player.Comprehension %>% str_detect(pattern = ".*no"), .N]` say that they did not.^[`r data[treated & Outro.1.player.Comprehension == "no", .N]` stated that they did not understand the game at all.]
+
+```{r warning = FALSE, eval = FALSE}
+ggplot(data[treated == FALSE],
+       aes(x = Intro.1.player.window_width, fill = is_dropout)) + 
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(values = colors,
+                    labels = c("Complete Obs.", "Dropouts")) +
+  scale_y_continuous(expand = c(0, NA)) +
+  scale_x_continuous(limits = c(0, NA), expand = c(0, 0)) +
+  geom_vline(xintercept = 812) +
+  geom_vline(xintercept = 1024) +
+  geom_label(label = "iPhone X",
+             x = 812,
+             y = 0.00045,
+             show.legend = FALSE) +
+  geom_label(label = "iPad",
+             x = 1024,
+             y = 0.00055,
+             show.legend = FALSE) +
+  layout + 
+  labs(x = "Window Width")
+
+```
+
+# Time
+
+```{r calcDuration}
+timeSpent[,
+          lag := shift(epoch_time_completed, fill = NA, type = "lag"),
+          by = c("session_code", "participant_code")]
+
+timeSpent[,
+          duration := epoch_time_completed - lag,
+          by = c("session_code", "participant_code")]
+
+timeSpent[,
+          completion := epoch_time_completed %>% max() - epoch_time_completed %>% min(),
+          by = c("session_code", "participant_code")]
+
+duration <- timeSpent[participant_code %in% DT$participant.code,
+                      .(
+                        session_code,
+                        participant_code,
+                        app_name,
+                        page_name,
+                        page_index,
+                        page_submission = epoch_time_completed,
+                        time_spent = duration,
+                        completion_time = completion
+                      )]
+```
+
+The time spent on every decision looks as follows. Intuitively, the pattern makes sense as respondents learn from round 1 to 6. Round 7 exposes the respondents to the forecast, which needs some time to process. 
+
+```{r plotTime, fig.cap = "Average Time Spent for each Decision per Round."}
+N <- duration[, participant_code %>% unique() %>% length()]
+temp <- duration[app_name == "Baillon" & page_name == "Baillon_Decision",
+                   .(time_spent = time_spent %>% sum()),
+                   by = c("session_code", "participant_code", "page_index", "page_name")]
+
+temp[, round := page_index-2, by = c("participant_code")]
+
+# remove outliers
+plotDT <- temp[,
+               .SD[time_spent < quantile(time_spent, probs = 0.99)], 
+               by = page_index]
+
+upperLimit <- plotDT[, time_spent %>% mean(), by = c("round")] %>% max()
+
+annotation <- plotDT[round == 12, time_spent %>% mean() %>% round(digits=0)]
+
+ggplot(data = summarySE(data = plotDT,
+                        measurevar = "time_spent",
+                        groupvars=c("round"),
+                        na.rm = FALSE,
+                        conf.interval = 0.95,
+                        .drop = TRUE),
+       mapping = aes(x = round, y = time_spent)) +
+  layout +
+  theme(legend.position="bottom") +
+  geom_line(show.legend=FALSE, color = colors[2], lty=2) +
+  geom_errorbar(aes(ymin=time_spent-ci, ymax=time_spent+ci), width=.25, alpha = 0.5, color = colors[2]) +
+  geom_point(color = colors[2]) +
+  scale_x_continuous(name="",  breaks = 1:12) +
+  scale_y_continuous(limits = c(0, upperLimit + 100), expand = c(0, 0),
+                     breaks = c(0,
+                                plotDT[round == 1, time_spent %>% mean() %>% round(digits=0)],
+                                plotDT[round == 7, time_spent %>% mean() %>% round(digits=0)],
+                                plotDT[round == 12, time_spent %>% mean() %>% round(digits=0)])) +
+  labs(y = "Time Passed in Seconds", caption = "Bars indicate 95% confidence intervals.
+       \nOutliers (identified by 99.0 quantile) removed.") +
+  theme(plot.margin = margin(0.25,1,0.25,0.25, "cm"))
+  
+# plotDT[page_index == 8, .(time_spent)][order(-time_spent)] %>% head(10) %>% kable()
+```
+The median time to complete the survey was `r duration[page_index == 19, completion_time %>% median(na.rm = TRUE)] %/% 60 + 1` minutes.
+
+# Variance
+
+On an individual level, the data looks as follows.
+
+```{r}
+MT[ASEP != "NaN"] %>% 
+  head(n = 5) %>%
+  kbl() # %>%
+  # scroll_box(width="120%") %>%
+  # kable_paper("hover", 
+  #             full_width = TRUE,
+  #             fixed_thead = TRUE)
+```
+
+
+```{r}
+temp <- mt[participant._index_in_pages == 20,
+   .(sd =c(Baillon.1.matching_probability,
+     Baillon.2.matching_probability,
+     Baillon.3.matching_probability,
+     Baillon.4.matching_probability,
+     Baillon.5.matching_probability,
+     Baillon.6.matching_probability,
+     Baillon.7.matching_probability,
+     Baillon.8.matching_probability,
+     Baillon.9.matching_probability,
+     Baillon.10.matching_probability,
+     Baillon.11.matching_probability,
+     Baillon.12.matching_probability) %>% sd(na.rm = TRUE)),
+   by = participant.label]
+
+lazyPeople <- temp[sd == 0]
+```
+
+The reported indices stem from matching probabilities. To check whether respondents stated the matching probabilities diligently, we expect them to exhibit some variance at the individual level. It turns out that there are some people (`r temp[sd == 0, .N]
+`) who enter the same matching probability each and every time. The following graph visualizes each respondent's standard deviation over all 12 rounds as a histogram:
+
+```{r warning = FALSE, message = FALSE, fig.cap = "Histogram: Standard Deviation of individual Decisions (across all rounds)"}
+ggplot(data = temp,
+       mapping = aes(x = sd)) + 
+  layout +
+  geom_histogram(fill = colors[1], binwidth = 2) +
+  scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
+  labs(title = "",
+        y = "Count",
+        x = "Standard Deviation")
+```
+
+# Treatments
+
+Aggregating these information by treatment yields the following table (where `treated == TRUE` marks Baillon's indices after participants have seen the forecast).
+ 
+```{r}
+data[AAI != "NaN",
+     .(`Ambiguity Aversion Index` = mean(AAI),
+       `a-insensitivity Index` = mean(AGII)),
+     keyby = c("location", "forecast", "treated")] %>% 
+  kable()
+```
+
+
+The following graph illustrates sample size per treatment arms. Remember that Illomantsi is the surprising treatment group. Technically, the randomization process has not been changed and should work as before.
+
+```{r treatmentBalance, layout="l-body-outset", fig.cap = "Sample Size by Treatment."}
+
+temp <- data[participant._index_in_pages == 20 & treated == FALSE]
+temp[, treatment := paste(location, forecast, sep ="_")]
+len <- NROW(temp)
+
+p1 <- ggplot(temp, 
+             aes(x=forecast)) + 
+  geom_bar(fill = colors[1]) +
+  geom_hline(yintercept = len/3, lty = 2) +
+  layout +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
+  labs(title="forecast",
+       x="")
+
+p2 <- ggplot(temp, 
+             aes(x=location)) + 
+  geom_bar(fill = colors[1]) +
+  geom_hline(yintercept = len/2, lty = 2) +
+  layout +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
+  labs(title="location",
+       x="",
+       y="")
+
+p3 <- ggplot(temp, 
+             aes(x=treatment)) + 
+  geom_bar(fill = colors[1]) +
+  geom_hline(yintercept = len/6, lty = 2) +
+  layout +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
+  labs(title="location x forecast",
+       y="",
+       x="")
+
+# grid.arrange(
+#   p1,
+#   p2,
+#   p3,
+#   nrow = 1,
+#   top = "",
+#   bottom = "Dashed lines indicate perfect balance."
+# )
+
+(p1 | p2 | p3) + plot_annotation(caption = "Dashed lines indicate perfect balance.")
+```
+```{r treatmentBalanceTable, eval = FALSE}
+data[treated == TRUE & participant._index_in_pages == 20,
+     .N,
+     keyby = c("location",
+            "forecast")] %>% 
+  kable()
+```
+
+There are some people who drop out after seeing the treatment 
+(`r data[treated == TRUE & participant._index_in_pages < 20 & participant._index_in_pages >= 9, .N]`). Let's see how these dropouts are distributed among treatment arms:
+
+```{r dropOutsTreatments}
+data[treated == TRUE & participant._index_in_pages < 20 & participant._index_in_pages >= 9,
+     .N,
+     keyby = c("location",
+            "forecast")] %>% 
+  kable()
+```
+
+The initial distribution of the 5.000 ex-ante generated participants looks, per treatment, as follows:
+
+```{r participantsTreatments}
+DT[,
+     .N,
+     keyby = c("location",
+            "forecast")] %>% 
+  kable()
+```
+
+# Payoffs
+
+```{r payoffs}
+data[treated == TRUE & participant._index_in_pages == 20,
+     .(Participants = .N,
+       `Total Bonus Payments` = participant.payoff %>% sum(na.rm=TRUE),
+       `Average Bonus Payment` = participant.payoff %>% mean(na.rm=TRUE) %>% round(digits = 2))] %>% kable()
+
+# data[participant._index_in_pages == 20 & treated == TRUE, .N, by = participant.payoff]
+# (127*12+93+2 )/ 220
+```
+
+```{r writePayments, eval = FALSE}
+
+DT[participant._index_in_pages == 20 & participant.label %>% nchar() == 32,
+   .(tic = participant.label,
+     Sonderincentive = participant.payoff)] %>% 
+  write_csv(file = "../data/processed/payments.csv")
+
+```
+
+# Sample Properties
+
+The majority (`r DT[Outro.1.player.Gender == "male", .N]` out of `r DT[participant._index_in_pages == 20, .N]` participants) is male. `r DT[Outro.1.player.Vac == "no interest", .N]` participants have no interest in vaccinations and `r DT[Outro.1.player.Vac == "yes", .N]` are vaccinated (at least once) already. The average participant is `r DT[, Outro.1.player.Age %>% mean(na.rm = TRUE) %>% round(digits = 0)]` years of age.
+
+```{r ageHist, fig.cap = "Histogram: Age Distribution."}
+ggplot(data = DT[participant._index_in_pages == 20],
+       mapping= aes(x = Outro.1.player.Age)) + 
+  geom_histogram(binwidth=5, fill = colors[1]) +
+  layout +
+  scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
+  labs(x = "",
+       y = "Count")
+```
+
+
+# Treatment Effects
+
+## Pre-Treatment Indices
+
+```{r}
+p1 <- ggplot(data = summarySE(data = data[treated == FALSE & 
+                                            participant._index_in_pages == 20 &
+                                            !(participant.label %in% lazyPeople$participant.label)],
+                              measurevar = "AAI",
+                              na.rm = FALSE,
+                              conf.interval = 0.95,
+                              .drop = TRUE),
+       mapping = aes(x = "abc", y = AAI)) + 
+  layout +
+  geom_bar(stat = "identity", fill = colors[1]) +
+  geom_errorbar(aes(ymin=AAI-ci, ymax=AAI+ci), 
+                width=.25, 
+                alpha = 0.5) + 
+  # scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
+  labs(x = "")
+
+p2 <- ggplot(data = summarySE(data = data[treated == FALSE & 
+                                            participant._index_in_pages == 20 &
+                                            !(participant.label %in% lazyPeople$participant.label)],
+                              measurevar = "AGII",
+                              na.rm = FALSE,
+                              conf.interval = 0.95,
+                              .drop = TRUE),
+       mapping = aes(x = "abc", y = AGII)) + 
+  layout +
+  geom_bar(stat = "identity", fill = colors[1]) +
+  geom_errorbar(aes(ymin=AGII-ci, ymax=AGII+ci), 
+                width=.25, 
+                alpha = 0.5) + 
+  # scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
+  labs(x = "")
+
+(p1 | p2)
+```
+
+## Post-Treatment Indices
+
+
+```{r}
+p1 <- ggplot(data = summarySE(data = data[treated == TRUE & 
+                                            participant._index_in_pages == 20 &
+                                            !(participant.label %in% lazyPeople$participant.label)],
+                              measurevar = "AAI",
+                              groupvars=c("forecast", "location"),
+                              na.rm = FALSE,
+                              conf.interval = 0.95,
+                              .drop = TRUE),
+       mapping = aes(x = forecast, y = AAI, fill = location)) + 
+  layout +
+  geom_bar(position = "dodge", stat = "identity") +
+  geom_errorbar(aes(ymin=AAI-ci, ymax=AAI+ci), 
+                width=.25, 
+                alpha = 0.5,
+                position = position_dodge(width = 0.9)) + 
+  # scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
+  scale_fill_manual(values = colors) +
+  labs(x = "")
+
+p2 <- ggplot(data = summarySE(data = data[treated == TRUE & 
+                                            participant._index_in_pages == 20 &
+                                            !(participant.label %in% lazyPeople$participant.label)],
+                        measurevar = "AGII",
+                        groupvars=c("forecast", "location"),
+                        na.rm = FALSE,
+                        conf.interval = 0.95,
+                        .drop = TRUE),
+       mapping = aes(x = forecast, y = AGII, fill = location)) + 
+  layout +
+  geom_bar(position = "dodge", stat = "identity") +
+  geom_errorbar(aes(ymin=AGII-ci, ymax=AGII+ci), 
+                width=.25, 
+                alpha = 0.5,
+                position = position_dodge(width = 0.9)) + 
+  scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
+  scale_fill_manual(values = colors) +
+  labs(x = "")
+
+(p1 | p2) + plot_layout(guides = "collect")
+```
+
+## Differences
+
+```{r eval = FALSE}
+temp1 <- data[treated == FALSE & participant._index_in_pages == 20 & !(participant.label %in% lazyPeople$participant.label),
+              .(participant.label, AAI, AGII)]
+
+temp2 <- data[treated == TRUE & participant._index_in_pages == 20 & !(participant.label %in% lazyPeople$participant.label),
+              .(participant.label, AAI, AGII)]
+
+diffs <- data[participant._index_in_pages == 20 & !(participant.label %in% lazyPeople$participant.label),
+              `:=`(dAAI = shift(AAI) - AAI,
+                   dAGII = shift(AGII) - AGII),
+              by = c("forecast", "location")]
+
+diffs[participant._index_in_pages == 20 & !(participant.label %in% lazyPeople$participant.label),
+      .(participant.label,
+        AAI, dAAI,
+        AGII, dAGII)]
+```
+
+
+# Reporting
+
+Der aktuelle Stand ist wie folgt: Wir zählen
+`r data[treated == TRUE & participant._index_in_pages == 20 & participant.label %>% nchar() == 32, .N]`
+abgeschlossene Umfragen bei
+`r data[treated == TRUE & participant._index_in_pages >= 1 & participant.label %>% nchar() == 32, .N]`
+Einstiegen. Die Abbrecherquote liegt entsprechend bei
+`r (100 - data[treated == TRUE & participant._index_in_pages == 20 & participant.label %>% nchar() == 32, .N] / data[treated == TRUE & participant._index_in_pages >= 1 & participant.label %>% nchar() == 32, .N]*100) %>% round(digits = 1)`%. 
+Der Anteil der Männer liegt bei knapp
+`r (data[treated == TRUE & participant._index_in_pages == 20 & Outro.1.player.Gender == "male" & participant.label %>% nchar() == 32, .N] / data[treated == TRUE & participant._index_in_pages == 20 & participant.label %>% nchar() == 32, .N]*100) %>% round(digits = 1)`%
+und das Durchschnittsalter beträgt
+`r data[treated == TRUE & participant._index_in_pages == 20 & participant.label %>% nchar() == 32, Outro.1.player.Age %>% mean() %>% round(digits=0)]`
+Jahre. Im Median haben die TeilnehmerInnen
+`r duration[page_index == 19, completion_time %>% median(na.rm = TRUE)] %/% 60 + 1`
+Minuten gebraucht, um die Studie abzuschließen.
+
+`r data[treated == TRUE & participant._index_in_pages == 20 & participant.payoff == 10 & participant.label %>% nchar() == 32, .N]`
+(also
+`r (data[treated == TRUE & participant._index_in_pages == 20 & participant.payoff == 10 & participant.label %>% nchar() == 32, .N] / data[treated == TRUE & participant._index_in_pages == 20 & participant.label %>% nchar() == 32, .N]*100) %>% round(digits = 1)`%)
+TeilnehmerInnen haben 10 Euro als sonder-Incentive verdient. Zusammen mit dem fixen Incentive in Höhe von 2 Euro müssen wir dementsprechend
+`r (data[treated == TRUE & participant._index_in_pages == 20 & participant.payoff == 10 & participant.label %>% nchar() == 32, .N] * 12 + data[treated == TRUE & participant._index_in_pages == 20 & participant.payoff != 10 & participant.label %>% nchar() == 32, .N] * 2) %>% formatC(format = "f", digits = 0)`
+Euro auszahlen.
+
+```{r duplications, eval = FALSE}
+data[participant._index_in_pages == 20,
+     participant.label %>% unique() %>% length()]
+temp <- data[participant._index_in_pages == 20 & treated == TRUE, .(participant.label, participant.time_started_utc.x)]
+tempyy <- temp[duplicated(participant.label), cbind(.SD[1], number = .N), by = participant.label]
+data[participant.label %in% tempyy$participant.label & participant._index_in_pages == 20 & treated == TRUE] %>% View()
+
+```
+

@@ -1,0 +1,660 @@
+---
+title: "Data Wrangling"
+description: |
+  Retrieve and process the survey's data.
+author:
+  - name: Hauke Roggenkamp 
+    url: https://github.com/Howquez
+    affiliation: CLICCS
+    affiliation_url: https://www.cliccs.uni-hamburg.de/
+date: "`r Sys.Date()`"
+bibliography: biblio.bib
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 2
+    toc_float: false
+    code_folding: true
+---
+
+```{r setup}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(data.table)
+library(kableExtra)
+library(downloadthis)
+library(stringr)
+library(lubridate)
+library(magrittr)
+library(tidyverse)
+library(wesanderson)
+library(glue)
+library(gridExtra)
+library(patchwork)
+library(sjPlot)
+```
+
+```{r layout}
+layout <- theme(panel.background = element_rect(fill = "white"),
+                panel.grid = element_blank(),
+                panel.grid.major.y = element_line(colour="gray", size=0.25),
+                legend.key = element_rect(fill = "white"),
+                axis.line.x.bottom = element_line(size = 0.25),
+                axis.line.y.left = element_line(size = 0.25),
+                plot.margin = unit(c(1,1,1,1), "cm"),
+                legend.title = element_blank()
+)
+```
+
+
+# Load & subset data
+
+
+```{r readData}
+# read data
+DT <- read.csv(file="../data/pilot/all_apps_wide_2021-05-25.csv",
+               stringsAsFactors = FALSE) %>% data.table()
+
+if(knitr::is_html_output()){
+  DT %>% 
+    download_this(
+          output_name = "rawData",
+          output_extension = ".csv", # CSV output
+          button_label = "Download raw data",
+          button_type = "default",
+        )
+}
+```
+
+
+Because most of the variables are secondary, I subset the data we are most interested in, that is, the variables needed to identify subjects (IDs) as well as the variables needed to calculate @Baillon2018a's indices. To conduct analyses with covariates and treatment information, one can use the IDs and merge the data.
+
+```{r subsetData}
+# select relevant columns for main- and control variables separately
+mainRegex <- "^participant\\.code$|matching_probability$|event_decision$|Comprehension$"
+mainVariables <- str_subset(string = names(DT),
+                            pattern = mainRegex)
+
+mt <- DT[participant._index_in_pages > 0,# Outro.1.player.Comprehension != "no", 
+         ..mainVariables] #"mt" for Main Table (in contrast to "Control Table" oder "Data Table")
+
+attrition <- round(1 - NROW(DT[participant._index_in_pages == 20]) / NROW(DT[participant._index_in_pages > 0]), digits = 3)*100
+
+```
+
+Importantly, the data contains all (N= `r NROW(DT[participant._index_in_pages > 0])`) observations that _started_ the survey (```participant._index_in_pages > 0```). Not all of them (only `r NROW(DT[participant._index_in_pages == 20])`) finished the survey. In fact, `r attrition`% started but did not finish the survey.^[One should thus keep in mind to subset the data with ```participant._index_in_pages == 20``` if one wished to analyze the complete observations.]
+
+# Rename data
+
+To make the variables a little more readable, I'll remove the ```.player``` substring.^[Eventually, we should rename these variables to make them shorter. Names such as ```MP[round]``` and ```event[round]``` would be great.]
+
+```{r renameData}
+oldNames <- names(mt)
+newNames <- str_replace_all(string=oldNames,
+                            pattern="\\.player",
+                            replacement="")
+setnames(x=mt,
+         old=oldNames,
+         new=newNames)
+```
+
+
+# Prepare indices
+
+This step is not necessary and needs to be adjusted as soon as we become interested in the events itself. But for the time being, I replace the event values to ```composite``` or ```single```. This is fairly simple, because the longer event strings indicate that the subject had to bet on composite events. As a consequence, replacing the values is a matter of counting characters.
+
+```{r events}
+
+for(round in 1:12){
+  
+  col = glue("Uncertainty.{round}.event_decision")
+  
+  set(x = mt,
+      i = which(mt[[col]] %>% as.character() %>% nchar() > 2),
+      j = col,
+      value = "composite")
+  
+  set(x = mt,
+      i = which(mt[[col]] %>% as.character() %>% nchar() == 2),
+      j = col,
+      value = "single")
+}
+```
+
+
+# Calculate indices
+
+This process is a little messy. To calculate the indices, we need to differentiate between composite and single events and calculate compound-event probabilities (CEPs) as well as single-event probabilities (SEPs) and their means for each observation. Having done so, one can calculate Baillon et al's _ambiguity aversion index_ (called AAI) as well as the _ambiguity-generated insensitivity (a-insensitivity) index_ (called AGII) which are defined as follows:
+
+$$
+\begin{align}
+\text{AAI}&=1-\overline{m_c} - \overline{m_s} \\
+\text{AGII}&=3 \times \bigg(\frac{1}{3}- (\overline{m_c} - \overline{m_s})\bigg)
+\end{align}
+$$
+Where the bar indicates the average of single ($s$) or ($c$) composite events. As a consequence $\overline{m_{s,c}}$ represents the ```ASEP``` or ```ACEP``` in the code chunk below.
+
+The subjects played the Baillon-tasks twice in the same order of events. Due to laziness, the calculation of the two sets of indices (one pre- and one post-treatment) lacks elegance and is done in two code chunks.^[Eventually, we should write either a function or a nested loop.] The pre-treatment indices are calculated as follows:
+
+```{r calcIndices1}
+
+#..calculate Baillons Indices
+for(row in 1:NROW(mt)){
+  
+  #..first get a vector of event types
+  vector = c()
+  for(round in 1:6){
+    col = glue("Uncertainty.{round}.event_decision")
+    vector = append(vector, mt[row, get(col)])
+  }
+  
+  # consider composite events first and get the round numbers where composite events were shown
+  cEvents = str_which(string = vector,
+                       pattern = "composite")
+  # now loop over these rounds to add the respective matching_probabilities
+  CEPs = NULL # Compound-Event Probabilities
+  for(compositeRound in cEvents){
+    col <- glue("Uncertainty.{compositeRound}.matching_probability")
+    increment <- mt[row, get(col)]
+    CEPs <- append(CEPs, increment)
+  }
+  # average
+  ACEP = mean(CEPs, na.rm=TRUE)/100
+  
+  # do the same for single events
+  sEvents <- str_which(string = vector,
+                       pattern = "single")
+  SEPs = NULL
+  for(singleRound in sEvents){
+    col <- glue("Uncertainty.{singleRound}.matching_probability")
+    increment <- mt[row, get(col)]
+    SEPs <- append(SEPs, increment)
+  }
+  ASEP = mean(SEPs, na.rm=TRUE)/100
+  
+  # calculate Ambiguity Aversion Index (AAI)
+  AAI = 1 - ACEP - ASEP
+  
+  # calculate  ambiguity-generated insensitivity (a-insensitivity) index (AGII)
+  AGII = 3 * (1/3 - (ACEP - ASEP))
+  
+  # write averages 
+  mt[row,
+     pre_ASEP := ASEP]
+  mt[row,
+     pre_ACEP := ACEP]
+  # write indices
+  mt[row,
+     pre_AAI := AAI]
+  mt[row,
+     pre_AGII := AGII]
+}
+```
+
+
+The post-treatment indices' calculation follows the same rules but adds a ```+6``` to the event vectors. This is ugly but feasible because the sequence of events in the first 6 rounds is exactly the same as in rounds 7-12.
+
+```{r calcIndices2}
+
+#..calculate Baillons Indices
+for(row in 1:NROW(mt)){
+  
+  #..first get a vector of event types
+  vector = c()
+  for(round in 1:6){
+    col = glue("Uncertainty.{round}.event_decision")
+    vector = append(vector, mt[row, get(col)])
+  }
+  
+  # consider composite events first and get the round numbers where composite events were shown
+  cEvents = str_which(string = vector,
+                       pattern = "composite") + 6
+  # now loop over these rounds to add the respective matching_probabilities
+  CEPs = NULL # Compound-Event Probabilities
+  for(compositeRound in cEvents){
+    col <- glue("Uncertainty.{compositeRound}.matching_probability")
+    increment <- mt[row, get(col)]
+    CEPs <- append(CEPs, increment)
+  }
+  # average
+  ACEP = mean(CEPs, na.rm=TRUE)/100
+  
+  # do the same for single events
+  sEvents <- str_which(string = vector,
+                       pattern = "single") + 6
+  SEPs = NULL
+  for(singleRound in sEvents){
+    col <- glue("Uncertainty.{singleRound}.matching_probability")
+    increment <- mt[row, get(col)]
+    SEPs <- append(SEPs, increment)
+  }
+  ASEP = mean(SEPs, na.rm=TRUE)/100
+  
+  # calculate Ambiguity Aversion Index (AAI)
+  AAI = 1 - ACEP - ASEP
+  
+  # calculate  ambiguity-generated insensitivity (a-insensitivity) index (AGII)
+  AGII = 3 * (1/3 - (ACEP - ASEP))
+  
+  # write averages 
+  mt[row,
+     post_ASEP := ASEP]
+  mt[row,
+     post_ACEP := ACEP]
+  
+  # write indices
+  mt[row,
+     post_AAI := AAI]
+  mt[row,
+     post_AGII := AGII]
+}
+```
+
+Having done that, the data looks as follows.
+
+```{r showData2}
+mt %>% 
+  head(n = 10) %>%
+  kbl() %>%
+  scroll_box(width="120%") %>%
+  kable_paper("hover", 
+              full_width = TRUE,
+              fixed_thead = TRUE)
+```
+
+Before one can merge the data with the covariates, I transform it such that we have two rows per subject where the first row reports Baillon's indices before treatment and the second row corresponds to the post-treatment indices.
+
+```{r}
+pre <- mt[,
+          .(participant.code,
+            ASEP = pre_ASEP,
+            ACEP = pre_ACEP,
+           AAI = pre_AAI,
+           AGII = pre_AGII,
+           treated = FALSE)]
+post <- mt[,
+           .(participant.code,
+             ASEP = post_ASEP,
+             ACEP = post_ACEP,
+           AAI = post_AAI,
+           AGII = post_AGII,
+           treated = TRUE)]
+
+MT <- rbindlist(list(pre, post))[order(participant.code)]
+
+MT %>% 
+  head(n = 10) %>%
+  kbl() %>%
+  scroll_box(width="120%") %>%
+  kable_paper("hover", 
+              full_width = TRUE,
+              fixed_thead = TRUE)
+```
+
+# Merge data
+
+Having done that, I merge the resulting table with the raw data. Alternatively, one could select some covariates using regular expressions once more.
+
+```{r selectCovariates, eval = FALSE}
+controlRegex <- "^participant\\.code$|time_started$|visited$|participant\\.payoff$|^Baillon.1.player.window.*|^Baillon.1.player.browser$|_index_in_pages|player\\.location$|player\\.treatment$|review_|Accuracy$|Credibility$|Comprehension$|Age$|Gender$|Education$|Income$|Usage$"
+controlVariables <- str_subset(string = names(DT),
+                               pattern = controlRegex)
+ct <- DT[, ..controlVariables]
+```
+
+```{r renameCovariates,  eval = FALSE}
+oldNames <- names(ct)
+newNames <- str_replace_all(string=oldNames,
+                            pattern="\\.player",
+                            replacement="")
+newerNames <- str_replace_all(string=newNames,
+                              pattern="Intro\\.1\\.",
+                              replacement="")
+setnames(x=ct,
+         old=oldNames,
+         new=newerNames)
+```
+
+```{r mergeData}
+# rename treatment variables
+oldNames <- c("Intro.1.player.location", "Intro.1.player.treatment")
+newNames <- c("location", "forecast")
+setnames(x=DT,
+         old=oldNames,
+         new=newNames,
+         skip_absent=TRUE)
+
+# merge with raw data instead of ct
+data <- merge(MT, DT,
+              by = "participant.code")
+
+```
+
+# Create Dropout Measure
+
+```{r dropouts}
+data[participant._index_in_pages > 0 & participant._index_in_pages < 20,
+     is_dropout := TRUE]
+
+data[participant._index_in_pages == 20,
+     is_dropout := FALSE]
+```
+
+
+# Download data
+
+
+```{r saveAndDownload} 
+save(data, file = "../data/processed/pilot.rda")
+
+if(knitr::is_html_output()){
+  data %>% 
+  download_this(
+        output_name = "processedData",
+        output_extension = ".csv", # CSV output
+        button_label = "Download processed data",
+        button_type = "default",
+      )
+}
+```
+
+# Analyses
+
+## Dropouts
+
+```{r}
+ggplot(data[participant._index_in_pages < 20 & treated == FALSE], 
+       aes(x=participant._index_in_pages)) + 
+  geom_histogram(binwidth=1, fill = wes_palette("Zissou1")[1]) +
+  scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
+  layout +
+  labs(x = "Pages") +
+  scale_x_continuous(breaks = c(2),
+                     labels = c("Instructions"))
+```
+
+### by Browser Width
+
+```{r warning = FALSE}
+ggplot(data[treated == FALSE],
+       aes(x = Intro.1.player.window_width, fill = is_dropout)) + 
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(values = wes_palette("Zissou1")[c(1,5)],
+                    labels = c("Complete Obs.", "Dropouts")) +
+  scale_y_continuous(expand = c(0, NA)) +
+  scale_x_continuous(limits = c(0, NA), expand = c(0, 0)) +
+  geom_vline(xintercept = 812) +
+  geom_vline(xintercept = 1024) +
+  geom_label(label = "iPhone X",
+             x = 812,
+             y = 0.00045,
+             show.legend = FALSE) +
+  geom_label(label = "iPad",
+             x = 1024,
+             y = 0.00055,
+             show.legend = FALSE) +
+  layout + 
+  labs(x = "Window Width")
+
+```
+
+
+### by Browser Type
+
+```{r warning = FALSE}
+data[,
+     browser := str_replace_all(string = Intro.1.player.browser,
+                                pattern = "\\W|\\d",
+                                replacement = "")]
+temp <- count(data[treated == FALSE & browser != ""], browser, is_dropout)
+temp[,
+     freq := n/sum(n),
+     by = c("browser")]
+
+ggplot(data = temp,
+       aes(x=browser, y=freq, fill=is_dropout, label = n)) +
+  geom_bar(stat="identity") +
+  scale_fill_manual(values = wes_palette("Zissou1")[c(1,5)],
+                    labels = c("Complete Obs.", "Dropouts")) +
+  geom_text() +
+  layout +
+  coord_flip()
+
+# NROW(DT[participant._index_in_pages > 2 & participant._index_in_pages < 20])
+data[is_dropout == TRUE & treated == FALSE, is_dropout %>% sum()]
+NROW(data[is_dropout == TRUE & treated == FALSE])
+NROW(data[is_dropout == FALSE & treated == FALSE])
+
+```
+
+## Time Spent
+
+
+```{r readTime}
+timeSpent <- read.csv(file="../data/pilot/PageTimes-2021-05-25.csv",
+                      stringsAsFactors = FALSE) %>% data.table()
+
+timeSpent[,
+          lag := shift(epoch_time, fill = NA, type = "lag"),
+          by = participant_code]
+
+timeSpent[,
+          duration := epoch_time - lag,
+          by = participant_code]
+
+duration <- timeSpent[,
+                      .(
+                        session_code,
+                        participant_code,
+                        app_name,
+                        page_name,
+                        page_index,
+                        page_submission = epoch_time,
+                        time_spent = duration
+                      )]
+
+if(knitr::is_html_output()){
+  duration %>% 
+  download_this(
+        output_name = "timeSpent",
+        output_extension = ".csv", # CSV output
+        button_label = "Download PageTimes data",
+        button_type = "default",
+      )
+}
+
+```
+
+```{r vizTime, warning=FALSE}
+
+col <- wes_palette("Zissou1")[1]
+
+temp <- duration[,
+                 median(time_spent),
+                 by = c("page_name", "page_index")]
+
+ggplot(temp,  aes(x=page_index, y = V1)) + 
+  geom_bar(stat="identity", fill = col) +
+  scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
+  scale_x_continuous(breaks = c(2, 3, 9, 14, 15, 19),
+                     labels = c("Instructions", "First Decision", "Treatment", "Last Decision", "Risk Elicitation", "CLICCS Questions")) +
+  layout +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(y="Median Time Spent on Site\nin Seconds", x="")
+```
+
+oTree reports a timestamp for each page submission. Substracting these timestamps from one another, one can calculate the time spent on most pages, that is, all but the first and the last page. As a consequence, one can calculate the median time required to read the instructions and answer the comprehension questions: `r temp[page_index == 2, V1]` seconds or more than `r temp[page_index == 2, V1] %/% 60` minutes. Aggregating the bars in the visualization above yields a measure of the time spent to complete the experiment of a litte more than `r sum(temp[, V1], na.rm = TRUE) %/% 60` minutes. These numbers, however, also include dropouts.
+
+
+```{r totalTimeSpent, eval = FALSE}
+obs <- duration[page_index == 19, participant_code]
+completionTime <- duration[participant_code %in% obs & page_index == 19, page_submission] - duration[participant_code %in% obs & page_index == 1, page_submission]
+
+median(completionTime) %>% seconds_to_period()
+ggplot(as.data.frame(completionTime),  aes(x=completionTime/60)) + 
+  geom_histogram(fill = wes_palette("Zissou1")[1]) +
+  # scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
+  # scale_x_continuous(breaks = c(2, 3, 9, 14, 15, 19),
+                     # labels = c("Instructions", "First Decision", "Treatment", "Last Decision", "Risk Elicitation", "CLICCS Questions")) +
+  layout +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(y="Median Time Spent on Site\nin Seconds", x="")
+```
+
+
+## Comprehension Questions
+
+There were two comprehension checks, Q1 and Q2. This is what the distribution of wrong answers looks like, if one considers all `r data[participant._index_in_pages > 3 & treated == FALSE] %>% NROW()` participants, who reached the third page, that is, all those who managed to answer the questions correctly, eventually.
+
+```{r wrongAnswer1, warning=FALSE}
+
+temp <- data[participant._index_in_pages > 3 & treated == FALSE]
+xmax <- temp[, max(Intro.1.player.wrong_answer_1, Intro.1.player.wrong_answer_2)] + 2
+
+g1 <- ggplot(temp,
+             aes(x=Intro.1.player.wrong_answer_1)) + 
+  geom_histogram(binwidth=1, fill = wes_palette("Zissou1")[1]) +
+  scale_y_continuous(limits = c(0, 125), expand = c(0, 0)) +
+  scale_x_continuous(limits = c(NA, xmax)) +
+  layout +
+  labs(x = "Q1")
+
+g2 <- ggplot(temp,
+             aes(x=Intro.1.player.wrong_answer_2)) + 
+  geom_histogram(binwidth=1, fill = wes_palette("Zissou1")[1]) +
+  scale_y_continuous(limits = c(0, 125), expand = c(0, 0)) +
+  scale_x_continuous(limits = c(NA, xmax)) +
+  layout +
+  labs(x = "Q2", y = "")
+
+grid.arrange(
+  g1,
+  g2,
+  nrow = 1,
+  top = "Wrong Answers"
+)
+
+```
+
+
+## Balance
+
+```{r treatmentBalance, layout="l-body-outset"}
+
+temp <- data[participant._index_in_pages == 20 & treated == FALSE]
+temp[, treatment := paste(location, forecast, sep ="_")]
+len <- NROW(temp)
+
+p1 <- ggplot(temp, 
+             aes(x=forecast)) + 
+  geom_bar(fill = col) +
+  geom_hline(yintercept = len/3, lty = 2) +
+  layout +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
+  labs(title="forecast",
+       x="")
+
+p2 <- ggplot(temp, 
+             aes(x=location)) + 
+  geom_bar(fill = col) +
+  geom_hline(yintercept = len/2, lty = 2) +
+  layout +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
+  labs(title="location",
+       x="",
+       y="")
+
+p3 <- ggplot(temp, 
+             aes(x=treatment)) + 
+  geom_bar(fill = col) +
+  geom_hline(yintercept = len/6, lty = 2) +
+  layout +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
+  labs(title="location x forecast",
+       y="",
+       x="")
+
+grid.arrange(
+  p1,
+  p2,
+  p3,
+  nrow = 1,
+  top = "",
+  bottom = "Dashed lines indicate perfect balance."
+)
+```
+# Results
+
+## Indices
+
+```{r distribution AAI}
+p1 <- ggplot(data[participant._index_in_pages == 20 & location == "Weiskirchen"],
+       aes(x = AAI, fill = treated)) + 
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(values = wes_palette("Zissou1")[c(1,5)]) +
+  scale_y_continuous(expand = c(0, NA), limits = c(0,2)) +
+  scale_x_continuous(limits = c(-1, 1)) +
+  layout + 
+  labs(x = "Weiskirchen", fill = "Treated?")
+
+p2 <- ggplot(data[participant._index_in_pages == 20 & location == "Ilomantsi"],
+       aes(x = AAI, fill = treated)) + 
+  geom_density(alpha = 0.5) +
+  scale_y_continuous(expand = c(0, NA), limits = c(0,2)) +
+  scale_x_continuous(limits = c(-1, 1)) +
+  scale_fill_manual(values = wes_palette("Zissou1")[c(1,5)]) +
+  layout + 
+  labs(x = "Ilomantsi", fill = "Treated?", y = "")
+
+patchwork <- p1 + p2 & theme(legend.position = "bottom")
+patchwork <- patchwork + plot_layout(guides = "collect") + plot_annotation(
+  title = "Ambiguity Aversion Index",
+  subtitle = "Colors represent the treatment status.",
+  caption = "Disclaimer: Ilomantsi represents the surprising forecast."
+)
+patchwork
+```
+
+```{r distribution AGII}
+p1 <- ggplot(data[participant._index_in_pages == 20 & location == "Weiskirchen"],
+       aes(x = AGII, fill = treated)) + 
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(values = wes_palette("Zissou1")[c(1,5)]) +
+  scale_y_continuous(expand = c(0, NA), limits = c(0,1)) +
+  scale_x_continuous(limits = c(-2.1, 2.1)) +
+  layout + 
+  labs(x = "Weiskirchen", fill = "Treated?")
+
+p2 <- ggplot(data[participant._index_in_pages == 20 & location == "Ilomantsi"],
+       aes(x = AGII, fill = treated)) + 
+  geom_density(alpha = 0.5) +
+  scale_y_continuous(expand = c(0, NA), limits = c(0,1)) +
+  scale_x_continuous(limits = c(-2.1, 2.1)) +
+  scale_fill_manual(values = wes_palette("Zissou1")[c(1,5)]) +
+  layout + 
+  labs(x = "Ilomantsi", fill = "Treated?", y = "")
+
+patchwork <- p1 + p2 & theme(legend.position = "bottom")
+patchwork <- patchwork + plot_layout(guides = "collect") + plot_annotation(
+  title = "Ambiguity-Generated Insensitivity (a-insensitivity) Index",
+  subtitle = "Colors represent the treatment status.",
+  caption = "Disclaimer: Ilomantsi represents the surprising forecast."
+)
+patchwork
+```
+
+
+## Regressions
+
+Some placeholder regressions:
+
+```{r regressions, eval = FALSE}
+# names(data)
+m1 <- lm(AAI ~ treated + location + treated*location, data = data[participant._index_in_pages == 20])
+m2 <- lm(AGII ~ treated + location + treated*location, data = data[participant._index_in_pages == 20])
+tab_model(m1, m2)
+
+```

@@ -13,3 +13,5 @@ __pycache__/
 *.otreezip
 .Rproj.user
 .Rhistory
+admin
+data/pilot

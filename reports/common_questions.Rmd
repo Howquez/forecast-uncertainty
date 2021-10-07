@@ -1,0 +1,24 @@
+---
+title: "Was sehen Sie als größte Herausforderung in Bezug auf ein sich wandelndes Klima?"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(data.table)
+library(magrittr)
+load("../data/processed/respondi_main.rda")
+```
+
+```{r}
+text1 <- data[treated == TRUE & nchar(Outro.1.CLICCS1) > 1, Outro.1.CLICCS1] %>% unlist() %>% paste(collapse = " | ")
+```
+
+```{r}
+text2 <- data[treated == TRUE & nchar(Outro.1.CLICCS2) > 1, Outro.1.CLICCS2] %>% unlist() %>% paste(collapse = " | ")
+```
+
+`r text1`
+
+# Wie gehen Sie damit um?
+
+`r text2`

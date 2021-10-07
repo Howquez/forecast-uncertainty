@@ -1,0 +1,246 @@
+---
+title: "Experiment: Results"
+description: |
+  A new article created using the Distill format.
+author: Hauke Roggenkamp
+date: "`r Sys.Date()`"
+bibliography: biblio.bib
+output:
+  pdf_document:
+    fig_width: 6
+    fig_height: 3
+    fig_caption: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+library(data.table)
+library(magrittr)
+library(stringr)
+library(ggplot2)
+library(patchwork)
+library(Rmisc)
+```
+
+```{r layout}
+layout <- theme(panel.background = element_rect(fill = "white"),
+                panel.grid = element_blank(),
+                legend.key = element_rect(fill = "white"),
+                plot.margin = unit(c(0.25,0.25,0.25,0.25), "cm"),
+                panel.grid.major.y = element_blank(),
+                axis.line.x.bottom = element_blank(),
+                axis.line.y.left = element_blank(),
+                plot.title = element_text(size = rel(1))
+                )
+colors <- c("#F3B05C", "#1E4A75", "#65B5C0", "#AD5E21")
+```
+
+```{r readData}
+load("../data/processed/respondi_main.rda")
+
+subset <- data #data[Outro.1.Comprehension %>% str_detect(pattern = "yes")]
+```
+
+```{r plotPrep}
+plotDT <- data.table(participant.label = subset[treated == FALSE, participant.label],
+                     preAAI = subset[treated == FALSE, AAI],
+                     postAAI = subset[treated == TRUE, AAI],
+                     preAGII = subset[treated == FALSE, AGII],
+                     postAGII = subset[treated == TRUE, AGII],
+                     location = subset[treated == FALSE, location],
+                     forecast = subset[treated == FALSE, forecast])
+
+olWb <- (plotDT[preAAI > postAAI & location == "Weiskirchen", .N] / plotDT[location == "Weiskirchen", .N] * 100) %>% round() %>% paste0("%")
+lrWb <- (plotDT[preAAI < postAAI & location == "Weiskirchen", .N] / plotDT[location == "Weiskirchen", .N] * 100) %>% round() %>% paste0("%")
+olWa <- (plotDT[preAGII > postAGII & location == "Weiskirchen", .N] / plotDT[location == "Weiskirchen", .N] * 100) %>% round() %>% paste0("%")
+lrWa <- (plotDT[preAGII < postAGII & location == "Weiskirchen", .N] / plotDT[location == "Weiskirchen", .N] * 100) %>% round() %>% paste0("%")
+
+olIb <- (plotDT[preAAI > postAAI & location == "Ilomantsi", .N] / plotDT[location == "Ilomantsi", .N] * 100) %>% round() %>% paste0("%")
+lrIb <- (plotDT[preAAI < postAAI & location == "Ilomantsi", .N] / plotDT[location == "Ilomantsi", .N] * 100) %>% round() %>% paste0("%")
+olIa <- (plotDT[preAGII > postAGII & location == "Ilomantsi", .N] / plotDT[location == "Ilomantsi", .N] * 100) %>% round() %>% paste0("%")
+lrIa <- (plotDT[preAGII < postAGII & location == "Ilomantsi", .N] / plotDT[location == "Ilomantsi", .N] * 100) %>% round() %>% paste0("%")
+
+spearmanWb <- cor(x = plotDT[location == "Weiskirchen", preAAI],
+                  y = plotDT[location == "Weiskirchen", postAAI],
+                  method = "spearman") %>% round(digits = 2)
+spearmanWa <- cor(x = plotDT[location == "Weiskirchen", preAGII],
+                  y = plotDT[location == "Weiskirchen", postAGII],
+                  method = "spearman") %>% round(digits = 2)
+
+spearmanIb <- cor(x = plotDT[location == "Ilomantsi", preAAI],
+                  y = plotDT[location == "Ilomantsi", postAAI],
+                  method = "spearman") %>% round(digits = 2)
+spearmanIa <- cor(x = plotDT[location == "Ilomantsi", preAGII],
+                  y = plotDT[location == "Ilomantsi", postAGII],
+                  method = "spearman") %>% round(digits = 2)
+
+```
+
+This document gives a very narrow overview of the collected data and resembles the structure of the @Baillon2018a paper's results section.
+
+# Ambiguity Aversion Index b
+
+To first illustrate the general nature of our data, Figure 1 presents all b indexes of Part 2 as a function of the b indexes of Part 1. Spearman correlations are high (`r spearmanWb` for the confirming treatment and `r spearmanIb` for the surprising treatment) and most dots are in the lower left quadrant or in the upper right quadrant.
+
+```{r plotB, warning = FALSE, fig.cap="Ambiguity aversion indexes b. Blue lines represent OLS regressions with 95% confidence intervals. Percentages of observations above and below the diagonal are indicated in the figures. Spearman correlations are in the panel titles."}
+
+p1 <- ggplot(data = plotDT[location == "Weiskirchen"],
+       mapping = aes(x = preAAI, y = postAAI)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth(method = lm, col = colors[3], fill = colors[3]) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  layout + theme() +
+  geom_abline(slope = 1) + 
+  labs(title = "A. Confirming Treatment" %>% paste0(" (",spearmanWb,")"),
+       x = "Part 1",
+       y = "Part 2") +
+  annotate("text", x = -0.75, y = 0.75, label = olWb) +
+  annotate("text", x = 0.75, y = -0.75, label = lrWb)
+
+p2 <- ggplot(data = plotDT[location == "Ilomantsi"],
+       mapping = aes(x = preAAI, y = postAAI)) +
+  geom_point(alpha = 0.4, shape = 4) +
+  geom_smooth(method = lm, col = colors[3], fill = colors[3]) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  layout +
+  geom_abline(slope = 1) + 
+  labs(title = "B. Surprising Treatment" %>% paste0(" (",spearmanIb,")"),
+       x = "Part 1",
+       y = "Part 2") +
+  annotate("text", x = -0.75, y = 0.75, label = olIb) +
+  annotate("text", x = 0.75, y = -0.75, label = lrIb)
+
+(p1 | p2)
+```
+
+# A-Insensitivity Index a
+
+Figure 2 depicts all individual a indexes of Part 2 as a function of the a indexes of Part 1. Spearman correlations are again high (`r spearmanWa` for the confirming treatment and `r spearmanIa` for the surprising treatment).
+
+```{r plotA, fig.cap="A-insensitivity indexes a. Blue lines represent OLS regressions with 95% confidence intervals. Percentages of observations above and below the diagonal are indicated in the figures. Spearman correlations are in the panel titles."}
+
+p1 <- ggplot(data = plotDT[location == "Weiskirchen"],
+       mapping = aes(x = preAGII, y = postAGII)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth(method = lm, col = colors[3], fill = colors[3]) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  scale_y_continuous(limits = c(-3, 3)) +
+  scale_x_continuous(limits = c(-3, 3)) +
+  layout + theme() +
+  geom_abline(slope = 1) + 
+  labs(title = "A. Confirming Treatment" %>% paste0(" (",spearmanWa,")"),
+       x = "Part 1",
+       y = "Part 2") +
+  annotate("text", x = -2, y = 2, label = olWa) +
+  annotate("text", x = 2, y = -2, label = lrWa)
+
+p2 <- ggplot(data = plotDT[location == "Ilomantsi"],
+       mapping = aes(x = preAGII, y = postAGII)) +
+  geom_point(alpha = 0.4, shape = 4) +
+  geom_smooth(method = lm, col = colors[3], fill = colors[3]) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  scale_y_continuous(limits = c(-3, 3)) +
+  scale_x_continuous(limits = c(-3, 3)) +
+  layout +
+  geom_abline(slope = 1) + 
+  labs(title = "B. Surprising Treatment" %>% paste0(" (",spearmanIa,")"),
+       x = "Part 1",
+       y = "Part 2") +
+  annotate("text", x = -2, y = 2, label = olIa) +
+  annotate("text", x = 2, y = -2, label = lrIa)
+
+(p1 | p2)
+```
+
+```{r}
+
+```
+
+# Response Time, Consistency, and Monotonicity
+
+```{r calcDuration}
+timeSpent <- read.csv(file = "../data/raw/PageTimes-2021-09-15.csv") %>% data.table()
+
+timeSpent[,
+          lag := shift(epoch_time_completed, fill = NA, type = "lag"),
+          by = c("session_code", "participant_code")]
+
+timeSpent[,
+          duration := epoch_time_completed - lag,
+          by = c("session_code", "participant_code")]
+
+timeSpent[,
+          completion := epoch_time_completed %>% max() - epoch_time_completed %>% min(),
+          by = c("session_code", "participant_code")]
+
+duration <- timeSpent[participant_code %in% data$participant.code,
+                      .(
+                        session_code,
+                        participant_code,
+                        app_name,
+                        page_name,
+                        page_index,
+                        page_submission = epoch_time_completed,
+                        time_spent = duration,
+                        completion_time = completion
+                      )]
+```
+
+The time spent on every decision is illustrated in Figure 3. Intuitively, the pattern makes sense as respondents learn from round 1 to 6 (that is, in Part 1). The beginning of the second Part (that is, in Round 7) exposes the respondents to the forecast, which needs some time to process. Afterwards, respondents answer as fast as before.
+
+```{r plotTime, fig.cap = "Average Time Spent for each Decision per Round."}
+N <- duration[, participant_code %>% unique() %>% length()]
+temp <- duration[app_name == "Baillon" & page_name == "Baillon_Decision",
+                   .(time_spent = time_spent %>% sum()),
+                   by = c("session_code", "participant_code", "page_index", "page_name")]
+
+temp[, round := page_index-2, by = c("participant_code")]
+
+# remove outliers
+plotDT <- temp[,
+               .SD[time_spent < quantile(time_spent, probs = 0.99)], 
+               by = page_index]
+
+upperLimit <- plotDT[, time_spent %>% mean(), by = c("round")] %>% max()
+
+annotation <- plotDT[round == 12, time_spent %>% mean() %>% round(digits=0)]
+
+ggplot(data = summarySE(data = plotDT,
+                        measurevar = "time_spent",
+                        groupvars=c("round"),
+                        na.rm = FALSE,
+                        conf.interval = 0.95,
+                        .drop = TRUE),
+       mapping = aes(x = round, y = time_spent)) +
+  layout +
+  theme(legend.position="bottom") +
+  geom_line(show.legend=FALSE, color = colors[2], lty=2) +
+  geom_errorbar(aes(ymin=time_spent-ci, ymax=time_spent+ci), width=.25, alpha = 0.5, color = colors[3]) +
+  geom_point(color = colors[2]) +
+  scale_x_continuous(name="",  breaks = 1:12) +
+  scale_y_continuous(limits = c(0, NA), expand = c(0, 0),
+                     breaks = c(0,
+                                plotDT[round == 1, time_spent %>% mean() %>% round(digits=0)],
+                                plotDT[round == 2, time_spent %>% mean() %>% round(digits=0)],
+                                plotDT[round == 7, time_spent %>% mean() %>% round(digits=0)],
+                                plotDT[round == 12, time_spent %>% mean() %>% round(digits=0)])) +
+  labs(y = "Response Time in Seconds", caption = "Bars indicate 95% confidence intervals.
+       \nOutliers (identified by 99.0 quantile) removed.") +
+  theme(plot.margin = margin(0.25,1,0.25,0.25, "cm"),
+        axis.line.x.bottom = element_line(size = 0.25),
+        axis.line.y.left = element_line(size = 0.25),
+        panel.grid.major.y = element_line(colour="gray", size=0.25))
+  
+```
+
+The average response time in the training part is more than 25 seconds, but this de- creases in Part 1 and then again in Part 2 for both the control and the TP treatment. Understandably, subjects needed to familiarize themselves with the task. In Table VI, the benchmark model (Model 1) shows that the average response time of the control sub- jects in Part 1 is about 17s per matching probability. It is about 4s longer than for subjects under TP, even though subjects could spend up to 25s to answer in the TP treatment. In Part 2, the control subjects answered faster than in Part 1.
+We next analyze the consistency of the matching probabilities by comparing repeated elicitations of matching probabilities for some events. Pairwise comparisons for each pair of matching probabilities with the Bonferroni correction indicate one difference, in one of the two tests in Part 1 for the TP treatment: the second matching probability m13 is higher than the first one (mean difference = ). The other differences are not significant.
+We find a similar pattern in the set-monotonicity tests. Out of six monotonicity tests, the average number of violations is 0.58 in Part 1 for the TP treatment, only 0.30 in Part 2 for the same treatment, and 0.36 and 0.24 in Parts 1 and 2, respectively, for the control treatment. The difference between Parts 1 and 2 in the TP treatment is significant (within- subject Wilcoxon signed-ranks test; Z = , p = ) and the difference between the TP and the control treatment in Part 1 is marginally significant (between-subject Mann– Whitney U test; Z = , p = ). The percentage of weak monotonicity violations is 5% and 4% in Parts 1 and 2 for the TP treatment, and 5% and 0% in Parts 1 and 2 for the control treatment. None of the differences is significant.
+
+# Balance
+
+# References

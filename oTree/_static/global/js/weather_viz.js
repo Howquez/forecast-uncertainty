@@ -147,7 +147,7 @@ function fillText() {
     if (displayForecast){
         document.getElementById("forecastText").innerHTML = forecastText;
     }
-    
+
     // document.getElementById("report0").innerHTML = reportArray[0];
     // document.getElementById("report1").innerHTML = reportArray[1];
     // document.getElementById("report2").innerHTML = reportArray[2];

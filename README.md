@@ -7,7 +7,7 @@ This repository is the foundation of an economic experiment that exposes respond
 the forecasts' communication strategies between subjects. We elicit the respondents' 
 ambiguity attitudes before and after exposure to assess forecasts' credibility and its effect on ambiguity attitudes.
 The ambiguity attitudes are elicited using Baillon et al.'s [(2018, Econometrica)]( https://doi.org/10.3982/ECTA14370) 
-Method. 
+method. 
 
 In these tasks, respondents shall choose winning probabilities of a lottery such that they are indifferent between that 
 particular lottery and a bet on temperature outcomes of some location at some time. They do neither know the corresponding 

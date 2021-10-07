@@ -38,16 +38,18 @@ To rerun the code you can download the whole [Github repository](https://github.
 
 ```{r readData}
 # read data
-DT <- read.csv(file="../data/simulation/all_apps_wide.csv",
+DT <- read.csv(file="../data/pilot/all_apps_wide_2021-05-14.csv",
                stringsAsFactors = FALSE) %>% data.table()
 
-DT %>% 
-  download_this(
-        output_name = "rawData",
-        output_extension = ".csv", # CSV output
-        button_label = "Download raw data",
-        button_type = "default",
-      )
+if(knitr::is_html_output()){
+  DT %>% 
+    download_this(
+          output_name = "rawData",
+          output_extension = ".csv", # CSV output
+          button_label = "Download raw data",
+          button_type = "default",
+        )
+}
 ```
 
 
@@ -70,7 +72,7 @@ Because most of the variables are secondary, I subset the data we are most inter
 mainRegex <- "^participant\\.code$|matching_probability$|event_decision$|Comprehension$"
 mainVariables <- str_subset(string = names(DT),
                             pattern = mainRegex)
-mt <- DT[ ,# Outro.1.player.Comprehension != "no", 
+mt <- DT[participant._index_in_pages == 20,# Outro.1.player.Comprehension != "no", 
          ..mainVariables] #"mt" for Main Table (in contrast to "Control Table" oder "Data Table")
 
 ```
@@ -296,7 +298,7 @@ setnames(x=ct,
 data <- merge(MT, DT,
               by = "participant.code")
 
-save(data, file = "../data/processed/simulations.rda")
+save(data, file = "../data/processed/pilot.rda")
 ```
 
 
@@ -305,13 +307,15 @@ save(data, file = "../data/processed/simulations.rda")
 You can find the processed data [as a .rda file here](https://github.com/Howquez/forecast-uncertainty/blob/Baillon/data/processed/simulations.rda) or download a .csv file using the button below.
 
 ```{r} 
-data %>% 
+if(knitr::is_html_output()){
+  data %>% 
   download_this(
         output_name = "processedData",
         output_extension = ".csv", # CSV output
         button_label = "Download processed data",
         button_type = "default",
       )
+}
 ```
 
 
@@ -322,7 +326,7 @@ Because the data was generated using bots, there is not much one can learn from 
 
 ```{r}
 layout <- theme(panel.background = element_rect(fill = "white"),
-                panel.grid = element_line(colour="gray", size=0),
+                panel.grid = element_blank(),
                 panel.grid.major.y = element_line(colour="gray", size=0.25),
                 legend.key = element_rect(fill = "white"),
                 axis.line.x.bottom = element_line(size = 0.25),
@@ -336,16 +340,16 @@ layout <- theme(panel.background = element_rect(fill = "white"),
 ```{r treatmentBalance, layout="l-body-outset"}
 
 col <- wes_palette("Zissou1")[1]
-len <- NROW(DT)
+len <- NROW(data)
 
-p1 <- ggplot(DT, 
+p1 <- ggplot(data, 
              aes(x=Intro.1.player.treatment)) + 
   geom_bar(fill = col) +
   geom_hline(yintercept = len/3, lty = 2) +
   layout +
   labs(x="treatment")
 
-p2 <- ggplot(DT, 
+p2 <- ggplot(data, 
              aes(x=Intro.1.player.location)) + 
   geom_bar() +
   geom_bar(fill = col) +
@@ -354,7 +358,7 @@ p2 <- ggplot(DT,
   labs(x="location",
        y="")
 
-p3 <- ggplot(DT, 
+p3 <- ggplot(data, 
              aes(x=Uncertainty.6.player.event_decision)) + 
   geom_bar() +
   geom_bar(fill = col) +
@@ -369,7 +373,7 @@ grid.arrange(
   p3,
   nrow = 1,
   top = "",
-  bottom = "Dashed line indicates perfect balance."
+  bottom = "Dashed lines indicate perfect balance."
 )
 ```
 

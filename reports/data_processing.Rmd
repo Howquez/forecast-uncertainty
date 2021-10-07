@@ -1,0 +1,397 @@
+---
+title: "How to communicate uncertainty?"
+description: |
+  The effects of asymmetrical interval predictions on ambiguity attitudes.
+author:
+  - name: Hauke Roggenkamp 
+    url: https://github.com/Howquez
+    affiliation: CLICCS
+    affiliation_url: https://www.cliccs.uni-hamburg.de/
+date: "`r Sys.Date()`"
+bibliography: biblio.bib
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 2
+    toc_float: false
+    code_folding: true
+---
+
+```{r setup, results = "hide", echo = FALSE, eval = FALSE}
+if(knitr::is_html_output()){
+  knitr::opts_chunk$set(echo = FALSE)
+}else{
+  knitr::opts_chunk$set(echo = TRUE)
+}
+```
+
+```{r packages}
+library(data.table)
+library(stringr)
+library(lubridate)
+library(magrittr)
+library(glue)
+library(readr)
+library(knitr)
+```
+
+# Read Data
+
+There are two files of raw data: `all_apps_wide_2021-09-15.csv` and `PageTimes-2021-09-15.csv`. The former (temporarily called `raw`) contains all the form fields implemented in oTree [@oTree] as well as some meta data. Each row represents one unique participant. The latter data (temporarily called `timeSpent`) contains time stamps and can be used to calculate how much time a participant spent on certain pages of the survey. Each row represents as page a participant visited.
+
+```{r readData}
+# read data
+raw <- read.csv(file="../data/raw/all_apps_wide_2021-09-15.csv",
+               stringsAsFactors = FALSE) %>% data.table()
+
+timeSpent <- read.csv(file = "../data/raw/PageTimes-2021-09-15.csv") %>% data.table()
+```
+
+Because we are primarily interested in all participants, that completed the survey, we subset the raw data accordingly. More precisely, we'll discard all participants who:
+
+- did not reach the last page (`r raw[,participant._max_page_index %>% unique()]`),^[If one is interested in respondents who entered the survey but did not necessarily complete it, one has to replace this condition by `participant._index_in_pages > 0`.]
+- have a participant label that is not a random 32-character alpha-numeric string (such as _TESTuser_, for instance).
+
+```{r subsetData}
+DT <- raw[participant._index_in_pages == participant._max_page_index & participant.label %>% nchar() == 32]
+```
+
+The resulting data.table contains `r DT %>% NROW()` rows which implies that this is exactly the number of complete observations we collected.
+
+# Variables' Naming Convention
+
+The data contains variables with different scopes. First, it contains participant variables that describe the participants' current status such as her payoff for instance. Second, it contains session variables that are mostly constant across participants. Finally, the data consists of form fields programmed in oTree. These form fields belong to apps [Intro, Baillon, Outro]. The variables we are most interested in stem from the _Baillon_ app.^[Intro variables are mostly used for a session's setup. Outro variables contain demographics and other covariates.]
+
+The naming convention of the latter class of variables follows a pattern: `app.round.model.form field` . In our case, the model is always called _player_, which is why this information is redundant and will be removed for what follows.
+
+```{r renameData}
+oldNames <- names(DT)
+newNames <- str_replace_all(string=oldNames,
+                            pattern="\\.player",
+                            replacement="")
+setnames(x=DT,
+         old=oldNames,
+         new=newNames)
+```
+
+# Primary Outcomes
+
+Because most of the variables are secondary, I subset the data we are most interested in, that is, the variables needed to calculate @Baillon2018a's indices as well as the `participant.label`. To conduct analyses with covariates and treatment information, we'll merge the data afterwards.
+
+```{r selectCols}
+# select relevant columns for main- and control variables separately
+mainRegex <- "^participant\\.label$|matching_probability$|event_decision$"
+mainVariables <- str_subset(string = names(DT),
+                            pattern = mainRegex)
+mt <- DT[, ..mainVariables] #"mt" for Main Table (in contrast to "Control Table" oder "Data Table")
+```
+
+The `.event_decision` describes on which events a subjects could bet in a given round. The values' naming convention is such that two digits describe a composite event while a one-digit value describes a single event that was relevant in a particular round. We'll exploit that convention to identify single and composite events for further processing.
+
+```{r events}
+for(round in 1:12){
+  
+  col = glue("Baillon.{round}.event_decision")
+  
+  set(x = mt,
+      i = which(mt[[col]] %>% as.character() %>% nchar() > 2),
+      j = col,
+      value = "composite")
+  
+  set(x = mt,
+      i = which(mt[[col]] %>% as.character() %>% nchar() == 2),
+      j = col,
+      value = "single")
+}
+```
+
+This enables us to calculate the indices we are interested in. Namely: _Ambiguity Aversion Index_ (`AAI`) and _Ambiguity-Generated Insensitivity (a-insensitivity) Index_ (`AGII`). We'll do this for the first six rounds...
+
+```{r calcIndices1}
+
+#..calculate Baillons Indices
+for(row in 1:NROW(mt)){
+  
+  #..first get a vector of event types
+  vector = c()
+  for(round in 1:6){
+    col = glue("Baillon.{round}.event_decision")
+    vector = append(vector, mt[row, get(col)])
+  }
+  
+  # consider composite events first and get the round numbers where composite events were shown
+  cEvents = str_which(string = vector,
+                       pattern = "composite")
+  # now loop over these rounds to add the respective matching_probabilities
+  CEPs = NULL # Compound-Event Probabilities
+  for(compositeRound in cEvents){
+    col <- glue("Baillon.{compositeRound}.matching_probability")
+    increment <- mt[row, get(col)]
+    CEPs <- append(CEPs, increment)
+  }
+  # average
+  ACEP = mean(CEPs, na.rm=TRUE)/100
+  
+  # do the same for single events
+  sEvents <- str_which(string = vector,
+                       pattern = "single")
+  SEPs = NULL
+  for(singleRound in sEvents){
+    col <- glue("Baillon.{singleRound}.matching_probability")
+    increment <- mt[row, get(col)]
+    SEPs <- append(SEPs, increment)
+  }
+  ASEP = mean(SEPs, na.rm=TRUE)/100
+  
+  # calculate Ambiguity Aversion Index (AAI)
+  AAI = 1 - ACEP - ASEP
+  
+  # calculate  Ambiguity-Generated Insensitivity (a-insensitivity) Index (AGII)
+  AGII = 3 * (1/3 - (ACEP - ASEP))
+  
+  # write averages 
+  mt[row,
+     pre_ASEP := ASEP]
+  mt[row,
+     pre_ACEP := ACEP]
+  # write indices
+  mt[row,
+     pre_AAI := AAI]
+  mt[row,
+     pre_AGII := AGII]
+}
+```
+
+... and then repeat the procedure for rounds 7 to 12.
+
+```{r calcIndices2}
+
+#..calculate Baillons Indices
+for(row in 1:NROW(mt)){
+  
+  #..first get a vector of event types
+  vector = c()
+  for(round in 1:6){
+    col = glue("Baillon.{round}.event_decision")
+    vector = append(vector, mt[row, get(col)])
+  }
+  
+  # consider composite events first and get the round numbers where composite events were shown
+  cEvents = str_which(string = vector,
+                       pattern = "composite") + 6
+  # now loop over these rounds to add the respective matching_probabilities
+  CEPs = NULL # Compound-Event Probabilities
+  for(compositeRound in cEvents){
+    col <- glue("Baillon.{compositeRound}.matching_probability")
+    increment <- mt[row, get(col)]
+    CEPs <- append(CEPs, increment)
+  }
+  # average
+  ACEP = mean(CEPs, na.rm=TRUE)/100
+  
+  # do the same for single events
+  sEvents <- str_which(string = vector,
+                       pattern = "single") + 6
+  SEPs = NULL
+  for(singleRound in sEvents){
+    col <- glue("Baillon.{singleRound}.matching_probability")
+    increment <- mt[row, get(col)]
+    SEPs <- append(SEPs, increment)
+  }
+  ASEP = mean(SEPs, na.rm=TRUE)/100
+  
+  # calculate Ambiguity Aversion Index (AAI)
+  AAI = 1 - ACEP - ASEP
+  
+  # calculate  ambiguity-generated insensitivity (a-insensitivity) index (AGII)
+  AGII = 3 * (1/3 - (ACEP - ASEP))
+  
+  # write averages 
+  mt[row,
+     post_ASEP := ASEP]
+  mt[row,
+     post_ACEP := ACEP]
+  
+  # write indices
+  mt[row,
+     post_AAI := AAI]
+  mt[row,
+     post_AGII := AGII]
+}
+```
+
+We can now calculate the difference between the post- and pre-treatment indices per participant. Subsequently, we'll rearrange the data such that each participant accounts for two rows. One row carrying indices measured before treatment (that is, where `treated == FALSE`) and one row this indices measured after the participant was exposed to the forecast (treatment).
+
+```{r rearrangeData}
+pre <- mt[order(participant.label),
+          .(participant.label,
+            ASEP = pre_ASEP,
+            ACEP = pre_ACEP,
+            AAI = pre_AAI,
+            AGII = pre_AGII,
+            treated = FALSE)]
+post <- mt[order(participant.label),
+           .(participant.label,
+             ASEP = post_ASEP,
+             ACEP = post_ACEP,
+             AAI = post_AAI,
+             AGII = post_AGII,
+             treated = TRUE)]
+
+diff <- mt[order(participant.label),
+           .(diffAAI = post_AAI - pre_AAI,
+             diffAGII = post_AGII - pre_AGII),
+           by = participant.label]
+
+MT <- rbindlist(list(pre, post))[order(participant.label, treated)]
+```
+
+The resulting data can then be merged with the raw data that contains treatment information, more detailed information on the participants' decisions as well as covariates.
+
+```{r mergeData}
+data <- Reduce(function(...) merge(..., 
+                                   all = TRUE, 
+                                   by = "participant.label"),
+       list(MT, 
+            diff, 
+            DT[participant._index_in_pages > 0 & participant.label %>% nchar() == 32])
+       )
+```
+
+
+# Misc
+
+Moreover, some variables (such as `time_started_utc`) are illformated. In addition, the payoff variable does not include the fixed fee of 2 Euro. These things will be addressed here: 
+
+```{r misc}
+data[, participant.time_started_utc := participant.time_started_utc %>% ymd_hms()]
+data[, participant.payoff := participant.payoff + 2]
+data[Outro.1.Income == 99999, Outro.1.Income := NA]
+```
+
+In addition, we want to mark respondents who did not vary in their responses with respect to the matching probabilities elicited in the `Baillon` app. (Note that this is also implied by `AGII == 1` and not irrational or lazy _per se_.)
+
+```{r variance}
+# calculate sd
+temp <- mt[,
+   .(sd1 = c(Baillon.1.matching_probability,
+             Baillon.2.matching_probability,
+             Baillon.3.matching_probability,
+             Baillon.4.matching_probability,
+             Baillon.5.matching_probability,
+             Baillon.6.matching_probability) %>% 
+       sd(na.rm = TRUE),
+     sd2 = c(Baillon.7.matching_probability,
+             Baillon.8.matching_probability,
+             Baillon.9.matching_probability,
+             Baillon.10.matching_probability,
+             Baillon.11.matching_probability,
+             Baillon.12.matching_probability) %>% 
+       sd(na.rm = TRUE)),
+   by = participant.label]
+
+# initialize zeroVariance var
+data[, zeroVariance := FALSE]
+data[treated == FALSE & participant.label %in% temp[sd1 == 0, participant.label],
+     zeroVariance := TRUE]
+data[treated == TRUE & participant.label %in% temp[sd2 == 0, participant.label],
+     zeroVariance := TRUE]
+
+# tidy up
+rm(list = c("temp"))
+```
+
+
+# Rearrange Variables
+
+To make the treatment information more salient and easier to read, we'll rename them to `location` and `forecast` and rearrange the columns a little. Similarly, the covariates generated in `Outro` will be renamed and rearranged.
+
+```{r treatmentVars}
+outroIndex <- data %>% names() %>% str_which(pattern = "Outro.1.[^payoff|subsession|role|id_in_group]")
+outroNames <- names(data)[outroIndex]
+outroNew <- outroNames %>% str_replace_all(pattern = "^Outro\\.1\\.", replacement = "")
+oldNames <- c("Intro.1.location", "Intro.1.treatment", outroNames)
+newNames <- c("location", "forecast", outroNew)
+setnames(x=data,
+         old=oldNames,
+         new=newNames,
+         skip_absent=TRUE)
+
+oldOrder <- names(data)
+firstVars <- c("participant.label", "location", "forecast", "treated", "zeroVariance", "ASEP", "ACEP", "AAI", "diffAAI", "AGII", "diffAGII", "participant.payoff", outroNew)
+newOrder <- oldOrder[!(oldOrder %in% firstVars)]
+
+setcolorder(data, neworder = firstVars)
+```
+
+
+# Time Spent
+
+Before saving the data, the time spent will be calculated using the second set of data we read. To do this, we'll subtract the time stamps of subsequent pages. These time stamps are recorded whenever a page is submitted. We'll therefore not know how much time participants spent on the survey's first page (because we do not have a time stamp generated when they entered a page). In addition, we do not know how much they spent on the last page because they did not submit them regularly. Because these pages did not prompt any decisions, this should not hurt too much.
+
+```{r calcDuration}
+timeSpent[,
+          lag := shift(epoch_time_completed, fill = NA, type = "lag"),
+          by = c("session_code", "participant_code")]
+
+timeSpent[,
+          duration := epoch_time_completed - lag,
+          by = c("session_code", "participant_code")]
+
+timeSpent[,
+          completion := epoch_time_completed %>% max() - epoch_time_completed %>% min(),
+          by = c("session_code", "participant_code")]
+
+duration <- timeSpent[participant_code %in% DT$participant.code,
+                      .(
+                        session_code,
+                        participant_code,
+                        app_name,
+                        page_name,
+                        page_index,
+                        page_submission = epoch_time_completed,
+                        time_spent = duration,
+                        completion_time = completion
+                      )]
+```
+
+# CLICCS Common Questions
+
+We also asked the Cluster's common questions. We'll store the answers in a separate (and deduplicated) object.
+`CLICCS1` answers the question _Was sehen Sie als größte Herausforderung in Bezug auf ein sich wandelndes Klima?_ while `CLICCS2` corresponds to _Wie gehen Sie damit um?_.
+
+```{r CQ}
+CLICCS <- data[, .(participant.label, CLICCS1, CLICCS2)] %>% unique()
+```
+
+
+# Write Data
+
+```{r writeDate}
+# csv
+write_csv(data, file = "../data/processed/respondi_main.csv")
+write_csv(duration, file = "../data/processed/respondi_timeSpent.csv")
+write_csv(CLICCS, file = "../data/processed/common_questions.csv")
+
+# rda
+save(data, file = "../data/processed/respondi_main.rda")
+save(duration, file = "../data/processed/respondi_timeSpent.rda")
+save(CLICCS, file = "../data/processed/common_questions.rda")
+```
+
+
+# Encoding
+
+If you want to learn more about the encoding of the variables' values, have a look at the `__init__.py` files. The file that documents the covariates' codes can, for instance, be found [here](https://github.com/Howquez/forecast-uncertainty/blob/Respondi/otreeLite/Outro/__init__.py).
+
+
+# Treatment Effects (beta)
+
+```{r}
+data[, 
+     .(`difference AAI` = diffAAI %>% mean(),
+       `difference AGII` = diffAGII %>% mean()),
+     keyby = c("location", "forecast")] %>% 
+  kable()
+```
+

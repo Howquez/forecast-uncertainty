@@ -18,3 +18,7 @@ source("analysis/R/visualization.R", echo=TRUE)
 # create_article("reports/data.Rmd")
 
 # install.packages("gridExtra")
+
+
+rmarkdown::render(input = "admin/HAURO_Ablaufplan.Rmd",
+                  output_format = "all")
