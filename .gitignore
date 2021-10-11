@@ -9,9 +9,14 @@ _bots*s
 __temp*
 __pycache__/
 *.py[cod]
-.DS_Store
 *.otreezip
 .Rproj.user
 .Rhistory
 admin
-data/pilot
+
+data/pilot/
+data/processed/
+data/raw/
+data/respondi/
+
+*.DS_Store
