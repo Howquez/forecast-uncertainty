@@ -385,7 +385,7 @@ save(CLICCS, file = "../data/processed/common_questions.rda")
 If you want to learn more about the encoding of the variables' values, have a look at the `__init__.py` files. The file that documents the covariates' codes can, for instance, be found [here](https://github.com/Howquez/forecast-uncertainty/blob/Respondi/otreeLite/Outro/__init__.py).
 
 
-# Treatment Effects (beta)
+# Treatment Effects (WIP)
 
 ```{r}
 data[, 
