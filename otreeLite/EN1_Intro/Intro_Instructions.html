@@ -1,0 +1,803 @@
+
+{{ block scripts }}
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/pattern-fill.js"></script>
+    <script src="https://code.highcharts.com/modules/broken-axis.js"></script>
+
+    <script src="{% static 'global/js/basics.js' %}"></script>
+    <script src="{% static 'global/js/buttons.js' %}"></script>
+
+    <script src="{% static 'global/js/weather_viz.js' %}"></script>
+    <script src="{% static 'global/js/event_bar.js' %}"></script>
+    <script src="{% static 'global/js/lottery_viz.js' %}"></script>
+    <script src="{% static 'global/js/lottery_demo.js' %}"></script>
+    <script src="{% static 'global/js/scroll_input.js' %}"></script>
+{{ endblock }}
+
+{{ block content }}
+<body class="bg-light.bg-gradient">
+<img src="https://github.githubassets.com/images/modules/site/actions/hero-bg.jpg" id="bg" alt="" style="z-index: -1; position: fixed; left: 30; opacity: 0.90;">
+
+
+    <nav class="navbar bg-header justify-content-end sticky-top" role="tablist" style="z-index:9999">
+        <div class="me-2 text-secondary" style="cursor: pointer;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-thermometer-half" viewBox="0 0 16 16" id="weather_icon">
+                <path d="M9.5 12.5a1.5 1.5 0 1 1-2-1.415V6.5a.5.5 0 0 1 1 0v4.585a1.5 1.5 0 0 1 1 1.415z"/>
+                <path d="M5.5 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0V2.5zM8 1a1.5 1.5 0 0 0-1.5 1.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0l-.166-.15V2.5A1.5 1.5 0 0 0 8 1z"/>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16" id="instructions_icon">
+                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-circle ms-2" viewBox="0 0 16 16" data-bs-toggle="offcanvas" data-bs-target="#offcanvasQuit" aria-controls="offcanvasQuit" id="quitButton">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+            </svg>
+        </div>
+
+        <ul class="nav flex-column visually-hidden" id="myTab" role="tablist">
+            <li class="nav-item dropdown ms-5">
+                <a class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                    </svg>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item">
+                        <a class="nav-link back-and-forth active" id="part1-tab" data-bs-toggle="list" href="#part1" role="tab" aria-controls="part1"> General </a>
+                    </li>
+                    <li class="dropdown-item">
+                        <a class="nav-link back-and-forth" id="part2-tab" data-bs-toggle="list" href="#part2" role="tab" aria-controls="part2"> Earnings </a>
+                    </li>
+                    <li class="dropdown-item">
+                        <a class="nav-link back-and-forth" id="part3-tab" data-bs-toggle="list" href="#part3" role="tab" aria-controls="part3"> Weather </a>
+                    </li>
+                    <li class="dropdown-item">
+                        <a class="nav-link back-and-forth" id="part4-tab" data-bs-toggle="list" href="#part4" role="tab" aria-controls="part4"> Demo </a>
+                    </li>
+                    <li class="dropdown-item">
+                        <a class="nav-link back-and-forth" id="part5-tab" data-bs-toggle="list" href="#part5" role="tab" aria-controls="part5"> Comprehension Questions </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </nav>
+
+    <!-- Instructions -->
+    <div class="card shadow-lg">
+
+        <div class="tab-content" id="myTabContent">
+
+            <!-- Part 1: General -->
+            <div class="tab-pane show active" id="part1" role="tabpanel" aria-labelledby="part1-tab">
+                <div class="card-header bg-white border-bottom-0 shadow-sm mt-3 sticky-top">
+                    <p class="h4">General</p>
+                </div>
+                <div class="card-body">
+
+                    <p class="card-text mb-0 lead">
+                        Procedure
+                    </p>
+                    <p>
+                        You can win a bonus payment of {{ Constants.bonus }} € in this study. To qualify for that bonus,
+                        you will have to make 6 trade-offs twice. Subsequently, we will ask you some questions about
+                        yourself. Finally, we will show you how much money you earned in this study.
+                    </p>
+                    <p>
+                        The whole study will take about 25 minutes of your time. Reading the instructions accounts for
+                        approximately 10 minutes while the participation in the study, that is, the trade-offs as well
+                        as the questionnaire take about 15 minutes.
+                    </p>
+                    <p>
+                        Each trade-off consists of two options: a bet on the weather as well as a lottery.
+                        To better assess the weather situation, you will receive information about previously measured
+                        temperatures. For the time being, you will not know anything about the location or the time the
+                        weather information refers to. After making the first 6 trade-offs, you will receive additional
+                        information. More precisely, you will be exposed to a weather forecast that you can then use to
+                        make the same 6 trade-offs once more.
+                    </p>
+
+                    <p class="card-text mb-0 lead">
+                        Bet
+                    </p>
+                    <p>
+                        We will ask you to bet on certain temperatures. You may bet that the temperature will be at
+                        least 17°C on a certain day at 14:00 (CET). If the temperature turns out to be 17°C or higher,
+                        you can earn {{ Constants.bonus }} €.
+                    </p>
+                    <p>
+                        The bet corresponds to the same time and location in each of the trade-offs. The only difference
+                        between the trade-offs is the temperature interval you can bet on. As a consequence, one
+                        trade-off may consider a temperature of 17°C or more, while another trade-off involves a bet on
+                        the temperature being 8°C or less. For this reason, we advice you to carefully examine the
+                        bets' temperature intervals that can earn you the bonus.
+                    </p>
+
+                    <p class="card-text mb-0 lead">
+                        Lottery
+                    </p>
+                    <p>
+                        To better understand the lottery you can imagine an urn containing 100 colored balls. Some of
+                        the balls are colored green, the others are red. Drawing a ball randomly and blindly, you can
+                        earn {{ Constants.bonus }} € if the ball turns out to be green and nothing if the ball is red.
+                    </p>
+
+                    <p class="card-text mb-0 lead">
+                        Trade-off
+                    </p>
+                    <p>
+                        Yo have to decide unter which conditions you prefer the lottery over the bet. We'll therefore
+                        ask you how many of the abovementioned 100 balls have to be green such that you prefer the
+                        lottery.
+                    </p>
+
+
+                    <!-- on Card Navigation  Arrows -->
+                    <div class="d-flex justify-content-center m-5">
+                        <button class="btn btn-white text-dark justify-content-center prevtab" style="border-radius: 40px;" disabled>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                            </svg>
+                        </button>
+
+                        {{ if screenout }}
+                        <div class="d-flex justify-content-center">
+                            <a class="btn btn-outline-secondary me-4 ms-4" href="{{redirect}}" role="button" style="border-radius: 40px;">
+                                Exit study
+                            </a>
+                        </div>
+                        {{ else }}
+                        <button class="btn btn-white text-dark justify-content-center" style="border-radius: 40px;" disabled>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                        </button>
+                        {{ endif }}
+
+                        <button class="btn btn-white text-dark justify-content-center nexttab" onclick="topFunction()" style="border-radius: 40px;" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-footer bg-light text-secondary">
+                    <p><sup>1</sup>
+                        Mentioning the time zone (CET) does not necessarily imply that the location the bet is referring
+                        to is in a location with the central European time zone.
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- Part 2: Verdienst  -->
+            <div class="tab-pane" id="part2" role="tabpanel" aria-labelledby="part2-tab">
+                <div class="card-header bg-white shadow-sm mt-3 sticky-top">
+                    <p class="h4">Earnings</p>
+                </div>
+                <div class="card-body">
+                    <p class="card-text mb-0 lead">
+                        Basics
+                    </p>
+                    <p>
+                        At the end of this study one of your trade-offs is drawn randomly to determine whether you will
+                        win {{ Constants.bonus }} € or not. For that reason, each of the trade-offs can turn out to be
+                        relevant for your payment.
+                    </p>
+                    <p>
+                        While you are reading these instructions, a computer program prepares a virtual lottery involving
+                        an urn with 100 red or green balls. The corresponding color composition is random: the urn may
+                        contain 5 green and 95 red balls, 72 green and 18 red balls or even 0 green and 100 red balls.
+                        Each composition that adds up to 100 balls is possible and qually likely.
+                    </p>
+
+                    <p class="card-text mb-0 lead">
+                        Bet
+                    </p>
+                    <p>
+                        If this particular urn contains less green balls than you require in the trade-off that is
+                        relevant for your earnings, the outcome of the bet will decide whether you will win the bonus
+                        payment. In this case, you will win {{ Constants.bonus }} €, if the actual temperature falls
+                        into the interval you were betting on. If not, you will not win the bonus.
+                    </p>
+
+                    <p class="card-text mb-0 lead">
+                        Lottery
+                    </p>
+                    <p>
+                        In case the urn contains at least as many green balls as you require in the trade-off that is
+                        relevant for your earnings, the outcome of the lottery will decide whether you will win the bonus
+                        payment. In that case, you will win {{ Constants.bonus }} €, if a green ball is drawn.
+                    </p>
+
+
+
+
+
+                    <!-- on Card Navigation  Arrows -->
+                    <div class="d-flex justify-content-center m-5">
+                        <button class="btn btn-white text-dark justify-content-center prevtab" onclick="topFunction()" style="border-radius: 40px;" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                            </svg>
+                        </button>
+
+                        {{ if screenout }}
+                        <div class="d-flex justify-content-center">
+                            <a class="btn btn-outline-secondary me-4 ms-4" href="{{redirect}}" role="button" style="border-radius: 40px;">
+                                Exit study
+                            </a>
+                        </div>
+                        {{ else }}
+                        <button class="btn btn-white text-dark justify-content-center" style="border-radius: 40px;" disabled>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                        </button>
+                        {{ endif }}
+
+                        <button class="btn btn-white text-dark justify-content-center nexttab" onclick="topFunction()" style="border-radius: 40px;" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Part 3: Wetter  -->
+            <div class="tab-pane" id="part3" role="tabpanel" aria-labelledby="part3-tab">
+                <div class="card-header bg-white border-bottom-0 shadow-sm mt-3 sticky-top">
+                    <p class="h4">Wetter</p>
+                </div>
+                <div class="card-body">
+                    <p class="card-text mb-0 lead">
+                        Basics
+                    </p>
+                    <p>
+                        The weather this study is referring to lies in the past, which is why you will be exposed to
+                        historic weather data and forecasts.
+                        This allows us to calculate your earnings immediately in case it is determined by the bet.
+                        Note that all the displayed weather information are real. At the beginning of your participation,
+                        a computer program randomly chose a location, a time and the kind of information you will
+                        receive. This may be any location in the world at any time. You will learn to which time and
+                        location the weather data is referring to but not until finishing the trade-offs. This way, we
+                        can be certain, that you can only utilize the information we provided. If your earnings are
+                        determined by the bet eventually, we can immediately check whether your bet was correct and
+                        inform you about the outcome.
+                    </p>
+
+                    <p class="card-text mb-0 lead">
+                        Description
+                    </p>
+                    <p>
+                        The visualization illustrates the aforementioned weather data. You see temperatures of three
+                        consecutive days - eacht at 14:00 CET. Your trade-off corresponds to a bet on the temperature
+                        9 days later at the same daytime (the purple shaded area). <br><br>
+                        <strong>
+                            From the seventh round we will additionally show you the mentioned weather forecast.
+                        </strong>
+                        The forecast will be displayed in that purple shaded area. In addition, we will display a text
+                        explaining the forecast.
+                    </p>
+
+                    <div class="container clearfix border-left border-primary w-75 bg-light" my-4>
+                        <br>
+                        <div class="alert alert-success" role="alert">
+                            <p class="text-center">
+                                <em>This is the place the weather forecast will be displayed from round seven on.</em>
+                            </p>
+                        </div>
+
+                        <figure class="highcharts-figure">
+                            <div id="weather_viz"></div>
+                        </figure>
+                    </div>
+
+                    <p class="card-text mb-0 lead">
+                        Proof of authenticity
+                    </p>
+                    <p>
+                        All the information displayed are real an measured (or forecasted) by experts. We ceil the data
+                        such that you do not have to think about decimal places. At the end of the study, we will
+                        display the sources the information stem from.
+                    </p>
+
+                    <p class="card-text mb-0 lead">
+                        Usability
+                    </p>
+                    <p>
+                        Be aware that you can retrieve both these instructions as well as the visualization at any time.
+                        To recall the visualization, you just have to click on the
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-thermometer-half" viewBox="0 0 16 16">
+                            <path d="M9.5 12.5a1.5 1.5 0 1 1-2-1.415V6.5a.5.5 0 0 1 1 0v4.585a1.5 1.5 0 0 1 1 1.415z"/>
+                            <path d="M5.5 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0V2.5zM8 1a1.5 1.5 0 0 0-1.5 1.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0l-.166-.15V2.5A1.5 1.5 0 0 0 8 1z"/>
+                        </svg>-symbol in the top right. To recall the instruction, you have to click on the
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                        </svg>-symbol next to it..
+                    </p>
+
+
+                    <!-- on Card Navigation  Arrows -->
+                    <div class="d-flex justify-content-center m-5 align-middle">
+                        <button class="btn btn-white text-dark justify-content-center prevtab" onclick="topFunction()" style="border-radius: 40px;" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                            </svg>
+                        </button>
+
+                        {{ if screenout }}
+                        <div class="d-flex justify-content-center">
+                            <a class="btn btn-outline-secondary me-4 ms-4" href="{{redirect}}" role="button" style="border-radius: 40px;">
+                                Exit study
+                            </a>
+                        </div>
+                        {{ else }}
+                        <button class="btn btn-white text-dark justify-content-center" style="border-radius: 40px;" disabled>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                        </button>
+                        {{ endif }}
+                        
+                        <button class="btn btn-white text-dark justify-content-center nexttab" onclick="topFunction()" style="border-radius: 40px;" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                </div>
+                <div class="card-footer bg-light text-secondary">
+                    <p><sup>1</sup>
+                        Mentioning the time zone (CET) does not necessarily imply that the location the bet is referring
+                        to is in a location with the central European time zone.
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- Part 4: Demo  -->
+            <div class="tab-pane" id="part4" role="tabpanel" aria-labelledby="part4-tab">
+                <div class="card-header bg-white border-bottom-0 shadow-sm mt-3 sticky-top">
+                    <p class="h4">Demo</p>
+                </div>
+                <div class="card-body">
+                    <p>
+                        The trade-offs will look as follows. The left column displays the bet. The right column displays
+                        the lottery, which you can configure with the text field, where you enter the amount of green
+                        balls you need at least to prefer the lottry.
+                    </p>
+                    <p>
+                        Consider the displayed trade-off carefully and feel free to enter different values. Notice how
+                        the visualizations change on input.
+                    </p>
+
+                    <div class="container clearfix w-100 bg-light">
+                        <div class="row justify-content-center">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-sm-12 col-md-12 col-lg-10">
+
+                                        <div class="card mt-5 shadow-lg">
+                                            <div class="card-header bg-white shadow-sm mt-1">
+                                                <p>
+                                                    What is the minimum number of green balls required such that you prefer the lottery?
+                                                </p>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm">
+                                                            <h4>Bet</h4>
+                                                            <p class="card-text mb-3 lead" id="subHeader">
+                                                                <small>You will earn 10 Euro according to the visualization below (or nothing).</small>
+                                                            </p>
+                                                        </div>
+
+                                                        <div class="col-sm bg-light rounded-top">
+                                                            <h4>Lottery</h4>
+                                                            <p class="card-text mb-3 lead">
+                                                                <small>You will earn 10 Euro if the drawn ball is green (or nothing).</small>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-sm">
+                                                            <small mb-4>
+                                                                The bet refers to the same location and day time but 9 days later.
+                                                                You can check the corresponding information, if needed, <a>here</a>. <br><br><br>
+                                                            </small>
+                                                        </div>
+
+                                                        <div class="col-sm bg-light">
+                                                            <small>
+                                                                The urn contains 100 balls in total. Some of them are green, the other are red.
+                                                                You decide on the required composition.
+                                                            </small>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-sm">
+                                                            <figure class="highcharts-figure">
+                                                                <div class="event_bar"></div>
+                                                            </figure>
+                                                        </div>
+
+                                                        <div class="col-sm bg-light">
+                                                            <figure class="highcharts-figure">
+                                                                <div class="pieChart"></div>
+                                                                <p class="highcharts-description">
+                                                                </p>
+                                                            </figure>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-sm">
+                                                        </div>
+                                                        <div class="col-sm bg-light rounded-bottom">
+                                                            <div class="row justify-content-center">
+                                                                <small class="form-text mt-4 pl-3 pr-3 mb-4">
+                                                                    What is the <u>minimum</u> number of green balls required such that you prefer the lottery?
+                                                                </small>
+                                                            </div>
+                                                            <div class="form-floating mb-3">
+                                                                <input type="number" class="form-control mb-1 shadow-sm bg-white" id="id_matching_probability" name="matching_probability" min="0" max="101">
+                                                                <label for="id_matching_probability">green balls in the urn</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div id="collapseSubmit" class="collapse justify-content-center" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+                                                    <div class="row justify-content-center mt-4 mb-2">
+                                                        <div class="form-check justify-content-center w-75">
+                                                            <input type="checkbox" class="form-check-input" id="submitCheck">
+                                                            <label class="form-check-label" for="submitCheck" id="submitCheckLabel">
+                                                                <small>Yes, I prefer the lottery.</small>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row justify-content-center mb-3">
+                                                        <button class="btn btn-outline-primary justify-content-center w-25 shadow" type="button" id="submitButton" style="border-radius: 40px;" disabled>
+                                                            Submit
+                                                        </button>
+                                                    </div>
+                                                    <div class="row mb-3 text-secondary">
+                                                        <small class="text-center">(The displayed button is deactivated.)</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- on Card Navigation  Arrows -->
+                    <div class="d-flex justify-content-center m-5">
+                        <button class="btn btn-white text-dark justify-content-center prevtab" onclick="topFunction()" style="border-radius: 40px;" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                            </svg>
+                        </button>
+
+                        {{ if screenout }}
+                        <div class="d-flex justify-content-center">
+                            <a class="btn btn-outline-secondary me-4 ms-4" href="{{redirect}}" role="button" style="border-radius: 40px;">
+                                Exit study
+                            </a>
+                        </div>
+                        {{ else }}
+                        <button class="btn btn-white text-dark justify-content-center" style="border-radius: 40px;" disabled>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                        </button>
+                        {{ endif }}
+
+                        <button class="btn btn-white text-dark justify-content-center nexttab" onclick="topFunction()" style="border-radius: 40px;" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Part 5: Verständnisfragen -->
+            <div class="tab-pane" id="part5" role="tabpanel" aria-labelledby="part5-tab">
+                <div class="card-header bg-white border-bottom-0 shadow-sm mt-3 sticky-top">
+                    <p class="h4">Verständnisfragen</p>
+                </div>
+
+                <div class="card-body">
+                    <p>
+                        Please review the exemplary trade off below and answer the questions. As soon as you answered them
+                        correctly, you can proceed with the study.
+                    </p>
+
+                    <div class="container clearfix displaystyle-leftborder displaystyle-my-warning w-100 bg-light">
+                        <div class="row justify-content-center">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-sm-12 col-md-12 col-lg-10">
+                                        <div class="card mt-5 shadow-lg">
+                                            <div class="card-header bg-white shadow-sm mt-1">
+                                                <p>
+                                                    What is the minimum number of green balls required such that you prefer the lottery?
+                                                </p>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm">
+                                                            <h4>Wette</h4>
+                                                            <p class="card-text mb-3 lead">
+                                                                <small>Sie gewinnen 10 Euro entsprechend der unten dargestellten Grafik (und sonst nichts).</small>
+                                                            </p>
+                                                        </div>
+
+                                                        <div class="col-sm bg-light rounded-top">
+                                                            <h4>Lotterie</h4>
+                                                            <p class="card-text mb-3 lead">
+                                                                <small>Sie gewinnen 10 Euro, wenn eine grüne Kugel gezogen wird (und sonst nichts).</small>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-sm">
+                                                            <small mb-4>
+                                                                Die Wette bezieht sich auf dieselbe Wettersituation und Tageszeit (9 Tage später),
+                                                                die Ihnen eben vorgestellt wurde. Bei Bedarf können Sie sich diese
+                                                                <a >hier</a> nochmals anschauen. <br><br>
+                                                            </small>
+                                                        </div>
+
+                                                        <div class="col-sm bg-light">
+                                                            <small>
+                                                                In dem Lostopf befinden sich insgesamt 100 Kugeln, die entweder grün oder rot sind. Den Anteil der
+                                                                grünen Kugeln bestimmen Sie in dieser Entscheidungssituation.
+                                                            </small>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-sm">
+                                                            <figure class="highcharts-figure">
+                                                                <div class="event_bar"></div>
+                                                            </figure>
+                                                        </div>
+
+                                                        <div class="col-sm bg-light">
+                                                            <figure class="highcharts-figure">
+                                                                <div id="lottery_demo"></div>
+                                                                <p class="highcharts-description">
+                                                                </p>
+                                                        </figure>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-sm">
+                                                        </div>
+                                                        <div class="col-sm bg-light rounded-bottom">
+                                                            <div class="row justify-content-center">
+                                                                <small class="form-text mt-4 pl-3 pr-3 mb-4">
+                                                                    Wie viele grüne Kugeln müssen sich <u>mindestens</u> in dem Lostopf befinden, damit Sie die
+                                                                    Lotterie gerade so bevorzugen?
+                                                                </small>
+                                                            </div>
+                                                            <div class="form-floating mb-3">
+                                                                <input type="number" class="form-control mb-1 shadow-sm bg-white" id="demo_matching_probability" name="matching_probability" value="50" min="0" max="101" disabled>
+                                                                <label for="demo_matching_probability">grüne Kugeln im Lostopf</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="container justify-content-center w-75">
+
+                                                    <div class="row m-3 justify-content-center">
+                                                        <div class="form-check justify-content-center mt-3">
+                                                            <input type="checkbox" class="form-check-input"checked>
+                                                            <label class="form-check-label" for="submitCheck">
+                                                                <small>Bei 49 oder weniger grünen Kugeln würde ich mich für die Wette entscheiden.</small>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row justify-content-center m-3">
+                                                        <button class="btn btn-outline-primary justify-content-center w-25 shadow" type="button" style="border-radius: 40px;">
+                                                            Absenden
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br><br>
+                    <p class="card-text mb-0 lead">
+                        Beispiel 1
+                    </p>
+                    <p>
+                        Stellen Sie sich vor, dass am Ende der Umfrage die obige Aufgabe für ihre Auszahlung relevant ist
+                        und dass sich 40 grüne Kugeln in der zufällig erstellten Lotterie befinden. Die Abbildung zeigt,
+                        dass bei 40 grünen Kugeln die Wette bevorzugt wird.
+                    </p>
+                    <p>
+                        Sie würden also 10 Euro gewinnen, wenn die Temperatur zwischen einschließlich 8 Grad Celsius und
+                        einschließlich 14 Grad Celsius beträgt.
+                    </p>
+                    <p>
+                        Nehmen wir an, dass sich am Ende des Experiments herausstellt, dass die Temperatur 15 Grad
+                        Celsius betrug.
+                    </p>
+                    {% formfield player.CQ_1 label="Wie viel würden Sie dann in dieser Situation gewinnen? Bitte wählen Sie eine Antwort aus." %}
+                    <hr class="my-5"/>
+
+                    <p class="card-text mb-0 lead">
+                        Beispiel 2
+                    </p>
+                    <p>
+                        Stellen Sie sich nun vor, dass am Ende der Umfrage die obige Aufgabe für ihre Auszahlung relevant
+                        ist und dass sich 60 grüne Kugeln in der zufällig erstellten Lotterie befinden.
+                    </p>
+                    <p>
+                        Die Abbildung zeigt, dass bei 60 grünen Kugeln die Lotterie bevorzugt wird.
+                    </p>
+                    <p>
+                        Sie würden also 10 Euro gewinnen, wenn eine grüne Kugel aus der zufällig erstellten Lotterie
+                        gezogen wird.
+                    </p>
+
+                    <p>
+                        Nehmen wir an, dass eine rote Kugel gezogen wird.
+                    </p>
+                    {% formfield player.CQ_2 label="Wie viel würden Sie dann in dieser Situation gewinnen? Bitte wählen Sie eine Antwort aus." %}
+
+
+
+
+                    <!-- on Card Navigation  Arrows -->
+                    <div class="d-flex justify-content-center m-5">
+                        <button class="btn btn-white text-dark justify-content-center prevtab" onclick="topFunction()" style="border-radius: 40px;" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                            </svg>
+                        </button>
+                        
+                        {{ if screenout }}
+                        <div class="d-flex justify-content-center">
+                            <a class="btn btn-outline-secondary me-4 ms-4" href="{{redirect}}" role="button" style="border-radius: 40px;">
+                                Studie abbrechen
+                            </a>
+                        </div>
+                        {{ else }}
+                        <button class="btn btn-white text-dark justify-content-center" style="border-radius: 40px;" disabled>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                        </button>
+                        {{ endif }}
+
+                        <button class="btn btn-white text-primary justify-content-center" style="border-radius: 40px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
+                                <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quit Offcanvas -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasQuit" aria-labelledby="offcanvasQuitLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasQuitLabel">Studie abbrechen</h5>
+        </div>
+        <div class="offcanvas-body">
+            <div>
+                Wenn Sie die Studie frühzeitig abbrechen möchten, klicken Sie einfach auf den folgenden button.
+                <br><br>
+                Wenn Sie fortfahren möchten, klicken Sie einfach rechts neben dieses Textfeld.
+            </div>
+            <div class="d-flex justify-content-center">
+                <a class="btn btn-outline-danger m-5" href="{{redirect}}" role="button" style="border-radius: 40px;">
+                    Studie abbrechen
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+{{ endblock }}

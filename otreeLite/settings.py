@@ -5,8 +5,15 @@ SESSION_CONFIGS = [
         name="Baillon",
         display_name="Baillon",
         num_demo_participants=1,
-
         app_sequence=["Intro", "Baillon", "Outro"],
+        location="random",
+        treatment="random",
+    ),
+    dict(
+        name="English_Baillon",
+        display_name="Baillon",
+        num_demo_participants=1,
+        app_sequence=["EN1_Intro", "EN2_Baillon", "EN3_Outro"],
         location="random",
         treatment="random",
     ),
@@ -53,7 +60,7 @@ SESSION_FIELDS = []
 
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans
-LANGUAGE_CODE = "de"
+LANGUAGE_CODE = "en"
 
 # e.g. EUR, GBP, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = "EUR"
