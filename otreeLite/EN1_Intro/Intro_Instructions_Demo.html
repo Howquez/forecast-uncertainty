@@ -1,0 +1,168 @@
+<div class="tab-pane" id="part4" role="tabpanel" aria-labelledby="part4-tab">
+    <div class="card-header bg-white border-bottom-0 shadow-sm mt-3 sticky-top">
+        <p class="h4">Demo</p>
+    </div>
+    <div class="card-body">
+        <p>
+            The trade-offs will look as follows. The left column displays the bet. The right column displays
+            the lottery, which you can configure with the text field, where you enter the amount of green
+            balls you need at least to prefer the lottry.
+        </p>
+        <p>
+            Consider the displayed trade-off carefully and feel free to enter different values. Notice how
+            the visualizations change on input.
+        </p>
+
+        <div class="container clearfix w-100 bg-light">
+            <div class="row justify-content-center">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-sm-12 col-md-12 col-lg-10">
+
+                            <div class="card mt-5 shadow-lg">
+                                <div class="card-header bg-white shadow-sm mt-1">
+                                    <p>
+                                        What is the minimum number of green balls required such that you prefer the lottery?
+                                    </p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <h4>Bet</h4>
+                                                <p class="card-text mb-3 lead" id="subHeader">
+                                                    <small>You will earn 10 Euro according to the visualization below (or nothing).</small>
+                                                </p>
+                                            </div>
+
+                                            <div class="col-sm bg-light rounded-top">
+                                                <h4>Lottery</h4>
+                                                <p class="card-text mb-3 lead">
+                                                    <small>You will earn 10 Euro if the drawn ball is green (or nothing).</small>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <small mb-4>
+                                                    The bet refers to the same location and day time but 9 days later.
+                                                    You can check the corresponding information, if needed, <a>here</a>. <br><br><br>
+                                                </small>
+                                            </div>
+
+                                            <div class="col-sm bg-light">
+                                                <small>
+                                                    The urn contains 100 balls in total. Some of them are green, the other are red.
+                                                    You decide on the required composition.
+                                                </small>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <figure class="highcharts-figure">
+                                                    <div class="event_bar"></div>
+                                                </figure>
+                                            </div>
+
+                                            <div class="col-sm bg-light">
+                                                <figure class="highcharts-figure">
+                                                    <div class="pieChart"></div>
+                                                    <p class="highcharts-description">
+                                                    </p>
+                                                </figure>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm">
+                                            </div>
+                                            <div class="col-sm bg-light rounded-bottom">
+                                                <div class="row justify-content-center">
+                                                    <small class="form-text mt-4 pl-3 pr-3 mb-4">
+                                                        What is the <u>minimum</u> number of green balls required such that you prefer the lottery?
+                                                    </small>
+                                                </div>
+                                                <div class="form-floating mb-3">
+                                                    <input type="number" class="form-control mb-1 shadow-sm bg-white" id="id_matching_probability" name="matching_probability" min="0" max="101">
+                                                    <label for="id_matching_probability">green balls in the urn</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="collapseSubmit" class="collapse justify-content-center" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+                                        <div class="row justify-content-center mt-4 mb-2">
+                                            <div class="form-check justify-content-center w-75">
+                                                <input type="checkbox" class="form-check-input" id="submitCheck">
+                                                <label class="form-check-label" for="submitCheck" id="submitCheckLabel">
+                                                    <small>Yes, I prefer the lottery.</small>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row justify-content-center mb-3">
+                                            <button class="btn btn-outline-primary justify-content-center w-25 shadow" type="button" id="submitButton" style="border-radius: 40px;" disabled>
+                                                Submit
+                                            </button>
+                                        </div>
+                                        <div class="row mb-3 text-secondary">
+                                            <small class="text-center">(The displayed button is deactivated.)</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- on Card Navigation  Arrows -->
+        <div class="d-flex justify-content-center m-5">
+            <button class="btn btn-white text-dark justify-content-center prevtab" onclick="topFunction()" style="border-radius: 40px;" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                </svg>
+            </button>
+
+            {{ if screenout }}
+            <div class="d-flex justify-content-center">
+                <a class="btn btn-outline-secondary me-4 ms-4" href="{{redirect}}" role="button" style="border-radius: 40px;">
+                    Exit study
+                </a>
+            </div>
+            {{ else }}
+            <button class="btn btn-white text-dark justify-content-center" style="border-radius: 40px;" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+            </button>
+            {{ endif }}
+
+            <button class="btn btn-white text-dark justify-content-center nexttab" onclick="topFunction()" style="border-radius: 40px;" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+<div class="tab-pane" id="part2" role="tabpanel" aria-labelledby="part2-tab">
+    <div class="card-header bg-white shadow-sm mt-3 sticky-top">
+        <p class="h4">Earnings</p>
+    </div>
+    <div class="card-body">
+        <p class="card-text mb-0 lead">
+            Basics
+        </p>
+        <p>
+            At the end of this study one of your trade-offs is drawn randomly to determine whether you will
+            win {{ Constants.bonus }} € or not. For that reason, each of the trade-offs can turn out to be
+            relevant for your payment.
+        </p>
+        <p>
+            While you are reading these instructions, a computer program prepares a virtual lottery involving
+            an urn with 100 red or green balls. The corresponding color composition is random: the urn may
+            contain 5 green and 95 red balls, 72 green and 18 red balls or even 0 green and 100 red balls.
+            Each composition that adds up to 100 balls is possible and qually likely.
+        </p>
+
+        <p class="card-text mb-0 lead">
+            Bet
+        </p>
+        <p>
+            If this particular urn contains less green balls than you require in the trade-off that is
+            relevant for your earnings, the outcome of the bet will decide whether you will win the bonus
+            payment. In this case, you will win {{ Constants.bonus }} €, if the actual temperature falls
+            into the interval you were betting on. If not, you will not win the bonus.
+        </p>
+
+        <p class="card-text mb-0 lead">
+            Lottery
+        </p>
+        <p>
+            In case the urn contains at least as many green balls as you require in the trade-off that is
+            relevant for your earnings, the outcome of the lottery will decide whether you will win the bonus
+            payment. In that case, you will win {{ Constants.bonus }} €, if a green ball is drawn.
+        </p>
+
+
+
+
+
+        <!-- on Card Navigation  Arrows -->
+        <div class="d-flex justify-content-center m-5">
+            <button class="btn btn-white text-dark justify-content-center prevtab" onclick="topFunction()" style="border-radius: 40px;" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                </svg>
+            </button>
+
+            {{ if screenout }}
+            <div class="d-flex justify-content-center">
+                <a class="btn btn-outline-secondary me-4 ms-4" href="{{redirect}}" role="button" style="border-radius: 40px;">
+                    Exit study
+                </a>
+            </div>
+            {{ else }}
+            <button class="btn btn-white text-dark justify-content-center" style="border-radius: 40px;" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+            </button>
+            {{ endif }}
+
+            <button class="btn btn-white text-dark justify-content-center nexttab" onclick="topFunction()" style="border-radius: 40px;" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>

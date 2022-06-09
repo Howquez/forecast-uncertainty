@@ -2,8 +2,8 @@ from os import environ
 
 SESSION_CONFIGS = [
     dict(
-        name="Baillon",
-        display_name="Baillon",
+        name="German_Baillon",
+        display_name="DE_Baillon",
         num_demo_participants=1,
         app_sequence=["Intro", "Baillon", "Outro"],
         location="random",
@@ -11,7 +11,7 @@ SESSION_CONFIGS = [
     ),
     dict(
         name="English_Baillon",
-        display_name="Baillon",
+        display_name="EN_Baillon",
         num_demo_participants=1,
         app_sequence=["EN1_Intro", "EN2_Baillon", "EN3_Outro"],
         location="random",
@@ -72,5 +72,5 @@ ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
 
 DEMO_PAGE_INTRO_HTML = """ """
 
-SECRET_KEY = environ.get('OTREE_SECRET_KEY')
-# SECRET_KEY = '6414986324531'
+# SECRET_KEY = environ.get('OTREE_SECRET_KEY')
+SECRET_KEY = '6414986324531'

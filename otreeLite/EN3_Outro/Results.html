@@ -19,21 +19,21 @@
 
 <div class="card mt-5 shadow-lg">
     <div class="card-body">
-        <h1 class="display-4 mb-4"><small class="text-muted">Sie bekommen</small> {{participant.payoff_plus_participation_fee}}<small class="text-muted"> ausgezahlt.</small></h1>
+        <h1 class="display-4 mb-4"><small class="text-muted">You receive</small> {{participant.payoff_plus_participation_fee}}</h1>
         <hr class="my-4">
         <p class="lead">
-            Wenn Sie alle Informationen gelesen haben, klicken Sie bitte auf den folgenden Button. Dies ist zwingend
-            notwendig, weil Ihr Ergebnis durch den Klick an Respondi übermittelt wird. So wird sichergestellt, dass
-            Sie Ihre Auszahlung erhalten können.
+            When you have read all the information, please click on the button below. This is essential, because your
+            result will be sent to Respondi by clicking on the button. This will ensure that
+            you can receive your payout.
         </p>
         <div class="d-flex justify-content-center my-5">
             <a class="btn btn-success btn-lg shadow-lg" href="{{redirect}}" role="button" style="border-radius: 40px;">
-                Zur Zahlungsabwicklung
+                To the payment processing
             </a>
         </div>
         <small>
-            Unten erklären wir Ihnen, wie Ihre Auszahlung zustande kommt &mdash; also welche Entscheidungssituation für
-            Ihre Auszahlung relevant ist und wie Sie sich dort entschieden haben.
+            Below we explain how your payout comes about &mdash; i.e. which decision situation is relevant for your
+            payout and how you decided there.
         </small>
     </div>
 
@@ -42,7 +42,7 @@
             <p class="lead mb-1">
                 <a data-bs-toggle="collapse" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
                     <small>
-                        Details anzeigen
+                        Show Details
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                         </svg>
@@ -54,19 +54,18 @@
         <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
             <div class="card-footer bg-white">
                 <p>
-                    Es wurde zufällig bestimmt, dass Ihre Abwägung aus
-                    <strong>Runde {{ participant.vars.round_to_pay }}</strong>
-                    Ihre Auszahlung bestimmt.
+                    It was randomly determined that your tradeoff from
+                    <strong>round {{ participant.vars.round_to_pay }}</strong>
+                    determines your payout.
 
                 <p>
-                    In der ausgewählten Runde hatten Sie die Wahl zwischen einer Lotterie und einer
-                    Wette. Die Wette sah dabei wie folgt aus:
+                    In the selected round you had the choice between a lottery and a bet. The bet looked like this:
                 </p>
 
                 <div class="container clearfix border-left border-primary w-75 mb-3 bg-light">
                     <br>
                     <p id="subHeader">
-                        <em>Sie gewinnen 10 Euro entsprechend der unten dargestellten Grafik (und sonst nichts).</em>
+                        <em>You win 10 euros according to the graphic shown below (and nothing otherwise).</em>
                     </p>
 
                     <figure class="highcharts-figure">
@@ -75,38 +74,35 @@
                 </div>
 
                 <p>
-                    Sie haben angegeben, dass Sie eine Lotterie erst dann besser als die Wette finden, wenn sich
-                    mindestens {{ participant.vars.pivotal_matching_probability }} grüne Kugeln in dem Lostopf befinden.
-                    Der Lostopf, der im Hintergrund vorbereitet wurde, enthält {{ participant.vars.pivotal_lottery }} grüne Kugeln.
+                    You have indicated that you think a lottery is better than the bet only when there are at least
+                    {{ participant.vars.pivotal_matching_probability }} green balls in the lottery pot.
+                    The lottery pot prepared in the background contains {{ participant.vars.pivotal_lottery }} green balls.
                 </p>
 
                 <p>
                     <strong>
-                        Deshalb wurde Ihre Auszahlung in dieser Runde durch die {{ participant.vars.mechanism }}
-                        bestimmt.
+                        Therefore, your payout in this round was determined by the {{ participant.vars.mechanism }}.
                     </strong>
                 </p>
 
                 {% if participant.vars.mechanism == "Wette" %}
                 {% if participant.vars.bet_success %}
                 <p>
-                    Weil die Temperatur entsprechend Ihrer Wette eingetreten ist, haben Sie gewonnen.
+                    Because the temperature has occurred according to your bet, you have won.
                 </p>
                 {% else %}
                 <p>
-                    Weil die Temperatur nicht entsprechend Ihrer Wette eingetreten ist, haben Sie leider nicht
-                    gewonnen.
+                    Because the temperature did not occur according to your bet, you unfortunately did not won.
                 </p>
                 {% endif %}
                 {% else %}
                 {% if participant.vars.lottery_success %}
                 <p>
-                    Weil zufällig eine grüne Kugel gezogen wurde, haben Sie gewonnen.
+                    Because a green ball was drawn at random, you won.
                 </p>
                 {% else %}
                 <p>
-                    Weil zufällig eine rote Kugel gezogen wurde, haben Sie leider nicht
-                    gewonnen.
+                    Because a red ball was drawn by chance, you unfortunately did not won.
                 </p>
                 {% endif %}
                 {% endif %}
@@ -119,35 +115,34 @@
 <div class="card mt-5 shadow-lg">
         <div class="card-body">
             <h5 class="card-title display-4">{{ participant.vars.location }} Oktober 2020</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Am <b>Sonntag</b>, dem 18. Oktober um 14:00 Uhr wurden hier
-                <b><span id="revelation"></span>°C</b> gemessen.
+            <h6 class="card-subtitle mb-2 text-muted">On <b>Sunday</b>, October 18 at 2 pm,
+                <b><span id="revelation"></span>°C</b> were measured.
             </h6>
             <br>
             <figure class="highcharts-figure">
                 <div id="weather_viz"></div>
             </figure>
             <p class="card-text">
-                <small>Der Wetterbericht, den wir Ihnen gezeigt haben und auf dem Ihre Entscheidungen sowie
-                Ihre möglichen Auszahlungen basieren, bezieht sich auf das Wetter in {{ participant.vars.location }}
+                <small>The weather report that we have shown you and on which your decisions as well as your possible payouts are based, refers to the weather in {{ participant.vars.location }}
                 {% if participant.vars.location == "Ilomantsi" %}
-                        (Finnland)
+                        (Finland)
                 {% else %}
-                        (Saarland)
+                        (Germany)
                     {% endif %}
-                im Oktober 2020.
-                Die Messdaten, die dieser Studie zugrunde liegen und für Ihre Auszahlung relevant sind, finden Sie
+                in October 2020.
+                The measurement data on which this study is based and which is relevant for your payout can be found
                 {% if participant.vars.location == "Ilomantsi" %}
-                    <a href="https://kachelmannwetter.com/de/messwerte/ostfinnland/temperatur/20201019-1100z.html#obs-detail-029390-72h" target="_blank">hier</a> und
-                    <a href="https://kachelmannwetter.com/de/messwerte/ostfinnland/temperatur/20201009-1100z.html#obs-detail-029390-72h" target="_blank">hier</a>.
+                    <a href="https://kachelmannwetter.com/de/messwerte/ostfinnland/temperatur/20201019-1100z.html#obs-detail-029390-72h" target="_blank">here</a> and
+                    <a href="https://kachelmannwetter.com/de/messwerte/ostfinnland/temperatur/20201009-1100z.html#obs-detail-029390-72h" target="_blank">here</a>.
                 {% else %}
-                    <a href="https://kachelmannwetter.com/de/messwerte/63-e-491-n/temperatur/20201009-1100z.html#obs-detail-J728-72h" target="_blank">hier</a> und
-                    <a href="https://kachelmannwetter.com/de/messwerte/63-e-491-n/temperatur/20201019-1100z.html#obs-detail-J728-72h" target="_blank">hier</a>.
+                    <a href="https://kachelmannwetter.com/de/messwerte/63-e-491-n/temperatur/20201009-1100z.html#obs-detail-J728-72h" target="_blank">here</a> and
+                    <a href="https://kachelmannwetter.com/de/messwerte/63-e-491-n/temperatur/20201019-1100z.html#obs-detail-J728-72h" target="_blank">here</a>.
                 {% endif %}
-                Die Wettervorhersage, die wir Ihnen ab der zweiten Runde dargestellt haben, stammen ebenfalls von
-                Kachelmannwetter und wurden mithilfe des Global Euro HD (ECMMF) Ensembles berechnet. Wir haben die Daten
-                am 09.10.2020 um {% if participant.vars.location == "Ilomantsi" %}15:59{%else%}14:29{%endif%} Uhr (MEZ)
-                abgerufen, wie Sie <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                diesem Screenshot</a> entnehmen können.
+                The weather forecast we have presented to you from the second round onwards also comes from
+                    Kachelmannwetter and was calculated using the Global Euro HD (ECMMF) ensemble. We have retrieved the
+                    data on 09.10.2020 at {% if participant.vars.location == "Ilomantsi" %}15:59{%else%}14:29{%endif%} o'clock (CET)
+                as you can see <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                in this screenshot</a>.
                 </small>
             </p>
         </div>

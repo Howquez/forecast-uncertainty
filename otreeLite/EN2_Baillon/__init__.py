@@ -9,7 +9,7 @@ Your app description
 
 
 class Constants(BaseConstants):
-    name_in_url = "Baillon"
+    name_in_url = "EN_Baillon"
 
     locations = ["Weiskirchen", "Ilomantsi"]  # ["confirmation", "contradiction"]
     treatments = ["best_guess", "interval", "both"]
@@ -21,12 +21,18 @@ class Constants(BaseConstants):
 
     null_payoff = 0
     prize_payoff = 10
+    bonus = 10
 
     currency = "EUR"
 
     ticks = [0, 8,
              14, 22]  # min and max value is only needed for plotting options, the second and third values are important
     events = ["E1", "E2", "E3", "E12", "E23", "E13"]
+
+    # templates
+    GENERAL_TEMPLATE = "EN1_Intro/Intro_Instructions_General.html"
+    EARNINGS_TEMPLATE = "EN1_Intro/Intro_Instructions_Earnings.html"
+    WEATHER_TEMPLATE = "EN1_Intro/Intro_Instructions_Weather.html"
 
 
 class Subsession(BaseSubsession):
@@ -164,6 +170,7 @@ class Baillon_Decision(Page):
             tic = "tic_is_missing"
 
         return {
+            "screenout": False,
             "treatment_displayed": treatment_displayed,
             "redirect": "https://mingle.respondi.com/s/1523917/ospe.php3?c_0002=0&return_tic="+tic
         }
@@ -171,14 +178,5 @@ class Baillon_Decision(Page):
     @staticmethod
     def before_next_page(player, timeout_happened):
         set_payoffs(player)
-
-
-class ResultsWaitPage(WaitPage):
-    pass
-
-
-class Results(Page):
-    pass
-
 
 page_sequence = [Baillon_Decision]

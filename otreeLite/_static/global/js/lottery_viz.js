@@ -3,7 +3,6 @@ console.log("pie chart & live updates ready!")
 
 // vars from oTree
 let compound = js_vars.compound;
-let template = js_vars.template;
 
 
 // initiate variables
@@ -20,11 +19,11 @@ document.getElementById("id_matching_probability").addEventListener('input', () 
     red = 100 - green;
 
     if(green<=0){
-        document.getElementById("submitCheckLabel").innerHTML = `<small>Ich würde mich nie für die Wette entscheiden.</small>`;
+        document.getElementById("submitCheckLabel").innerHTML = `<small>I would never choose the bet.</small>`;
     } else if (green > 100) {
-        document.getElementById("submitCheckLabel").innerHTML = `<small>Ich würde mich immer für die Wette entscheiden.</small>`;
+        document.getElementById("submitCheckLabel").innerHTML = `<small>I would always choose the bet.</small>`;
     } else {
-        document.getElementById("submitCheckLabel").innerHTML = `<small>Bei ${green - 1} oder weniger grünen Kugeln würde ich mich für die Wette entscheiden.</small>`;
+        document.getElementById("submitCheckLabel").innerHTML = `<small>For ${green - 1} or less green balls, I would choose the bet.</small>`;
     }
 
     if(template!="instructions"){
@@ -70,9 +69,9 @@ $(function () {
               tooltip: {
                 formatter: function() {
                   if (this.point.color == successColor) {
-                    return "Sie gewinnen 10 Euro.";
+                    return "You win 10 euros.";
                   } else {
-                    return "Sie gewinnen nichts."
+                    return "You win nothing."
                   }
                 }
               },
@@ -96,17 +95,17 @@ $(function () {
                 }
               },
               series: [{
-                name: "Kugeln",
+                name: "balls",
                 colorByPoint: true,
                 data: [{
-                    name: "rot",
+                    name: "red",
                     y: red,
                     sliced: true,
                     selected: true,
                     color: lossColor
                   },
                   {
-                    name: "grün",
+                    name: "green",
                     y: green,
                     sliced: true,
                     selected: true,

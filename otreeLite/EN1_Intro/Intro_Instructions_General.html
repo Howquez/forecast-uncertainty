@@ -1,0 +1,115 @@
+<div class="tab-pane show active" id="part1" role="tabpanel" aria-labelledby="part1-tab">
+                <div class="card-header bg-white border-bottom-0 shadow-sm mt-3 sticky-top">
+                    <p class="h4">General</p>
+                </div>
+                <div class="card-body">
+
+                    <p class="card-text mb-0 lead">
+                        Procedure
+                    </p>
+                    <p>
+                        You can win a bonus payment of {{ Constants.bonus }} € in this study. To qualify for that bonus,
+                        you will have to make 6 trade-offs twice. Subsequently, we will ask you some questions about
+                        yourself. Finally, we will show you how much money you earned in this study.
+                    </p>
+                    <p>
+                        The whole study will take about 25 minutes of your time. Reading the instructions accounts for
+                        approximately 10 minutes while the participation in the study, that is, the trade-offs as well
+                        as the questionnaire take about 15 minutes.
+                    </p>
+                    <p>
+                        Each trade-off consists of two options: a bet on the weather as well as a lottery.
+                        To better assess the weather situation, you will receive information about previously measured
+                        temperatures. For the time being, you will not know anything about the location or the time the
+                        weather information refers to. After making the first 6 trade-offs, you will receive additional
+                        information. More precisely, you will be exposed to a weather forecast that you can then use to
+                        make the same 6 trade-offs once more.
+                    </p>
+
+                    <p class="card-text mb-0 lead">
+                        Bet
+                    </p>
+                    <p>
+                        We will ask you to bet on certain temperatures. You may bet that the temperature will be at
+                        least 17°C on a certain day at 14:00 (CET). If the temperature turns out to be 17°C or higher,
+                        you can earn {{ Constants.bonus }} €.
+                    </p>
+                    <p>
+                        The bet corresponds to the same time and location in each of the trade-offs. The only difference
+                        between the trade-offs is the temperature interval you can bet on. As a consequence, one
+                        trade-off may consider a temperature of 17°C or more, while another trade-off involves a bet on
+                        the temperature being 8°C or less. For this reason, we advice you to carefully examine the
+                        bets' temperature intervals that can earn you the bonus.
+                    </p>
+
+                    <p class="card-text mb-0 lead">
+                        Lottery
+                    </p>
+                    <p>
+                        To better understand the lottery you can imagine an urn containing 100 colored balls. Some of
+                        the balls are colored green, the others are red. Drawing a ball randomly and blindly, you can
+                        earn {{ Constants.bonus }} € if the ball turns out to be green and nothing if the ball is red.
+                    </p>
+
+                    <p class="card-text mb-0 lead">
+                        Trade-off
+                    </p>
+                    <p>
+                        Yo have to decide unter which conditions you prefer the lottery over the bet. We'll therefore
+                        ask you how many of the abovementioned 100 balls have to be green such that you prefer the
+                        lottery.
+                    </p>
+
+
+                    <!-- on Card Navigation  Arrows -->
+                    <div class="d-flex justify-content-center m-5">
+                        <button class="btn btn-white text-dark justify-content-center prevtab" style="border-radius: 40px;" disabled>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                            </svg>
+                        </button>
+
+                        {{ if screenout }}
+                        <div class="d-flex justify-content-center">
+                            <a class="btn btn-outline-secondary me-4 ms-4" href="{{redirect}}" role="button" style="border-radius: 40px;">
+                                Exit study
+                            </a>
+                        </div>
+                        {{ else }}
+                        <button class="btn btn-white text-dark justify-content-center" style="border-radius: 40px;" disabled>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            </svg>
+                        </button>
+                        {{ endif }}
+
+                        <button class="btn btn-white text-dark justify-content-center nexttab" onclick="topFunction()" style="border-radius: 40px;" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-footer bg-light text-secondary">
+                    <p><sup>1</sup>
+                        Mentioning the time zone (CET) does not necessarily imply that the location the bet is referring
+                        to is in a location with the central European time zone.
+                    </p>
+                </div>
+            </div>
+
+

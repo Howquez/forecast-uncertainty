@@ -17,9 +17,9 @@ var chart = Highcharts.chart("lottery_demo", {
             tooltip: {
             formatter: function() {
               if (this.point.color == successColor) {
-                return "Sie gewinnen 10 Euro.";
+                return "You win 10 euros.";
               } else {
-                return "Sie gewinnen nichts."
+                return "You win nothing."
               }
             }
             },
@@ -43,17 +43,17 @@ var chart = Highcharts.chart("lottery_demo", {
             }
             },
             series: [{
-            name: "Kugeln",
+            name: "balls",
             colorByPoint: true,
             data: [{
-                name: "rot",
+                name: "red",
                 y: 50,
                 sliced: true,
                 selected: true,
                 color: lossColor
               },
               {
-                name: "grün",
+                name: "green",
                 y: 50,
                 sliced: true,
                 selected: true,

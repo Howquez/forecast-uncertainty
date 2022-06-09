@@ -1,0 +1,124 @@
+<div class="tab-pane" id="part3" role="tabpanel" aria-labelledby="part3-tab">
+    <div class="card-header bg-white border-bottom-0 shadow-sm mt-3 sticky-top">
+        <p class="h4">Wetter</p>
+    </div>
+    <div class="card-body">
+        <p class="card-text mb-0 lead">
+            Basics
+        </p>
+        <p>
+            The weather this study is referring to lies in the past, which is why you will be exposed to
+            historic weather data and forecasts.
+            This allows us to calculate your earnings immediately in case it is determined by the bet.
+            Note that all the displayed weather information are real. At the beginning of your participation,
+            a computer program randomly chose a location, a time and the kind of information you will
+            receive. This may be any location in the world at any time. You will learn to which time and
+            location the weather data is referring to but not until finishing the trade-offs. This way, we
+            can be certain, that you can only utilize the information we provided. If your earnings are
+            determined by the bet eventually, we can immediately check whether your bet was correct and
+            inform you about the outcome.
+        </p>
+
+        <p class="card-text mb-0 lead">
+            Description
+        </p>
+        <p>
+            The visualization illustrates the aforementioned weather data. You see temperatures of three
+            consecutive days - eacht at 14:00 CET. Your trade-off corresponds to a bet on the temperature
+            9 days later at the same daytime (the purple shaded area). <br><br>
+            <strong>
+                From the seventh round we will additionally show you the mentioned weather forecast.
+            </strong>
+            The forecast will be displayed in that purple shaded area. In addition, we will display a text
+            explaining the forecast.
+        </p>
+
+        <div class="container clearfix border-left border-primary w-75 bg-light" my-4>
+            <br>
+            <div class="alert alert-success" role="alert">
+                <p class="text-center">
+                    <em>This is the place the weather forecast will be displayed from round seven on.</em>
+                </p>
+            </div>
+
+            <figure class="highcharts-figure">
+                <div id="weather_viz"></div>
+            </figure>
+        </div>
+
+        <p class="card-text mb-0 lead">
+            Proof of authenticity
+        </p>
+        <p>
+            All the information displayed are real an measured (or forecasted) by experts. We ceil the data
+            such that you do not have to think about decimal places. At the end of the study, we will
+            display the sources the information stem from.
+        </p>
+
+        <p class="card-text mb-0 lead">
+            Usability
+        </p>
+        <p>
+            Be aware that you can retrieve both these instructions as well as the visualization at any time.
+            To recall the visualization, you just have to click on the
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-thermometer-half" viewBox="0 0 16 16">
+                <path d="M9.5 12.5a1.5 1.5 0 1 1-2-1.415V6.5a.5.5 0 0 1 1 0v4.585a1.5 1.5 0 0 1 1 1.415z"/>
+                <path d="M5.5 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0V2.5zM8 1a1.5 1.5 0 0 0-1.5 1.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0l-.166-.15V2.5A1.5 1.5 0 0 0 8 1z"/>
+            </svg>-symbol in the top right. To recall the instruction, you have to click on the
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+            </svg>-symbol next to it..
+        </p>
+
+
+        <!-- on Card Navigation  Arrows -->
+        <div class="d-flex justify-content-center m-5 align-middle">
+            <button class="btn btn-white text-dark justify-content-center prevtab" onclick="topFunction()" style="border-radius: 40px;" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                </svg>
+            </button>
+
+            {{ if screenout }}
+            <div class="d-flex justify-content-center">
+                <a class="btn btn-outline-secondary me-4 ms-4" href="{{redirect}}" role="button" style="border-radius: 40px;">
+                    Exit study
+                </a>
+            </div>
+            {{ else }}
+            <button class="btn btn-white text-dark justify-content-center" style="border-radius: 40px;" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+            </button>
+            {{ endif }}
+
+            <button class="btn btn-white text-dark justify-content-center nexttab" onclick="topFunction()" style="border-radius: 40px;" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
+                </svg>
+            </button>
+        </div>
+
+    </div>
+    <div class="card-footer bg-light text-secondary">
+        <p><sup>1</sup>
+            Mentioning the time zone (CET) does not necessarily imply that the location the bet is referring
+            to is in a location with the central European time zone.
+        </p>
+    </div>
+</div>

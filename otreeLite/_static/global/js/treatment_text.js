@@ -39,8 +39,8 @@ if (village == "Ilomantsi"){
 
 
 // text operations
-var rangeText = `Sie halten es für sehr wahrscheinlich, dass die Temperatur um 14:00 Uhr zwischen ${range[1][1]}°C und ${range[1][2]}°C betragen wird.`
-var bestguessText = `Eine Temperatur von ${bestGuess[1][1]}°C halten sie für am wahrscheinlichsten.`;
+var rangeText = `They think it is very likely that the temperature at 14:00 will be between ${range[1][1]}°C and ${range[1][2]}°C.`
+var bestguessText = `They consider a temperature of ${bestGuess[1][1]}°C most likely.`;
 var forecastText = "&nbsp;";
 
 // treatment definitions

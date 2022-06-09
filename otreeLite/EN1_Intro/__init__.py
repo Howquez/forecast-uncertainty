@@ -7,7 +7,7 @@ Your app description
 
 
 class Constants(BaseConstants):
-    name_in_url = "Intro"
+    name_in_url = "EN_Intro"
     players_per_group = None
     num_rounds = 1
     bonus = 10  # same as Constants.prize_payoff in Uncertainty
@@ -16,6 +16,13 @@ class Constants(BaseConstants):
     treatments = ["best_guess", "interval", "both"]
     Weiskirchen_temp = 9
     Ilomantsi_temp = 3
+
+    # templates
+    GENERAL_TEMPLATE  = "EN1_Intro/Intro_Instructions_General.html"
+    EARNINGS_TEMPLATE = "EN1_Intro/Intro_Instructions_Earnings.html"
+    WEATHER_TEMPLATE  = "EN1_Intro/Intro_Instructions_Weather.html"
+    DEMO_TEMPLATE     = "EN1_Intro/Intro_Instructions_Demo.html"
+
 
 
 class Subsession(BaseSubsession):
@@ -95,7 +102,6 @@ class Intro_Welcome(Page):
 
 class Intro_Instructions(Page):
     form_model = "player"
-    form_fields = ["CQ_1", "CQ_2"]
 
     @staticmethod
     def js_vars(player):
@@ -108,21 +114,21 @@ class Intro_Instructions(Page):
 
         )
 
-    @staticmethod
-    def error_message(player, values):
-        if values['CQ_1'] != 0:
-            if values['CQ_2'] == 0:
-                player.wrong_answer_1 += 1
-                return 'Fehler in Frage 1. Versuchen Sie es noch einmal. Um mit der Studie fortfahren zu können, müssen Sie diese Frage richtig beantwortet haben.'
-        if values['CQ_2'] != 0:
-            if values['CQ_1'] == 0:
-                player.wrong_answer_2 += 1
-                return 'Fehler in Frage 2. Versuchen Sie es noch einmal. Um mit der Studie fortfahren zu können, müssen Sie diese Frage richtig beantwortet haben.'
-        if values['CQ_2'] != 0:
-            if values['CQ_1'] != 0:
-                player.wrong_answer_1 += 1
-                player.wrong_answer_2 += 1
-                return 'Fehler in Frage 1 und 2. Versuchen Sie es noch einmal. Um mit der Studie fortfahren zu können, müssen Sie diese beiden Fragen richtig beantwortet haben.'
+    # @staticmethod
+    # def error_message(player, values):
+    #     if values['CQ_1'] != 0:
+    #         if values['CQ_2'] == 0:
+    #             player.wrong_answer_1 += 1
+    #             return 'Fehler in Frage 1. Versuchen Sie es noch einmal. Um mit der Studie fortfahren zu können, müssen Sie diese Frage richtig beantwortet haben.'
+    #     if values['CQ_2'] != 0:
+    #         if values['CQ_1'] == 0:
+    #             player.wrong_answer_2 += 1
+    #             return 'Fehler in Frage 2. Versuchen Sie es noch einmal. Um mit der Studie fortfahren zu können, müssen Sie diese Frage richtig beantwortet haben.'
+    #     if values['CQ_2'] != 0:
+    #         if values['CQ_1'] != 0:
+    #             player.wrong_answer_1 += 1
+    #             player.wrong_answer_2 += 1
+    #             return 'Fehler in Frage 1 und 2. Versuchen Sie es noch einmal. Um mit der Studie fortfahren zu können, müssen Sie diese beiden Fragen richtig beantwortet haben.'
 
     @staticmethod
     def vars_for_template(player):

@@ -1,0 +1,201 @@
+<div class="tab-pane" id="part5" role="tabpanel" aria-labelledby="part5-tab">
+    <div class="card-header bg-white border-bottom-0 shadow-sm mt-3 sticky-top">
+        <p class="h4">Verständnisfragen</p>
+    </div>
+
+    <div class="card-body">
+        <p>
+            Please review the exemplary trade off below and answer the questions. As soon as you answered them
+            correctly, you can proceed with the study.
+        </p>
+
+        <div class="container clearfix displaystyle-leftborder displaystyle-my-warning w-100 bg-light">
+            <div class="row justify-content-center">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-sm-12 col-md-12 col-lg-10">
+                            <div class="card mt-5 shadow-lg">
+                                <div class="card-header bg-white shadow-sm mt-1">
+                                    <p>
+                                        What is the minimum number of green balls required such that you prefer the lottery?
+                                    </p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <h4>Wette</h4>
+                                                <p class="card-text mb-3 lead">
+                                                    <small>Sie gewinnen 10 Euro entsprechend der unten dargestellten Grafik (und sonst nichts).</small>
+                                                </p>
+                                            </div>
+
+                                            <div class="col-sm bg-light rounded-top">
+                                                <h4>Lotterie</h4>
+                                                <p class="card-text mb-3 lead">
+                                                    <small>Sie gewinnen 10 Euro, wenn eine grüne Kugel gezogen wird (und sonst nichts).</small>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <small mb-4>
+                                                    Die Wette bezieht sich auf dieselbe Wettersituation und Tageszeit (9 Tage später),
+                                                    die Ihnen eben vorgestellt wurde. Bei Bedarf können Sie sich diese
+                                                    <a >hier</a> nochmals anschauen. <br><br>
+                                                </small>
+                                            </div>
+
+                                            <div class="col-sm bg-light">
+                                                <small>
+                                                    In dem Lostopf befinden sich insgesamt 100 Kugeln, die entweder grün oder rot sind. Den Anteil der
+                                                    grünen Kugeln bestimmen Sie in dieser Entscheidungssituation.
+                                                </small>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <figure class="highcharts-figure">
+                                                    <div class="event_bar"></div>
+                                                </figure>
+                                            </div>
+
+                                            <div class="col-sm bg-light">
+                                                <figure class="highcharts-figure">
+                                                    <div id="lottery_demo"></div>
+                                                    <p class="highcharts-description">
+                                                    </p>
+                                            </figure>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm">
+                                            </div>
+                                            <div class="col-sm bg-light rounded-bottom">
+                                                <div class="row justify-content-center">
+                                                    <small class="form-text mt-4 pl-3 pr-3 mb-4">
+                                                        Wie viele grüne Kugeln müssen sich <u>mindestens</u> in dem Lostopf befinden, damit Sie die
+                                                        Lotterie gerade so bevorzugen?
+                                                    </small>
+                                                </div>
+                                                <div class="form-floating mb-3">
+                                                    <input type="number" class="form-control mb-1 shadow-sm bg-white" id="demo_matching_probability" name="matching_probability" value="50" min="0" max="101" disabled>
+                                                    <label for="demo_matching_probability">grüne Kugeln im Lostopf</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container justify-content-center w-75">
+
+                                        <div class="row m-3 justify-content-center">
+                                            <div class="form-check justify-content-center mt-3">
+                                                <input type="checkbox" class="form-check-input"checked>
+                                                <label class="form-check-label" for="submitCheck">
+                                                    <small>Bei 49 oder weniger grünen Kugeln würde ich mich für die Wette entscheiden.</small>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row justify-content-center m-3">
+                                            <button class="btn btn-outline-primary justify-content-center w-25 shadow" type="button" style="border-radius: 40px;">
+                                                Absenden
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br><br>
+        <p class="card-text mb-0 lead">
+            Beispiel 1
+        </p>
+        <p>
+            Stellen Sie sich vor, dass am Ende der Umfrage die obige Aufgabe für ihre Auszahlung relevant ist
+            und dass sich 40 grüne Kugeln in der zufällig erstellten Lotterie befinden. Die Abbildung zeigt,
+            dass bei 40 grünen Kugeln die Wette bevorzugt wird.
+        </p>
+        <p>
+            Sie würden also 10 Euro gewinnen, wenn die Temperatur zwischen einschließlich 8 Grad Celsius und
+            einschließlich 14 Grad Celsius beträgt.
+        </p>
+        <p>
+            Nehmen wir an, dass sich am Ende des Experiments herausstellt, dass die Temperatur 15 Grad
+            Celsius betrug.
+        </p>
+        {% formfield player.CQ_1 label="Wie viel würden Sie dann in dieser Situation gewinnen? Bitte wählen Sie eine Antwort aus." %}
+        <hr class="my-5"/>
+
+        <p class="card-text mb-0 lead">
+            Beispiel 2
+        </p>
+        <p>
+            Stellen Sie sich nun vor, dass am Ende der Umfrage die obige Aufgabe für ihre Auszahlung relevant
+            ist und dass sich 60 grüne Kugeln in der zufällig erstellten Lotterie befinden.
+        </p>
+        <p>
+            Die Abbildung zeigt, dass bei 60 grünen Kugeln die Lotterie bevorzugt wird.
+        </p>
+        <p>
+            Sie würden also 10 Euro gewinnen, wenn eine grüne Kugel aus der zufällig erstellten Lotterie
+            gezogen wird.
+        </p>
+
+        <p>
+            Nehmen wir an, dass eine rote Kugel gezogen wird.
+        </p>
+        {% formfield player.CQ_2 label="Wie viel würden Sie dann in dieser Situation gewinnen? Bitte wählen Sie eine Antwort aus." %}
+
+
+
+
+        <!-- on Card Navigation  Arrows -->
+        <div class="d-flex justify-content-center m-5">
+            <button class="btn btn-white text-dark justify-content-center prevtab" onclick="topFunction()" style="border-radius: 40px;" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                </svg>
+            </button>
+
+            {{ if screenout }}
+            <div class="d-flex justify-content-center">
+                <a class="btn btn-outline-secondary me-4 ms-4" href="{{redirect}}" role="button" style="border-radius: 40px;">
+                    Studie abbrechen
+                </a>
+            </div>
+            {{ else }}
+            <button class="btn btn-white text-dark justify-content-center" style="border-radius: 40px;" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+            </button>
+            {{ endif }}
+
+            <button class="btn btn-white text-primary justify-content-center" style="border-radius: 40px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
+                    <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>

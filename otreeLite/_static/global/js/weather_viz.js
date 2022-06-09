@@ -102,8 +102,8 @@ if (village == "Ilomantsi"){
 
 
 // text operations
-var rangeText = `Sie halten es für sehr wahrscheinlich, dass die Temperatur um 14:00 Uhr zwischen ${range[1][1]}°C und ${range[1][2]}°C betragen wird. `
-var bestguessText = `Eine Temperatur von ${bestGuess[1][1]}°C halten sie für am wahrscheinlichsten. `;
+var rangeText = `They think it is very likely that the temperature at 14:00 will be between ${range[1][1]}°C and ${range[1][2]}°C. `
+var bestguessText = `They consider a temperature of ${bestGuess[1][1]}°C most likely. `;
 var forecastText = "&nbsp;";
 
 
@@ -169,8 +169,8 @@ var height = 9;
 // language plot options
 Highcharts.setOptions({
     lang: {
-        weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-        shortWeekdays: ['So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.']
+        weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        shortWeekdays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     },
 });
 
@@ -222,7 +222,7 @@ var chart = Highcharts.chart("weather_viz", {
             },
             label: {
                 useHTML: true,
-                text: "+ eine Woche",
+                text: "+ one week",
                 verticalAlign: "middle",
                 align: "center",
                 style: {
@@ -251,7 +251,7 @@ var chart = Highcharts.chart("weather_viz", {
 
     yAxis: {
         title: {
-            text: "Temperatur in °C"
+            text: "Temperature in °C"
         },
         min: 0,
         max: 35,
@@ -285,7 +285,7 @@ var chart = Highcharts.chart("weather_viz", {
     },
 
     series: [{
-        name: "Gemessene Temperatur",
+        name: "Observed Temperature",
         type: "area",
         fillOpacity: 0.1,
         data: observed,
@@ -303,7 +303,7 @@ var chart = Highcharts.chart("weather_viz", {
             },
         showInLegend: displayForecast,
     }, {
-        name: "Wettervorhersage",
+        name: "Weather Forecast",
         data: bestGuess,
         zIndex: 1,
         color: forecastColor,
@@ -318,7 +318,7 @@ var chart = Highcharts.chart("weather_viz", {
         showInLegend: displayForecast && displayBestGuess,
         visible: displayForecast && displayBestGuess
     }, {
-        name: "Wahrscheinlicher Bereich",
+        name: "Most Probable Range",
         data: range,
         type: "arearange",
         lineWidth: 0,

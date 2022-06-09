@@ -69,12 +69,12 @@ console.log("barchart ready!")
     }
 
 // set subheader of table
-    var E1SubHeader  = "<small>Sie gewinnen 10 Euro, wenn die Temperatur unter 8°C beträgt (und sonst nichts).</small>";
-    var E2SubHeader  = "<small>Sie gewinnen 10 Euro, wenn die Temperatur zwischen einschließlich  8°C und einschließlich 14°C beträgt (und sonst nichts).</small>";
-    var E3SubHeader  = "<small>Sie gewinnen 10 Euro, wenn die Temperatur über 14°C beträgt (und sonst nichts).</small>";
-    var E12SubHeader = "<small>Sie gewinnen 10 Euro, wenn die Temperatur 14°C oder weniger beträgt (und sonst nichts).</small>";
-    var E23SubHeader = "<small>Sie gewinnen 10 Euro, wenn die Temperatur 8°C oder mehr beträgt (und sonst nichts).</small>";
-    var E13SubHeader = "<small>Sie gewinnen 10 Euro, wenn die Temperatur unter 8°C oder über 14°C beträgt (und sonst nichts).</small>";
+    var E1SubHeader  = "<small>You win 10 euros if the temperature is below 8°C (and nothing otherwise).</small>";
+    var E2SubHeader  = "<small>You win 10 euros if the temperature is between 8°C and 14°C inclusive (and nothing otherwise).</small>";
+    var E3SubHeader  = "<small>You win 10 euros if the temperature is above 14°C beträgt (and nothing otherwise).</small>";
+    var E12SubHeader = "<small>You win 10 euros if the temperature is 14°C or less (and nothing otherwise).</small>";
+    var E23SubHeader = "<small>You win 10 euros if the temperature is 8°C or more  (and nothing otherwise).</small>";
+    var E13SubHeader = "<small>You win 10 euros if the temperature is below 8°C or above 14°C (and nothing otherwise).</small>";
 
     // var E1SubHeader  = `<em>Sie gewinnen 10 Euro, wenn die Temperatur bis einschließlich ${labelArray[1]}°C beträgt (und sonst nichts).</em>`;
     // var E2SubHeader  = `<em>Sie gewinnen 10 Euro, wenn die Temperatur ${labelArray[1]}°C bis ${labelArray[2]}°C beträgt (und sonst nichts).</em>`;
@@ -145,9 +145,9 @@ $(function () {
                     tooltip: {
                         formatter: function() {
                             if (this.series.color == successColor) {
-                                return "Sie gewinnen 10 Euro.";
+                                return "You win 10 euros.";
                             } else {
-                                return "Sie gewinnen nichts."
+                                return "You win nothing."
                             }
                         }
                     },
@@ -176,21 +176,21 @@ $(function () {
 
                     series: [{
                         label: "Series3",
-                        name: "über 14°C", //`${labelArray[2]}°C und drüber` ,// "14°C und drüber",
+                        name: "above 14°C", //`${labelArray[2]}°C und drüber` ,// "14°C und drüber",
                         data: [ticksArray[3] - ticksArray[2]],
                         showInLegend: false,
                         color: S3Col,
                         dataLabels: S3Label
                     }, {
                         label: "Series2",
-                        name: "von einschließlich 8°C bis <br> einschließlich 14°C", //`${labelArray[1]}°C bis ${labelArray[2]}°C` ,//"8°C bis 14°C",
+                        name: "from 8°C to <br> 14°C inclusive", //`${labelArray[1]}°C bis ${labelArray[2]}°C` ,//"8°C bis 14°C",
                         data: [ticksArray[2] - ticksArray[1]],
                         showInLegend: false,
                         color: S2Col,
                         dataLabels: S2Label
                     }, {
                         label: "Series1",
-                        name: "unter 8°C", //`bis zu ${labelArray[1]}°C` , //"bis zu 8°C",
+                        name: "below 8°C", //`bis zu ${labelArray[1]}°C` , //"bis zu 8°C",
                         data: [ticksArray[1] - ticksArray[0]],
                         showInLegend: false,
                         color: S1Col,

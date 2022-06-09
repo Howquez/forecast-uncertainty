@@ -7,7 +7,7 @@ Your app description
 
 # MODELS
 class Constants(BaseConstants):
-    name_in_url = 'Outro'
+    name_in_url = 'EN_Outro'
     players_per_group = None
     num_rounds = 1
 
@@ -246,6 +246,9 @@ class CLICCS_Questions(Page):
     form_model = "player"
     form_fields = ["CLICCS1", "CLICCS2"]
 
+class Demo_Info(Page):
+    form_model = "player"
+
 class Results(Page):
     form_model = "player"
 
@@ -272,9 +275,5 @@ class Results(Page):
                 )
 
 
-page_sequence = [Outro_Risk,
-                 Domain_Questions_1,
-                 Domain_Questions_2,
-                 Demographic_Questions,
-                 CLICCS_Questions,
+page_sequence = [Demo_Info,
                  Results]

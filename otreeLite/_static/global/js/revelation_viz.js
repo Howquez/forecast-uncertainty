@@ -92,8 +92,8 @@ Highcharts.setOptions({
     lang: {
         months:        ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
         shortMonths:   ["Jan.", "Feb.", "März", "Apr.", "Mai", "Jun.", "Jul.", "Aug.", "Sept.", "Okt.", "Nov.", "Dez."],
-        weekdays:      ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-        shortWeekdays: ['So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.']
+        weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        shortWeekdays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     },
 });
 
@@ -173,7 +173,7 @@ var chart = Highcharts.chart("weather_viz", {
     },
 
     series: [{
-        name: "Gemessene Temperatur in °C",
+        name: "Observed temperature in °C",
         data: observed,
         type: "area",
         color: observedColor,
@@ -192,14 +192,14 @@ var chart = Highcharts.chart("weather_viz", {
         color: observedColor,//Highcharts.getOptions().colors[0]
         showInLegend: displayForecast,
     }, {
-        name: "Wettervorhersage",
+        name: "Weather forecast",
         data: bestGuess,
         zIndex: 1,
         color: forecastColor,
         showInLegend: displayForecast,
         visible: displayForecast
     }, {
-        name: "Wahrscheinlichster Bereich",
+        name: "Most probable range",
         data: range,
         type: "arearange",
         lineWidth: 0,

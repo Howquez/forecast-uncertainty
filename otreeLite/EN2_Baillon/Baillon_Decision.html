@@ -38,8 +38,8 @@
 <!-- Header -->
 <nav class="navbar sticky-top mb-4 justify-content-between">
     <h5>
-        <span class="badge rounded-pill mt-4 bg-dark shadow" data-toggle="tooltip" data-placement="bottom" title="Runde {{ player.round_number }}">
-            Runde {{ player.round_number }}
+        <span class="badge rounded-pill mt-4 bg-dark shadow" data-toggle="tooltip" data-placement="bottom" title="Round {{ player.round_number }}">
+            Round {{ player.round_number }}
         </span>
     </h5>
     <div style="cursor: pointer;">
@@ -65,23 +65,23 @@
             <div class="card mt-5 shadow-lg">
                 <div class="card-header bg-white shadow-sm mt-1 sticky-top">
                     <p>
-                        Wie viele grüne Kugeln müssen sich mindestens in dem Lostopf befinden, damit Sie die Lotterie vorziehen?
+                        How many green balls must be in the lottery pot at least for you to prefer the lottery?
                     </p>
                 </div>
                 <div class="card-body">
                     <div class="container">
                         <div class="row">
                             <div class="col-sm">
-                                <h4>Wette</h4>
+                                <h4>Bet</h4>
                                 <p class="card-text mb-3 lead" id="subHeader">
-                                    <small>Sie gewinnen 10 Euro entsprechend der unten dargestellten Grafik (und sonst nichts).</small>
+                                    <small>You win 10 euros according to the graphic below (and nothing otherwise).</small>
                                 </p>
                             </div>
 
                             <div class="col-sm bg-light rounded-top">
-                                <h4>Lotterie</h4>
+                                <h4>Lottery</h4>
                                 <p class="card-text mb-3 lead">
-                                    <small>Sie gewinnen 10 Euro, wenn eine grüne Kugel gezogen wird (und sonst nichts).</small>
+                                    <small>You win 10 euros if a green ball is drawn (and nothing otherwise).</small>
                                 </p>
                             </div>
                         </div>
@@ -89,17 +89,17 @@
                         <div class="row">
                             <div class="col-sm">
                                 <small mb-4>
-                                    Die Wette bezieht sich auf dieselbe Wettersituation und Tageszeit (9 Tage später),
-                                    die Ihnen eben vorgestellt wurde. Bei Bedarf können Sie sich diese
-                                    <a data-bs-toggle="modal" data-bs-target="#modalWeather" id="weather_text" style="cursor: pointer;"><u>hier</u></a>
-                                    nochmals anschauen. <br><br><br>
+                                    The bet refers to the same weather situation and time of day (9 days later), that
+                                    was just presented to you. If you desire, you can look at it again
+                                    <a data-bs-toggle="modal" data-bs-target="#modalWeather" id="weather_text" style="cursor: pointer;"><u>here</u></a>
+                                    . <br><br><br>
                                 </small>
                             </div>
 
                             <div class="col-sm bg-light">
                                 <small>
-                                    In dem Lostopf befinden sich insgesamt 100 Kugeln, die entweder grün oder rot sind. Den Anteil der
-                                    grünen Kugeln bestimmen Sie in dieser Entscheidungssituation.
+                                    There are a total of 100 balls in the lottery pot, which are either green or red.
+                                    With your decision you determine the fraction of green balls.
                                 </small>
                             </div>
                         </div>
@@ -126,13 +126,13 @@
                             <div class="col-sm bg-light rounded-bottom">
                                 <div class="row justify-content-center">
                                     <small class="form-text mt-4 pl-3 pr-3 mb-4">
-                                        Wie viele grüne Kugeln müssen sich <u>mindestens</u> in dem Lostopf befinden, damit Sie die
-                                        Lotterie gerade so bevorzugen?
+                                        How many green balls must be <u>at least</u> in the lottery pot for you to
+                                        prefer the lottery just so prefer?
                                     </small>
                                 </div>
                                 <div class="form-floating mb-3">
                                     <input type="number" class="form-control mb-1 shadow-sm bg-white" id="id_matching_probability" name="matching_probability" min="0" max="101" required>
-                                    <label for="id_matching_probability">grüne Kugeln im Lostopf</label>
+                                    <label for="id_matching_probability">green balls in the lottery pot</label>
                                 </div>
                             </div>
 
@@ -148,13 +148,13 @@
                                 <input type="checkbox" class="form-check-input" id="submitCheck" required checked>
                                 {% endif %}
                                 <label class="form-check-label" for="submitCheck" id="submitCheckLabel">
-                                    <small>Ja, so bevorzuge ich die Lotterie.</small>
+                                    <small>Yes, I prefer the lottery.</small>
                                 </label>
                             </div>
                         </div>
                         <div class="row justify-content-center mb-3">
                             <button class="btn btn-primary justify-content-center w-25 shadow" type="submit" id="submitButton" disabled style="border-radius: 40px;">
-                                Absenden
+                                Submit
                             </button>
                         </div>
                     </div>
@@ -172,14 +172,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalWeatherLabel">
-                    Wetter
+                    Weather
                 </h5>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 {% if treatment_displayed %}
                 <div class="alert alert-success" role="alert">
-                    <p>Experten haben am Freitag eine Vorhersage für den Sonntag <u>9 Tage später</u> 14:00 Uhr (MEZ) getroffen:</p>
+                    <p>Experts made a forecast for Sunday <u>9 days later</u> 14:00 (CET) on Friday:</p>
                     <strong><span id="forecastText"></span></strong>
                 </div>
                 {% endif %}
@@ -189,64 +189,22 @@
                 </figure>
 
                 <p>
-                    Die Temperaturen betrugen zwischen Mittwoch und Freitag jeweils 12°C <small>(um 14:00 Uhr)</small>.
+                    Temperatures were 12°C <small>(at 14:00)</small> between Wednesday and Friday.
                 </p>
 
                 <p class="card-text">
-                    Ohne zu wissen, auf welchen Ort und Zeitpunkt sich das oben dargestellte Wetter bezieht,
-                    müssen Sie für die folgenden Aufgaben abschätzen, welche Temperaturbereiche Sie
+                    Without knowing what location and time the weather shown above refers to, the following tasks
+                    require you to estimate what temperature ranges you think are likely to occur
+                    on Sunday <u>9 days later</u>
                     {% if treatment_displayed %}
-                    am Sonntag <u>9 Tage später</u>
-                    <a style="color:#A6219D">(also im lila schraffierten Bereich)</a>
-                    {% else %}
-                    am Sonntag <u>9 Tage später</u>
+                    <a style="color:#A6219D">(i.e., in the purple shaded area)</a>
                     {% endif %}
-                    am selben Ort und zur gleichen Tageszeit für wahrscheinlich halten.
+                    at the same location and time of day.
                 </p>
             </div>
         </div>
     </div>
 </div>
-
-<!-- Weather Offcanvas
-<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWeather" aria-labelledby="offcanvasWeather">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasWeatherLabel">
-            Wetter
-        </h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-
-        {% if treatment_displayed %}
-            <div class="alert alert-success" role="alert">
-                <p>Experten haben am Freitag eine Vorhersage für den Sonntag <u>9 Tage später</u> getroffen:</p>
-                <p><span id="forecastText"></span></p>
-            </div>
-        {% endif %}
-
-        <figure class="highcharts-figure">
-            <div id="weather_viz"></div>
-        </figure>
-
-        <p>
-            Die Temperaturen betrugen zwischen Mittwoch und Freitag jeweils 12°C <small>(um 14:00 Uhr)</small>.
-        </p>
-
-        <p class="card-text">
-            Ohne zu wissen, auf welchen Ort und Zeitpunkt sich das oben dargestellte Wetter bezieht,
-            müssen Sie für die folgenden Aufgaben abschätzen, welche Temperaturbereiche Sie
-                {% if treatment_displayed %}
-                am Sonntag <u>9 Tage später</u>
-                <a style="color:#A6219D">(also im lila schraffierten Bereich)</a>
-                {% else %}
-                am Sonntag <u>9 Tage später</u>
-                {% endif %}
-            am selben Ort und zur gleichen Tageszeit für wahrscheinlich halten.
-        </p>
-    </div>
-</div>
--->
 
 <!-- Instructions Offcanvas -->
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasInstructions" aria-labelledby="offcanvasInstructions">
@@ -255,15 +213,15 @@
         <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
 
             <li class="nav-item" >
-                <a class="nav-link back-and-forth active" id="part1-tab" data-bs-toggle="tab" href="#part1" role="tab" aria-controls="part1"> Allgemeines </a>
+                <a class="nav-link back-and-forth active" id="part1-tab" data-bs-toggle="tab" href="#part1" role="tab" aria-controls="part1"> General </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link back-and-forth" id="part2-tab" data-bs-toggle="tab" href="#part2" role="tab" aria-controls="part2"> Verdienst </a>
+                <a class="nav-link back-and-forth" id="part2-tab" data-bs-toggle="tab" href="#part2" role="tab" aria-controls="part2"> Earnings </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link back-and-forth" id="part3-tab" data-bs-toggle="tab" href="#part3" role="tab" aria-controls="part3"> Wetter </a>
+                <a class="nav-link back-and-forth" id="part3-tab" data-bs-toggle="tab" href="#part3" role="tab" aria-controls="part3"> Weather </a>
             </li>
         </ul>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -271,165 +229,15 @@
     <div class="offcanvas-body">
         <div class="tab-content" id="myTabContent">
             <!-- Part 1: Allgemeines -->
-            <div class="tab-pane show active" id="part1" role="tabpanel" aria-labelledby="part1-tab">
-                <div class="card-body">
-
-                    <p class="card-text mb-0 lead">
-                        Ablauf
-                    </p>
-                    <p>
-                        In dieser Studie können Sie einen Bonus in Höhe von {{ Constants.prize_payoff }} € gewinnen.
-                        Dafür müssen Sie in insgesamt zweimal 6 Runden Abwägungen treffen. Danach  stellen wir Ihnen
-                        einige Fragen zu Ihrer Person. Zum Schluss zeigen wir Ihnen, wie viel Geld Sie in dieser Studie
-                        verdient haben.
-                    </p>
-                    <p>
-                        In jeder Runde müssen Sie zwischen einer Lotterie und einer Wette über das Wetter abwägen.
-                        Um die Wette besser beurteilen zu können, bekommen Sie Informationen über zuvor gemessene
-                        Temperaturen. Aber Sie erfahren vorerst nicht, auf welchen Ort und welchen genauen Zeitpunkt sich die
-                        Wette bezieht. Nach den ersten 6 Runden bekommen Sie zusätzlich eine Wettervorhersage angezeigt
-                        und müssen die 6 Runden ein zweites (und letztes) Mal durchlaufen.
-                    </p>
-
-                    <p class="card-text mb-0 lead">
-                        Wette
-                    </p>
-                    <p>
-                        Bei der Wette setzen Sie auf bestimmte Temperaturen, also zum Beispiel darauf, dass die
-                        Temperatur am Sonntag um 14:00 Uhr (MEZ)<sup>1</sup> mindestens 17°C betragen wird.
-                        Wenn die Temperatur dann tatsächlich über 17°C beträgt, gewinnen Sie {{ Constants.prize_payoff }} €.
-                    </p>
-                    <p>
-                        Die Wette wird sich in allen Runden auf den gleichen Ort und Zeitraum beziehen, aber
-                        hinsichtlich der Temperaturbereiche unterscheiden. Das heißt, dass Sie in einer Runde zum
-                        Beispiel darauf wetten können, dass die Temperatur mindestens 14°C beträgt und in einer anderen
-                        Runde darauf wetten, dass die Temperatur höchstens 8°C beträgt. Aus diesem Grund müssen Sie sich
-                        zu Beginn einer jeden Runde genau anschauen, bei welchen Temperaturbereichen Sie gewinnen und
-                        verlieren.
-                    </p>
-
-                    <p class="card-text mb-0 lead">
-                        Lotterie
-                    </p>
-                    <p>
-                        Für die Lotterie können Sie sich einen virtuellen Lostopf mit 100 Kugeln darin
-                        vorstellen. Die Kugeln sind entweder grün oder rot gefärbt. Nun wird aus dem Lostopf zufällig eine
-                        Kugel gezogen. Ist die gezogene Kugel grün, gewinnen Sie {{ Constants.prize_payoff }} €. Wenn die Kugel
-                        hingegen rot ist, gewinnen Sie nichts.
-                    </p>
-
-                    <p class="card-text mb-0 lead">
-                        Aufgabe
-                    </p>
-                    <p>
-                        Ihre Aufgabe besteht nun in jeder Runde darin, abzuwägen, unter welchen Bedingungen Sie die
-                        Lotterie der Wette gerade so vorziehen würden. Sie werden deshalb gefragt, wie viele von
-                        insgesamt 100 Kugeln grün sein müssen, damit Sie die Lotterie bevorzugen.
-                    </p>
-
-                </div>
-            </div>
+            {{ include Constants.GENERAL_TEMPLATE }}
 
 
             <!-- Part 2: Verdienst  -->
-            <div class="tab-pane" id="part2" role="tabpanel" aria-labelledby="part2-tab">
-                <div class="card-body">
-
-                    <p class="card-text mb-0 lead">
-                        Grundsätzliches
-                    </p>
-                    <p>
-                        Am Ende dieser Studie wird aus den insgesamt 12 Runden zufällig eine Runde ausgewählt, um
-                        zu bestimmen, ob Sie {{ Constants.prize_payoff }} € gewinnen oder nicht. Deshalb kann jede Ihrer
-                        Abwägungen entscheidend für Ihre Auszahlung sein.
-                    </p>
-                    <p>
-                        Während Sie diese Anleitung lesen, bereitet ein Computerprogramm eine Lotterie mit insgesamt 100
-                        Kugeln vor. Die Zusammensetzung roten und grünen Kugeln ist dabei rein zufällig. Ob sich nun 5
-                        oder 91 grüne Kugeln in dem Lostopf befinden, ist genauso wahrscheinlich, wie dass sich 0 oder 100
-                        grünen Kugeln in dem Lostopf befinden.
-                    </p>
-
-                    <p class="card-text mb-0 lead">
-                        Wette
-                    </p>
-                    <p>
-                        Wenn diese
-                        zufällig erstellte Lotterie weniger grüne Kugeln enthält, als Sie in der entscheidenden Runde
-                        mindestens gefordert haben, dann entscheidet die Wette darüber, ob Sie gewinnen. In diesem Fall
-                        bekommen Sie {{ Constants.prize_payoff }} €, wenn das Wetter, auf das Sie gesetzt haben, tatsächlich
-                        eintritt und sonst nichts.
-                    </p>
-
-                    <p class="card-text mb-0 lead">
-                        Lotterie
-                    </p>
-                    <p>
-                        Wenn diese zufällig erstellte Lotterie hingegen mehr grüne Kugeln enthält, als Sie in der
-                        entscheidenden Runde mindestens gefordert haben, dann entscheidet genau diese zufällig erstellte
-                        Lotterie über Ihren Gewinn und Sie erhalten {{ Constants.prize_payoff }} €, wenn
-                        zufällig eine grüne Kugel aus diesem Lostopf gezogen wird.
-                    </p>
-
-                </div>
-            </div>
+            {{ include Constants.EARNINGS_TEMPLATE }}
 
 
-            <!-- Part 3: Verdienst -->
-            <div class="tab-pane" id="part3" role="tabpanel" aria-labelledby="part3-tab">
-                <div class="card-body">
-
-                    <p class="card-text mb-0 lead">
-                        Bedienungshilfen
-                    </p>
-                    <p>
-                        Beachten Sie, dass Sie die Wetter-Grafik jederzeit abrufen können.
-                        Für eine erneute Betrachtung klicken Sie einfach auf das
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-thermometer-half" viewBox="0 0 16 16">
-                            <path d="M9.5 12.5a1.5 1.5 0 1 1-2-1.415V6.5a.5.5 0 0 1 1 0v4.585a1.5 1.5 0 0 1 1 1.415z"/>
-                            <path d="M5.5 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0V2.5zM8 1a1.5 1.5 0 0 0-1.5 1.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0l-.166-.15V2.5A1.5 1.5 0 0 0 8 1z"/>
-                        </svg>-Symbol oben rechts im Bild.
-                    </p>
-
-                    <p class="card-text mb-0 lead">
-                        Grundsätzliches
-                    </p>
-                    <p>
-                        Das Wettergeschehen, auf das sich diese Studie bezieht, liegt in der Vergangenheit.
-                        Dementsprechend zeigen wir Ihnen historische Wetterdaten und Wettervorhersagen.
-                        Dadurch können wir Ihren Gewinn sofort berechnen, sollte Ihr Gewinn auf Grundlage einer Wette
-                        bestimmt werden. Der Ort, der Zeitraum und die Informationen, die wir Ihnen darstellen, wurden
-                        zu Beginn der Studie bestimmt und können nicht durch Ihre Entscheidungen beeinflusst werden.
-                        Darüber hinaus kann sich das Wettergeschehen auf einen beliebigen Ort der Welt zu einem
-                        beliebigen Zeitraum beziehen. Dadurch stellen wir sicher, dass Sie nur die von uns
-                        bereitgestellten Informationen für die Abwägungen verwenden können.
-                    </p>
-
-                    <p class="card-text mb-0 lead">
-                        Beschreibung
-                    </p>
-                    <p>
-                        In der Grafik sehen Sie die bereits genannten Wetterdaten. Dort sind jeweils Temperaturen von
-                        drei aufeinanderfolgenden Tagen um 14:00 Uhr (MEZ) dargestellt. Ihre Schätzung soll sich nun
-                        auf den Sonntag 9 Tage später (also den lila schraffierten Bereich) beziehen.
-                        <strong>
-                            Sie können ab der siebten Runde zusätzlich eine Wettervorhersage einsehen.
-                        </strong>
-
-                    </p>
-
-
-                    <p class="card-text mb-0 lead">
-                        Echtheit
-                    </p>
-                    <p>
-                        Alle dargestellten Daten sind echt, also von Experten gemessen oder, im Falle der Vorhersage,
-                        berechnet. Wir runden die Daten der Einfachheit halber. Am Ende der Studie werden wir Ihnen die
-                        Quellen zu den jeweiligen Daten zeigen.
-                    </p>
-
-                </div>
-            </div>
+            <!-- Part 3: Wetter -->
+            {{ include Constants.WEATHER_TEMPLATE }}
         </div>
     </div>
 </div>
@@ -437,17 +245,17 @@
 <!-- Quit Offcanvas -->
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasQuit" aria-labelledby="offcanvasQuitLabel">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasQuitLabel">Studie abbrechen</h5>
+        <h5 class="offcanvas-title" id="offcanvasQuitLabel">Quit study</h5>
     </div>
     <div class="offcanvas-body">
         <div>
-            Wenn Sie die Studie frühzeitig abbrechen möchten, klicken Sie einfach auf den folgenden button.
+            If you intend to leave the study, click on the button.
             <br><br>
-            Wenn Sie fortfahren möchten, klicken Sie einfach rechts neben dieses Textfeld.
+            If not, click right next to this text field.
         </div>
         <div class="d-flex justify-content-center">
             <a class="btn btn-outline-danger m-5" href="{{redirect}}" role="button" style="border-radius: 40px;">
-                Studie abbrechen
+                Quit
             </a>
         </div>
     </div>
